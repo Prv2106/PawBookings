@@ -117,4 +117,10 @@ public class PawBookings {
         this.caneSelezionato = cn;
     }
 
+
+
+    public Map<Integer, Cliente> getClienti(){
+        return this.clienti;
+    }
+
 }

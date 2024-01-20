@@ -6,7 +6,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Map;
 
+import domain_layer.Cane;
+import domain_layer.Cliente;
 import domain_layer.PawBookings;
 
 public class MainApplication extends Application {
@@ -26,7 +30,16 @@ public class MainApplication extends Application {
     }
 
     public static void main(String[] args) {
-        PawBookings PB = PawBookings.getInstance();     
+        PawBookings PB = PawBookings.getInstance();  
+        
+    // Caricamento dei Cani del Cliente per l'avviamento
+    Map<Integer,Cliente> clienti = PB.getClienti();
+
+    LinkedList<Cane> listaCani = new LinkedList<>();
+    listaCani.add(new Cane(1,"Stella","Pastore Tedesco" ));
+    listaCani.add(new Cane(2,"Luna","Pastore Tedesco" ));
+    clienti.get(1).loadCani(listaCani);
+
         launch(args);
     }
 }
