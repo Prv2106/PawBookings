@@ -54,4 +54,9 @@ public abstract class Corso {
     public LinkedList<Lezione> getLezioni(){
         return this.programma;
     }
+
+
+
+
+    
 }
