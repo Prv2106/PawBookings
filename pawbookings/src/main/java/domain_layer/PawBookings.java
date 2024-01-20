@@ -66,9 +66,6 @@ public class PawBookings {
     }
 
 
-
-
-
     public LinkedList<Corso> nuovaIscrizioneCorso(){
         int capienza;
         // per ciascun corso presente in elencoCorsi viene verificato che il corso non sia pieno 
@@ -121,6 +118,10 @@ public class PawBookings {
 
     public Map<Integer, Cliente> getClienti(){
         return this.clienti;
+    }
+
+    public Cane getCaneSelezionato() {
+        return this.caneSelezionato;
     }
 
 }

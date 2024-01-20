@@ -2,11 +2,15 @@ package org.sample.pawbookings;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.util.Callback;
 
 import domain_layer.Cane;
+import domain_layer.Cliente;
+import domain_layer.PawBookings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,11 +32,14 @@ public class HomePageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // popoliamo la lista
+        PawBookings PB = PawBookings.getInstance();  
+        
+        // Caricamento dei Cani del Cliente per l'avviamento
+        Map<Integer,Cliente> clienti = PB.getClienti();
+        LinkedList<Cane> listaCani = clienti.get(1).getCani();
+
+        items.addAll(listaCani);
         this.list.setItems(items);
-        // List<Cane> cani = PawBookings.getInstance().getCaniCliente();
-        // items.addAll(cani);
-        items.add(new Cane(0, "Rex", "Pastore Tedesco"));
-        items.add(new Cane(1, "Luna", "Barboncino"));
 
         // definiamo la grafica di ogni oggetto della lista
         this.list.setCellFactory(new Callback<ListView<Cane>, ListCell<Cane>>() {
@@ -59,8 +66,7 @@ public class HomePageController implements Initializable {
     // -------------------> Aggiungiamo il listener per l'evento di click
                             setOnMouseClicked(event -> {
                                 // Azioni da eseguire quando un elemento viene cliccato
-                                System.out.println("Elemento cliccato: " + cane.getNome());
-                                // PawBookings.getInstance().setCaneSelezionato(cane);
+                                PB.selezionaCane(cane);;
 
                                 // passiamo alla schermata successiva
                                 try {

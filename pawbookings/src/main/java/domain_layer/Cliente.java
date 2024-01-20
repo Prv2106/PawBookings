@@ -12,6 +12,7 @@ public class Cliente {
         this.codiceCliente = codiceCliente;
         this.nome = nome;
         this.cognome = cognome;
+        this.caniPosseduti = new LinkedList<>();
     }
 
     public int getCodiceCliente() {
@@ -24,6 +25,10 @@ public class Cliente {
 
     public String getCognome() {
         return this.cognome;
+    }
+
+    public LinkedList<Cane> getCani() {
+        return this.caniPosseduti;
     }
 
 

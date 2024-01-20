@@ -2,14 +2,14 @@ package org.sample.pawbookings;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 import javafx.util.Callback;
 
 import domain_layer.Corso;
-import domain_layer.CorsoAvanzato;
-import domain_layer.CorsoBase;
 import domain_layer.Lezione;
+import domain_layer.PawBookings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -31,18 +31,11 @@ public class AvailableCoursesController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // popoliamo la lista
-        this.list.setItems(items);
-
-        Corso corsoBase = new CorsoBase(0,10,20, "Base");
-        corsoBase.getLezioni().add(new Lezione(0, "lezione 1"));
-        corsoBase.getLezioni().add(new Lezione(1, "lezione 2"));
+        PawBookings PB = PawBookings.getInstance();  
+        LinkedList<Corso> corsiDisponibili = PB.nuovaIscrizioneCorso();
         
-        Corso corsoAvanzato = new CorsoAvanzato(0,10,20, "Avanzato");
-        corsoAvanzato.getLezioni().add(new Lezione(2, "Lezione A"));
-        corsoAvanzato.getLezioni().add(new Lezione(3, "Lezione B"));
-
-
-        items.addAll(corsoBase, corsoAvanzato);
+        items.addAll(corsiDisponibili);
+        this.list.setItems(items);
 
 
         // definiamo la grafica di ogni oggetto della lista
@@ -77,6 +70,7 @@ public class AvailableCoursesController implements Initializable {
     // -------------------> Aggiungiamo il listener per l'evento di click
                             setOnMouseClicked(event -> {
                                 // Azioni da eseguire quando un elemento viene cliccato
+                                PB.confermaIscrizioneCorso(corso);
 
                                 // passiamo alla schermata successiva
                                 try {
