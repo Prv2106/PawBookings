@@ -6,6 +6,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Map;
+
+import domain_layer.Cane;
+import domain_layer.Cliente;
+import domain_layer.PawBookings;
 
 public class MainApplication extends Application {
     private static Scene scene;
@@ -24,6 +30,14 @@ public class MainApplication extends Application {
     }
 
     public static void main(String[] args) {
+        PawBookings PB = PawBookings.getInstance();  
+        
+    // Caricamento dei Cani del Cliente per l'avviamento
+    Map<Integer,Cliente> clienti = PB.getClienti();
+
+    clienti.get(1).loadCani(1,"Stella","Pastore Tedesco" );
+    clienti.get(1).loadCani(2,"Luna","Pastore Tedesco");
+
         launch(args);
     }
 }

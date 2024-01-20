@@ -1,9 +1,12 @@
 package domain_layer;
 
+import java.util.LinkedList;
+
 public class Cliente {
     private int codiceCliente;
     private String nome;
     private String cognome;
+    private LinkedList<Cane> caniPosseduti;
 
     public Cliente (int codiceCliente, String nome, String cognome) {
         this.codiceCliente = codiceCliente;
@@ -22,4 +25,13 @@ public class Cliente {
     public String getCognome() {
         return this.cognome;
     }
+
+
+    public void loadCani(int codiceCane, String nome, String razza){
+        Cane cn = new Cane(codiceCane, nome, razza);
+        this.caniPosseduti.add(cn);
+    }
+
+
+
 }
