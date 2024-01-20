@@ -15,19 +15,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.util.Callback;
 
 public class AvailableShiftsController implements Initializable {
 
     @FXML
     private ListView<Turno> list;
-
-    @FXML
-    private Text textCorsoCorrente = new Text();
-
-    @FXML
-    private Text textProssimaLezione = new Text();
 
 
     // creiamo una lista osservabile per i corsi
@@ -36,10 +29,6 @@ public class AvailableShiftsController implements Initializable {
     // metodo che viene richiamato all'apertura della schermata
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // impostiamo turno e lezione
-        textCorsoCorrente.setText("Corso base");
-        textProssimaLezione.setText("Lezione B");
-
         // popoliamo la lista dinamica
         Turno turnoMattina = new Turno(LocalDate.now(), LocalTime.of(9, 0, 0), LocalTime.of(11, 0, 0));
         Turno turnoPomeriggio = new Turno(LocalDate.now(), LocalTime.of(15, 0, 0), LocalTime.of(17, 0, 0));
