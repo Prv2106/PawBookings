@@ -28,7 +28,7 @@ public class Lezione {
     }
 
     // Metodo per ottenere l'elenco dei turni disponibili
-    public LinkedList<Turno> getelencoTurniDisponibili() {
+    public LinkedList<Turno> getTurniDisponibili() {
         // Restituzione dell'elenco dei turni disponibili
         return this.elencoTurniDisponibili;
     }
