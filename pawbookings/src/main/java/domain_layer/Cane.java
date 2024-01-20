@@ -1,6 +1,5 @@
 package domain_layer;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Cane {
@@ -9,7 +8,7 @@ public class Cane {
     private final String razza;
     private boolean attualmenteIscritto;
     private Corso corsoCorrente;
-    private ArrayList<Corso> corsiCompletati;
+    private LinkedList<Corso> corsiCompletati;
     private LinkedList<Lezione> lezioniSeguite;
 
     public Cane(int codiceCane, String nome, String razza) {
@@ -17,17 +16,17 @@ public class Cane {
         this.nome = nome;
         this.razza = razza;
         this.attualmenteIscritto = false;
-        this.corsiCompletati = new ArrayList<Corso>();
+        this.corsiCompletati = new LinkedList<Corso>();
         this.lezioniSeguite = new LinkedList<Lezione>();
     }
 
     // ************* metodi ****************
     public Lezione getLezioneSuccessiva() {
-        ArrayList<Lezione> programma = this.corsoCorrente.getLezioni();
+        LinkedList<Lezione> programma = this.corsoCorrente.getLezioni();
         return this.calcolaLezioneSuccessiva(programma);
     }
 
-    public Lezione calcolaLezioneSuccessiva(ArrayList<Lezione> programma) {
+    public Lezione calcolaLezioneSuccessiva(LinkedList<Lezione> programma) {
         return programma.get(lezioniSeguite.size());
         
     }
@@ -38,7 +37,7 @@ public class Cane {
     }
 
     public void aggiornaStatoAvanzamento(Turno ts) {
-        ArrayList<Lezione> programma = this.corsoCorrente.getLezioni();
+        LinkedList<Lezione> programma = this.corsoCorrente.getLezioni();
         Lezione lezioneSuccessiva = calcolaLezioneSuccessiva(programma);
         lezioneSuccessiva.aggiornaTurniDisponibili(ts);
         lezioniSeguite.add(lezioneSuccessiva);

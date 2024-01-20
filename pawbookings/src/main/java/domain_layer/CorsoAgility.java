@@ -8,6 +8,6 @@ public class CorsoAgility extends Corso{
     @Override
     public void loadLezioni() {
         // TODO Auto-generated method stub
-        
+        return;
     }
 }

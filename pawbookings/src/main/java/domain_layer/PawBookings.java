@@ -76,7 +76,7 @@ public class PawBookings {
 
 
     public Boolean selezionaTurno(Turno ts){
-
+        return true;
     }
 
     public void selezionaCane(Cane cn){
