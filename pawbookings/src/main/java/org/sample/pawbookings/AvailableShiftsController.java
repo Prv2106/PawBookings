@@ -2,10 +2,11 @@ package org.sample.pawbookings;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalTime;
+
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
+import domain_layer.PawBookings;
 import domain_layer.Turno;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +23,6 @@ public class AvailableShiftsController implements Initializable {
     @FXML
     private ListView<Turno> list;
 
-
     // creiamo una lista osservabile per i corsi
     ObservableList<Turno> items = FXCollections.observableArrayList();
 
@@ -30,11 +30,10 @@ public class AvailableShiftsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // popoliamo la lista dinamica
-        Turno turnoMattina = new Turno(LocalDate.now(), LocalTime.of(9, 0, 0), LocalTime.of(11, 0, 0));
-        Turno turnoPomeriggio = new Turno(LocalDate.now(), LocalTime.of(15, 0, 0), LocalTime.of(17, 0, 0));
-        Turno turnoSera = new Turno(LocalDate.now(), LocalTime.of(18, 30, 0), LocalTime.of(20, 30, 0));
+        PawBookings PB = PawBookings.getInstance();  
+        LinkedList<Turno> elencoTurni = PB.prenotaTurnoLezione();
 
-        items.addAll(turnoMattina, turnoPomeriggio, turnoSera);
+        items.addAll(elencoTurni);
         this.list.setItems(items);
 
         // definiamo la grafica di ogni oggetto della lista
@@ -64,7 +63,12 @@ public class AvailableShiftsController implements Initializable {
     // -------------------> Aggiungiamo il listener per l'evento di click
                             setOnMouseClicked(event -> {
                                 // Azioni da eseguire quando un elemento viene cliccato
-
+                                try {
+                                    PB.selezionaTurno(turno);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+    
                                 // passiamo alla schermata successiva
                                 try {
                                     MainApplication.setRoot("ok-view.fxml");
