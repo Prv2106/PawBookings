@@ -17,4 +17,16 @@ public class ChooseActivityController {
         }
     }
 
+    @FXML
+    void onPrenotaTurnoLezioneClicked(ActionEvent event) {
+        // passiamo alla schermata che mostra l'elenco dei turni disponibili
+        try {
+            MainApplication.setRoot("available_shifts-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }
