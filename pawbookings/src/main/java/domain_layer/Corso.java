@@ -44,7 +44,11 @@ public abstract class Corso {
         return this.capienza;
     }
 
-    public void aggiornaCaniIscritti(Cane cn) {
-        this.elencoCaniIscritti.remove(cn);
+    public float getCosto() {
+        return this.costo;
+    }
+
+    public String getTipoCorso() {
+        return this.tipoCorso;
     }
 }
