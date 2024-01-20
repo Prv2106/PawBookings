@@ -8,9 +8,9 @@ public class CorsoBase extends Corso{
 
 
     public CorsoBase(int codice, int capienza, float costo, String tipoCorso) {
-        super(codice, capienza, costo, tipoCorso);
-        
+        super(codice, capienza, costo, tipoCorso);   
         this.programma = new LinkedList<>();
+        this.loadLezioni();
     }
 
     @Override

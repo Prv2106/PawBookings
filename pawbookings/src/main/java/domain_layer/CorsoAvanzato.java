@@ -8,6 +8,7 @@ public class CorsoAvanzato extends Corso{
     public CorsoAvanzato(int codice, int capienza, float costo, String tipoCorso) {
         super(codice, capienza, costo, tipoCorso);
         this.programma = new LinkedList<>();
+        this.loadLezioni();
     }
 
     @Override

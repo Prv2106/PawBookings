@@ -6,6 +6,7 @@ public class CorsoAgility extends Corso{
     public CorsoAgility(int codice, int capienza, float costo, String tipoCorso) {
         super(codice, capienza, costo, tipoCorso);
         this.programma = new LinkedList<>();
+        this.loadLezioni();
     }
 
     @Override
