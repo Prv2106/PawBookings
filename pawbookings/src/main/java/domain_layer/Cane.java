@@ -13,6 +13,8 @@ public class Cane {
         this.attualmenteIscritto = attualmenteIscritto;
     }
 
+    
+
     public String getNome() {
         return this.nome;
     }

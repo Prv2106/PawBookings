@@ -27,7 +27,6 @@ public class HomePageController implements Initializable{
     // metodo che viene richiamato all'apertura della schermata
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         // popoliamo la lista
         this.list.setItems(items);
         // List<String> cani = PawBookings.getInstance().getCaniCliente();
