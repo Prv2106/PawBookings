@@ -31,8 +31,8 @@ public class HomePageController implements Initializable {
         this.list.setItems(items);
         // List<Cane> cani = PawBookings.getInstance().getCaniCliente();
         // items.addAll(cani);
-        items.add(new Cane(0, "Rex", "Pastore Tedesco", false));
-        items.add(new Cane(1, "Luna", "Barboncino", false));
+        items.add(new Cane(0, "Rex", "Pastore Tedesco"));
+        items.add(new Cane(1, "Luna", "Barboncino"));
 
         // definiamo la grafica di ogni oggetto della lista
         this.list.setCellFactory(new Callback<ListView<Cane>, ListCell<Cane>>() {

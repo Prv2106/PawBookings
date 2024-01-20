@@ -3,6 +3,7 @@ package domain_layer;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
+
 public abstract class Corso {
     private int codice;
     private int capienza;
@@ -13,7 +14,7 @@ public abstract class Corso {
 
     public Corso(int capienza) { //la capienza viene passata da PawBookings
         this.capienza = capienza;
-        this.elencoCaniIscritti = new ArrayList<>();
+        this.elencoCaniIscritti = new ArrayList<Cane>();
     }
 
     public void confermaIscrizione(Cane cn) {
