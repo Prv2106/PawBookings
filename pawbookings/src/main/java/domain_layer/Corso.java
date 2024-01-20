@@ -9,7 +9,7 @@ public abstract class Corso {
     private float costo;
     private String tipoCorso;
     private LinkedList<Cane> elencoCaniIscritti;
-    private LinkedList<Lezione> programma;
+    
 
     //Costruttore dell classe Corso
     public Corso(int codice, int capienza, float costo, String tipoCorso) { //La capienza viene passata da PawBookings
@@ -19,10 +19,11 @@ public abstract class Corso {
         this.tipoCorso = tipoCorso;
         // Inizializzazione dell'elenco dei cani iscritti come un nuovo ArrayList
         this.elencoCaniIscritti = new LinkedList<>();
-        // Inizializzazione del programma del corso come un nuovo LinkedList
-        this.programma = new LinkedList<>();
+        
     }
 
+
+    // metodo implementato dalle sottoclassi di Corso...
     public abstract void loadLezioni();
 
     // Metodo per confermare l'iscrizione di un cane e aggiornare la capienza
@@ -53,7 +54,5 @@ public abstract class Corso {
         return this.tipoCorso;
     }
 
-    public LinkedList<Lezione> getLezioni(){
-        return this.programma;
-    }    
+    public abstract LinkedList<Lezione> getLezioni();
 }
