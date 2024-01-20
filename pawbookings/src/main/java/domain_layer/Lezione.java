@@ -33,6 +33,8 @@ public class Lezione {
         return this.elencoTurniDisponibili;
     }
 
-   
+    public String getNome() {
+        return this.nome;
+    }
 
 }
