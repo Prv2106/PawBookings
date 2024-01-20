@@ -34,12 +34,12 @@ public class AvailableCoursesController implements Initializable {
         this.list.setItems(items);
 
         Corso corsoBase = new CorsoBase(0,10,20, "Base");
-        corsoBase.getProgramma().add(new Lezione(0, "lezione 1"));
-        corsoBase.getProgramma().add(new Lezione(1, "lezione 2"));
+        corsoBase.getLezioni().add(new Lezione(0, "lezione 1"));
+        corsoBase.getLezioni().add(new Lezione(1, "lezione 2"));
         
         Corso corsoAvanzato = new CorsoAvanzato(0,10,20, "Avanzato");
-        corsoAvanzato.getProgramma().add(new Lezione(2, "Lezione A"));
-        corsoAvanzato.getProgramma().add(new Lezione(3, "Lezione B"));
+        corsoAvanzato.getLezioni().add(new Lezione(2, "Lezione A"));
+        corsoAvanzato.getLezioni().add(new Lezione(3, "Lezione B"));
 
         items.addAll(corsoBase, corsoAvanzato);
 
@@ -62,11 +62,11 @@ public class AvailableCoursesController implements Initializable {
                             Label tipoCorsoLabel = new Label("Tipo Corso: " + corso.getTipoCorso());
                             Label costoLabel = new Label("Costo: " + corso.getCosto());
                             // programma
-                            Label lezioniLabel = new Label("Programma (num. lezioni: " + corso.getProgramma().size());
+                            Label lezioniLabel = new Label("Programma (num. lezioni: " + corso.getLezioni().size());
                             vbox.getChildren().addAll(tipoCorsoLabel, costoLabel, lezioniLabel);
 
-                            for (int i = 0; i < corso.getProgramma().size(); i++) {
-                                Lezione lezione = corso.getProgramma().get(i);
+                            for (int i = 0; i < corso.getLezioni().size(); i++) {
+                                Lezione lezione = corso.getLezioni().get(i);
                                 vbox.getChildren().add(new Label("   - " + (i+1) + lezione.getNome()));
                             }
 

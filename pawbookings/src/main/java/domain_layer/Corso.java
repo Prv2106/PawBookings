@@ -1,7 +1,6 @@
 package domain_layer;
 
-import java.util.List;
-import java.util.ArrayList;
+
 import java.util.LinkedList;
 
 public abstract class Corso {
@@ -9,7 +8,7 @@ public abstract class Corso {
     private int capienza;
     private float costo;
     private String tipoCorso;
-    private List<Cane> elencoCaniIscritti;
+    private LinkedList<Cane> elencoCaniIscritti;
     private LinkedList<Lezione> programma;
 
     //Costruttore dell classe Corso
@@ -19,10 +18,12 @@ public abstract class Corso {
         this.costo = costo;
         this.tipoCorso = tipoCorso;
         // Inizializzazione dell'elenco dei cani iscritti come un nuovo ArrayList
-        this.elencoCaniIscritti = new ArrayList<>();
+        this.elencoCaniIscritti = new LinkedList<>();
         // Inizializzazione del programma del corso come un nuovo LinkedList
         this.programma = new LinkedList<>();
     }
+
+    public abstract void loadLezioni();
 
     // Metodo per confermare l'iscrizione di un cane e aggiornare la capienza
     public void confermaIscrizione(Cane cn) {
@@ -52,7 +53,7 @@ public abstract class Corso {
         return this.tipoCorso;
     }
 
-    public LinkedList<Lezione> getProgramma() {
+    public LinkedList<Lezione> getLezioni(){
         return this.programma;
-    }
+    }    
 }
