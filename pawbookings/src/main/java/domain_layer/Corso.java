@@ -12,7 +12,7 @@ public abstract class Corso {
     private List<Cane> elencoCaniIscritti;
     private LinkedList<Lezione> programma;
 
-    public Corso(int capienza) { //la capienza viene passata da PawBookings
+    public Corso(int capienza) { 
         this.capienza = capienza;
         this.elencoCaniIscritti = new ArrayList<Cane>();
     }
@@ -26,11 +26,21 @@ public abstract class Corso {
         this.capienza--;
     }
 
+    public void aggiornaCaniIscritti(Cane cn) {
+        this.elencoCaniIscritti.remove(cn);
+    }
+
     public int getCapienza() {
         return this.capienza;
     }
 
-    public void aggiornaCaniIscritti(Cane cn) {
-        this.elencoCaniIscritti.remove(cn);
+    public String getTipoCorso() {
+        return this.tipoCorso;
     }
+
+    public float getCosto() {
+        return this.costo;
+    }
+
+
 }
