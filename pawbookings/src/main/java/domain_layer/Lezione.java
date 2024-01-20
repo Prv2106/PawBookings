@@ -1,8 +1,8 @@
 package domain_layer;
 
-import java.util.ArrayList;
+
 import java.util.LinkedList;
-import java.util.List;
+
 
 
 // Definizione della classe Lezione

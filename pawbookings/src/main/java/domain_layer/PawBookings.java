@@ -29,7 +29,6 @@ public class PawBookings {
 
      // metodo per recuperare l'unica istanza della classe PawBookings per il pattern GoF Singleton
      public static PawBookings getInstance(){
-
          if(PB == null){
              PB = new PawBookings();
              System.out.println("istanza creata");
@@ -37,7 +36,6 @@ public class PawBookings {
          else{
              System.out.println("Istanza già creata");
          }
-        
         return PB;
     }
 

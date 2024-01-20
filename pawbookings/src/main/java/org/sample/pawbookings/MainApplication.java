@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import domain_layer.PawBookings;
+
 public class MainApplication extends Application {
     private static Scene scene;
 
@@ -24,6 +26,7 @@ public class MainApplication extends Application {
     }
 
     public static void main(String[] args) {
+        PawBookings PB = PawBookings.getInstance();     
         launch(args);
     }
 }
