@@ -16,7 +16,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 
-public class HomePageController implements Initializable{
+public class HomePageController implements Initializable {
     @FXML
     ListView<Cane> list; // oggetto ListView recuperato dal file fxml (id=list)
 
@@ -29,7 +29,7 @@ public class HomePageController implements Initializable{
     public void initialize(URL url, ResourceBundle rb) {
         // popoliamo la lista
         this.list.setItems(items);
-        // List<String> cani = PawBookings.getInstance().getCaniCliente();
+        // List<Cane> cani = PawBookings.getInstance().getCaniCliente();
         // items.addAll(cani);
         items.add(new Cane(0, "Rex", "Pastore Tedesco", false));
         items.add(new Cane(1, "Luna", "Barboncino", false));
@@ -41,6 +41,7 @@ public class HomePageController implements Initializable{
                 return new ListCell<Cane>() {
                     @Override
                     protected void updateItem(Cane cane, boolean empty) {
+                        // per ogni elemento (cane)
                         super.updateItem(cane, empty);
 
                         if (cane == null || empty) {
