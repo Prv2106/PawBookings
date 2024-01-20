@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Cane {
-    private int codiceCane;
-    private String nome;
-    private String razza;
+    private final int codiceCane;
+    private final String nome;
+    private final String razza;
     private boolean attualmenteIscritto;
     private Corso corsoCorrente;
     private ArrayList<Corso> corsiCompletati;
@@ -50,13 +50,16 @@ public class Cane {
 
     
     // ********** getters 'semplici' *********
-
     public String getNome() {
         return this.nome;
     }
 
     public String getRazza() {
         return this.razza;
+    }
+
+    public int getCodiceCane() {
+        return this.codiceCane;
     }
 
 }
