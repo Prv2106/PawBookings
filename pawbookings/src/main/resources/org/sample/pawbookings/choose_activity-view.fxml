@@ -26,7 +26,7 @@
             <BorderPane prefHeight="153.0" prefWidth="350.0" />
             <VBox alignment="CENTER" prefHeight="447.0" prefWidth="350.0">
                <children>
-                  <Button fx:id="nuovaIscrizioneCorsoButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="85.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Nuova Iscrizione Corso" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNuovaIscrizioneCorsoClicked" prefHeight="85.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Nuova Iscrizione Corso" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -34,7 +34,7 @@
                         <Insets bottom="30.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="prenotaTurnoLezioneButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="85.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Prenota Turno Lezione" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPrenotaTurnoLezioneClicked" prefHeight="85.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Prenota Turno Lezione" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
