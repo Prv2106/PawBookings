@@ -14,7 +14,7 @@ public class Corso {
 
     }
 
-    public void aggiornaCaniIscritti() {
+    public void aggiornaCaniIscritti(Cane cn) {
 
     }
 }
