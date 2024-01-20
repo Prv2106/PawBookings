@@ -12,11 +12,13 @@ public class Cane {
     private ArrayList<Corso> corsiCompletati;
     private LinkedList<Lezione> lezioniSeguite;
 
-    public Cane(int codiceCane, String nome, String razza, boolean attualmenteIscritto) {
+    public Cane(int codiceCane, String nome, String razza) {
         this.codiceCane = codiceCane;
         this.nome = nome;
         this.razza = razza;
-        this.attualmenteIscritto = attualmenteIscritto;
+        this.attualmenteIscritto = false;
+        this.corsiCompletati = new ArrayList<Corso>();
+        this.lezioniSeguite = new LinkedList<Lezione>();
     }
 
     // ************* metodi ****************
