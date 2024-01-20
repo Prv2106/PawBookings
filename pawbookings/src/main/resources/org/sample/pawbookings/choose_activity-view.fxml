@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="625.0" maxWidth="350.0" minHeight="625.0" minWidth="350.0" prefHeight="625.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sample.pawbookings.ChooseActivityController">
+   <children>
+      <ImageView fitWidth="350.0" pickOnBounds="true" preserveRatio="true">
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+         <image>
+            <Image url="@../../../assets/home_view.png" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER" maxHeight="625.0" maxWidth="350.0" minHeight="625.0" minWidth="350.0" prefHeight="625.0" prefWidth="350.0">
+         <children>
+            <BorderPane prefHeight="153.0" prefWidth="350.0" />
+            <VBox alignment="CENTER" prefHeight="447.0" prefWidth="350.0">
+               <children>
+                  <Button fx:id="nuovaIscrizioneCorsoButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="85.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Nuova Iscrizione Corso" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="30.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="prenotaTurnoLezioneButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="85.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Prenota Turno Lezione" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+            <BorderPane prefHeight="87.0" prefWidth="350.0">
+               <top>
+                  <HBox prefHeight="65.0" prefWidth="350.0" BorderPane.alignment="CENTER" />
+               </top>
+            </BorderPane>
+         </children>
+      </VBox>
+   </children>
+</StackPane>
