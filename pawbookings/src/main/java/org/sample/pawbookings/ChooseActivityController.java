@@ -2,21 +2,13 @@ package org.sample.pawbookings;
 
 import java.io.IOException;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 
 public class ChooseActivityController {
 
     @FXML
-    private Button nuovaIscrizioneCorsoButton;
-
-    @FXML
-    private Button prenotaTurnoLezioneButton;
-
-
-    @FXML
-    void onNuovaIscrizioneCorsoClicked(MouseEvent event) {
+    void onNuovaIscrizioneCorsoClicked(ActionEvent event) {
         // passiamo alla schermata che mostra l'elenco dei corsi disponibili
         try {
             MainApplication.setRoot("available_courses-view.fxml");
@@ -24,5 +16,17 @@ public class ChooseActivityController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    void onPrenotaTurnoLezioneClicked(ActionEvent event) {
+        // passiamo alla schermata che mostra l'elenco dei turni disponibili
+        try {
+            MainApplication.setRoot("available_shifts-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }
