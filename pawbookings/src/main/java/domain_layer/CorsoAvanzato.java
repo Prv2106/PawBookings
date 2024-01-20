@@ -15,7 +15,7 @@ public class CorsoAvanzato extends Corso{
         Lezione l1 = new Lezione(1, "Messa al piede del cane‌");
         Lezione l2 = new Lezione(2, "Condotta senza guinzaglio‌");
         Lezione l3 = new Lezione(3, "Svolte, dietro front e variazioni delle andature");
-        Lezione l4 = new Lezione(4, "Posizioni di “seduto” e “terra” in condotta”");
+        Lezione l4 = new Lezione(4, "Posizioni di seduto e terra in condotta”");
         Lezione l5 = new Lezione(5, "Riporto in piano di un oggetto");
 
         this.programma.add(l1);
