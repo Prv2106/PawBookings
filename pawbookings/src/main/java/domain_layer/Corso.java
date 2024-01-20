@@ -51,4 +51,8 @@ public abstract class Corso {
     public String getTipoCorso() {
         return this.tipoCorso;
     }
+
+    public LinkedList<Lezione> getProgramma() {
+        return this.programma;
+    }
 }
