@@ -27,8 +27,9 @@ public class Cliente {
     }
 
 
-    public void loadCani(LinkedList<Cane> listaCani){
-        this.caniPosseduti.addAll(listaCani);
+    public void loadCani(int codiceCane, String nome, String razza){
+        Cane cn = new Cane(codiceCane, nome, razza);
+        this.caniPosseduti.add(cn);
     }
 
 

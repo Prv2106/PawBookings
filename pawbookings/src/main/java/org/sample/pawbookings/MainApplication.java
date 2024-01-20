@@ -35,10 +35,8 @@ public class MainApplication extends Application {
     // Caricamento dei Cani del Cliente per l'avviamento
     Map<Integer,Cliente> clienti = PB.getClienti();
 
-    LinkedList<Cane> listaCani = new LinkedList<>();
-    listaCani.add(new Cane(1,"Stella","Pastore Tedesco" ));
-    listaCani.add(new Cane(2,"Luna","Pastore Tedesco" ));
-    clienti.get(1).loadCani(listaCani);
+    clienti.get(1).loadCani(1,"Stella","Pastore Tedesco" );
+    clienti.get(1).loadCani(2,"Luna","Pastore Tedesco");
 
         launch(args);
     }
