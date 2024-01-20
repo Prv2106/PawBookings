@@ -41,6 +41,7 @@ public class AvailableCoursesController implements Initializable {
         corsoAvanzato.getLezioni().add(new Lezione(2, "Lezione A"));
         corsoAvanzato.getLezioni().add(new Lezione(3, "Lezione B"));
 
+
         items.addAll(corsoBase, corsoAvanzato);
 
 
@@ -60,14 +61,14 @@ public class AvailableCoursesController implements Initializable {
                             // tipo corso e costo
                             VBox vbox = new VBox();
                             Label tipoCorsoLabel = new Label("Tipo Corso: " + corso.getTipoCorso());
-                            Label costoLabel = new Label("Costo: " + corso.getCosto());
+                            Label costoLabel = new Label("Costo: " + corso.getCosto() + "€");
                             // programma
-                            Label lezioniLabel = new Label("Programma (num. lezioni: " + corso.getLezioni().size());
+                            Label lezioniLabel = new Label("Programma (num. lezioni: " + corso.getLezioni().size() +")");
                             vbox.getChildren().addAll(tipoCorsoLabel, costoLabel, lezioniLabel);
 
                             for (int i = 0; i < corso.getLezioni().size(); i++) {
                                 Lezione lezione = corso.getLezioni().get(i);
-                                vbox.getChildren().add(new Label("   - " + (i+1) + lezione.getNome()));
+                                vbox.getChildren().add(new Label("   - " + (i+1) +") " + lezione.getNome()));
                             }
 
                             // Imposta il contenuto della cella
@@ -76,11 +77,10 @@ public class AvailableCoursesController implements Initializable {
     // -------------------> Aggiungiamo il listener per l'evento di click
                             setOnMouseClicked(event -> {
                                 // Azioni da eseguire quando un elemento viene cliccato
-                                // 
 
                                 // passiamo alla schermata successiva
                                 try {
-                                    MainApplication.setRoot("choose_activity-view.fxml");
+                                    MainApplication.setRoot("ok-view.fxml");
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
