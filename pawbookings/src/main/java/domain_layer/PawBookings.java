@@ -108,8 +108,13 @@ public class PawBookings {
 
 
     public Boolean selezionaTurno(Turno ts){
-        this.caneSelezionato.aggiornaStatoAvanzamento(ts);
-        return true;
+        if(ts == null){
+            return false;
+        }
+        else{
+            this.caneSelezionato.aggiornaStatoAvanzamento(ts);
+            return true;
+        }
     }
 
     public void selezionaCane(Cane cn){
