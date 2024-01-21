@@ -4,12 +4,11 @@ import java.util.LinkedList;
 
 public class CorsoBase extends Corso{
 
-    private LinkedList<Lezione> programma;
+ 
 
 
     public CorsoBase(int codice, int capienza, float costo, String tipoCorso) {
         super(codice, capienza, costo, tipoCorso);   
-        this.programma = new LinkedList<>();
         this.loadLezioni();
     }
 
@@ -21,19 +20,15 @@ public class CorsoBase extends Corso{
         Lezione lezione4 = new Lezione(4,"Controllo delle Impulsività");
         
 
-        this.programma.add(lezione1);
-        this.programma.add(lezione2);
-        this.programma.add(lezione3);
-        this.programma.add(lezione4);
+        super.programma.add(lezione1);
+        super.programma.add(lezione2);
+        super.programma.add(lezione3);
+        super.programma.add(lezione4);
         
     }
 
 
-    @Override
-    public LinkedList<Lezione> getLezioni(){
-        return this.programma;
-    }
-
+ 
 
 
 }

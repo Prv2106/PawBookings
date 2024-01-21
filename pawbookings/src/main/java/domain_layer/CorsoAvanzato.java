@@ -1,13 +1,10 @@
 package domain_layer;
 
-import java.util.LinkedList;
 
 public class CorsoAvanzato extends Corso{
-    private LinkedList<Lezione> programma;
-
+    
     public CorsoAvanzato(int codice, int capienza, float costo, String tipoCorso) {
         super(codice, capienza, costo, tipoCorso);
-        this.programma = new LinkedList<>();
         this.loadLezioni();
     }
 
@@ -19,15 +16,15 @@ public class CorsoAvanzato extends Corso{
         Lezione l4 = new Lezione(4, "Posizioni di seduto e terra in condotta”");
         Lezione l5 = new Lezione(5, "Riporto in piano di un oggetto");
 
-        this.programma.add(l1);
-        this.programma.add(l2);
-        this.programma.add(l3);
-        this.programma.add(l4);
-        this.programma.add(l5);
+        super.programma.add(l1);
+        super.programma.add(l2);
+        super.programma.add(l3);
+        super.programma.add(l4);
+        super.programma.add(l5);
     }
 
-    @Override
-    public LinkedList<Lezione> getLezioni() {
-        return this.programma;
-    }
+
+
+
+
 }

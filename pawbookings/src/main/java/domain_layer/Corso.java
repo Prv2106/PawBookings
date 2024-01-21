@@ -8,7 +8,9 @@ public abstract class Corso {
     private int capienza;
     private float costo;
     private String tipoCorso;
-    private LinkedList<Cane> elencoCaniIscritti;
+    protected LinkedList<Cane> elencoCaniIscritti;
+    protected LinkedList<Lezione> programma;
+
     
 
     //Costruttore dell classe Corso
@@ -17,8 +19,8 @@ public abstract class Corso {
         this.capienza = capienza;
         this.costo = costo;
         this.tipoCorso = tipoCorso;
-        // Inizializzazione dell'elenco dei cani iscritti come un nuovo ArrayList
         this.elencoCaniIscritti = new LinkedList<>();
+        this.programma = new LinkedList<>();
         
     }
 
@@ -54,5 +56,15 @@ public abstract class Corso {
         return this.tipoCorso;
     }
 
-    public abstract LinkedList<Lezione> getLezioni();
+    public LinkedList<Cane> getCaniIscritti(){
+        return this.elencoCaniIscritti;
+    }
+
+
+    public LinkedList<Lezione> getLezioni() {
+        return this.programma;
+    }
+
+
+    
 }

@@ -16,5 +16,22 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Map;
 import java.util.LinkedList;
 class CorsoTest {
+
+
+
+    // Verifica che il cane viene aggiunto alla lista dei cani iscritti al corso scelto
+    @Test
+    void testConfermaIscrizione(){
+        Corso cs = new CorsoBase(1,10,200.0F,"Corso Base");
+        int lunghezza = cs.getCaniIscritti().size();
+        cs.confermaIscrizione(new Cane(5,"Walker","Pastore Tedesco"));
+        assertEquals(lunghezza + 1, cs.getCaniIscritti().size());     
+    }
+
+
+
+
+
+    
     
 }
