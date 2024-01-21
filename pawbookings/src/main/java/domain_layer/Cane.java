@@ -28,12 +28,11 @@ public class Cane {
 
     public Lezione calcolaLezioneSuccessiva(LinkedList<Lezione> programma) {
         return programma.get(lezioniSeguite.size());
-        
     }
 
     public void aggiornaAttualmenteIscritto(Corso cs) {
         this.attualmenteIscritto = !this.attualmenteIscritto;
-        corsoCorrente = attualmenteIscritto == true ? cs : null;
+        corsoCorrente = this.attualmenteIscritto ? cs : null;
     }
 
     public void aggiornaStatoAvanzamento(Turno ts) {

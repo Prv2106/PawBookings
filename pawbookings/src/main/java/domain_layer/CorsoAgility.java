@@ -3,6 +3,7 @@ package domain_layer;
 import java.util.LinkedList;
 public class CorsoAgility extends Corso{
     private LinkedList<Lezione> programma;
+    
     public CorsoAgility(int codice, int capienza, float costo, String tipoCorso) {
         super(codice, capienza, costo, tipoCorso);
         this.programma = new LinkedList<>();
