@@ -9,7 +9,7 @@ public class PawBookings {
     
     private static PawBookings PB;
 
-    private LinkedList<Corso> elencoCorsi;
+    public LinkedList<Corso> elencoCorsi;
     private LinkedList<Corso> elencoCorsiDisponibili;
     private Map<Integer, Cliente> clienti;
     private Cane caneSelezionato;
@@ -80,18 +80,20 @@ public class PawBookings {
     }
 
     public Boolean confermaIscrizioneCorso(Corso cs){
+        if(cs == null){
+            return false;
+        } else {
+            cs.confermaIscrizione(caneSelezionato);
 
-        cs.confermaIscrizione(caneSelezionato);
+            // l'attributo attualmenteIscritto di caneSelezionato diventa true 
+            // e viene inizializzata la variabile corsoCorrente di caneSelezionato
+            caneSelezionato.aggiornaAttualmenteIscritto(cs);
 
-        // l'attributo attualmenteIscritto di caneSelezionato diventa true 
-        // e viene inizializzata la variabile corsoCorrente di caneSelezionato
-        caneSelezionato.aggiornaAttualmenteIscritto(cs);
+            // la lista elencoCorsiDisponibili viene svuotata
+            elencoCorsiDisponibili.clear();
 
-        // la lista elencoCorsiDisponibili viene svuotata
-        elencoCorsiDisponibili.clear();
-
-        return true;
-
+            return true;
+        }
     }
 
 
