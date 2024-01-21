@@ -126,4 +126,8 @@ public class PawBookings {
         return this.caneSelezionato;
     }
 
+    public LinkedList<Corso> getCorsi() {
+        return this.elencoCorsi;
+    }
+
 }

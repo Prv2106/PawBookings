@@ -47,7 +47,6 @@ public class Cane {
             corsoCorrente.aggiornaCaniIscritti(this);
         }
     }
-
     
     // ********** getters 'semplici' *********
     public String getNome() {
@@ -60,6 +59,28 @@ public class Cane {
 
     public int getCodiceCane() {
         return this.codiceCane;
+    }
+
+    public boolean getAttualmenteIscritto() {
+        return this.attualmenteIscritto;
+    }
+
+    public Corso getCorsoCorrente() {
+        return this.corsoCorrente;
+    }
+
+    public LinkedList<Lezione> getLezioniSeguite() {
+        return this.lezioniSeguite;
+    }
+
+    // setters
+    public void setAttualmenteIscritto(boolean bl) {
+        this.attualmenteIscritto = bl;
+    }
+
+    //  metodi per testing
+    public void aggiungiLezioneSeguita(Lezione lz) {
+        this.lezioniSeguite.add(lz);
     }
 
 }

@@ -52,6 +52,10 @@ public abstract class Corso {
         return this.costo;
     }
 
+    public int getCodice() {
+        return this.codice;
+    }
+
     public String getTipoCorso() {
         return this.tipoCorso;
     }
