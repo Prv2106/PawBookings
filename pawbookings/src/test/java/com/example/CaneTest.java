@@ -5,6 +5,7 @@ import domain_layer.Corso;
 import domain_layer.CorsoBase;
 import domain_layer.Lezione;
 import domain_layer.PawBookings;
+import domain_layer.Turno;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -56,5 +57,38 @@ class CaneTest {
 
         // Seconda verifica: ci aspettiamo che la lezione successiva sia la seconda
         assertEquals("Guinzaglio e Camminare al Guinzaglio", cn.getLezioneSuccessiva().getNome());
+    }
+
+    @Test
+    void testAggiornaAvanzamentoCorso() {
+        // 1) dimensione elenco lezioni seguite, ovvero
+        // controlliamo che la lezione successiva sia aggiunta all'elenco
+
+        // prendiamo un cane
+        Cane cn = PB.getCaneSelezionato();
+
+        int lunghezzaPrecedente = cn.getLezioniSeguite().size();
+
+        // simuliamo l'iscrizione del cane
+        cn.aggiornaAttualmenteIscritto(PB.getCorsi().get(0));
+
+        // recuperiamo il primo turno della prima lezione del corso base a cui è iscritto
+        Turno t = PB.getCorsi().get(0).getLezioni().get(0).getTurniDisponibili().get(0);
+
+        cn.aggiornaStatoAvanzamento(t);
+
+        assertEquals(lunghezzaPrecedente + 1, cn.getLezioniSeguite().size());
+
+        // verifichiamo che l'elenco delle lezioni seguite del cane contenga la lezione
+        // relativa al turno scelto
+        assertTrue(cn.getLezioniSeguite().contains(PB.getCorsi().get(0).getLezioni().get(0)));
+    }
+
+    @Test
+    void testCompletamentoCorso() {
+        // 2) verfichiamo il caso in cui il cane termina il programma di una lezione:
+        //    - il booleano '' dell'istanza di Cane
+        //    - check sulla lunghezza dell'elenco dei corsi completati del cane
+        //    - check sulla lunghezza dell'elenco dei cani iscritti a quel corso terminato dal cane
     }
 }
