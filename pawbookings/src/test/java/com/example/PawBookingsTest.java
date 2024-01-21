@@ -8,10 +8,13 @@ import domain_layer.Cliente;
 import domain_layer.Corso;
 import domain_layer.CorsoBase;
 import domain_layer.PawBookings;
+import domain_layer.Turno;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Map;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.LinkedList;
 
 class PawBookingsTest {
@@ -73,13 +76,13 @@ class PawBookingsTest {
         assertTrue(PB.confermaIscrizioneCorso(new CorsoBase(1, 10, 200.0F, "Corso Base")));
     }
 
-    @Test
-    void prenotaTurnoLezione() {
-
-    }
-
+    // Viene fatto un controllo sul valore booleano restituito relativamente al turno passato come parametro al metodo selezionaTurno
     @Test
     void testSelezionaTurno() {
+        // Per eseguire il test viene effettuata l'iscrizione di caneSelezionato ad un Corso, ad esempio Corso Base
+        PB.getCaneSelezionato().aggiornaAttualmenteIscritto(PB.elencoCorsi.get(0));
+        assertFalse(PB.selezionaTurno(null));
+        assertTrue(PB.selezionaTurno(new Turno(LocalDate.of(2024, 1, 20), LocalTime.of(9, 0), LocalTime.of(10, 0))));  
         
     }
 
@@ -92,11 +95,5 @@ class PawBookingsTest {
         assertEquals("Luna", PB.getCaneSelezionato().getNome());
     }
 
-    @Test
-    void getClienti() {
-    }
-
-    @Test
-    void getCaneSelezionato() {
-    }
+  
 }
