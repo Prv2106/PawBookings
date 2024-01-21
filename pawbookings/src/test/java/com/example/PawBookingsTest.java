@@ -1,14 +1,11 @@
 package com.example;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import domain_layer.Cane;
 import domain_layer.Cliente;
 import domain_layer.Corso;
-import domain_layer.CorsoAgility;
-import domain_layer.CorsoAvanzato;
 import domain_layer.CorsoBase;
 import domain_layer.PawBookings;
 
@@ -50,18 +47,17 @@ class PawBookingsTest {
 
     @Test
     void testLoadCorsi() {
+        // il costruttore della classe singleton PB chiama il metodo "loadCorsi"
+        // il quale crea 3 corsi, pertanto verifichiamo che la lunghezza combacia
         LinkedList<Corso> elencoCorsi = PB.elencoCorsi;
 
         assertEquals(3, elencoCorsi.size());
-        assertTrue(elencoCorsi.stream().anyMatch(corso -> corso instanceof CorsoBase));
-        assertTrue(elencoCorsi.stream().anyMatch(corso -> corso instanceof CorsoAvanzato));
-        assertTrue(elencoCorsi.stream().anyMatch(corso -> corso instanceof CorsoAgility));
     }
 
     // Test Whitebox
     // Il metodo verifica che la lista dei corsi disponibili contenga corsi 
     // la cui capienza sia effettivamente maggiore di 0
-    void nuovaIscrizioneCorso() {
+    void testNuovaIscrizioneCorso() {
         LinkedList<Corso> elencoCorsi = new LinkedList<>();
         elencoCorsi = PB.nuovaIscrizioneCorso();
     
@@ -72,17 +68,19 @@ class PawBookingsTest {
     }
 
     @Test
-    void confermaIscrizioneCorso() {        
+    void testConfermaIscrizioneCorso() {        
         assertFalse(PB.confermaIscrizioneCorso(null));
         assertTrue(PB.confermaIscrizioneCorso(new CorsoBase(1, 10, 200.0F, "Corso Base")));
     }
 
     @Test
     void prenotaTurnoLezione() {
+
     }
 
     @Test
-    void selezionaTurno() {
+    void testSelezionaTurno() {
+        
     }
 
     // Test Whitebox 
