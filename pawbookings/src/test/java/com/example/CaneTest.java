@@ -86,9 +86,42 @@ class CaneTest {
 
     @Test
     void testCompletamentoCorso() {
-        // 2) verfichiamo il caso in cui il cane termina il programma di una lezione:
-        //    - il booleano '' dell'istanza di Cane
-        //    - check sulla lunghezza dell'elenco dei corsi completati del cane
-        //    - check sulla lunghezza dell'elenco dei cani iscritti a quel corso terminato dal cane
+        // 2) verfichiamo il caso in cui il cane termina il programma di un Corso:
+
+        Turno t;
+        Cane cn = PB.getCaneSelezionato();
+        // simuliamo l'iscrizione del cane
+        cn.aggiornaAttualmenteIscritto(PB.getCorsi().get(0));
+
+        // Simuliamo la prenotazione del Cane ad un turno di ciascuna lezione
+        t = PB.getCorsi().get(0).getLezioni().get(0).getTurniDisponibili().get(0);
+        cn.aggiornaStatoAvanzamento(t);
+        t = PB.getCorsi().get(0).getLezioni().get(1).getTurniDisponibili().get(0);
+        cn.aggiornaStatoAvanzamento(t);
+        t = PB.getCorsi().get(0).getLezioni().get(2).getTurniDisponibili().get(0);
+        cn.aggiornaStatoAvanzamento(t);
+        t = PB.getCorsi().get(0).getLezioni().get(3).getTurniDisponibili().get(0);
+        cn.aggiornaStatoAvanzamento(t);
+
+        // Verifichiamo che l'attributo attualmenteIscritto di cn è diventato false
+        assertFalse(cn.getAttualmenteIscritto());
+
+        // Verifichiamo che l'attributo corsoCorrente di cn è diventato null
+        assertEquals(null, cn.getCorsoCorrente());
+
+        // Verifichiamo che la lunghezza della lista lezioniSeguite di cn è diventata 4
+        assertEquals(4, cn.getLezioniSeguite().size());
+
+        // Verifichiamo che nell'elenco Corsi completati di cn sia presente il corso che abbiamo completato
+        assertTrue(cn.getCorsiCompletati().contains(PB.getCorsi().get(0)));
+
+        // Verifichiamo che l'istanza cn di Cane non sia più presente nell'elencoCaniIscritti del Corso interessato
+        assertFalse(PB.getCorsi().get(0).getCaniIscritti().contains(cn));
+
     }
+
+
+
+
+
 }

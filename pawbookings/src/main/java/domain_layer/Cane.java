@@ -43,8 +43,8 @@ public class Cane {
 
         if (lezioniSeguite.size() == programma.size()) {
             corsiCompletati.add(corsoCorrente);
-            aggiornaAttualmenteIscritto(corsoCorrente);
             corsoCorrente.aggiornaCaniIscritti(this);
+            aggiornaAttualmenteIscritto(corsoCorrente);
         }
     }
     
@@ -72,6 +72,12 @@ public class Cane {
     public LinkedList<Lezione> getLezioniSeguite() {
         return this.lezioniSeguite;
     }
+
+    public LinkedList<Corso> getCorsiCompletati(){
+        return this.corsiCompletati;
+    }
+
+
 
     // setters
     public void setAttualmenteIscritto(boolean bl) {
