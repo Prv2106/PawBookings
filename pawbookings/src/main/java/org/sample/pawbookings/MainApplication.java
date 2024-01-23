@@ -6,9 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Map;
 import domain_layer.Cliente;
 import domain_layer.PawBookings;
+import domain_layer.PeriodoAffido;
 
 public class MainApplication extends Application {
     private static Scene scene;
@@ -53,6 +55,11 @@ public class MainApplication extends Application {
 
         PB.accedi("Giuseppe2", "0000");
         PB.aggiungiCane("Sole", "Barboncino");
+        PB.aggiungiCane("Luna", "Rottweiler");
+        PB.aggiungiCane("Vanessa", "Labrador");
+        LinkedList<PeriodoAffido> lp = PB.affido();
+        PB.selezionaPeriodo(lp.get(0));
+        PB.confermaAffido(PB.getClienti().get("Giuseppe2").getCane(1));
       
         launch(args);
     }

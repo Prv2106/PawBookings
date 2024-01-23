@@ -84,5 +84,14 @@ class PawBookingsTest {
         assertEquals("Luna", PB.getCaneSelezionato().getNome());
     }
 
+    // Il metodo da testare restituisce un elenco di cani che non sono attualmente in affido
+    @Test
+    void testSelezionaPeriodo(){
+        LinkedList<Cane> elencoCaniNonInAffido = PB.selezionaPeriodo(PB.affido().get(0));
+        for (Cane cane : elencoCaniNonInAffido) {
+            assertFalse(cane.attualmenteInAffido);
+        }
+    }
+
   
 }
