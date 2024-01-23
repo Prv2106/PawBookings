@@ -79,6 +79,15 @@ public class Cliente {
         return this.password;
     }
 
+    public Cane getCane(int codiceCane) {
+        for (Cane cn : this.caniPosseduti) {
+            if (cn.getCodiceCane() == codiceCane) {
+                return cn;
+            }
+        }
+        return null;
+    }
+
 
 
 

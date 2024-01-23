@@ -220,30 +220,42 @@ public class PawBookings {
 
 
     public LinkedList<Cane> rimuoviCane(){
-
+        return clienteLoggato.getCaniNonInAffido();
     }
 
 
     public Boolean aggiungiCane(String nome, String razza){
-
+        return clienteLoggato.registraCane(nome, razza);
     }
 
     public PeriodoAffido concludiAffido(String codiceCliente, int codiceCane){
-
+        Cliente cl;
+        Cane cn;
+        PeriodoAffido affido;
+        cl = this.clienti.get(codiceCliente);
+        cn = cl.getCane(codiceCane);
+        affido = cn.getAffido();
+        setCaneSelezionato(cn);
+        return affido;
     }
 
     public Boolean accediComeAdmin(int pin){
-
+        return checkPin(pin);
     }
 
     public Boolean checkPin(int pin){
-
-
+        if(pin == this.pinAdmin){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 
-
-  
+    public void setCaneSelezionato(Cane cn){
+        this.caneSelezionato = cn;
+    }
 
 
 }
