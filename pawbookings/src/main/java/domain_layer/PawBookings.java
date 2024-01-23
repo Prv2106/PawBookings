@@ -12,7 +12,10 @@ public class PawBookings {
     private LinkedList<Corso> elencoCorsiDisponibili;
     private Map<Integer, Cliente> clienti;
     private Cane caneSelezionato;
-
+    private int pinAdmin;
+    private LinkedList<PeriodoAffido> elencoPeriodiDisponibili;
+    private Cliente clienteLoggato;
+    private PeriodoAffido periodoSelezionato;
 
  
 
@@ -21,8 +24,7 @@ public class PawBookings {
         this.elencoCorsi = new LinkedList<>();
         this.elencoCorsiDisponibili = new LinkedList<>();
         this.clienti = new HashMap<>();
-
-        this.loadClienti();
+        this.pinAdmin = 1234; 
         this.loadCorsi();
     }
 
@@ -40,10 +42,12 @@ public class PawBookings {
     }
 
 
+    // loadClienti va rimossa
+
     public void loadClienti(){
-        Cliente c1= new Cliente(1,"Alberto","Provenzano");
-        Cliente c2= new Cliente(2,"Daniele","Lucifora");
-        Cliente c3= new Cliente(3,"Giuseppe","Leocata");
+        Cliente c1= new Cliente("Alberto1","Alberto","Provenzano","785965241","0000");
+        Cliente c2= new Cliente("Daniele1","Daniele","Lucifora","787965241","0000");
+        Cliente c3= new Cliente("Giuseppe1","Giuseppe","Leocata","785975241","0000");
         
         this.clienti.put(1,c1);
         this.clienti.put(2,c2);
@@ -138,5 +142,89 @@ public class PawBookings {
     public LinkedList<Corso> getCorsi() {
         return this.elencoCorsi;
     }
+
+
+    public LinkedList<PeriodoAffido> affido(){
+        return this.elencoPeriodiDisponibili;
+    }
+
+
+
+    public LinkedList<Cane> selezionaPeriodo(PeriodoAffido pa){
+        // viene recuperato l'elenco dei cani del cliente loggato che non sono attualmente in affido
+        return this.clienteLoggato.getCaniNonInAffido();
+    }
+
+
+    public Boolean confermaAffido(Cane cn){
+        
+    }
+
+    public void setPeriodoSelezionato(PeriodoAffido pa){
+        this.periodoSelezionato = pa;
+    }
+
+    public Boolean confermaConclusioneAffido(){
+
+    }
+
+
+
+    public Boolean accedi(String codiceCliente, String password){
+
+    }
+
+
+    public Cliente verificaCliente(String codiceCliente, String password){
+
+    }
+
+
+
+    public void setClienteLoggato(Cliente cl){
+
+    }
+    
+
+    public Boolean registrati(String nome, String cognome, String numeroTelefono, String password, String codiceCliente){
+
+    }
+
+    
+    public String generaCodiceCliente(){
+
+    }
+
+
+    public Boolean confermaRimozioneCane(Cane cn){
+
+    }
+
+
+
+    public LinkedList<Cane> rimuoviCane(){
+
+    }
+
+
+    public Boolean aggiungiCane(String nome, String razza){
+
+    }
+
+    public PeriodoAffido concludiAffido(String codiceCliente, int codiceCane){
+
+    }
+
+    public Boolean accediComeAdmin(int pin){
+
+    }
+
+    public Boolean checkPin(int pin){
+
+
+    }
+
+
+
 
 }
