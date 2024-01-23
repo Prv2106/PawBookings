@@ -11,7 +11,7 @@ public class PawBookings {
 
     public LinkedList<Corso> elencoCorsi;
     private LinkedList<Corso> elencoCorsiDisponibili;
-    private Map<Integer, Cliente> clienti;
+    private Map<String, Cliente> clienti;
     private Cane caneSelezionato;
     private int pinAdmin;
     private LinkedList<PeriodoAffido> elencoPeriodiDisponibili;
@@ -128,7 +128,7 @@ public class PawBookings {
 
 
 
-    public Map<Integer, Cliente> getClienti(){
+    public Map<String, Cliente> getClienti(){
         return this.clienti;
     }
 
@@ -154,8 +154,13 @@ public class PawBookings {
 
 
     public Boolean confermaAffido(Cane cn){
-        
-        
+        int numeroPostiDisponibili;
+        this.periodoSelezionato.registraAffido(cn);
+        numeroPostiDisponibili= this.periodoSelezionato.getNumeroPosti();
+        if(numeroPostiDisponibili == 0){
+            this.elencoPeriodiDisponibili.remove(this.periodoSelezionato);
+        }
+        return true;
     }
 
     public void setPeriodoSelezionato(PeriodoAffido pa){
@@ -163,39 +168,49 @@ public class PawBookings {
     }
 
     public Boolean confermaConclusioneAffido(){
-
+        return this.caneSelezionato.conclusioneAffido();
     }
 
 
 
     public Boolean accedi(String codiceCliente, String password){
-
+        Cliente cl;
+        cl=this.verificaCliente(codiceCliente, password);
+        this.setClienteLoggato(cl);
     }
 
 
     public Cliente verificaCliente(String codiceCliente, String password){
-
+        if(clienti.get(codiceCliente).getPassword() == password){
+            return clienti.get(codiceCliente);
+        }
+     
     }
 
 
 
     public void setClienteLoggato(Cliente cl){
-
+        this.clienteLoggato = cl;
     }
     
 
-    public Boolean registrati(String nome, String cognome, String numeroTelefono, String password, String codiceCliente){
-
+    public Boolean registrati(String nome, String cognome, String numeroTelefono, String password){
+        String codiceCliente;
+        Cliente nuovoCliente;
+        codiceCliente=this.generaCodiceCliente();
+        nuovoCliente = new Cliente(codiceCliente,nome,cognome,password,numeroTelefono);
+        this.clienti.putIfAbsent(codiceCliente, nuovoCliente);
+        return true;
     }
 
     
-    public String generaCodiceCliente(){
-
+    public String generaCodiceCliente(String nome){
+        return (nome + (clienti.size() +1));
     }
 
 
     public Boolean confermaRimozioneCane(Cane cn){
-
+        
     }
 
 
@@ -223,6 +238,8 @@ public class PawBookings {
     }
 
 
+
+  
 
 
 }

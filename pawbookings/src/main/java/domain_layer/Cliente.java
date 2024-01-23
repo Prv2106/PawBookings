@@ -6,12 +6,16 @@ public class Cliente {
     private String codiceCliente;
     private String nome;
     private String cognome;
+    private String password;
+    private String numeroTelefono;
     private LinkedList<Cane> caniPosseduti;
 
-    public Cliente (String codiceCliente, String nome, String cognome) {
+    public Cliente (String codiceCliente, String nome, String cognome,String password,String numeroTelefono) {
         this.codiceCliente = codiceCliente;
         this.nome = nome;
         this.cognome = cognome;
+        this.password = password;
+        this.numeroTelefono = numeroTelefono;
         this.caniPosseduti = new LinkedList<>();
     }
 
@@ -69,5 +73,11 @@ public class Cliente {
     public LinkedList<Cane> getCani() {
         return this.caniPosseduti;
     }
+
+
+    public String getPassword(){
+        return this.password;
+    }
+
 
 }
