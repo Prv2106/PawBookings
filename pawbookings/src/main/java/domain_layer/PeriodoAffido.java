@@ -22,6 +22,7 @@ public class PeriodoAffido {
         this.costo = costo;
         this.CapienzaMassima = 5;
         this.numPosti = this.CapienzaMassima;
+        this.elencoCaniAffido = new LinkedList<>();
     }
 
     public boolean registraAffido(Cane cn) {

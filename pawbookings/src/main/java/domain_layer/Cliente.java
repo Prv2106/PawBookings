@@ -80,4 +80,15 @@ public class Cliente {
     }
 
 
+
+
+    public Boolean rimuoviCane(Cane cn){
+        return this.caniPosseduti.remove(cn);
+    }
+
+
+
+
+
+
 }
