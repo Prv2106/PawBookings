@@ -8,6 +8,8 @@ public class Cane {
     private final String razza;
     private boolean attualmenteIscritto;
     private Corso corsoCorrente;
+    public boolean attualmenteInAffido;
+    private PeriodoAffido affidoCorrente;
     private LinkedList<Corso> corsiCompletati;
     private LinkedList<Lezione> lezioniSeguite;
 
@@ -47,7 +49,28 @@ public class Cane {
             aggiornaAttualmenteIscritto(corsoCorrente);
         }
     }
+
+    // Il metodo aggiorna lo stato attualmente in affido.
+    public void aggiornaAttualmenteInAffido(PeriodoAffido pa) {
+        this.attualmenteInAffido = !this.attualmenteInAffido;
+        affidoCorrente = this.attualmenteInAffido ? pa : null;
+    }
+
+    // Il metodo richiama il metodo concludiAffido e il metodo aggiornaAttualmenteInAffido.
+    public boolean conclusioneAffido() {
+        affidoCorrente.concludiAffido(this);
+        this.aggiornaAttualmenteInAffido(affidoCorrente);
+        return true;
+    }
     
+    public boolean aggiornaAssociazioniCane(){
+        if (this.attualmenteIscritto) {
+            this.corsoCorrente.annullaIscrizione(this);
+            corsoCorrente.elencoCaniIscritti.remove(this);
+        }
+        return true;
+    }
+
     // ********** getters 'semplici' *********
     public String getNome() {
         return this.nome;
@@ -88,5 +111,6 @@ public class Cane {
     public void aggiungiLezioneSeguita(Lezione lz) {
         this.lezioniSeguite.add(lz);
     }
+
 
 }
