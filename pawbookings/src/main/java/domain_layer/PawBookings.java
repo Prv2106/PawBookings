@@ -8,6 +8,7 @@ import java.util.Map;
 public class PawBookings {
     
     private static PawBookings PB;
+
     public LinkedList<Corso> elencoCorsi;
     private LinkedList<Corso> elencoCorsiDisponibili;
     private Map<Integer, Cliente> clienti;
@@ -30,7 +31,7 @@ public class PawBookings {
 
 
      // metodo per recuperare l'unica istanza della classe PawBookings per il pattern GoF Singleton
-     public static PawBookings getInstance(){
+     public static PawBookings getInstance() {
          if(PB == null){
              PB = new PawBookings();
              System.out.println("istanza creata");
@@ -122,13 +123,9 @@ public class PawBookings {
     }
 
     public void selezionaCane(Cane cn){
-        this.setCaneSelezionato(cn);
-    }
-
-
-    public void setCaneSelezionato(Cane cn){
         this.caneSelezionato = cn;
     }
+
 
 
     public Map<Integer, Cliente> getClienti(){
@@ -157,6 +154,7 @@ public class PawBookings {
 
 
     public Boolean confermaAffido(Cane cn){
+        
         
     }
 
