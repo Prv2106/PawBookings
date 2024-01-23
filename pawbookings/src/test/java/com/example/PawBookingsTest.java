@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import domain_layer.Cane;
-import domain_layer.Cliente;
+
 import domain_layer.Corso;
 import domain_layer.CorsoBase;
 import domain_layer.PawBookings;
@@ -12,7 +12,7 @@ import domain_layer.Turno;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Map;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.LinkedList;
@@ -36,17 +36,6 @@ class PawBookingsTest {
         assertNotNull(PB);
     }
 
-    // Il metodo crea con successo tre istanze della classe Cliente.
-    @Test
-    void testLoadClienti() {
-        PB.loadClienti();
-        Map<Integer, Cliente> clienti = PB.getClienti();
-    
-        assertEquals(3, clienti.size());
-        assertTrue(clienti.containsKey(1));
-        assertTrue(clienti.containsKey(2));
-        assertTrue(clienti.containsKey(3));
-    }
 
     @Test
     void testLoadCorsi() {

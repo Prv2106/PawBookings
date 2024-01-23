@@ -35,7 +35,7 @@ public class HomePageController implements Initializable {
         PawBookings PB = PawBookings.getInstance();  
         
         // Caricamento dei Cani del Cliente per l'avviamento
-        Map<Integer,Cliente> clienti = PB.getClienti();
+        Map<String,Cliente> clienti = PB.getClienti();
         LinkedList<Cane> listaCani = clienti.get(1).getCani();
 
         items.addAll(listaCani);
