@@ -1,6 +1,7 @@
 package domain_layer;
 
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -27,6 +28,7 @@ public class PawBookings {
         this.clienti = new HashMap<>();
         this.pinAdmin = 1234; 
         this.loadCorsi();
+        this.loadPeriodiAffido();
     }
 
 
@@ -43,20 +45,6 @@ public class PawBookings {
     }
 
 
-    // loadClienti va rimossa
-
-    public void loadClienti(){
-        Cliente c1= new Cliente("Alberto1","Alberto","Provenzano","785965241","0000");
-        Cliente c2= new Cliente("Daniele1","Daniele","Lucifora","787965241","0000");
-        Cliente c3= new Cliente("Giuseppe1","Giuseppe","Leocata","785975241","0000");
-        
-        this.clienti.put(1,c1);
-        this.clienti.put(2,c2);
-        this.clienti.put(3,c3);
-
-        System.out.println("Caricamento Clienti completato con successo!");        
-    }
-
     public void loadCorsi(){
         CorsoBase corsoBase = new CorsoBase(1,10,200.0F,"Corso Base");
         CorsoAvanzato corsoAvanzato = new CorsoAvanzato(2,10,250.0F,"Corso Avanzato");
@@ -67,7 +55,21 @@ public class PawBookings {
         this.elencoCorsi.add(corsoAgility);
 
         System.out.println("Caricamento Corsi completato con successo!");        
+    }
 
+
+    public void loadPeriodiAffido(){
+
+        // Creazione delle istanze di PeriodoAffido 
+        PeriodoAffido p1 = new PeriodoAffido(1, LocalDate.now(), LocalDate.now().plusWeeks(2), 150.0f);
+        PeriodoAffido p2 = new PeriodoAffido(2, LocalDate.now().plusWeeks(2), LocalDate.now().plusMonths(1), 300.0f);
+        PeriodoAffido p3 = new PeriodoAffido(3,LocalDate.now().plusMonths(1) ,LocalDate.now().plusMonths(2), 600.0f);
+
+        this.elencoPeriodiDisponibili.add(p1);
+        this.elencoPeriodiDisponibili.add(p2);
+        this.elencoPeriodiDisponibili.add(p3);
+
+        
     }
 
 
@@ -177,6 +179,7 @@ public class PawBookings {
         Cliente cl;
         cl=this.verificaCliente(codiceCliente, password);
         this.setClienteLoggato(cl);
+        return true;
     }
 
 
@@ -184,7 +187,7 @@ public class PawBookings {
         if(clienti.get(codiceCliente).getPassword() == password){
             return clienti.get(codiceCliente);
         }
-     
+        else return null;
     }
 
 
@@ -197,7 +200,7 @@ public class PawBookings {
     public Boolean registrati(String nome, String cognome, String numeroTelefono, String password){
         String codiceCliente;
         Cliente nuovoCliente;
-        codiceCliente=this.generaCodiceCliente();
+        codiceCliente= this.generaCodiceCliente(nome);
         nuovoCliente = new Cliente(codiceCliente,nome,cognome,password,numeroTelefono);
         this.clienti.putIfAbsent(codiceCliente, nuovoCliente);
         return true;
@@ -210,7 +213,8 @@ public class PawBookings {
 
 
     public Boolean confermaRimozioneCane(Cane cn){
-        
+        cn.aggiornaAssociazioniCane();
+        return this.clienteLoggato.rimuoviCane(cn);
     }
 
 
