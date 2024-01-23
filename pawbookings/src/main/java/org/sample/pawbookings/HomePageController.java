@@ -13,6 +13,7 @@ import domain_layer.Cliente;
 import domain_layer.PawBookings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -26,7 +27,6 @@ public class HomePageController implements Initializable {
 
     // creiamo una lista osservabile
     ObservableList<Cane> items = FXCollections.observableArrayList();
-
 
     // metodo che viene richiamato all'apertura della schermata
     @Override
@@ -80,7 +80,15 @@ public class HomePageController implements Initializable {
                 };
             }
         });
-            
+    }
+
+     @FXML
+    void onDogTabPressed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onProfileTabPressed(ActionEvent event) {
         
     }
     

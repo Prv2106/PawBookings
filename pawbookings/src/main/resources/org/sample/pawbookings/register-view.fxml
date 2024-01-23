@@ -35,6 +35,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -44,7 +45,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="625.0" maxWidth="350.0" minHeight="625.0" minWidth="350.0" prefHeight="625.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sample.pawbookings.OkController">
+<StackPane maxHeight="625.0" maxWidth="350.0" minHeight="625.0" minWidth="350.0" prefHeight="625.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sample.pawbookings.RegisterController">
    <children>
       <ImageView fitWidth="350.0" pickOnBounds="true" preserveRatio="true">
          <viewport>
@@ -59,25 +60,69 @@
             <BorderPane prefHeight="153.0" prefWidth="350.0" />
             <VBox alignment="CENTER" prefHeight="447.0" prefWidth="350.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Operazione conclusa con successo!" textAlignment="CENTER">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="INSERISCI I TUOI DATI:" textAlignment="CENTER">
                      <font>
                         <Font size="17.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="20.0" />
+                        <Insets bottom="30.0" />
                      </VBox.margin>
                   </Text>
-                  <ImageView fitHeight="191.0" fitWidth="200.0">
-                     <image>
-                        <Image url="@../../../assets/ok.png" />
-                     </image>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nome: " wrappingWidth="58.579185485839844">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="name" alignment="CENTER" prefHeight="34.0" prefWidth="252.0" promptText="Mario" />
+                     </children>
                      <VBox.margin>
-                        <Insets bottom="30.0" top="10.0" />
+                        <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
-                  </ImageView>
-                  <Button mnemonicParsing="false" onAction="#onBackToHomePressed" prefHeight="82.0" prefWidth="299.0" style="-fx-background-color: #4facfe;" text="Torna alla Home Page" textFill="WHITE">
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cognome:" wrappingWidth="64.8128890991211">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="surname" alignment="CENTER" prefHeight="34.0" prefWidth="246.0" promptText="Rossi" />
+                     </children>
                      <VBox.margin>
-                        <Insets bottom="20.0" top="10.0" />
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="telefono:" wrappingWidth="67.9298324584961">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="tel" alignment="CENTER" prefHeight="34.0" prefWidth="243.0" promptText="+39 327XXXXXXX" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="314.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="password:" wrappingWidth="66.68306732177734">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="password" alignment="CENTER" prefHeight="34.0" prefWidth="244.0" promptText="*********" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Button mnemonicParsing="false" onAction="#onRegisterPressed" prefHeight="55.0" prefWidth="319.0" style="-fx-background-color: #4facfe;" text="REGISTRATI" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets bottom="20.0" top="20.0" />
                      </VBox.margin>
                      <font>
                         <Font size="19.0" />

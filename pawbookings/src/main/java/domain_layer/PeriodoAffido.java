@@ -1,11 +1,13 @@
-import java.util.Date;
+package domain_layer;
+
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 public class PeriodoAffido {
     // attributi
     private final int codice;
-    private final Date dataInizio;
-    private final Date dataFine;
+    private final LocalDate dataInizio;
+    private final LocalDate dataFine;
     private final float costo;
     private int numPosti; // derivato, sono i posti disponibili
     private int CapienzaMassima;
@@ -13,7 +15,7 @@ public class PeriodoAffido {
     // riferimenti
     private LinkedList<Cane> elencoCaniAffido;
 
-    public PeriodoAffido(int codice, Date dataInizio, Date dataFine, float costo) {
+    public PeriodoAffido(int codice, LocalDate dataInizio, LocalDate dataFine, float costo) {
         this.codice = codice;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
