@@ -112,5 +112,9 @@ public class Cane {
         this.lezioniSeguite.add(lz);
     }
 
+    public PeriodoAffido getAffido() {
+        return this.affidoCorrente;
+    }
+
 
 }
