@@ -8,13 +8,13 @@ import java.util.Map;
 public class PawBookings {
     
     private static PawBookings PB;
-
     public LinkedList<Corso> elencoCorsi;
     private LinkedList<Corso> elencoCorsiDisponibili;
     private Map<Integer, Cliente> clienti;
     private Cane caneSelezionato;
 
-    
+
+ 
 
     // metodo costruttore
     private PawBookings(){
@@ -118,9 +118,13 @@ public class PawBookings {
     }
 
     public void selezionaCane(Cane cn){
-        this.caneSelezionato = cn;
+        this.setCaneSelezionato(cn);
     }
 
+
+    public void setCaneSelezionato(Cane cn){
+        this.caneSelezionato = cn;
+    }
 
 
     public Map<Integer, Cliente> getClienti(){
