@@ -70,5 +70,14 @@ public abstract class Corso {
     }
 
 
+
+    public Boolean annullaIscrizione(Cane cn){
+        return this.elencoCaniIscritti.remove(cn);
+    }
+
+
+
+
+
     
 }
