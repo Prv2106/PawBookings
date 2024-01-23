@@ -41,11 +41,23 @@ public class PeriodoAffido {
     }
 
     public void aggiornaNumeroPosti() {
-        this.numPosti--;
+        this.numPosti = this.CapienzaMassima - this.elencoCaniAffido.size();
     }
 
     public int getNumeroPosti(){
         return this.numPosti;
+    }
+
+
+
+
+
+
+
+    /**** metodi per i test ****/
+
+    public LinkedList<Cane> getCaniAffido(){
+        return this.elencoCaniAffido;
     }
 
 

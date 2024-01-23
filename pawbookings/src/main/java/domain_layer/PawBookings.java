@@ -28,6 +28,7 @@ public class PawBookings {
         this.clienti = new HashMap<>();
         this.elencoPeriodiDisponibili = new LinkedList<>();
         this.pinAdmin = 1234; 
+        this.elencoPeriodiDisponibili = new LinkedList<>();
         this.loadCorsi();
         this.loadPeriodiAffido();
     }
@@ -160,6 +161,7 @@ public class PawBookings {
     public Boolean confermaAffido(Cane cn){
         int numeroPostiDisponibili;
         this.periodoSelezionato.registraAffido(cn);
+        cn.aggiornaAttualmenteInAffido(periodoSelezionato);
         numeroPostiDisponibili= this.periodoSelezionato.getNumeroPosti();
         if(numeroPostiDisponibili == 0){
             this.elencoPeriodiDisponibili.remove(this.periodoSelezionato);
@@ -258,6 +260,13 @@ public class PawBookings {
     public void setCaneSelezionato(Cane cn){
         this.caneSelezionato = cn;
     }
+
+
+
+    public PeriodoAffido getPeriodoSelezionato(){
+        return this.periodoSelezionato;
+    }
+
 
 
 }
