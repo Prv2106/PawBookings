@@ -38,7 +38,7 @@ public class ChooseActivityController {
 
             // messaggio errore
             errorController.setTextError("probabilmente il cane non è iscritto ad un corso");
-            errorController.setFXML(null);
+            errorController.setFXML("choose_activity-view.fxml");
 
             // andiamo nella schermata
             MainApplication.goTo(secondRoot);

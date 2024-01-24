@@ -72,11 +72,10 @@ public class HomePageController implements Initializable {
 
         // -------------------> Aggiungiamo il listener per l'evento di click
                                 setOnMouseClicked(event -> {
-                                    // Azioni da eseguire quando un elemento viene cliccato
-                                    PB.selezionaCane(cane);;
-
-                                    // passiamo alla schermata successiva
                                     try {
+                                        // Azioni da eseguire quando un elemento viene cliccato
+                                        PB.selezionaCane(cane);;
+                                        // passiamo alla schermata successiva 
                                         MainApplication.setRoot("choose_activity-view.fxml");
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -88,8 +87,6 @@ public class HomePageController implements Initializable {
                 }
             });
         }
-        
-
     }
 
      @FXML
