@@ -37,7 +37,7 @@ public class MainApplication extends Application {
         stackRoots.push(root);
     }
 
-    static void goBackRoot(boolean isMobile) throws IOException {
+    static void goBackAndChangePlatform(boolean isMobile) throws IOException {
         stackRoots.pop();
         scene.setRoot(stackRoots.getLast());
         

@@ -19,7 +19,7 @@ public class LoginOrRegisterController  {
         try {
             Stage finestraCorrente = (Stage) backButton.getScene().getWindow();
             finestraCorrente.close();
-            MainApplication.goBackRoot(true);;
+            MainApplication.goBackAndChangePlatform(false);
         } catch (IOException e) {
             e.printStackTrace();
         }

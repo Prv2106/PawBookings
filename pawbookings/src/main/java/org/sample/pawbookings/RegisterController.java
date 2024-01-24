@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class RegisterController {
 
@@ -30,9 +29,7 @@ public class RegisterController {
     @FXML
     void onBackPressed(ActionEvent event) throws IOException {
         try {
-            Stage finestraCorrente = (Stage) backButton.getScene().getWindow();
-            finestraCorrente.close();
-            MainApplication.goBackRoot(true);;
+            MainApplication.simpleBack();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -2,13 +2,10 @@ package org.sample.pawbookings;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.Period;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 import domain_layer.Cane;
-import domain_layer.Corso;
-import domain_layer.Lezione;
 import domain_layer.PawBookings;
 import domain_layer.PeriodoAffido;
 import javafx.collections.FXCollections;

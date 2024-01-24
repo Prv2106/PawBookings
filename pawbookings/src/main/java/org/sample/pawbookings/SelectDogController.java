@@ -16,7 +16,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class SelectDogController {
@@ -35,9 +34,7 @@ public class SelectDogController {
     @FXML
     void onBackPressed(ActionEvent event) throws IOException {
         try {
-            Stage finestraCorrente = (Stage) backButton.getScene().getWindow();
-            finestraCorrente.close();
-            MainApplication.goBackRoot(true);;
+            MainApplication.simpleBack();
         } catch (IOException e) {
             e.printStackTrace();
         }

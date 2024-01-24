@@ -20,7 +20,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class AvailableCoursesController implements Initializable {
     @FXML
@@ -34,9 +33,7 @@ public class AvailableCoursesController implements Initializable {
     @FXML
     void onBackPressed(ActionEvent event) throws IOException {
         try {
-            Stage finestraCorrente = (Stage) backButton.getScene().getWindow();
-            finestraCorrente.close();
-            MainApplication.goBackRoot(true);;
+            MainApplication.simpleBack();
         } catch (IOException e) {
             e.printStackTrace();
         }

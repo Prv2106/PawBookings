@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
+
 
 
 public class ChooseActivityController {
@@ -17,9 +17,7 @@ public class ChooseActivityController {
     @FXML
     void onBackPressed(ActionEvent event) throws IOException {
         try {
-            Stage finestraCorrente = (Stage) backButton.getScene().getWindow();
-            finestraCorrente.close();
-            MainApplication.goBackRoot(true);;
+            MainApplication.simpleBack();
         } catch (IOException e) {
             e.printStackTrace();
         }

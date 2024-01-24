@@ -1,9 +1,5 @@
 package org.sample.pawbookings;
-
 import java.io.IOException;
-import java.util.LinkedList;
-
-import domain_layer.Cane;
 import domain_layer.PawBookings;
 import domain_layer.PeriodoAffido;
 import javafx.event.ActionEvent;
@@ -29,9 +25,7 @@ public class DettagliAffidoController {
     @FXML
     void onBackPressed(ActionEvent event) throws IOException {
         try {
-            Stage finestraCorrente = (Stage) backButton.getScene().getWindow();
-            finestraCorrente.close();
-            MainApplication.goBackRoot(true);;
+            MainApplication.simpleBack();
         } catch (IOException e) {
             e.printStackTrace();
         }
