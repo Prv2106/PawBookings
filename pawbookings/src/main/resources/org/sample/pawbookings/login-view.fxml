@@ -94,7 +94,7 @@
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <Button mnemonicParsing="false" onAction="#onRegisterPressed" prefHeight="58.0" prefWidth="319.0" style="-fx-background-color: #4facfe;" text="ACCEDI" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#onLoginPressed" prefHeight="58.0" prefWidth="319.0" style="-fx-background-color: #4facfe;" text="ACCEDI" textFill="WHITE">
                      <VBox.margin>
                         <Insets bottom="20.0" top="20.0" />
                      </VBox.margin>

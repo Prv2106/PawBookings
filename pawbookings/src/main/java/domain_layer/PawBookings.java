@@ -261,6 +261,9 @@ public class PawBookings {
         this.caneSelezionato = cn;
     }
 
+    public Cliente getClienteLoggato() {
+        return this.clienteLoggato;
+    }
 
 
     public PeriodoAffido getPeriodoSelezionato(){
