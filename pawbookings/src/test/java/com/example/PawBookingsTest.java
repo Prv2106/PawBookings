@@ -19,7 +19,6 @@ class PawBookingsTest {
     public static void initTest() {
         //Configurazioni che ci servono prima dell'esecuzione dei metodi di test
         PB = PawBookings.getInstance();
-        PB.loadCorsi();
         PB.selezionaCane(new Cane(10, "Luna", "Barboncino"));
         // Luna è iscritta al corso Base
         PB.confermaIscrizioneCorso(PB.elencoCorsi.get(0));

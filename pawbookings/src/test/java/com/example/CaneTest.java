@@ -18,7 +18,6 @@ class CaneTest {
         //Configurazioni che ci servono prima dell'esecuzione dei metodi di test
         PB = PawBookings.getInstance();
         PB.selezionaCane(new Cane(10, "Luna", "Barboncino"));
-        PB.loadCorsi();
         PB.getCaneSelezionato().aggiornaAttualmenteIscritto(PB.elencoCorsi.get(0));
     }
     
