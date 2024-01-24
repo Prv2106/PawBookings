@@ -43,8 +43,7 @@ public class Cliente {
     public boolean registraCane(String nome, String razza){
         int codCane = generaCodiceCane();
         Cane nuovoCane = new Cane(codCane, nome, razza);
-        caniPosseduti.add(nuovoCane);
-        return true;
+        return caniPosseduti.add(nuovoCane);
     }
 
     // Il metodo genera un codice cane, che è il risultato della somma tra il numero di cani posseduti e 1.

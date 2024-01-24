@@ -18,11 +18,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.LinkedList;
 
-class PawBookingsTest {
+class PawBookingsTestIterazione1 {
 
     static PawBookings PB;
-
-    /***    TEST PER ITERAZIONE 1   ***/
 
     // Il metodo viene eseguito prima di tutti i test
     // inizializza l'istanza di PawBookings
@@ -38,55 +36,6 @@ class PawBookingsTest {
     void testGetInstance() {
         assertNotNull(PB);
     }
-
-
-    @Test
-    void testLoadCorsi() {
-        // il costruttore della classe singleton PB chiama il metodo "loadCorsi"
-        // il quale crea 3 corsi, pertanto verifichiamo che la lunghezza combacia
-        LinkedList<Corso> elencoCorsi = PB.elencoCorsi;
-
-        assertEquals(3, elencoCorsi.size());
-    }
-
-    // Test Whitebox
-    // Il metodo verifica che la lista dei corsi disponibili contenga corsi 
-    // la cui capienza sia effettivamente maggiore di 0
-    void testNuovaIscrizioneCorso() {
-        LinkedList<Corso> elencoCorsi = new LinkedList<>();
-        elencoCorsi = PB.nuovaIscrizioneCorso();
-    
-        for (Corso corso : elencoCorsi) {
-            assertTrue(corso.getCapienza() > 0);
-        }
-
-    }
-
-    @Test
-    void testConfermaIscrizioneCorso() {        
-        assertFalse(PB.confermaIscrizioneCorso(null));
-        assertTrue(PB.confermaIscrizioneCorso(new CorsoBase(1, 10, 200.0F, "Corso Base")));
-    }
-
-    // Viene fatto un controllo sul valore booleano restituito relativamente al turno passato come parametro al metodo selezionaTurno
-    @Test
-    void testSelezionaTurno() {
-        // Per eseguire il test viene effettuata l'iscrizione di caneSelezionato ad un Corso, ad esempio Corso Base
-        PB.getCaneSelezionato().aggiornaAttualmenteIscritto(PB.elencoCorsi.get(0));
-        assertFalse(PB.selezionaTurno(null));
-        assertTrue(PB.selezionaTurno(new Turno(LocalDate.of(2024, 1, 20), LocalTime.of(9, 0), LocalTime.of(10, 0))));  
-        
-    }
-
-    // Test Whitebox 
-    // Il metodo restituisce un'istanza della classe Cane se il parametro cane è diverso da null 
-    // ed inoltre verifica che il nome del cane sia uguale a "Luna"
-    @Test
-    void testSelezionaCane() {
-        assertNotNull(PB.getCaneSelezionato());
-        assertEquals("Luna", PB.getCaneSelezionato().getNome());
-    }
-
 
 
     /***    TEST PER ITERAZIONE 2   ***/
@@ -153,16 +102,62 @@ class PawBookingsTest {
         // Ci aspettiamo che ClienteLoggato ==  Alberto
         assertEquals(Alberto, PB.getClienteLoggato());
 
+         // Accedendo con codiceCliente Alberto1 e password 0323
+         esito = PB.accedi("Alberto1", "0323");
+         assertFalse(esito);
+
+         // Ci aspettiamo che ClienteLoggato ==  null
+         assertEquals(null, PB.getClienteLoggato());
+
+    }
+
+
+    @Test
+    void testVerificaCliente(){
+         // Il codice per accedere con Alberto sarà Alberto1
+         PB.registrati("Alberto", "Provenzano", "12345678", "0000");
+         PB.registrati("Pippo", "Baudo", "12345678", "0000");
+
+         Cliente Alberto = PB.getClienti().get("Alberto1"); 
+
+         // Test del metodo 
+         // Inserendo le credenziali corrette ci aspettiamo che il cliente restituito da verificaCliente sia Alberto
+         assertEquals(Alberto, PB.verificaCliente("Alberto1", "0000"));
+
+         //Inserendo le credenziali errate ci aspettiamo che il cliente restituito da verificaCliente non sia Alberto
+         assertNotEquals(Alberto, PB.verificaCliente("Alberto1", "1234"));
+
+
     }
 
 
 
 
+    @Test
+    void testSetClienteLoggato(){
+        PB.registrati("Alberto", "Provenzano", "12345678", "0000");
+        PB.registrati("Pippo", "Baudo", "12345678", "0000");
+        Cliente Alberto = PB.getClienti().get("Alberto1"); 
+        Cliente Pippo = PB.getClienti().get("Pippo2"); 
+        //Test del metodo
+        PB.setClienteLoggato(Alberto);
+        // Ci aspettiamo che clienteLoggato sia uguale ad Alberto
+        assertEquals(Alberto, PB.getClienteLoggato());
+        // Ci aspettiamo che clienteLoggato non sia Pippo
+        assertNotEquals(Pippo, PB.getClienteLoggato());
+
+
+    }
 
 
 
+    @Test
+    void testAggiungiCane(){
+        PB.registrati("Alberto", "Provenzano", "12345678", "0000");
+        PB.aggiungiCane("Stella", "Pastore Tedesco");
+        PB.aggiungiCane("Asso", "Corso");
 
-
+    }
 
 
 
