@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
 import javafx.util.Callback;
 
 import domain_layer.Cane;
-import domain_layer.Cliente;
 import domain_layer.PawBookings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,8 +34,7 @@ public class HomePageController implements Initializable {
         PawBookings PB = PawBookings.getInstance();  
         
         // Caricamento dei Cani del Cliente per l'avviamento
-        Map<String,Cliente> clienti = PB.getClienti();
-        LinkedList<Cane> listaCani = clienti.get(1).getCani();
+        LinkedList<Cane> listaCani =PB.getClienteLoggato().getCani();
 
         items.addAll(listaCani);
         this.list.setItems(items);
