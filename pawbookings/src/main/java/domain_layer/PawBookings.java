@@ -165,7 +165,7 @@ public class PawBookings {
         cn.aggiornaAttualmenteInAffido(periodoSelezionato);
         numeroPostiDisponibili= this.periodoSelezionato.getNumeroPosti();
         if(numeroPostiDisponibili == 0){
-            this.elencoPeriodiDisponibili.remove(this.periodoSelezionato);
+            esito = this.elencoPeriodiDisponibili.remove(this.periodoSelezionato);
         }
         return esito;
     }
@@ -189,13 +189,8 @@ public class PawBookings {
     public Boolean accedi(String codiceCliente, String password){
         Cliente cl;
         cl=this.verificaCliente(codiceCliente, password);
-        this.setClienteLoggato(cl);
-        if(cl == null){
-            return false;
-        }
-        else{
-            return true;
-        }
+        return this.setClienteLoggato(cl);
+      
     }
 
 
@@ -224,9 +219,7 @@ public class PawBookings {
         codiceCliente = this.generaCodiceCliente(nome);
         nuovoCliente = new Cliente(codiceCliente,nome,cognome,password,numeroTelefono);
         this.clienti.putIfAbsent(codiceCliente, nuovoCliente);
-        if (setClienteLoggato(nuovoCliente)) 
-         return true;
-        else return false;
+        return setClienteLoggato(nuovoCliente);
     }
 
     
@@ -254,12 +247,11 @@ public class PawBookings {
     public PeriodoAffido concludiAffido(String codiceCliente, int codiceCane){
         Cliente cl;
         Cane cn;
-        PeriodoAffido affido;
         cl = this.clienti.get(codiceCliente);
         cn = cl.getCane(codiceCane);
-        affido = cn.getAffido();
         setCaneSelezionato(cn);
-        return affido;
+        return cn.getAffido();
+      
     }
 
     public Boolean accediComeAdmin(int pin){

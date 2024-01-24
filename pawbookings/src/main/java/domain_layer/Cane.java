@@ -58,9 +58,10 @@ public class Cane {
 
     // Il metodo richiama il metodo concludiAffido e il metodo aggiornaAttualmenteInAffido.
     public boolean conclusioneAffido() {
-        affidoCorrente.concludiAffido(this);
+        Boolean esito;
+        esito = affidoCorrente.concludiAffido(this);
         this.aggiornaAttualmenteInAffido(affidoCorrente);
-        return true;
+        return esito;
     }
     
     public boolean aggiornaAssociazioniCane(){
