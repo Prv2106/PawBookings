@@ -145,7 +145,7 @@ class PawBookingsTest {
 
         // test del metodo
         // Accedendo con codiceCliente Alberto1 e password 0000
-        esito = PB.accedi("Alberto1", "0000");
+        esito = PB.accedi("Alberto1", "0000");  
 
         // Ci aspettiamo che il valore restituito da accedi sia true
         assertTrue(esito);
