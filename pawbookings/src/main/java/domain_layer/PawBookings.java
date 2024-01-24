@@ -183,7 +183,12 @@ public class PawBookings {
         Cliente cl;
         cl=this.verificaCliente(codiceCliente, password);
         this.setClienteLoggato(cl);
-        return true;
+        if(cl == null){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
 

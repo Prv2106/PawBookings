@@ -48,12 +48,9 @@ public class Cliente {
     }
 
     // Il metodo genera un codice cane, che è il risultato della somma tra il numero di cani posseduti e 1.
+    
     public int generaCodiceCane(){
-        int codiceCane = 0;
-        for (Cane cn : this.caniPosseduti) {
-            codiceCane = this.caniPosseduti.size() + 1;
-        }
-        return codiceCane;
+        return this.caniPosseduti.size() + 1;
     }
 
     // Metodi per recuperare gli attributi

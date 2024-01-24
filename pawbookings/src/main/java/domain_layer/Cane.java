@@ -18,8 +18,8 @@ public class Cane {
         this.nome = nome;
         this.razza = razza;
         this.attualmenteIscritto = false;
-        this.corsiCompletati = new LinkedList<Corso>();
-        this.lezioniSeguite = new LinkedList<Lezione>();
+        this.corsiCompletati = new LinkedList<>();
+        this.lezioniSeguite = new LinkedList<>();
     }
 
     // ************* metodi ****************
@@ -107,7 +107,8 @@ public class Cane {
         this.attualmenteIscritto = bl;
     }
 
-    //  metodi per testing
+    /****      metodi per testing        ****/  
+
     public void aggiungiLezioneSeguita(Lezione lz) {
         this.lezioniSeguite.add(lz);
     }
@@ -115,6 +116,21 @@ public class Cane {
     public PeriodoAffido getAffido() {
         return this.affidoCorrente;
     }
+
+    public boolean getAttualmenteInAffido(){
+        return this.attualmenteInAffido;
+    }
+
+
+    public PeriodoAffido getAffidoCorrente(){
+        return this.affidoCorrente;
+    }
+
+
+
+
+
+
 
 
 }
