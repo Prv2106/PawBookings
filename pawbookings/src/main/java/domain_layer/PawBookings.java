@@ -205,6 +205,7 @@ public class PawBookings {
 
     public boolean setClienteLoggato(Cliente cl) {
         if (cl == null) {
+            this.clienteLoggato = null;
             return false;
         } else {
             this.clienteLoggato = cl;
