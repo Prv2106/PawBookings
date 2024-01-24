@@ -76,7 +76,7 @@
                         <Insets bottom="30.0" top="10.0" />
                      </VBox.margin>
                   </ImageView>
-                  <Button mnemonicParsing="false" onAction="#onBackToHomePressed" prefHeight="82.0" prefWidth="299.0" style="-fx-background-color: #4facfe;" text="Torna alla Home Page" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#onPressed" prefHeight="82.0" prefWidth="299.0" style="-fx-background-color: #4facfe;" text="RICEVUTO" textFill="WHITE">
                      <VBox.margin>
                         <Insets bottom="20.0" top="10.0" />
                      </VBox.margin>

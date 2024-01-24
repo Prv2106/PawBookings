@@ -58,7 +58,7 @@
             <BorderPane prefHeight="153.0" prefWidth="350.0" />
             <VBox alignment="CENTER" prefHeight="447.0" prefWidth="350.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onUserPressed" prefHeight="53.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Accedi come Cliente" textFill="WHITE">
+                  <Button fx:id="button" mnemonicParsing="false" onAction="#onUserPressed" prefHeight="53.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Accedi come Cliente" textFill="WHITE">
                      <font>
                         <Font size="23.0" />
                      </font>

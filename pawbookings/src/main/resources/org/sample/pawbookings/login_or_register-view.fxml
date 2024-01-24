@@ -26,7 +26,7 @@
             <BorderPane prefHeight="153.0" prefWidth="350.0" />
             <VBox alignment="CENTER" prefHeight="447.0" prefWidth="350.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onLoginPressed" prefHeight="85.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Accedi" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="accedi" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onLoginPressed" prefHeight="85.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Accedi" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>

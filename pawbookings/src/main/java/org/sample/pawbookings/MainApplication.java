@@ -22,12 +22,23 @@ public class MainApplication extends Application {
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
+    static void setRoot(String fxml) throws IOException {    
         scene.setRoot(new FXMLLoader(MainApplication.class.getResource(fxml)).load());
     }
 
     static void goTo(Parent root) throws IOException {
         scene.setRoot(root);
+    }
+
+    static void setRootAndChangePlatform(String fxml, boolean isMobile) throws IOException {       
+        scene.setRoot(new FXMLLoader(MainApplication.class.getResource(fxml)).load());
+        Stage stage = new Stage(); // nuova finestra
+        if (isMobile) 
+            stage.setTitle("PawBookings-mobile");
+        else 
+            stage.setTitle("PawBookings-PC");
+            stage.setScene(scene);
+            stage.show();
     }
 
 
