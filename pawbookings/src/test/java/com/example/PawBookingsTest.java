@@ -9,7 +9,7 @@ import domain_layer.PawBookings;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.LinkedList;
 
-class PawBookingsTestIterazione1 {
+class PawBookingsTest {
 
     static PawBookings PB;
     // Il metodo viene eseguito prima di tutti i test

@@ -6,16 +6,12 @@ import org.junit.jupiter.api.Test;
 import domain_layer.Cane;
 import domain_layer.Cliente;
 import domain_layer.Corso;
-import domain_layer.CorsoBase;
 import domain_layer.PawBookings;
 import domain_layer.PeriodoAffido;
-import domain_layer.Turno;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.LinkedList;
 
 class PawBookingsTestIterazione2 {
@@ -28,7 +24,10 @@ class PawBookingsTestIterazione2 {
     @BeforeAll
     public static void initTest() {
         PB = PawBookings.getInstance();
-        PB.selezionaCane(new Cane(1, "Luna", "Barboncino"));
+        PB.registrati("Alberto", "Provenzano", "12345678", "0000");
+        PB.aggiungiCane("Stella", "Pastore Tedesco");
+        PB.aggiungiCane("Asso", "Corso");
+        PB.logout();    
     }
 
     // Il metodo restituisce un'istanza della classe PawBookings se PB è null.
@@ -36,9 +35,6 @@ class PawBookingsTestIterazione2 {
     void testGetInstance() {
         assertNotNull(PB);
     }
-
-
-    /***    TEST PER ITERAZIONE 2   ***/
 
 
 
@@ -56,45 +52,41 @@ class PawBookingsTestIterazione2 {
 
     @Test
     void testRegistrati(){
-         // Il codiceCliente di Alberto deve essere Alberto1
-         PB.registrati("Alberto", "Provenzano", "12345678", "0000");
-         // Il codiceCliente di Giuseppe deve essere Giuseppe2
+        int lunghezzaPrecedente = PB.getClienti().size();
+        int lunghezzaSuccessiva;
+
+         // Il codiceCliente di Pippo deve essere Pippo2
+         PB.registrati("Pippo", "Baudo", "12345678", "0000");
+         // Il codiceCliente di Giuseppe deve essere Giuseppe3
          PB.registrati("Giuseppe", "Leocata", "562562", "0000");
-         // Il codiceCliente di Daniele deve essere Daniele3
+         // Il codiceCliente di Daniele deve essere Daniele4
          PB.registrati("Daniele", "Lucifora", "9921319", "0000");
 
-        
-        // Ci asepttiamo che la lunghezza della lista dei clienti di PB sia 3
-        assertEquals(3, PB.getClienti().size());
+        lunghezzaSuccessiva = lunghezzaPrecedente + 3;
 
-        Cliente Alberto = PB.getClienti().get("Alberto1");
-        Cliente Giuseppe = PB.getClienti().get("Giuseppe2");
-        Cliente Daniele = PB.getClienti().get("Daniele3");
+        // Ci asepttiamo che la lunghezza della lista dei clienti di PB sia 4
+        assertEquals(lunghezzaSuccessiva,PB.getClienti().size());
+    }
 
-        // Verifichiamo che i codici clienti siano come ci aspettavamo
-        assertEquals("Alberto1",Alberto.getCodiceCliente());
-        assertEquals("Giuseppe2",Giuseppe.getCodiceCliente());
-        assertEquals("Daniele3",Daniele.getCodiceCliente());
 
-       // Verifichiamo che ciascun cliente appena creato abbia a sua volta creato una lista di cani
-       assertNotEquals(null, Alberto.getCani());
-       assertNotEquals(null, Giuseppe.getCani());
-       assertNotEquals(null, Daniele.getCani());
 
+    @Test
+    void testGeneraCodiceCliente(){
+        int numeroClienti = PB.getClienti().size();
+        //Inserendo come Nome: "Francesco" ci aspettiamo che il codiceCliente generato sia
+        // Francesco seguito dal valore dell'espressione numeroClienti + 1
+        assertEquals("Francesco" + (numeroClienti+1), PB.generaCodiceCliente("Francesco"));
     }
 
     @Test
     void testAccedi(){
-
-        // Il codice per accedere con Alberto sarà Alberto1
-        PB.registrati("Alberto", "Provenzano", "12345678", "0000");
-        PB.registrati("Pippo", "Baudo", "12345678", "0000");
         Cliente Alberto = PB.getClienti().get("Alberto1");
         Boolean esito;
 
         // test del metodo
         // Accedendo con codiceCliente Alberto1 e password 0000
-        esito = PB.accedi("Alberto1", "0000");  
+        esito = PB.accedi("Alberto1", "0000");
+       
 
         // Ci aspettiamo che il valore restituito da accedi sia true
         assertTrue(esito);
@@ -109,16 +101,39 @@ class PawBookingsTestIterazione2 {
          // Ci aspettiamo che ClienteLoggato ==  null
          assertEquals(null, PB.getClienteLoggato());
 
+        // Ripristiniamo lo stato
+         PB.logout();  
+
     }
+
+
+
+    @Test
+    void testLogout(){
+        Cliente Alberto = PB.getClienti().get("Alberto1");
+        Cane Stella =  PB.getClienti().get("Alberto1").getCane(1);
+        PB.accedi("Alberto1", "0000");
+        PB.selezionaCane(PB.getClienteLoggato().getCane(1));
+        // In questo momento clienteLoggato è = Alberto
+        // e caneSelezionato è = Stella
+        assertEquals(Alberto, PB.getClienteLoggato());
+        assertEquals(Stella, PB.getCaneSelezionato());
+
+        // test del metodo
+        // Con il logout ci aspettiamo che sia clienteLoggato che caneSelezionato diventino null
+        PB.logout();
+        assertEquals(null, PB.getClienteLoggato());
+        assertEquals(null, PB.getCaneSelezionato());
+
+
+    }
+
 
 
     @Test
     void testVerificaCliente(){
-         // Il codice per accedere con Alberto sarà Alberto1
-         PB.registrati("Alberto", "Provenzano", "12345678", "0000");
-         PB.registrati("Pippo", "Baudo", "12345678", "0000");
-
-         Cliente Alberto = PB.getClienti().get("Alberto1"); 
+        Cliente Alberto = PB.getClienti().get("Alberto1");
+         
 
          // Test del metodo 
          // Inserendo le credenziali corrette ci aspettiamo che il cliente restituito da verificaCliente sia Alberto
@@ -135,56 +150,96 @@ class PawBookingsTestIterazione2 {
 
     @Test
     void testSetClienteLoggato(){
-        PB.registrati("Alberto", "Provenzano", "12345678", "0000");
-        PB.registrati("Pippo", "Baudo", "12345678", "0000");
         Cliente Alberto = PB.getClienti().get("Alberto1"); 
-        Cliente Pippo = PB.getClienti().get("Pippo2"); 
+        Cliente Giuseppe = PB.getClienti().get("Giuseppe3");
         //Test del metodo
         PB.setClienteLoggato(Alberto);
         // Ci aspettiamo che clienteLoggato sia uguale ad Alberto
         assertEquals(Alberto, PB.getClienteLoggato());
         // Ci aspettiamo che clienteLoggato non sia Pippo
-        assertNotEquals(Pippo, PB.getClienteLoggato());
+        assertNotEquals(Giuseppe, PB.getClienteLoggato());
 
-
+        // Ripristino lo stato iniziale
+        PB.logout();
     }
 
 
 
     @Test
     void testAggiungiCane(){
-        PB.registrati("Alberto", "Provenzano", "12345678", "0000");
-        PB.aggiungiCane("Stella", "Pastore Tedesco");
-        PB.aggiungiCane("Asso", "Corso");
+        int numeroCaniPrecedente;
+        int numeroCaniSuccessivo;
+        PB.accedi("Alberto1", "0000");
+        numeroCaniPrecedente = PB.getClienteLoggato().getCani().size();
+        PB.aggiungiCane("Maya", "Pastore Tedesco");
+        numeroCaniSuccessivo = numeroCaniPrecedente +1;
+
+        // Verifico che la lunghezza della lista dei cani posseduti da Alberto è aumentata di 1
+        assertEquals(numeroCaniSuccessivo, PB.getClienteLoggato().getCani().size());
+
+        // Verifico che la lista dei cani posseduti da Alberto contiene Maya
+        Cane Maya = PB.getClienteLoggato().getCane(numeroCaniSuccessivo);
+        assertTrue(PB.getClienteLoggato().getCani().contains(Maya));
+    
 
     }
 
 
+    
+    @Test
+    void testRimuoviCane(){
+        // Il metodo rimuoviCane deve restituire la lista dei Cani del Cliente che non si trovano attualmente in Affido
+        PB.accedi("Alberto1", "0000");
+        LinkedList<Cane> caniNonInAffido = PB.rimuoviCane();
+        for(Cane cn: caniNonInAffido){
+            assertFalse(cn.getAttualmenteInAffido());
+        }
+
+    }
 
 
+    @Test
+    void confermaRimozioneCane(){
+        int numCani;
+        PB.accedi("Alberto1", "0000");
+        PB.aggiungiCane("Aki","Pitbull");
+        numCani = PB.getClienteLoggato().getCani().size();
+        PB.selezionaCane(PB.getClienteLoggato().getCani().get(numCani-1));
+        Cane Aki = PB.getCaneSelezionato();
+        Corso corsoBase = PB.getCorsi().get(0);
+        PB.confermaIscrizioneCorso(corsoBase);
+        assertTrue(corsoBase.getCaniIscritti().contains(Aki));
+        
+        // Viene verificato che il Cane rimosso se partecipava ad un corso abbia annullato l'iscrizione a tale corso
+        PB.confermaRimozioneCane(Aki);
+        assertFalse(corsoBase.getCaniIscritti().contains(Aki));
 
+        // Viene verificato che il cane rimosso non appartenga più alla lista dei cani posseduti dal cliente
+        assertFalse(PB.getClienteLoggato().getCani().contains(Aki));
+    
 
-
-
-
-
-
+    }
 
 
     // Il metodo da testare restituisce un elenco di cani che non sono attualmente in affido
     @Test
     void testSelezionaPeriodo(){
 
-        // Simuliamo la registrazione di un utente e dei suoi cani
-        PB.registrati("Giuseppe", "Leocata", "562562", "0000");
-        PB.accedi("Giuseppe1", "0000");
-        PB.aggiungiCane("Sole", "Barboncino");
-        PB.aggiungiCane("Luna", "Rottweiler");
-        PB.aggiungiCane("Vanessa", "Labrador");
+        Cliente Alberto = PB.getClienti().get("Alberto1"); 
+        /*
+         * Cani di Alberto:
+         * PB.aggiungiCane("Stella", "Pastore Tedesco");
+         * PB.aggiungiCane("Asso", "Corso");
+         */
+
+         // Simuliamo l'accesso del Cliente Alberto
+         PB.accedi("Alberto1", "0000");
+
+
         //simuliamo l'affido di uno dei cani
         LinkedList<PeriodoAffido> lp = PB.affido();
         PB.selezionaPeriodo(lp.get(0));       
-        PB.confermaAffido(PB.getClienti().get("Giuseppe1").getCane(1));
+        PB.confermaAffido(Alberto.getCane(2));
 
         // verifichiamo che nella lista restituita da selezionaPeriodo non sia presente il cane messo in affido prima
         LinkedList<Cane> elencoCaniNonInAffido = PB.selezionaPeriodo(PB.affido().get(0));
@@ -195,6 +250,9 @@ class PawBookingsTestIterazione2 {
         // viene anche testato che periodoSlezionato sia uguale a PB.affido().get(0)
         assertEquals(lp.get(0), PB.getPeriodoSelezionato());
 
+        // Ripristiniamo lo stato iniziale
+        PB.logout();
+
     }
 
 
@@ -202,34 +260,47 @@ class PawBookingsTestIterazione2 {
     void testConfermaAffido(){
         //Recuperiamo la lista di periodi disponibili
         LinkedList<PeriodoAffido> lp= PB.affido();
+        LinkedList<Cane> caniNonInAffido;
 
         // Prendiamo il primo periodo e affidiamo 3 cani
-        lp.get(1).getCaniAffido().add(new Cane(1,"Stella", "Pastore Tedesco"));
-        lp.get(1).getCaniAffido().add(new Cane(2,"Walker", "Pastore Tedesco"));
-        lp.get(1).getCaniAffido().add(new Cane(3,"Sole", "Barboncino"));
-        // settiamo il periodo selezionato
-        PB.setPeriodoSelezionato(lp.get(1));
-        Cane nuovoCane = new Cane(4,"Rex","Pastore Tedesco");
-        // Test del metodo
+        PB.accedi("Alberto1", "0000");
+        PB.aggiungiCane("Max", "Labrador");
+        PB.aggiungiCane("Kia", "Barboncino");
+        PB.aggiungiCane("Nettuno", "Pitbull");
 
-        // Simuliamo l'affido di un nuovo cane tramite confermaAffido
-        PB.confermaAffido(nuovoCane);
+        // Viene settato il periodo selezionato
+        caniNonInAffido = PB.selezionaPeriodo(lp.get(1));
+
+        // Test del metodo
+        PB.confermaAffido(caniNonInAffido.get(1));
+        PB.confermaAffido(caniNonInAffido.get(2));
+        PB.confermaAffido(caniNonInAffido.get(3));
+        PB.logout();
+
+        PB.registrati("Mario", "Rossi", "123456", "0000");
+        PB.aggiungiCane("Rex", "Pastore Tedesco");
+        PB.aggiungiCane("Maya", "Pastore Tedesco");
+        caniNonInAffido = PB.selezionaPeriodo(lp.get(1));
+        PB.confermaAffido(caniNonInAffido.get(0));  
+        Cane Rex = caniNonInAffido.get(0);
+        Cane Maya = caniNonInAffido.get(1);
+
         // ci aspettiamo che elenco cani affido del periodo selezionato contenga 4 Cani
         assertEquals(4, PB.getPeriodoSelezionato().getCaniAffido().size());
         // ci aspettiamo che contenga Rex
-        assertTrue( PB.getPeriodoSelezionato().getCaniAffido().contains(nuovoCane));
+        assertTrue( PB.getPeriodoSelezionato().getCaniAffido().contains(Rex));
         // ci aspettiamo che il numero di posti disponibili sia 1
         assertEquals(1, PB.getPeriodoSelezionato().getNumeroPosti());
 
         // Simuliamo l'affido di un nuovo cane tramite confermaAffido 
-        nuovoCane = new Cane(5,"Vanessa","Barboncino");
-        PB.confermaAffido(nuovoCane);
+        PB.confermaAffido(Maya);
         // ci aspettiamo che il numero di posti diventi 0
         assertEquals(0, PB.getPeriodoSelezionato().getNumeroPosti());
         // ci aspettiamo che il periodo selezionato non appartenga più all'elenco di periodi disponibili di PB
         assertFalse(PB.affido().contains(PB.getPeriodoSelezionato()));      
 
-
+        // Ripristiniamo lo stato iniziale
+        PB.logout();
 
     }
 
@@ -238,28 +309,24 @@ class PawBookingsTestIterazione2 {
 
     @Test
     void testConcludiAffido(){
+        PB.accedi("Alberto1","0000");
+        // Il codice sarà 3
+        PB.aggiungiCane("Natan", "Pitbull");
 
-        PB.registrati("Daniele", "Lucifora", "9921319", "0000");
-        PB.accedi("Daniele1", "0000");
-        // Il codice sarà 1
-        PB.aggiungiCane("Stella", "Pastore Tedesco");
-        // Il codice sarà 2
-        PB.aggiungiCane("Asso", "Corso");
-
-        // Iscriviamo Asso al Periodo 1
+        // Iscriviamo Natan al Periodo 3
         LinkedList<PeriodoAffido> lp = PB.affido();
-        PB.selezionaPeriodo(lp.get(0));
-        Cane asso = PB.getClienti().get("Daniele1").getCane(2);
-        PB.confermaAffido(asso);
+        PB.selezionaPeriodo(lp.get(2));
+        Cane Natan = PB.getClienti().get("Alberto1").getCane(3);
+        PB.confermaAffido(Natan);
         PeriodoAffido pa;
         // Testiamo il metodo
-        pa = PB.concludiAffido("Daniele1", 2);
+        pa = PB.concludiAffido("Alberto1", 3);
 
-        // ci aspettiamo che cane selezionato corrisponda ad asso
-        assertEquals(asso, PB.getCaneSelezionato());
+        // ci aspettiamo che cane selezionato corrisponda ad Natan
+        assertEquals(Natan, PB.getCaneSelezionato());
 
-        // ci aspettiamo che l'affido che stiamo concludendo sia il periodo 1
-        assertEquals(lp.get(0), pa);
+        // ci aspettiamo che l'affido che stiamo concludendo sia il periodo 3
+        assertEquals(lp.get(2), pa);
 
 
     }
@@ -269,24 +336,18 @@ class PawBookingsTestIterazione2 {
     void testConfermaConclusioneAffido(){
         
         // Simuliamo l'iscrizone di un cane ad un periodo di affido
-        PB.registrati("Daniele", "Lucifora", "9921319", "0000");
-        PB.accedi("Daniele1", "0000");
-        // Il codice sarà 1
-        PB.aggiungiCane("Stella", "Pastore Tedesco");
-        // Il codice sarà 2
-        PB.aggiungiCane("Asso", "Corso");
-
-        // Iscriviamo Stella al Periodo 2
+        PB.accedi("Alberto1","0000");
+      
+        // Iscriviamo Stella al Periodo 3
         LinkedList<PeriodoAffido> lp = PB.affido();
-        PB.selezionaPeriodo(lp.get(1));
-
-        // tramite selezionaPeriodo viene settato periodoSelezionato con Periodo2
-        Cane stella = PB.getClienti().get("Daniele1").getCane(1);
-        PB.confermaAffido(stella);
+        // tramite selezionaPeriodo viene settato periodoSelezionato con Periodo 3
+        PB.selezionaPeriodo(lp.get(2));
+        Cane Stella = PB.getClienti().get("Alberto1").getCane(1);
+        PB.confermaAffido(Stella);
         PeriodoAffido pa;
-        
+      
         // tramite concludiAffido settiamo il caneSelezionato con stella
-        pa = PB.concludiAffido("Daniele1", 1);
+        pa = PB.concludiAffido("Alberto1", 1);
 
 
         // Test del metodo
@@ -294,13 +355,13 @@ class PawBookingsTestIterazione2 {
         PB.confermaConclusioneAffido();
 
         // Ci aspettiamo che Stella venga rimossa dall'elenco caniAffido del periodo 2
-        assertFalse( PB.getPeriodoSelezionato().getCaniAffido().contains(stella));
+        assertFalse( PB.getPeriodoSelezionato().getCaniAffido().contains(Stella));
 
         // Ci aspettiamo che l'attributo attualmenteInAffido di Stella diventi false
-        assertFalse(stella.getAttualmenteInAffido());
+        assertFalse(Stella.getAttualmenteInAffido());
 
         // Ci aspettiamo che affidoCorrente di Stella diventi null
-        assertEquals(null, stella.getAffidoCorrente());
+        assertEquals(null, Stella.getAffidoCorrente());
 
     }
 

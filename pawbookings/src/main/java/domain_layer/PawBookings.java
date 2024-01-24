@@ -175,6 +175,7 @@ public class PawBookings {
             return true;
         }
         else{
+            this.periodoSelezionato = null;
             return false;
         }
     }
