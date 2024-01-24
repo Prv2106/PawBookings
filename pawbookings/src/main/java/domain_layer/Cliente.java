@@ -42,8 +42,8 @@ public class Cliente {
     // Il metodo registra un cane, aggiungendolo alla lista dei cani posseduti dal cliente.
     public boolean registraCane(String nome, String razza){
         int codCane = generaCodiceCane();
-        Cane cn = new Cane(codCane, nome, razza);
-        caniPosseduti.add(cn);
+        Cane nuovoCane = new Cane(codCane, nome, razza);
+        caniPosseduti.add(nuovoCane);
         return true;
     }
 
