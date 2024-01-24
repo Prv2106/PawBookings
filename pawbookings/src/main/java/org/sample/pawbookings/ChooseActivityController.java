@@ -7,10 +7,23 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 
 public class ChooseActivityController {
-   
+    @FXML
+    private Button backButton;
+    @FXML
+    void onBackPressed(ActionEvent event) throws IOException {
+        try {
+            Stage finestraCorrente = (Stage) backButton.getScene().getWindow();
+            finestraCorrente.close();
+            MainApplication.goBackRoot(true);;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     void onNuovaIscrizioneCorsoClicked(ActionEvent event) {
@@ -38,9 +51,8 @@ public class ChooseActivityController {
 
             // messaggio errore
             errorController.setTextError("probabilmente il cane non è iscritto ad un corso");
-            errorController.setFXML("choose_activity-view.fxml");
 
-            // andiamo nella schermata
+            // andiamo nella schermata di errore
             MainApplication.goTo(secondRoot);
         }
     }

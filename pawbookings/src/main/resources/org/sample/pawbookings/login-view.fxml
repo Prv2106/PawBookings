@@ -106,7 +106,20 @@
             </VBox>
             <BorderPane prefHeight="87.0" prefWidth="350.0">
                <top>
-                  <HBox prefHeight="65.0" prefWidth="350.0" BorderPane.alignment="CENTER" />
+                  <HBox alignment="CENTER" prefHeight="65.0" prefWidth="350.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fitHeight="46.0" fitWidth="48.0">
+                                 <image>
+                                    <Image url="@../../../assets/back.png" />
+                                 </image>
+                              </ImageView>
+                              <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackPressed" prefHeight="61.0" prefWidth="89.0" style="-fx-background-color: trasparent;" />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </HBox>
                </top>
             </BorderPane>
          </children>

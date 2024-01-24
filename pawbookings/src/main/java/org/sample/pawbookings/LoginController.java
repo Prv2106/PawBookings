@@ -4,7 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -17,6 +19,19 @@ public class LoginController {
 
     @FXML
     private TextField password;
+
+    @FXML
+    private Button backButton;
+    @FXML
+    void onBackPressed(ActionEvent event) throws IOException {
+        try {
+            Stage finestraCorrente = (Stage) backButton.getScene().getWindow();
+            finestraCorrente.close();
+            MainApplication.goBackRoot(true);;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     void onLoginPressed(ActionEvent event) throws IOException {
@@ -42,9 +57,7 @@ public class LoginController {
                 // utente non trovato... quindi:
                 // messaggio errore
                 errorController.setTextError("UTENTE NON TROVATO");
-                // destinazione schermata successiva: sempre il login
-                errorController.setFXML("login-view.fxml");
-                // andiamo nella schermata
+                // andiamo nella schermata di errore
                 MainApplication.goTo(secondRoot);
             }
         } else {
@@ -52,9 +65,7 @@ public class LoginController {
 
             // messaggio errore
             errorController.setTextError("devi prima compilare entrambi i campi");
-            // destinazione schermata successiva: sempre il login
-            errorController.setFXML("login-view.fxml");
-            // andiamo nella schermata
+            // andiamo nella schermatav di errore
             MainApplication.goTo(secondRoot);
         }
     }

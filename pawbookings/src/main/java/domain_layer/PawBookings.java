@@ -262,8 +262,8 @@ public class PawBookings {
         return checkPin(pin);
     }
 
-    public Boolean checkPin(int pin){
-        if(pin == this.pinAdmin){
+    public Boolean checkPin(Integer pin){
+        if(pin.equals(pin)){
             return true;
         }
         else{
