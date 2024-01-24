@@ -17,13 +17,23 @@ public class ProfileController implements Initializable {
 
     @FXML
     void onNewDogPressed(ActionEvent event) {
-
+        try {
+            MainApplication.setRoot("new_dog-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void onRemoveDogPressed(ActionEvent event) {
-        
+        try {
+            MainApplication.setRoot("remove_dog-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+
 
     // PULSANTI NAVBAR
     @FXML
