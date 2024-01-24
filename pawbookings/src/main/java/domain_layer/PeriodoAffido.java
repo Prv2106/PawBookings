@@ -48,11 +48,13 @@ public class PeriodoAffido {
         return this.numPosti;
     }
 
+    public LocalDate getDataInizio() {
+        return this.dataInizio;
+    }
 
-
-
-
-
+    public LocalDate getDataFine() {
+        return this.dataFine;
+    }
 
     /**** metodi per i test ****/
 

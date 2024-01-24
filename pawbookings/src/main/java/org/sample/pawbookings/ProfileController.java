@@ -1,5 +1,6 @@
 package org.sample.pawbookings;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -21,7 +22,28 @@ public class ProfileController implements Initializable {
 
     @FXML
     void onRemoveDogPressed(ActionEvent event) {
+        
+    }
 
+    // PULSANTI NAVBAR
+    @FXML
+    void onDogTabPressed(ActionEvent event) {
+        // andiamo nella sezione relativa all'affido
+        try {
+            MainApplication.setRoot("available_periods-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void onHomeTabPressed(ActionEvent event) {
+        // andiamo nella home page
+        try {
+            MainApplication.setRoot("home_page-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
