@@ -199,12 +199,13 @@ public class PawBookings {
     }
     
 
-    public Boolean registrati(String nome, String cognome, String numeroTelefono, String password){
+    public Boolean registrati(String nome, String cognome, String numeroTelefono, String password) {
         String codiceCliente;
         Cliente nuovoCliente;
         codiceCliente= this.generaCodiceCliente(nome);
         nuovoCliente = new Cliente(codiceCliente,nome,cognome,password,numeroTelefono);
         this.clienti.putIfAbsent(codiceCliente, nuovoCliente);
+        this.clienteLoggato = nuovoCliente;
         return true;
     }
 
