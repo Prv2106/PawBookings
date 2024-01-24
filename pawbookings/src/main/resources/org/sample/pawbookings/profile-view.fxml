@@ -34,7 +34,7 @@
                      <children>
                         <Text fill="#696767" strokeType="OUTSIDE" strokeWidth="0.0" text="cliente: " wrappingWidth="68.17633438110352">
                            <HBox.margin>
-                              <Insets left="20.0" />
+                              <Insets left="22.0" />
                            </HBox.margin>
                            <font>
                               <Font size="18.0" />
@@ -60,6 +60,26 @@
                         <Font size="24.0" />
                      </font>
                   </Button>
+                  <HBox alignment="BOTTOM_RIGHT" prefHeight="60.0" prefWidth="350.0">
+                     <children>
+                        <StackPane>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                           <children>
+                              <ImageView fitHeight="70.0" fitWidth="200.0">
+                                 <image>
+                                    <Image url="@../../../assets/logout.png" />
+                                 </image>
+                              </ImageView>
+                              <Button mnemonicParsing="false" onAction="#onLogoutPressed" prefHeight="67.0" prefWidth="198.0" style="-fx-background-color: none;" />
+                           </children>
+                        </StackPane>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </HBox>
                </children>
             </VBox>
             <BorderPane prefHeight="87.0" prefWidth="350.0">

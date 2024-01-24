@@ -150,7 +150,6 @@ public class PawBookings {
     }
 
 
-
     public LinkedList<Cane> selezionaPeriodo(PeriodoAffido pa){
         setPeriodoSelezionato(pa);
         // viene recuperato l'elenco dei cani del cliente loggato che non sono attualmente in affido
@@ -190,7 +189,11 @@ public class PawBookings {
         Cliente cl;
         cl=this.verificaCliente(codiceCliente, password);
         return this.setClienteLoggato(cl);
-      
+    }
+
+    public void logout() {
+        setClienteLoggato(null);
+        setCaneSelezionato(null);
     }
 
 
@@ -270,11 +273,12 @@ public class PawBookings {
 
 
     public Boolean setCaneSelezionato(Cane cn){
-        if(cn !=null){
+        if(cn != null){
             this.caneSelezionato = cn;
             return true;
         }
         else {
+            this.caneSelezionato = null;
             return false;
         }
     }

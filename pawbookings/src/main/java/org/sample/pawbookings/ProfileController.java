@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class ProfileController implements Initializable {
 
@@ -33,6 +34,17 @@ public class ProfileController implements Initializable {
         }
     }
 
+    @FXML
+    void onLogoutPressed(ActionEvent event) {
+        try {
+            PawBookings.getInstance().logout();
+            Stage finestraCorrente = (Stage) username.getScene().getWindow();
+            finestraCorrente.close();
+            MainApplication.setRootAndChangePlatform("fork-view.fxml", false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     // PULSANTI NAVBAR

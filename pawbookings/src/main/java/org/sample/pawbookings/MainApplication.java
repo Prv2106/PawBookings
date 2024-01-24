@@ -12,38 +12,58 @@ import domain_layer.PeriodoAffido;
 
 public class MainApplication extends Application {
     private static Scene scene;
+    private static Parent previousRoot;
 
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("fork-view.fxml"));
         scene = new Scene(fxmlLoader.load());
-        stage.setTitle("PawBookings");
+        stage.setTitle("PawBookings-PC");
         stage.setScene(scene);
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {    
-        scene.setRoot(new FXMLLoader(MainApplication.class.getResource(fxml)).load());
-    }
-
-    static void goTo(Parent root) throws IOException {
+    static void setRoot(String fxml) throws IOException {
+        previousRoot = scene.getRoot();
+        Parent root = new FXMLLoader(MainApplication.class.getResource(fxml)).load();
         scene.setRoot(root);
     }
 
-    static void setRootAndChangePlatform(String fxml, boolean isMobile) throws IOException {       
-        scene.setRoot(new FXMLLoader(MainApplication.class.getResource(fxml)).load());
+    static void goTo(Parent root) throws IOException {
+        previousRoot = scene.getRoot();
+        scene.setRoot(root);
+    }
+
+    static void goBackRoot(boolean isMobile) throws IOException {
+        scene.setRoot(previousRoot);
         Stage stage = new Stage(); // nuova finestra
-        if (isMobile) 
+        if (isMobile) {
             stage.setTitle("PawBookings-mobile");
-        else 
+        }
+        else {
             stage.setTitle("PawBookings-PC");
-            stage.setScene(scene);
-            stage.show();
+        }
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    static void setRootAndChangePlatform(String fxml, boolean isMobile) throws IOException {
+        Parent root = new FXMLLoader(MainApplication.class.getResource(fxml)).load();
+        previousRoot = scene.getRoot();  
+        scene.setRoot(root);
+        Stage stage = new Stage(); // nuova finestra
+        if (isMobile) {
+            stage.setTitle("PawBookings-mobile");
+        }
+        else {
+            stage.setTitle("PawBookings-PC");
+        }
+        stage.setScene(scene);
+        stage.show();
     }
 
 
     public static void main(String[] args) {
-        
         PawBookings PB = PawBookings.getInstance();  
         
         // Istruzioni per simulare dei dati persistenti

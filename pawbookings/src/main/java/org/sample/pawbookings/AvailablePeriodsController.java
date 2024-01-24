@@ -33,7 +33,7 @@ public class AvailablePeriodsController implements Initializable{
     ObservableList<PeriodoAffido> items = FXCollections.observableArrayList();
 
         @Override
-    public void initialize(URL url, ResourceBundle rb) {
+        public void initialize(URL url, ResourceBundle rb) {
         // popoliamo la lista
         PawBookings PB = PawBookings.getInstance();  
         LinkedList<PeriodoAffido> periodiDisponibili = PB.affido();
