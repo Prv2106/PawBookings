@@ -137,7 +137,7 @@ class PawBookingsTest {
     @Test
     void testAccedi(){
 
-        // Il codice per accedere con alberto sarà Alberto1
+        // Il codice per accedere con Alberto sarà Alberto1
         PB.registrati("Alberto", "Provenzano", "12345678", "0000");
         Cliente Alberto = PB.getClienti().get("Alberto1");
         Boolean esito;
@@ -152,8 +152,6 @@ class PawBookingsTest {
         // Ci aspettiamo che ClienteLoggato ==  Alberto
         assertEquals(Alberto, PB.getClienteLoggato());
 
-
-    
     }
 
 

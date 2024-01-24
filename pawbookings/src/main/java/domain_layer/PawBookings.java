@@ -160,17 +160,24 @@ public class PawBookings {
 
     public Boolean confermaAffido(Cane cn){
         int numeroPostiDisponibili;
-        this.periodoSelezionato.registraAffido(cn);
+        Boolean esito;
+        esito = this.periodoSelezionato.registraAffido(cn);
         cn.aggiornaAttualmenteInAffido(periodoSelezionato);
         numeroPostiDisponibili= this.periodoSelezionato.getNumeroPosti();
         if(numeroPostiDisponibili == 0){
             this.elencoPeriodiDisponibili.remove(this.periodoSelezionato);
         }
-        return true;
+        return esito;
     }
 
-    public void setPeriodoSelezionato(PeriodoAffido pa){
-        this.periodoSelezionato = pa;
+    public Boolean setPeriodoSelezionato(PeriodoAffido pa){
+        if(pa != null){
+            this.periodoSelezionato = pa;
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public Boolean confermaConclusioneAffido(){
@@ -269,8 +276,14 @@ public class PawBookings {
     }
 
 
-    public void setCaneSelezionato(Cane cn){
-        this.caneSelezionato = cn;
+    public Boolean setCaneSelezionato(Cane cn){
+        if(cn !=null){
+            this.caneSelezionato = cn;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public Cliente getClienteLoggato() {
