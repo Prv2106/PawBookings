@@ -194,19 +194,25 @@ public class PawBookings {
 
 
 
-    public void setClienteLoggato(Cliente cl){
-        this.clienteLoggato = cl;
+    public boolean setClienteLoggato(Cliente cl) {
+        if (cl == null) {
+            return false;
+        } else {
+            this.clienteLoggato = cl;
+            return true;
+        }
     }
     
 
     public Boolean registrati(String nome, String cognome, String numeroTelefono, String password) {
         String codiceCliente;
         Cliente nuovoCliente;
-        codiceCliente= this.generaCodiceCliente(nome);
+        codiceCliente = this.generaCodiceCliente(nome);
         nuovoCliente = new Cliente(codiceCliente,nome,cognome,password,numeroTelefono);
         this.clienti.putIfAbsent(codiceCliente, nuovoCliente);
-        this.clienteLoggato = nuovoCliente;
-        return true;
+        if (setClienteLoggato(nuovoCliente)) 
+         return true;
+        else return false;
     }
 
     
