@@ -39,13 +39,19 @@ public class DettagliAffidoController {
 
     public void start(PeriodoAffido pa) {
         codice.setText(Integer.toString(pa.getCodice()));
-        dataInizio.setText(pa.getDataFine().toString());
-        dataFine.setText(pa.getDataFine().toString());
+        dataInizio.setText(pa.getDataInizio().getDayOfMonth() + "/" + pa.getDataInizio().getMonthValue() + "/" + pa.getDataInizio().getYear());
+        dataFine.setText(pa.getDataFine().getDayOfMonth() + "/" + pa.getDataFine().getMonthValue() + "/" + pa.getDataFine().getYear());
     }
 
     @FXML
     void onConcludiAffidoPressed(ActionEvent event) {
-        
+        // passiamo alla schermata che mostra l'elenco dei corsi disponibili
+        try {
+            PawBookings.getInstance().confermaConclusioneAffido();
+            MainApplication.setRoot("admin_ok-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

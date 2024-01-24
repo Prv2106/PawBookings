@@ -17,4 +17,13 @@ public class AdminHomeController {
         }
     }
 
+    @FXML
+    void onLogoutPressed(ActionEvent event) {
+        try {
+            MainApplication.setRoot("fork-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

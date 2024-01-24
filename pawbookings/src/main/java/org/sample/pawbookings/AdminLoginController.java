@@ -46,12 +46,17 @@ public class AdminLoginController {
             // operazione di sistema
             PawBookings PB = PawBookings.getInstance();  
             try {
-                PB.accediComeAdmin(Integer.parseInt(pin));
-                MainApplication.setRoot("admin_home-view.fxml");
+                if (PB.accediComeAdmin(Integer.parseInt(pin))) {
+                    MainApplication.setRoot("admin_home-view.fxml");
+                } else {
+                    // pin errato... quindi:
+                    // messaggio errore
+                    errorController.setTextError("PIN ERRATO");
+                    // andiamo nella schermata di errore
+                    MainApplication.goTo(secondRoot);
+                }
             } catch (Exception e) {
-                // pin errato... quindi:
-                // messaggio errore
-                errorController.setTextError("PIN ERRATO");
+                errorController.setTextError(e.getMessage());
                 // andiamo nella schermata di errore
                 MainApplication.goTo(secondRoot);
             }
@@ -59,7 +64,7 @@ public class AdminLoginController {
             // i campi sono vuoti...
 
             // messaggio errore
-            errorController.setTextError("devi prima compilare entrambi i campi");
+            errorController.setTextError("non puoi lasciare il campo vuoto");
             // andiamo nella schermata di errore
             MainApplication.goTo(secondRoot);
         }

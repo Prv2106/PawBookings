@@ -8,8 +8,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class ConcludiAffidoController {
 
@@ -19,6 +20,18 @@ public class ConcludiAffidoController {
     @FXML
     private TextField codiceCane;
 
+    @FXML
+    private Button backButton;
+    @FXML
+    void onBackPressed(ActionEvent event) throws IOException {
+        try {
+            Stage finestraCorrente = (Stage) backButton.getScene().getWindow();
+            finestraCorrente.close();
+            MainApplication.goBackRoot(true);;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
 
     @FXML
@@ -38,22 +51,19 @@ public class ConcludiAffidoController {
         if (!codiceCliente.isEmpty() && !codiceCane.isEmpty()) {
             // operazione di sistema
             PawBookings PB = PawBookings.getInstance();  
+            PeriodoAffido pa = PB.concludiAffido(codiceCliente, Integer.parseInt(codiceCane));
             try {
-                PeriodoAffido pa = PB.concludiAffido(codiceCliente, Integer.parseInt(codiceCane));
-
                 // recuperiamo il loader relativa alla schermata di dettagli affido (fxml)
-                FXMLLoader ld = new FXMLLoader(getClass().getResource("select_dog-view.fxml"));
-                Parent root = loader.load(); // qui viene chiamato l'eventuale INITIALIZE
+                FXMLLoader ld = new FXMLLoader(getClass().getResource("dettagli_affido-view.fxml"));
+                Parent root = ld.load(); // qui viene chiamato l'eventuale INITIALIZE
                 // ne recuperiamo il relativo controller
-                DettagliAffidoController controller = loader.getController();
+                DettagliAffidoController controller = ld.getController();
                 controller.start(pa);
                 // andiamo nella schermata
-                MainApplication.goTo(secondRoot);
-
-                MainApplication.setRoot("dettagli_affido-view.fxml");
+                MainApplication.goTo(root);
             } catch (Exception e) {
                 // nessun periodo trovato sulla base dei dati inseriti... quindi:
-                errorController.setTextError("Nessuna corrispondenza");
+                errorController.setTextError(e.getMessage());
                 // andiamo nella schermata di errore
                 MainApplication.goTo(secondRoot);
             }

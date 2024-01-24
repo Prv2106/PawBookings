@@ -248,7 +248,7 @@ public class PawBookings {
         return clienteLoggato.registraCane(nome, razza);
     }
 
-    public PeriodoAffido concludiAffido(String codiceCliente, int codiceCane){
+    public PeriodoAffido concludiAffido(String codiceCliente, int codiceCane) {
         Cliente cl;
         Cane cn;
         cl = this.clienti.get(codiceCliente);
@@ -263,7 +263,7 @@ public class PawBookings {
     }
 
     public Boolean checkPin(Integer pin){
-        if(pin.equals(pin)){
+        if(this.pinAdmin == pin){
             return true;
         }
         else{

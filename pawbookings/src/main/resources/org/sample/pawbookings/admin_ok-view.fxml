@@ -38,12 +38,12 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="650.0" maxWidth="700.0" minHeight="650.0" minWidth="800.0" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sample.pawbookings.AdminHomeController">
+<StackPane maxHeight="650.0" maxWidth="700.0" minHeight="650.0" minWidth="800.0" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sample.pawbookings.AdminOkController">
    <children>
       <ImageView fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
          <viewport>
@@ -53,43 +53,41 @@
             <Image url="@../../../assets/pc_view.png" />
          </image>
       </ImageView>
-      <VBox maxHeight="625.0" maxWidth="681.0" minHeight="625.0" minWidth="350.0" prefHeight="625.0" prefWidth="681.0">
+      <VBox maxHeight="625.0" maxWidth="350.0" minHeight="625.0" minWidth="350.0" prefHeight="625.0" prefWidth="350.0">
          <children>
             <BorderPane prefHeight="153.0" prefWidth="350.0" />
-            <VBox alignment="CENTER" prefHeight="392.0" prefWidth="377.0">
+            <VBox alignment="CENTER" prefHeight="447.0" prefWidth="350.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onConcludiAffidoPressed" prefHeight="53.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Concludi Affido" textFill="WHITE">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Operazione conclusa con successo!" textAlignment="CENTER">
                      <font>
-                        <Font size="23.0" />
+                        <Font size="17.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="40.0" top="40.0" />
+                        <Insets />
                      </VBox.margin>
+                  </Text>
+                  <Text fx:id="textError" fill="#4e4b4b" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <ImageView fitHeight="191.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@../../../assets/ok.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="30.0" top="10.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <Button mnemonicParsing="false" onAction="#onPressed" prefHeight="59.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="TORNA ALLA HOME" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets bottom="20.0" top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="19.0" />
+                     </font>
                   </Button>
                </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </VBox>
-            <BorderPane prefHeight="87.0" prefWidth="350.0">
-               <top>
-                  <HBox prefHeight="65.0" prefWidth="350.0" BorderPane.alignment="CENTER" />
-               </top>
-            </BorderPane>
-            <HBox alignment="BOTTOM_RIGHT" prefHeight="60.0" prefWidth="350.0">
-               <children>
-                  <StackPane>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                     <children>
-                        <ImageView fitHeight="70.0" fitWidth="200.0">
-                           <image>
-                              <Image url="@../../../assets/logout.png" />
-                           </image>
-                        </ImageView>
-                        <Button mnemonicParsing="false" onAction="#onLogoutPressed" prefHeight="67.0" prefWidth="198.0" style="-fx-background-color: none;" />
-                     </children>
-                  </StackPane>
-               </children>
-            </HBox>
          </children>
       </VBox>
    </children>
