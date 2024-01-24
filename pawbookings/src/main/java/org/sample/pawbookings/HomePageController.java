@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class HomePageController implements Initializable {
@@ -38,64 +39,77 @@ public class HomePageController implements Initializable {
         PawBookings PB = PawBookings.getInstance();  
         
         // Caricamento dei Cani del Cliente per l'avviamento
-        LinkedList<Cane> listaCani =PB.getClienteLoggato().getCani();
+        LinkedList<Cane> listaCani = PB.getClienteLoggato().getCani();
 
         if (listaCani.isEmpty()) {
             text.setText("Non hai ancora aggiunto un cane");
+            text.setFont(new Font(16));
         } else {
             items.addAll(listaCani);
             this.list.setItems(items);
+
+            // definiamo la grafica di ogni oggetto della lista
+            this.list.setCellFactory(new Callback<ListView<Cane>, ListCell<Cane>>() {
+                @Override
+                public ListCell<Cane> call(ListView<Cane> listView) {
+                    return new ListCell<Cane>() {
+                        @Override
+                        protected void updateItem(Cane cane, boolean empty) {
+                            // per ogni elemento (cane)
+                            super.updateItem(cane, empty);
+
+                            if (cane == null || empty) {
+                                setText(null);
+                            } else {
+                                // nome e razza
+                                VBox vbox = new VBox();
+                                Label nomeLabel = new Label("Nome: " + cane.getNome());
+                                Label razzaLabel = new Label("Razza: " + cane.getRazza());
+                                vbox.getChildren().addAll(nomeLabel, razzaLabel);
+
+                                // Imposta il contenuto della cella
+                                setGraphic(vbox);
+
+        // -------------------> Aggiungiamo il listener per l'evento di click
+                                setOnMouseClicked(event -> {
+                                    // Azioni da eseguire quando un elemento viene cliccato
+                                    PB.selezionaCane(cane);;
+
+                                    // passiamo alla schermata successiva
+                                    try {
+                                        MainApplication.setRoot("choose_activity-view.fxml");
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                });
+                            }
+                        }
+                    };
+                }
+            });
         }
         
-        // definiamo la grafica di ogni oggetto della lista
-        this.list.setCellFactory(new Callback<ListView<Cane>, ListCell<Cane>>() {
-            @Override
-            public ListCell<Cane> call(ListView<Cane> listView) {
-                return new ListCell<Cane>() {
-                    @Override
-                    protected void updateItem(Cane cane, boolean empty) {
-                        // per ogni elemento (cane)
-                        super.updateItem(cane, empty);
 
-                        if (cane == null || empty) {
-                            setText(null);
-                        } else {
-                            // nome e razza
-                            VBox vbox = new VBox();
-                            Label nomeLabel = new Label("Nome: " + cane.getNome());
-                            Label razzaLabel = new Label("Razza: " + cane.getRazza());
-                            vbox.getChildren().addAll(nomeLabel, razzaLabel);
-
-                            // Imposta il contenuto della cella
-                            setGraphic(vbox);
-
-    // -------------------> Aggiungiamo il listener per l'evento di click
-                            setOnMouseClicked(event -> {
-                                // Azioni da eseguire quando un elemento viene cliccato
-                                PB.selezionaCane(cane);;
-
-                                // passiamo alla schermata successiva
-                                try {
-                                    MainApplication.setRoot("choose_activity-view.fxml");
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            });
-                        }
-                    }
-                };
-            }
-        });
     }
 
      @FXML
     void onDogTabPressed(ActionEvent event) {
-
+        // andiamo nella schermata relativa all'affido
+        try {
+            MainApplication.setRoot("available_periods-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void onProfileTabPressed(ActionEvent event) {
-        
+        // andiamo nella schermata relativa al profilo dell'utente
+        try {
+            MainApplication.setRoot("profile-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
 

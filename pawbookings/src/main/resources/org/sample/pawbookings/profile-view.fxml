@@ -19,7 +19,7 @@
             <Rectangle2D />
          </viewport>
          <image>
-            <Image url="@../../../assets/standard_view.png" />
+            <Image url="@../../../assets/profile_view.png" />
          </image>
       </ImageView>
       <VBox alignment="CENTER" maxHeight="625.0" maxWidth="350.0" minHeight="625.0" minWidth="350.0" prefHeight="625.0" prefWidth="350.0">

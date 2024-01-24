@@ -195,7 +195,7 @@ public class PawBookings {
 
 
     public Cliente verificaCliente(String codiceCliente, String password){
-        if(clienti.get(codiceCliente).getPassword() == password){
+        if(clienti.get(codiceCliente).getPassword().equals(password)){
             return clienti.get(codiceCliente);
         }
         else return null;
