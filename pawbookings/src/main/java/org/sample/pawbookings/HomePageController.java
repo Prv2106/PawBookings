@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 public class HomePageController implements Initializable {
     @FXML
@@ -26,6 +27,9 @@ public class HomePageController implements Initializable {
 
     // creiamo una lista osservabile
     ObservableList<Cane> items = FXCollections.observableArrayList();
+
+    @FXML
+    private Text text;
 
     // metodo che viene richiamato all'apertura della schermata
     @Override
@@ -36,9 +40,13 @@ public class HomePageController implements Initializable {
         // Caricamento dei Cani del Cliente per l'avviamento
         LinkedList<Cane> listaCani =PB.getClienteLoggato().getCani();
 
-        items.addAll(listaCani);
-        this.list.setItems(items);
-
+        if (listaCani.isEmpty()) {
+            text.setText("Non hai ancora aggiunto un cane");
+        } else {
+            items.addAll(listaCani);
+            this.list.setItems(items);
+        }
+        
         // definiamo la grafica di ogni oggetto della lista
         this.list.setCellFactory(new Callback<ListView<Cane>, ListCell<Cane>>() {
             @Override
