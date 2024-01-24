@@ -62,6 +62,7 @@ public class PeriodoAffido {
         return this.elencoCaniAffido;
     }
 
-
-
+    public int getCodice() {
+        return this.codice;
+    }
 }

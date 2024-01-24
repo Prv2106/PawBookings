@@ -70,14 +70,14 @@
                         <TextField fx:id="codiceCliente" alignment="CENTER" promptText="Nick12344" />
                      </children>
                   </VBox>
-                  <VBox fx:id="codiceCane" alignment="CENTER" prefHeight="79.0" prefWidth="350.0">
+                  <VBox alignment="CENTER" prefHeight="79.0" prefWidth="350.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Codice cane:" wrappingWidth="80.81829833984375">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Text>
-                        <TextField alignment="CENTER" promptText="Nick12344" text="123456.." />
+                        <TextField fx:id="codiceCane" alignment="CENTER" promptText="Nick12344" text="123456.." />
                      </children>
                   </VBox>
                   <Button mnemonicParsing="false" onAction="#onConcludiAffidoPressed" prefHeight="53.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Concludi Affido" textFill="WHITE">
@@ -90,11 +90,21 @@
                   </Button>
                </children>
             </VBox>
-            <BorderPane prefHeight="87.0" prefWidth="350.0">
-               <top>
-                  <HBox prefHeight="65.0" prefWidth="350.0" BorderPane.alignment="CENTER" />
-               </top>
-            </BorderPane>
+            <BorderPane prefHeight="87.0" prefWidth="350.0" />
+            <HBox alignment="CENTER" prefHeight="65.0" prefWidth="350.0">
+               <children>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="46.0" fitWidth="48.0">
+                           <image>
+                              <Image url="@../../../assets/back.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackPressed" prefHeight="61.0" prefWidth="89.0" style="-fx-background-color: trasparent;" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>

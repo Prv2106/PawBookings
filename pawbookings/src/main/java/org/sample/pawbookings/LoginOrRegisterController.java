@@ -5,11 +5,25 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 public class LoginOrRegisterController  {
 
     @FXML
     private Button accedi;
+
+    @FXML
+    private Button backButton;
+    @FXML
+    void onBackPressed(ActionEvent event) throws IOException {
+        try {
+            Stage finestraCorrente = (Stage) backButton.getScene().getWindow();
+            finestraCorrente.close();
+            MainApplication.goBackAndChangePlatform(false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     void onLoginPressed(ActionEvent event) {

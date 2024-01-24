@@ -77,12 +77,12 @@
                               <Font size="20.0" />
                            </font>
                         </Text>
-                        <Text fx:id="codice" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                        <Text fx:id="codice" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="255.07637405395508">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
                            <font>
-                              <Font size="20.0" />
+                              <Font size="18.0" />
                            </font>
                         </Text>
                      </children>
@@ -97,12 +97,12 @@
                               <Font size="20.0" />
                            </font>
                         </Text>
-                        <Text fx:id="dataInizio" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="38.141236305236816">
+                        <Text fx:id="dataInizio" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="227.02438831329346">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
                            <font>
-                              <Font size="20.0" />
+                              <Font size="18.0" />
                            </font>
                         </Text>
                      </children>
@@ -117,12 +117,12 @@
                               <Font size="20.0" />
                            </font>
                         </Text>
-                        <Text fx:id="dataFine" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="38.141236305236816">
+                        <Text fx:id="dataFine" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="225.1542100906372">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
                            <font>
-                              <Font size="20.0" />
+                              <Font size="18.0" />
                            </font>
                         </Text>
                      </children>
@@ -142,6 +142,20 @@
                   <HBox prefHeight="65.0" prefWidth="350.0" BorderPane.alignment="CENTER" />
                </top>
             </BorderPane>
+            <HBox alignment="CENTER" prefHeight="65.0" prefWidth="350.0">
+               <children>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="46.0" fitWidth="48.0">
+                           <image>
+                              <Image url="@../../../assets/back.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackPressed" prefHeight="61.0" prefWidth="89.0" style="-fx-background-color: trasparent;" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>

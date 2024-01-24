@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 public class NewDogController {
@@ -16,6 +17,17 @@ public class NewDogController {
 
     @FXML
     private TextField razza;
+
+    @FXML
+    private Button backButton;
+    @FXML
+    void onBackPressed(ActionEvent event) throws IOException {
+        try {
+            MainApplication.simpleBack();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     void onNewDogPressed(ActionEvent event) throws IOException{
@@ -39,9 +51,7 @@ public class NewDogController {
             } catch (Exception e) {
                 // messaggio errore
                 errorController.setTextError(e.getMessage());
-                // destinazione schermata successiva: sempre il login
-                errorController.setFXML("new_dog-view.fxml");
-                // andiamo nella schermata
+                // andiamo nella schermata di errore
                 MainApplication.goTo(secondRoot);
             }
         } else {
@@ -49,9 +59,7 @@ public class NewDogController {
 
             // messaggio errore
             errorController.setTextError("devi prima compilare entrambi i campi");
-            // destinazione schermata successiva: sempre il login
-            errorController.setFXML("new_dog-view.fxml");
-            // andiamo nella schermata
+            // andiamo nella schermata di errore
             MainApplication.goTo(secondRoot);
         }
     }

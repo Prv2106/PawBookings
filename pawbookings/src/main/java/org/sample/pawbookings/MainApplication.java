@@ -7,35 +7,40 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Stack;
+
 import domain_layer.PawBookings;
 import domain_layer.PeriodoAffido;
 
 public class MainApplication extends Application {
     private static Scene scene;
-    private static Parent previousRoot;
+    private static Stack<Parent> stackRoots = new Stack<>();
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("fork-view.fxml"));
-        scene = new Scene(fxmlLoader.load());
+        Parent root = new FXMLLoader(MainApplication.class.getResource("fork-view.fxml")).load();
+        scene = new Scene(root);
+        stackRoots.push(root);
         stage.setTitle("PawBookings-PC");
         stage.setScene(scene);
         stage.show();
     }
 
     static void setRoot(String fxml) throws IOException {
-        previousRoot = scene.getRoot();
         Parent root = new FXMLLoader(MainApplication.class.getResource(fxml)).load();
+        stackRoots.push(root);
         scene.setRoot(root);
     }
 
     static void goTo(Parent root) throws IOException {
-        previousRoot = scene.getRoot();
         scene.setRoot(root);
+        stackRoots.push(root);
     }
 
-    static void goBackRoot(boolean isMobile) throws IOException {
-        scene.setRoot(previousRoot);
+    static void goBackAndChangePlatform(boolean isMobile) throws IOException {
+        stackRoots.pop();
+        scene.setRoot(stackRoots.getLast());
+        
         Stage stage = new Stage(); // nuova finestra
         if (isMobile) {
             stage.setTitle("PawBookings-mobile");
@@ -47,10 +52,15 @@ public class MainApplication extends Application {
         stage.show();
     }
 
+    static void simpleBack() throws IOException {
+        stackRoots.pop();
+        scene.setRoot(stackRoots.getLast());
+    }
+
     static void setRootAndChangePlatform(String fxml, boolean isMobile) throws IOException {
         Parent root = new FXMLLoader(MainApplication.class.getResource(fxml)).load();
-        previousRoot = scene.getRoot();  
         scene.setRoot(root);
+        stackRoots.push(root);
         Stage stage = new Stage(); // nuova finestra
         if (isMobile) {
             stage.setTitle("PawBookings-mobile");
@@ -86,7 +96,6 @@ public class MainApplication extends Application {
         PB.aggiungiCane("Vanessa", "Labrador");
         
 
-        
         LinkedList<PeriodoAffido> lp = PB.affido();
         PB.selezionaPeriodo(lp.get(0));
         PB.confermaAffido(PB.getClienti().get("Giuseppe2").getCane(1));

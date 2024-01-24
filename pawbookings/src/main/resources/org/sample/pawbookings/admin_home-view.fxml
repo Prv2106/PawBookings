@@ -53,10 +53,10 @@
             <Image url="@../../../assets/pc_view.png" />
          </image>
       </ImageView>
-      <VBox maxHeight="625.0" maxWidth="350.0" minHeight="625.0" minWidth="350.0" prefHeight="625.0" prefWidth="350.0">
+      <VBox maxHeight="625.0" maxWidth="681.0" minHeight="625.0" minWidth="350.0" prefHeight="625.0" prefWidth="681.0">
          <children>
             <BorderPane prefHeight="153.0" prefWidth="350.0" />
-            <VBox alignment="CENTER" prefHeight="447.0" prefWidth="350.0">
+            <VBox alignment="CENTER" prefHeight="392.0" prefWidth="377.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onConcludiAffidoPressed" prefHeight="53.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Concludi Affido" textFill="WHITE">
                      <font>
@@ -73,6 +73,23 @@
                   <HBox prefHeight="65.0" prefWidth="350.0" BorderPane.alignment="CENTER" />
                </top>
             </BorderPane>
+            <HBox alignment="BOTTOM_RIGHT" prefHeight="60.0" prefWidth="350.0">
+               <children>
+                  <StackPane>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <children>
+                        <ImageView fitHeight="70.0" fitWidth="200.0">
+                           <image>
+                              <Image url="@../../../assets/logout.png" />
+                           </image>
+                        </ImageView>
+                        <Button mnemonicParsing="false" onAction="#onLogoutPressed" prefHeight="67.0" prefWidth="198.0" style="-fx-background-color: none;" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>

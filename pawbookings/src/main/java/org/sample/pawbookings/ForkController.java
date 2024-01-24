@@ -16,9 +16,7 @@ public class ForkController {
     void onAdminPressed(ActionEvent event) {
         // passiamo alla schermata di login per l'admin
         try {
-            Stage finestraCorrente = (Stage) button.getScene().getWindow();
-            finestraCorrente.close();
-            MainApplication.setRootAndChangePlatform("admin_login-view.fxml", false);
+            MainApplication.setRoot("admin_login-view.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }

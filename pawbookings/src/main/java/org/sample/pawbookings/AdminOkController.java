@@ -1,23 +1,20 @@
 package org.sample.pawbookings;
 
 import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
-public class ErrorController {
+public class AdminOkController {
+
     @FXML
     private Text textError;
-
-    public void setTextError(String txt) {
-        this.textError.setText(txt);
-    }
-  
 
     @FXML
     void onPressed(ActionEvent event) {
         try {
-            MainApplication.simpleBack();
+            MainApplication.setRoot("admin_home-view.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
