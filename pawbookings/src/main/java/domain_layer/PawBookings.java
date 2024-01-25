@@ -77,6 +77,7 @@ public class PawBookings {
         int capienza;
         // per ciascun corso presente in elencoCorsi viene verificato che il corso non sia pieno 
         // e in caso affermativo viene aggiunto all'elencoCorsiDisponibili
+        elencoCorsiDisponibili.clear();
         for(Corso i: elencoCorsi){
             capienza = i.getCapienza();
             if(capienza > 0){
@@ -95,9 +96,6 @@ public class PawBookings {
             // l'attributo attualmenteIscritto di caneSelezionato diventa true 
             // e viene inizializzata la variabile corsoCorrente di caneSelezionato
             caneSelezionato.aggiornaAttualmenteIscritto(cs);
-
-            // la lista elencoCorsiDisponibili viene svuotata
-            elencoCorsiDisponibili.clear();
 
             return true;
         }
@@ -219,10 +217,15 @@ public class PawBookings {
     public Boolean registrati(String nome, String cognome, String numeroTelefono, String password) {
         String codiceCliente;
         Cliente nuovoCliente;
-        codiceCliente = this.generaCodiceCliente(nome);
-        nuovoCliente = new Cliente(codiceCliente,nome,cognome,password,numeroTelefono);
-        this.clienti.putIfAbsent(codiceCliente, nuovoCliente);
-        return setClienteLoggato(nuovoCliente);
+        Boolean esito = checkNumTelefono(numeroTelefono);
+        if (esito) {
+            codiceCliente = this.generaCodiceCliente(nome);
+            nuovoCliente = new Cliente(codiceCliente,nome,cognome,password,numeroTelefono);
+            this.clienti.putIfAbsent(codiceCliente, nuovoCliente);
+            return setClienteLoggato(nuovoCliente);
+        } else {
+            return false;
+        }
     }
 
     
@@ -253,9 +256,13 @@ public class PawBookings {
         Cane cn;
         cl = this.clienti.get(codiceCliente);
         cn = cl.getCane(codiceCane);
-        setCaneSelezionato(cn);
-        return cn.getAffido();
-      
+        if (cn == null) {
+            setCaneSelezionato(cn);
+            return null;
+        } else {
+            setCaneSelezionato(cn);
+            return cn.getAffido();
+        }
     }
 
     public Boolean accediComeAdmin(int pin){
@@ -305,6 +312,13 @@ public class PawBookings {
         return this.numCani;
     }
 
-    
+    public boolean checkNumTelefono(String numeroTelefono) {
+        for (Cliente c : this.clienti.values()) {
+            if (c.getNumTelefono().equals(numeroTelefono)) {
+                return false;
+            }
+        }
 
+        return true;
+    }
 }
