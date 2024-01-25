@@ -77,6 +77,7 @@ public class PawBookings {
         int capienza;
         // per ciascun corso presente in elencoCorsi viene verificato che il corso non sia pieno 
         // e in caso affermativo viene aggiunto all'elencoCorsiDisponibili
+        elencoCorsiDisponibili.clear();
         for(Corso i: elencoCorsi){
             capienza = i.getCapienza();
             if(capienza > 0){
@@ -95,9 +96,6 @@ public class PawBookings {
             // l'attributo attualmenteIscritto di caneSelezionato diventa true 
             // e viene inizializzata la variabile corsoCorrente di caneSelezionato
             caneSelezionato.aggiornaAttualmenteIscritto(cs);
-
-            // la lista elencoCorsiDisponibili viene svuotata
-            elencoCorsiDisponibili.clear();
 
             return true;
         }
