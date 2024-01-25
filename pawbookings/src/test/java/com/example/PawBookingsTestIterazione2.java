@@ -64,7 +64,7 @@ class PawBookingsTestIterazione2 {
 
         lunghezzaSuccessiva = lunghezzaPrecedente + 3;
 
-        // Ci asepttiamo che la lunghezza della lista dei clienti di PB sia 4
+        // Ci asepttiamo che la lunghezza della lista dei clienti di PB sia aumentata di 3
         assertEquals(lunghezzaSuccessiva,PB.getClienti().size());
     }
 
@@ -167,23 +167,40 @@ class PawBookingsTestIterazione2 {
 
     @Test
     void testAggiungiCane(){
-        int numeroCaniPrecedente;
-        int numeroCaniSuccessivo;
+        int numeroCaniSistemaPrecedente;
+        int numeroCaniSistemaSuccessivo;
+        int numeroCaniClientePrecedente;
+        int numeroCaniClienteSuccessivo;
         PB.accedi("Alberto1", "0000");
-        numeroCaniPrecedente = PB.getClienteLoggato().getCani().size();
+        numeroCaniClientePrecedente = PB.getClienteLoggato().getCani().size();
+        numeroCaniSistemaPrecedente = PB.getNumeroCani();
         PB.aggiungiCane("Maya", "Pastore Tedesco");
-        numeroCaniSuccessivo = numeroCaniPrecedente +1;
+        numeroCaniSistemaSuccessivo = numeroCaniSistemaPrecedente +1;
+        numeroCaniClienteSuccessivo = numeroCaniClientePrecedente + 1;
 
         // Verifico che la lunghezza della lista dei cani posseduti da Alberto è aumentata di 1
-        assertEquals(numeroCaniSuccessivo, PB.getClienteLoggato().getCani().size());
+        assertEquals(numeroCaniClienteSuccessivo, PB.getClienteLoggato().getCani().size());
 
         // Verifico che la lista dei cani posseduti da Alberto contiene Maya
-        Cane Maya = PB.getClienteLoggato().getCane(numeroCaniSuccessivo);
+        Cane Maya = PB.getClienteLoggato().getCane(numeroCaniSistemaSuccessivo);
         assertTrue(PB.getClienteLoggato().getCani().contains(Maya));
     
 
     }
 
+
+    @Test
+    void testGeneraCodiceCane(){
+        int numCodiceCanePrecedente;
+        int numCodiceCaneSuccessivo;
+        PB.accedi("Alberto1", "0000");
+        // Il codiceCane corrisponde al valore della variabile di PB numCani
+        numCodiceCanePrecedente = PB.getNumeroCani();
+        numCodiceCaneSuccessivo = numCodiceCanePrecedente + 1;
+        // Verifichiamo che chiamando il metodo generaCodiceCane viene incrementato di 1 il codiceCane 
+        assertEquals(numCodiceCaneSuccessivo, PB.generaCodiceCane());
+    }
+    
 
     
     @Test
