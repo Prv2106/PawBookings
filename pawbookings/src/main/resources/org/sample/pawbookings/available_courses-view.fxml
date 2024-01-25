@@ -86,7 +86,7 @@
                                     <Image url="@../../../assets/back.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackPressed" prefHeight="61.0" prefWidth="89.0" style="-fx-background-color: trasparent;" />
+                              <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackPressed" prefHeight="61.0" prefWidth="89.0" style="-fx-background-color: #00000000;" />
                            </children>
                         </StackPane>
                      </children>
