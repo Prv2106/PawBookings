@@ -40,20 +40,15 @@ public class Cliente {
     }
 
     // Il metodo registra un cane, aggiungendolo alla lista dei cani posseduti dal cliente.
-    public boolean registraCane(String nome, String razza){
-        int codCane = generaCodiceCane();
-        Cane nuovoCane = new Cane(codCane, nome, razza);
+    public boolean registraCane(String nome, String razza, int codiceCane){
+        Cane nuovoCane = new Cane(codiceCane, nome, razza);
         return caniPosseduti.add(nuovoCane);
     }
 
     // Il metodo genera un codice cane, che è il risultato della somma tra il numero di cani posseduti e 1.
+   
     
-    public int generaCodiceCane(){
-        return this.caniPosseduti.size() + 1;
-    }
-
     // Metodi per recuperare gli attributi
-
     public String getCodiceCliente() {
         return this.codiceCliente;
     }

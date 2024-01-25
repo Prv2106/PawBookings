@@ -18,6 +18,8 @@ public class PawBookings {
     private LinkedList<PeriodoAffido> elencoPeriodiDisponibili;
     private Cliente clienteLoggato;
     private PeriodoAffido periodoSelezionato;
+    private int numCani;
+
 
  
 
@@ -27,7 +29,8 @@ public class PawBookings {
         this.elencoCorsiDisponibili = new LinkedList<>();
         this.clienti = new HashMap<>();
         this.elencoPeriodiDisponibili = new LinkedList<>();
-        this.pinAdmin = 1234; 
+        this.pinAdmin = 1234;
+        this.numCani= 0;
         this.elencoPeriodiDisponibili = new LinkedList<>();
         this.loadCorsi();
         this.loadPeriodiAffido();
@@ -241,7 +244,8 @@ public class PawBookings {
 
 
     public Boolean aggiungiCane(String nome, String razza){
-        return clienteLoggato.registraCane(nome, razza);
+        int codiceCane = this.generaCodiceCane();
+        return clienteLoggato.registraCane(nome, razza, codiceCane);
     }
 
     public PeriodoAffido concludiAffido(String codiceCliente, int codiceCane) {
@@ -289,5 +293,18 @@ public class PawBookings {
     }
 
 
+
+    public int generaCodiceCane(){
+        this.numCani += 1;
+        return this.numCani;
+        
+    }
+
+
+    public int getNumeroCani(){
+        return this.numCani;
+    }
+
+    
 
 }

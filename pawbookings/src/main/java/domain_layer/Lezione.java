@@ -44,9 +44,9 @@ public class Lezione {
 
     private void  loadTurni(){
 
-        Turno t1 = new Turno(LocalDate.of(2024, 1, 20), LocalTime.of(9, 0), LocalTime.of(10, 0));
-        Turno t2 = new Turno(LocalDate.of(2024, 1, 20), LocalTime.of(15, 0), LocalTime.of(16, 0));
-        Turno t3 = new Turno(LocalDate.of(2024, 1, 20), LocalTime.of(18, 0), LocalTime.of(19, 0));
+        Turno t1 = new Turno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
+        Turno t2 = new Turno(LocalDate.now().plusDays(1), LocalTime.of(15, 0), LocalTime.of(16, 0));
+        Turno t3 = new Turno(LocalDate.now().plusDays(1), LocalTime.of(18, 0), LocalTime.of(19, 0));
         
       
         this.elencoTurniDisponibili.add(t1);
