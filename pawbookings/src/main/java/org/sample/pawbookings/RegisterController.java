@@ -55,18 +55,20 @@ public class RegisterController {
             // operazione di sistema
             PawBookings PB = PawBookings.getInstance();  
             try {
-                PB.registrati(name, surname, tel, password);
-                MainApplication.setRoot("ok-view.fxml");
+                if (PB.registrati(name, surname, tel, password)) {
+                    MainApplication.setRoot("ok-view.fxml");
+                } else {
+                    // utente già iscritto
+                    errorController.setTextError("Il numero di telefono inserito risulta già presente nel sistema");
+                    // andiamo nella schermata di errore
+                    MainApplication.goTo(secondRoot);
+                }
             } catch (Exception e) {
-                // utente non trovato... quindi:
-                // messaggio errore
                 errorController.setTextError(e.getMessage());
                 // andiamo nella schermata di errore
                 MainApplication.goTo(secondRoot);
             }
         } else {
-            // i campi sono vuoti...
-
             // messaggio errore
             errorController.setTextError("devi prima compilare tutti i campi");
             // andiamo nella schermata di errore

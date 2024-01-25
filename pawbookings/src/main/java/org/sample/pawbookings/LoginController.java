@@ -49,13 +49,18 @@ public class LoginController {
             // operazione di sistema
             PawBookings PB = PawBookings.getInstance();  
             try {
-                PB.accedi(codice, password);
-                MainApplication.setRoot("home_page-view.fxml");
+                if (PB.accedi(codice, password)) {
+                    MainApplication.setRoot("home_page-view.fxml");
+                } else {
+                    // utente non trovato
+                    // messaggio errore
+                    errorController.setTextError("UTENTE NON TROVATO");
+                    // andiamo nella schermata di errore
+                    MainApplication.goTo(secondRoot);
+                }
             } catch (Exception e) {
-                // utente non trovato... quindi:
-                // messaggio errore
-                errorController.setTextError("UTENTE NON TROVATO");
-                // andiamo nella schermata di errore
+                errorController.setTextError(e.getMessage());
+                // andiamo nella schermatav di errore
                 MainApplication.goTo(secondRoot);
             }
         } else {

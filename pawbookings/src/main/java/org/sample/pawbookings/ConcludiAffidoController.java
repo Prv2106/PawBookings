@@ -49,21 +49,29 @@ public class ConcludiAffidoController {
         if (!codiceCliente.isEmpty() && !codiceCane.isEmpty()) {
             // operazione di sistema
             PawBookings PB = PawBookings.getInstance();  
-            PeriodoAffido pa = PB.concludiAffido(codiceCliente, Integer.parseInt(codiceCane));
+            
             try {
-                // recuperiamo il loader relativa alla schermata di dettagli affido (fxml)
-                FXMLLoader ld = new FXMLLoader(getClass().getResource("dettagli_affido-view.fxml"));
-                Parent root = ld.load(); // qui viene chiamato l'eventuale INITIALIZE
-                // ne recuperiamo il relativo controller
-                DettagliAffidoController controller = ld.getController();
-                controller.start(pa);
-                // andiamo nella schermata
-                MainApplication.goTo(root);
+                PeriodoAffido pa = PB.concludiAffido(codiceCliente, Integer.parseInt(codiceCane));
+                if (pa != null) {
+                    // recuperiamo il loader relativa alla schermata di dettagli affido (fxml)
+                    FXMLLoader ld = new FXMLLoader(getClass().getResource("dettagli_affido-view.fxml"));
+                    Parent root = ld.load(); // qui viene chiamato l'eventuale INITIALIZE
+                    // ne recuperiamo il relativo controller
+                    DettagliAffidoController controller = ld.getController();
+                    controller.start(pa);
+                    // andiamo nella schermata
+                    MainApplication.goTo(root);
+                } else {
+                    // nessun affido trovato sulla base dei dati inseriti:
+                    errorController.setTextError("Nessuna corrispondenza trovata");
+                    // andiamo nella schermata di errore
+                    MainApplication.goTo(secondRoot);
+                }
             } catch (Exception e) {
                 // nessun periodo trovato sulla base dei dati inseriti... quindi:
-                errorController.setTextError(e.getMessage());
-                // andiamo nella schermata di errore
-                MainApplication.goTo(secondRoot);
+                    errorController.setTextError(e.getMessage());
+                    // andiamo nella schermata di errore
+                    MainApplication.goTo(secondRoot);
             }
         } else {
             // i campi sono vuoti...
