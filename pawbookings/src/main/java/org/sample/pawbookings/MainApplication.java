@@ -98,7 +98,7 @@ public class MainApplication extends Application {
 
         LinkedList<PeriodoAffido> lp = PB.affido();
         PB.selezionaPeriodo(lp.get(0));
-        PB.confermaAffido(PB.getClienti().get("Giuseppe2").getCane(1));
+        PB.confermaAffido(PB.getClienti().get("Giuseppe2").getCane(3));
       
         launch(args);
     }
