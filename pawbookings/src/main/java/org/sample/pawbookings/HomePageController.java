@@ -62,11 +62,11 @@ public class HomePageController implements Initializable {
                             } else {
                                 // nome e razza
                                 VBox vbox = new VBox();
-                                Label nomeLabel = new Label("Nome: " + cane.getNome());
-                                Label razzaLabel = new Label("Razza: " + cane.getRazza());
-                                vbox.getChildren().addAll(nomeLabel, razzaLabel);
+                                vbox.getChildren().add(new Label("Nome: " + cane.getNome()));
+                                vbox.getChildren().add(new Label("Razza: " + cane.getRazza()));
+                                vbox.getChildren().add(new Label("Codice: " + cane.getCodiceCane()));
 
-                                // Imposta il contenuto della cella
+                                // Impostiiamo il contenuto della cella
                                 setGraphic(vbox);
 
         // -------------------> Aggiungiamo il listener per l'evento di click
