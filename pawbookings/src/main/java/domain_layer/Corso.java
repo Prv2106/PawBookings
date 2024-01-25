@@ -12,7 +12,6 @@ public abstract class Corso {
     protected LinkedList<Lezione> programma;
 
     
-
     //Costruttore dell classe Corso
     public Corso(int codice, int capienza, float costo, String tipoCorso) { //La capienza viene passata da PawBookings
         this.codice = codice;
@@ -23,7 +22,6 @@ public abstract class Corso {
         this.programma = new LinkedList<>();
         
     }
-
 
     // metodo implementato dalle sottoclassi di Corso...
     public abstract void loadLezioni();
