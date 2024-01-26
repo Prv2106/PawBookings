@@ -12,7 +12,6 @@ public class Corso {
     protected LinkedList<Lezione> programma;
 
     
-
     //Costruttore dell classe Corso
     public Corso(int codice, int capienza, float costo, String tipoCorso) { //La capienza viene passata da PawBookings
         this.codice = codice;
@@ -23,7 +22,6 @@ public class Corso {
         this.programma = new LinkedList<>();
         
     }
-
 
 
     // Metodo per confermare l'iscrizione di un cane e aggiornare la capienza
