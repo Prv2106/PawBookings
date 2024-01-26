@@ -311,4 +311,8 @@ public class PawBookings {
 
         return true;
     }
+
+    public LinkedList<Corso> getElencoCorsi() {
+        return this.elencoCorsi;
+    }
 }

@@ -53,4 +53,14 @@ public class ChooseActivityController {
             MainApplication.goTo(secondRoot);
         }
     }
+
+    @FXML
+    void onScambiaTurnoClicked(ActionEvent event) {
+        // passiamo alla schermata che mostra l'elenco dei turni disponibili
+        try {
+            MainApplication.setRoot("available_shifts_to_switch-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

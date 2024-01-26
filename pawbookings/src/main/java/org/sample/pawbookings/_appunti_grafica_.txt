@@ -12,19 +12,25 @@ colore base:  #4facfe
 TODO: (Iterazione 3)
 
 - LATO CLIENTE:
-    - nuovo pulsante "Scambia turno" nella pagine "ChooseActicity", il quale rimanda alla pagina "AvailbleShiftsToSwitch" (1)
-    - nuovo pulsante "Programmi" nella home page, che rimanda alla pagina "ShowAllCourse" (2)
-    - nuovo pulsante "Mostra stato avanzamento corso", che rimanda alla pagina "ShowCourseState" (3)
+    - nuovo pulsante "Scambia turno" nella pagina "ChooseActivity", il quale rimanda alla pagina "AvailbleShiftsToSwitch" (1)
+    - nuovo pulsante "Programmi" nella home page, che rimanda alla pagina "ShowAllCourses" (2)  
+    - nuovo pulsante "Mostra stato avanzamento corso", nella pagina "ChooseActivity" che rimanda alla pagina "ShowCourseState" (3)
+    - nuovo pulsante "leggi stato di salute" nella home page, che rimanda alla pagina "ReadNotifications" (4)
 
     (1) nuova pagina "AvailbleShiftsToSwitch", molto simile alla "AvailableShifts" se non uguale, cambiano solo le operazione di sistema in input
         e output (dopo la seleziona del turno).
 
     (2) nuova pagina  "ShowAllCourses", che restituisce l'elenco di tutti i corsi offerti dal centro
-    --> al click su un corso, si va alla pagina "ShowProgram"
+    --> al click su un corso, si va alla pagina "ShowProgram" passando come parametro il corso
 
     - nuova pagina "ShowProgram", che restituisce per ciascuna lezione, nome della lezione con l'elenco degli esercizi
 
     (3) nuova pagina "ShowCourseState", che mostra 2 ListView: una per le lezioni seguite, l'altra per quelle mancanti
+
+    (4) nuova pagina "ReadNotifications", che mostra 1 ListView contentente tutti i cani per cui è stata ricevuta una notifica, con annessa 
+        la relativa notifica
+        --> l'oggetto i-esimo è ottenuto dall'iterazione di una mappa Map<String,String> dove la chiave è il nome del cane e il valore è il 
+            messaggio inviato dall'amministratore
 
     
 - LATO AMMINISTRATORE:
@@ -67,7 +73,7 @@ TODO: (Iterazione 3)
     --> al click su un periodo di affido, andiamo alla pagina "ShowDogsToRate"
 
     - nuova pagina "ShowDogsToRate", che restituisce l'elenco dei cani con, per ciascun cane, accanto una textfield dove inserire il relativo
-        commento.. in basso, poi, un pulsante "invia notifiche"
+        commento.. in basso, poi, un pulsante "Notifica clienti"
 
 
 

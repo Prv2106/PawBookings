@@ -105,8 +105,7 @@ public class HomePageController implements Initializable {
 
     @FXML
     void onNotificationIconPressed(ActionEvent event) {
-        noNotificationIcon.setVisible(!noNotificationIcon.isVisible());
-        notificationIcon.setVisible(!notificationIcon.isVisible());
+       
     }
 
      @FXML
