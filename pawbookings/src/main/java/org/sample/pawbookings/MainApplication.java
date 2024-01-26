@@ -99,6 +99,57 @@ public class MainApplication extends Application {
         LinkedList<PeriodoAffido> lp = PB.affido();
         PB.selezionaPeriodo(lp.get(0));
         PB.confermaAffido(PB.getClienti().get("Giuseppe2").getCane(3));
+
+
+
+
+        /*  DATI CORSI
+         *  CorsoBase corsoBase = new CorsoBase(1,10,200.0F,"Corso Base");
+            CorsoAvanzato corsoAvanzato = new CorsoAvanzato(2,10,250.0F,"Corso Avanzato");
+            CorsoAgility corsoAgility = new CorsoAgility(3,5,300.0F,"Corso Agility");
+
+         */
+
+
+
+        /*
+         * ROGRAMMI CORSI
+         */
+
+        /* CORSO BASE
+         *  Lezione lezione1 = new Lezione(1,"Comandi di Base");
+            Lezione lezione2 = new Lezione(2,"Guinzaglio e Camminare al Guinzaglio");
+            Lezione lezione3 = new Lezione(3,"Dai la Zampa e Seduto");
+            Lezione lezione4 = new Lezione(4,"Controllo delle Impulsività");
+        */
+
+
+        /* CORSO AVANZATO
+         *  Lezione l1 = new Lezione(1, "Messa al piede del cane‌");
+            Lezione l2 = new Lezione(2, "Condotta senza guinzaglio‌");
+            Lezione l3 = new Lezione(3, "Svolte, dietro front e variazioni delle andature");
+            Lezione l4 = new Lezione(4, "Posizioni di seduto e terra in condotta”");
+            Lezione l5 = new Lezione(5, "Riporto in piano di un oggetto");
+
+        */
+
+
+        /* CORSO AGILITY
+         * Lezione l1 = new Lezione(1, "Introduzione all'Agility");
+           Lezione l2 = new Lezione(2, "Comandi di Base‌");
+           Lezione l3 = new Lezione(3, "Abilità di Controllo e Fiducia");
+           Lezione l4 = new Lezione(4, "Sequenze di Ostacoli");
+           Lezione l5 = new Lezione(5, "Gare Simulate"); 
+        */
+
+
+
+
+
+
+
+
+
       
         launch(args);
     }
