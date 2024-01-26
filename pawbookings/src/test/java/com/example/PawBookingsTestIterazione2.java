@@ -36,7 +36,24 @@ class PawBookingsTestIterazione2 {
         assertNotNull(PB);
     }
 
+    @Test
+    void testVerificaIdoneitaPrenotazioneTurno() {
+        // seguiamo l'accesso con un utene i cui cani non sono iscirtti a nessun corso
+        PB.accedi("Alberto1", "0000");
+        
+        // simuliamo la selezione del cane
+        PB.selezionaCane(PB.getClienteLoggato().getCane(1));
+        
+        // siccome "Stella", il cane il cui codice è 1, non è iscritta a nessun corso, 
+        // il test deve restituire false 
+        assertFalse(PB.verificaIdoneitaPrenotazioneTurno());
 
+        // adesso iscriviamo il cane al corso base
+        PB.confermaIscrizioneCorso(PB.elencoCorsi.get(0));
+
+        // il test deve restituire true
+        assertTrue(PB.verificaIdoneitaPrenotazioneTurno());
+    }
 
     @Test
     void testAccediComeAdmin(){
