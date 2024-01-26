@@ -21,7 +21,6 @@ public class Lezione {
         this.nome = nome;
         // Inizializzazione dell'elenco dei turni disponibili come un nuovo ArrayList
         this.elencoTurniDisponibili = new LinkedList<>();
-        this.loadTurni();
     }
 
     // Metodo per aggiornare l'elenco dei turni disponibili
@@ -39,23 +38,6 @@ public class Lezione {
     public String getNome() {
         return this.nome;
     }
-
-
-
-    private void  loadTurni(){
-
-        Turno t1 = new Turno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
-        Turno t2 = new Turno(LocalDate.now().plusDays(1), LocalTime.of(15, 0), LocalTime.of(16, 0));
-        Turno t3 = new Turno(LocalDate.now().plusDays(1), LocalTime.of(18, 0), LocalTime.of(19, 0));
-        
-      
-        this.elencoTurniDisponibili.add(t1);
-        this.elencoTurniDisponibili.add(t2);
-        this.elencoTurniDisponibili.add(t3);
-
-        
-    }
-
 
 
 }
