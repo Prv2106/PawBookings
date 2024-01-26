@@ -32,7 +32,6 @@ public class PawBookings {
         this.pinAdmin = 1234;
         this.numCani= 0;
         this.elencoPeriodiDisponibili = new LinkedList<>();
-        this.loadCorsi();
         this.loadPeriodiAffido();
     }
 
@@ -45,18 +44,7 @@ public class PawBookings {
     }
 
 
-    public void loadCorsi(){
-        CorsoBase corsoBase = new CorsoBase(1,10,200.0F,"Corso Base");
-        CorsoAvanzato corsoAvanzato = new CorsoAvanzato(2,10,250.0F,"Corso Avanzato");
-        CorsoAgility corsoAgility = new CorsoAgility(3,5,300.0F,"Corso Agility");
-
-        this.elencoCorsi.add(corsoBase);
-        this.elencoCorsi.add(corsoAvanzato);
-        this.elencoCorsi.add(corsoAgility);
-
-        System.out.println("Caricamento Corsi completato con successo!");        
-    }
-
+  
 
     public void loadPeriodiAffido(){
 

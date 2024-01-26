@@ -64,12 +64,11 @@ public class Cane {
         return esito;
     }
     
-    public boolean aggiornaAssociazioniCane(){
+    public void aggiornaAssociazioniCane(){
         if (this.attualmenteIscritto) {
             this.corsoCorrente.annullaIscrizione(this);
             corsoCorrente.elencoCaniIscritti.remove(this);
         }
-        return true;
     }
 
     // ********** getters 'semplici' *********

@@ -3,7 +3,7 @@ package domain_layer;
 
 import java.util.LinkedList;
 
-public abstract class Corso {
+public class Corso {
     private int codice;
     private int capienza;
     private float costo;
@@ -12,6 +12,7 @@ public abstract class Corso {
     protected LinkedList<Lezione> programma;
 
     
+
     //Costruttore dell classe Corso
     public Corso(int codice, int capienza, float costo, String tipoCorso) { //La capienza viene passata da PawBookings
         this.codice = codice;
@@ -23,8 +24,7 @@ public abstract class Corso {
         
     }
 
-    // metodo implementato dalle sottoclassi di Corso...
-    public abstract void loadLezioni();
+
 
     // Metodo per confermare l'iscrizione di un cane e aggiornare la capienza
     public void confermaIscrizione(Cane cn) {
