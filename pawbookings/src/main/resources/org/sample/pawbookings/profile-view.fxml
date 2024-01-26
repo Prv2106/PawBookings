@@ -47,7 +47,7 @@
                         </Text>
                      </children>
                   </HBox>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNewDogPressed" prefHeight="85.0" prefWidth="314.0" style="-fx-background-color: #03fc17;" text="Aggiungi un cane" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNewDogPressed" prefHeight="85.0" prefWidth="314.0" style="-fx-background-color: #8ceb34;" text="Aggiungi un cane" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>

@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -31,11 +32,25 @@ public class HomePageController implements Initializable {
     @FXML
     private Text text;
 
+    @FXML
+    private ImageView noNotificationIcon;
+
+    @FXML
+    private ImageView notificationIcon;
+
+
     // metodo che viene richiamato all'apertura della schermata
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // popoliamo la lista
         PawBookings PB = PawBookings.getInstance();  
+
+        // preoccupiamoci dell'icon della "posta"
+        if (PB.getClienteLoggato().getNotifica()) {
+            // se l'utente ha notifiche da leggere
+            noNotificationIcon.setVisible(false);
+        } else {
+            notificationIcon.setVisible(false);
+        }
         
         // Caricamento dei Cani del Cliente per l'avviamento
         LinkedList<Cane> listaCani = PB.getClienteLoggato().getCani();
@@ -88,6 +103,12 @@ public class HomePageController implements Initializable {
         }
     }
 
+    @FXML
+    void onNotificationIconPressed(ActionEvent event) {
+        noNotificationIcon.setVisible(!noNotificationIcon.isVisible());
+        notificationIcon.setVisible(!notificationIcon.isVisible());
+    }
+
      @FXML
     void onDogTabPressed(ActionEvent event) {
         // andiamo nella schermata relativa all'affido
@@ -106,6 +127,11 @@ public class HomePageController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void onVisualizzaProgrammaPressed(ActionEvent event) {
+        
     }
     
 
