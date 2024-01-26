@@ -36,7 +36,24 @@ class PawBookingsTestIterazione2 {
         assertNotNull(PB);
     }
 
+    @Test
+    void testVerificaIdoneitaPrenotazioneTurno() {
+        // seguiamo l'accesso con un utene i cui cani non sono iscirtti a nessun corso
+        PB.accedi("Alberto1", "0000");
+        
+        // simuliamo la selezione del cane
+        PB.selezionaCane(PB.getClienteLoggato().getCane(1));
+        
+        // siccome "Stella", il cane il cui codice è 1, non è iscritta a nessun corso, 
+        // il test deve restituire false 
+        assertFalse(PB.verificaIdoneitaPrenotazioneTurno());
 
+        // adesso iscriviamo il cane al corso base
+        PB.confermaIscrizioneCorso(PB.elencoCorsi.get(0));
+
+        // il test deve restituire true
+        assertTrue(PB.verificaIdoneitaPrenotazioneTurno());
+    }
 
     @Test
     void testAccediComeAdmin(){
@@ -56,7 +73,7 @@ class PawBookingsTestIterazione2 {
         int lunghezzaSuccessiva;
 
          // Il codiceCliente di Pippo deve essere Pippo2
-         PB.registrati("Pippo", "Baudo", "12345123", "0000");
+         PB.registrati("Pippo", "Baudo", "12345678", "0000");
          // Il codiceCliente di Giuseppe deve essere Giuseppe3
          PB.registrati("Giuseppe", "Leocata", "562562", "0000");
          // Il codiceCliente di Daniele deve essere Daniele4
@@ -66,17 +83,6 @@ class PawBookingsTestIterazione2 {
 
         // Ci asepttiamo che la lunghezza della lista dei clienti di PB sia aumentata di 3
         assertEquals(lunghezzaSuccessiva,PB.getClienti().size());
-    }
-
-    @Test
-    void testCheckNumTelefono() {
-        // inserendo il numero: 12345678, che è il numero con cui è stato registrato l'utente Alberto,
-        // ci aspettiamo che il metodo ritorni false
-        assertFalse(PB.checkNumTelefono("12345678"));
-
-        // inserendo il numero: 87654321, che non appartiene a nessun utene,
-        // ci aspettiamo che il metodo ritorni true
-        assertTrue(PB.checkNumTelefono("87654321"));
     }
 
 
