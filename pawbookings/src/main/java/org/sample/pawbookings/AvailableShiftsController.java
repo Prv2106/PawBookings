@@ -25,7 +25,7 @@ public class AvailableShiftsController implements Initializable {
     @FXML
     private ListView<Turno> list;
 
-    // creiamo una lista osservabile per i corsi
+    // creiamo una lista osservabile per i turni
     ObservableList<Turno> items = FXCollections.observableArrayList();
 
     @FXML

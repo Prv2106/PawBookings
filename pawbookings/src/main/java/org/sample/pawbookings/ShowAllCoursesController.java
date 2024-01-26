@@ -28,7 +28,6 @@ public class ShowAllCoursesController implements Initializable{
 
     @FXML
     private ListView<Corso> list;
-
     // creiamo una lista osservabile per i corsi
     ObservableList<Corso> items = FXCollections.observableArrayList();
 
@@ -43,7 +42,6 @@ public class ShowAllCoursesController implements Initializable{
     
         @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // popoliamo la lista
         PawBookings PB = PawBookings.getInstance();  
         LinkedList<Corso> elencoCorsi = PB.getElencoCorsi();
         
