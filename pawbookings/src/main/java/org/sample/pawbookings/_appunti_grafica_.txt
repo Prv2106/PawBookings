@@ -1,0 +1,83 @@
+Mobile:
+    larghezza finestre: 350
+    altezza finestre: 625
+
+Desktop:
+    larghezza: 800
+    altezza: 650
+
+colore base:  #4facfe  
+
+
+TODO: (Iterazione 3)
+
+- LATO CLIENTE:
+    - nuovo pulsante "Scambia turno" nella pagine "ChooseActicity", il quale rimanda alla pagina "AvailbleShiftsToSwitch" (1)
+    - nuovo pulsante "Programmi" nella home page, che rimanda alla pagina "ShowAllCourse" (2)
+    - nuovo pulsante "Mostra stato avanzamento corso", che rimanda alla pagina "ShowCourseState" (3)
+
+    (1) nuova pagina "AvailbleShiftsToSwitch", molto simile alla "AvailableShifts" se non uguale, cambiano solo le operazione di sistema in input
+        e output (dopo la seleziona del turno).
+
+    (2) nuova pagina  "ShowAllCourses", che restituisce l'elenco di tutti i corsi offerti dal centro
+    --> al click su un corso, si va alla pagina "ShowProgram"
+
+    - nuova pagina "ShowProgram", che restituisce per ciascuna lezione, nome della lezione con l'elenco degli esercizi
+
+    (3) nuova pagina "ShowCourseState", che mostra 2 ListView: una per le lezioni seguite, l'altra per quelle mancanti
+
+    
+- LATO AMMINISTRATORE:
+    - nuovo pulsante "Gestisci corso" nella AdminHomePage, il quale rimanda alla pagina "ManageCourse" (1)
+    - nuovo pulsante "Inserisci turno lezione" nella AdminHomePage, il quale rimanda alla pagina "CoursesWithDogs" (2)
+    - nuovo pulsante "Notifica stato di Salute" nella AdminHomePage, che rimanda alla pagina "ShowPeriodsWithDogs" (3)
+
+    (1) nuova pagina "ManageCourse", la quale contiene tre pulsanti: 
+            - "Inserisci corso", -> pagina "NewCourse"
+            - "Modifica informazioni di un corso" -> pagina "AllCourses" 
+            - "Modifica programma di un corso" -> pagina "AllCourses"
+
+    - nuova pagina "NewCourse", la quale contiene 3 textfields (molto simile a quella del login):
+      "tipo corso: ", "capienza: ", "costo: "
+
+    - nuova pagina "AllCourses", la quale (molto similmente alla AvailableCourses lato Cliente) restituisce tutti i corsi, 
+        il cui Controller deve essere richiamato dalle schermate precedenti in quanto dobbiamo passare la stringa fxml della schermata 
+        successiva, per distinguere se andare nella modifica informazioni "ModifyInfoCourse" o nella modifica programma "ModifyProgramCourse"
+
+    - nuova pagina "ModifyInfoCourse", la quale manda a schermo 2 textfields: "costo", "capienza" ed 1 pulsante "Modifica", il quale
+        rimanda alla schermata di successo classica
+
+    - nuova pagina "ModifyProgramCourse", la quale manda a schermo 1 textfield "nome nuova lezione" ed 1 pulsante "aggiungi lezione"
+        -> quest'ultimo pulsante rimanda alla pagina "NewExercise"
+
+    - nuova pagina "NewExercise", la quale contiene, oltre ad un Text "lezione: 'nomeLezione" 2 textfield "nome esercizio", "descrizione",
+         ed 1 pulsante "aggiungi esercizio". Tale pulsante ci rimanda ad una pagina di successo "esercizio aggiunto alla lezione", e 
+         2 pulsanti: "inserisci nuovo esercizio" e "ho finito"
+
+
+    (2) nuova pagina "CoursesWithDogs", che restituisce l'elenco dei corsi filtrati sulla base della presenza o meno di un cane iscritto
+    --> al click su un corso da tale pagina, andiamo nella pagina "ShowProgramOfCourse"
+
+    - nuova pagina "ShowProgramOfCourse", che restituisce l'elenco delle lezioni di un corso
+    --> al click su una lezione da tale pagina, andiamo nella pagina "NewShift"
+
+    - nuova pagina "NewShift", che contiene 3 textfields: "data", "ora inizio", "ora fine" e 1 tasto "inserisci nuovo turno"
+
+    (3) nuova pagina "ShowPeriodsWithDogs", che restituisce l'elenco dei periodi di affido filtrati sulla base della presenza o meno di un cane
+    --> al click su un periodo di affido, andiamo alla pagina "ShowDogsToRate"
+
+    - nuova pagina "ShowDogsToRate", che restituisce l'elenco dei cani con, per ciascun cane, accanto una textfield dove inserire il relativo
+        commento.. in basso, poi, un pulsante "invia notifiche"
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -3,6 +3,7 @@ package domain_layer;
 import java.util.LinkedList;
 
 public class Cliente {
+    private boolean notifica;
     private String codiceCliente;
     private String nome;
     private String cognome;
@@ -16,6 +17,7 @@ public class Cliente {
         this.cognome = cognome;
         this.password = password;
         this.numeroTelefono = numeroTelefono;
+        this.notifica = false;
         this.caniPosseduti = new LinkedList<>();
     }
 
@@ -86,6 +88,10 @@ public class Cliente {
 
     public String getNumTelefono() {
         return this.numeroTelefono;
+    }
+
+    public boolean getNotifica() {
+        return this.notifica;
     }
 
 
