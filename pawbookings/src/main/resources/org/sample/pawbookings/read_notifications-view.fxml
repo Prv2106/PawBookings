@@ -45,7 +45,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="625.0" maxWidth="350.0" minHeight="625.0" minWidth="350.0" prefHeight="625.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sample.pawbookings.ShowProgramController">
+<StackPane maxHeight="625.0" maxWidth="350.0" minHeight="625.0" minWidth="350.0" prefHeight="625.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sample.pawbookings.ReadNotificationsController">
    <children>
       <ImageView fitWidth="350.0" pickOnBounds="true" preserveRatio="true">
          <viewport>
@@ -65,18 +65,10 @@
                         <Insets left="20.0" />
                      </VBox.margin>
                      <children>
-                        <Text fill="#393838" strokeType="OUTSIDE" strokeWidth="0.0" text="Porgramma del corso: " wrappingWidth="186.91796875">
+                        <Text fill="#393838" strokeType="OUTSIDE" strokeWidth="0.0" text="Notifiche per te:" wrappingWidth="186.91796875">
                            <font>
                               <Font size="18.0" />
                            </font>
-                        </Text>
-                        <Text fx:id="courseName" strokeType="OUTSIDE" strokeWidth="0.0" text="Corso Base">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
                         </Text>
                      </children>
                   </HBox>

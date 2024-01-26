@@ -36,7 +36,7 @@ TODO: (Iterazione 3)
 - LATO AMMINISTRATORE:
     - nuovo pulsante "Gestisci corso" nella AdminHomePage, il quale rimanda alla pagina "ManageCourse" (1)
     - nuovo pulsante "Inserisci turno lezione" nella AdminHomePage, il quale rimanda alla pagina "CoursesWithDogs" (2)
-    - nuovo pulsante "Notifica stato di Salute" nella AdminHomePage, che rimanda alla pagina "ShowPeriodsWithDogs" (3)
+    - nuovo pulsante "Notifica stato di Salute" nella AdminHomePage, che rimanda alla pagina "PeriodsWithDogs" (3)
 
     (1) nuova pagina "ManageCourse", la quale contiene tre pulsanti: 
             - "Inserisci corso", -> pagina "NewCourse"
@@ -69,7 +69,7 @@ TODO: (Iterazione 3)
 
     - nuova pagina "NewShift", che contiene 3 textfields: "data", "ora inizio", "ora fine" e 1 tasto "inserisci nuovo turno"
 
-    (3) nuova pagina "ShowPeriodsWithDogs", che restituisce l'elenco dei periodi di affido filtrati sulla base della presenza o meno di un cane
+    (3) nuova pagina "PeriodsWithDogs", che restituisce l'elenco dei periodi di affido filtrati sulla base della presenza o meno di un cane
     --> al click su un periodo di affido, andiamo alla pagina "ShowDogsToRate"
 
     - nuova pagina "ShowDogsToRate", che restituisce l'elenco dei cani con, per ciascun cane, accanto una textfield dove inserire il relativo
