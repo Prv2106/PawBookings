@@ -114,6 +114,13 @@ public class PawBookings {
     }
 
 
+
+    public Boolean verificaIdoneitaPrenotazioneTurno(){
+        return this.caneSelezionato.getAttualmenteIscritto();
+    }
+
+
+
     public Boolean selezionaTurno(Turno ts){
         if(ts == null){
             return false;
@@ -306,5 +313,10 @@ public class PawBookings {
     }
 
     
+
+    
+
+
+
 
 }
