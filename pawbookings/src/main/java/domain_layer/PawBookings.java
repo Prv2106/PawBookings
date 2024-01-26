@@ -99,9 +99,7 @@ public class PawBookings {
         return lezioneSuccesiva.getTurniDisponibili();
     }
 
-    public Boolean verificaIdoneitaPrenotazioneTurno() {
-        return this.caneSelezionato.getAttualmenteIscritto();
-    }
+    
 
 
     public Boolean selezionaTurno(Turno ts){
