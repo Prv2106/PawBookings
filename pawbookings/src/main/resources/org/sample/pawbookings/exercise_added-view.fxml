@@ -35,17 +35,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="650.0" maxWidth="700.0" minHeight="650.0" minWidth="800.0" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sample.pawbookings.AdminLoginController">
+<StackPane maxHeight="650.0" maxWidth="700.0" minHeight="650.0" minWidth="800.0" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sample.pawbookings.ExerciseAddedController">
    <children>
       <ImageView fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
          <viewport>
@@ -60,43 +58,43 @@
             <BorderPane prefHeight="153.0" prefWidth="350.0" />
             <VBox alignment="CENTER" prefHeight="447.0" prefWidth="350.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci il tuo pin:">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Essercizio aggiunto correttamente." textAlignment="CENTER">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="17.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="30.0" />
+                        <Insets />
                      </VBox.margin>
                   </Text>
-                  <TextField fx:id="pin" alignment="CENTER" prefHeight="26.0" prefWidth="181.0" promptText="****">
+                  <ImageView fitHeight="176.0" fitWidth="193.0">
+                     <image>
+                        <Image url="@../../../assets/ok.png" />
+                     </image>
                      <VBox.margin>
-                        <Insets bottom="20.0" left="70.0" right="70.0" />
+                        <Insets bottom="30.0" top="10.0" />
                      </VBox.margin>
-                  </TextField>
-                  <Button mnemonicParsing="false" onAction="#onLoginPressed" prefHeight="54.0" prefWidth="263.0" style="-fx-background-color: #4facfe;" text="Accedi come Admin" textFill="WHITE">
+                  </ImageView>
+                  <Button mnemonicParsing="false" onAction="#onContinuePressed" prefHeight="59.0" prefWidth="347.0" style="-fx-background-color: #1e964a;" text="Aggiungine un altro" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets bottom="20.0" top="10.0" />
+                     </VBox.margin>
                      <font>
-                        <Font size="23.0" />
+                        <Font size="19.0" />
                      </font>
                   </Button>
+                  <Button mnemonicParsing="false" onAction="#onFinishPressed" prefHeight="59.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Concludi inserimento lezione" textFill="WHITE">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </Button>
                </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </VBox>
-            <BorderPane prefHeight="87.0" prefWidth="350.0">
-               <bottom>
-                  <HBox alignment="CENTER" prefHeight="65.0" prefWidth="350.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fitHeight="46.0" fitWidth="48.0">
-                                 <image>
-                                    <Image url="@../../../assets/back.png" />
-                                 </image>
-                              </ImageView>
-                              <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackPressed" prefHeight="61.0" prefWidth="89.0" style="-fx-background-color: #00000000;" />
-                           </children>
-                        </StackPane>
-                     </children>
-                  </HBox>
-               </bottom></BorderPane>
          </children>
       </VBox>
    </children>

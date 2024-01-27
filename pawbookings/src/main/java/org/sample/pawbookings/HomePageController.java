@@ -105,8 +105,12 @@ public class HomePageController implements Initializable {
 
     @FXML
     void onNotificationIconPressed(ActionEvent event) {
-        noNotificationIcon.setVisible(!noNotificationIcon.isVisible());
-        notificationIcon.setVisible(!notificationIcon.isVisible());
+       // andiamo nella schermata relativa alla letture delle notifiche
+       try {
+        MainApplication.setRoot("read_notifications-view.fxml");
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 
      @FXML

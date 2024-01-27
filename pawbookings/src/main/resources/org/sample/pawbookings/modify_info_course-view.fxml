@@ -45,7 +45,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="650.0" maxWidth="700.0" minHeight="650.0" minWidth="800.0" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sample.pawbookings.AdminLoginController">
+<StackPane maxHeight="650.0" maxWidth="700.0" minHeight="650.0" minWidth="800.0" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sample.pawbookings.ModifyInfoCourseController">
    <children>
       <ImageView fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
          <viewport>
@@ -60,43 +60,54 @@
             <BorderPane prefHeight="153.0" prefWidth="350.0" />
             <VBox alignment="CENTER" prefHeight="447.0" prefWidth="350.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci il tuo pin:">
+                  <VBox alignment="CENTER" prefHeight="79.0" prefWidth="350.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="capienza:" wrappingWidth="53.38970947265625">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Text>
+                        <TextField fx:id="capienza" alignment="CENTER" promptText="20" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="79.0" prefWidth="350.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="costo:" wrappingWidth="34.06500244140625">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Text>
+                        <TextField fx:id="costo" alignment="CENTER" promptText="50€" />
+                     </children>
+                  </VBox>
+                  <Button mnemonicParsing="false" onAction="#onInserisciNuovoCorsoPressed" prefHeight="53.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Modifica" textFill="WHITE">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="27.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="30.0" />
+                        <Insets bottom="40.0" top="40.0" />
                      </VBox.margin>
-                  </Text>
-                  <TextField fx:id="pin" alignment="CENTER" prefHeight="26.0" prefWidth="181.0" promptText="****">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="70.0" right="70.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Button mnemonicParsing="false" onAction="#onLoginPressed" prefHeight="54.0" prefWidth="263.0" style="-fx-background-color: #4facfe;" text="Accedi come Admin" textFill="WHITE">
-                     <font>
-                        <Font size="23.0" />
-                     </font>
                   </Button>
                </children>
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
             </VBox>
-            <BorderPane prefHeight="87.0" prefWidth="350.0">
-               <bottom>
-                  <HBox alignment="CENTER" prefHeight="65.0" prefWidth="350.0" BorderPane.alignment="CENTER">
+            <BorderPane prefHeight="87.0" prefWidth="350.0" />
+            <HBox alignment="CENTER" prefHeight="65.0" prefWidth="350.0">
+               <children>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fitHeight="46.0" fitWidth="48.0">
-                                 <image>
-                                    <Image url="@../../../assets/back.png" />
-                                 </image>
-                              </ImageView>
-                              <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackPressed" prefHeight="61.0" prefWidth="89.0" style="-fx-background-color: #00000000;" />
-                           </children>
-                        </StackPane>
+                        <ImageView fitHeight="46.0" fitWidth="48.0">
+                           <image>
+                              <Image url="@../../../assets/back.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackPressed" prefHeight="61.0" prefWidth="89.0" style="-fx-background-color: #00000000;" />
                      </children>
-                  </HBox>
-               </bottom></BorderPane>
+                  </StackPane>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>

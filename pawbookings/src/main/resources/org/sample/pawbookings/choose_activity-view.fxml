@@ -26,17 +26,33 @@
             <BorderPane prefHeight="153.0" prefWidth="350.0" />
             <VBox alignment="CENTER" prefHeight="447.0" prefWidth="350.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNuovaIscrizioneCorsoClicked" prefHeight="85.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Nuova Iscrizione Corso" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNuovaIscrizioneCorsoClicked" prefHeight="57.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Nuova Iscrizione Corso" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="20.0" />
                      </font>
                      <VBox.margin>
                         <Insets bottom="30.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPrenotaTurnoLezioneClicked" prefHeight="85.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Prenota Turno Lezione" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onMostraStatoAvanzamentoCorsoClicked" prefHeight="57.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Mostra stato avanzamento corso" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="30.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPrenotaTurnoLezioneClicked" prefHeight="57.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Prenota Turno Lezione" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="30.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onScambiaTurnoClicked" prefHeight="57.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Scambia Turno" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
                      </font>
                   </Button>
                </children>

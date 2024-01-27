@@ -4,12 +4,8 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.text.Text;
 
 public class AdminOkController {
-
-    @FXML
-    private Text textError;
 
     @FXML
     void onPressed(ActionEvent event) {

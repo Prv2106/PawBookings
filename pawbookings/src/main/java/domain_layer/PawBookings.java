@@ -2,6 +2,7 @@ package domain_layer;
 
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -9,16 +10,20 @@ import java.util.Map;
 public class PawBookings {
     
     private static PawBookings PB;
+    private int numCani;
+    private int pinAdmin;
 
+    // Riferimenti
     public LinkedList<Corso> elencoCorsi;
     private LinkedList<Corso> elencoCorsiDisponibili;
     private Map<String, Cliente> clienti;
     private Cane caneSelezionato;
-    private int pinAdmin;
     private LinkedList<PeriodoAffido> elencoPeriodiDisponibili;
+    private LinkedList<PeriodoAffido> elencoPeriodi;
     private Cliente clienteLoggato;
+    private Cliente clienteSelezionato;
     private PeriodoAffido periodoSelezionato;
-    private int numCani;
+    private Corso corsoSelezionato;
 
 
  
@@ -31,6 +36,7 @@ public class PawBookings {
         this.elencoPeriodiDisponibili = new LinkedList<>();
         this.pinAdmin = 1234;
         this.numCani= 0;
+        this.elencoPeriodiDisponibili = new LinkedList<>();
         this.elencoPeriodiDisponibili = new LinkedList<>();
         this.loadPeriodiAffido();
     }
@@ -146,7 +152,13 @@ public class PawBookings {
     public Boolean confermaAffido(Cane cn){
         int numeroPostiDisponibili;
         Boolean esito;
+        Boolean esitoVerifica = verificaIscrizione(this.ClienteLoggato);
         esito = this.periodoSelezionato.registraAffido(cn);
+
+        if(esitoVerifica == false){
+            this.ClienteLoggato.iscrizioneNotificheStatoSalute(this.periodoSelezionato);
+        }
+
         cn.aggiornaAttualmenteInAffido(periodoSelezionato);
         numeroPostiDisponibili= this.periodoSelezionato.getNumeroPosti();
         if(numeroPostiDisponibili == 0){
@@ -167,7 +179,13 @@ public class PawBookings {
     }
 
     public Boolean confermaConclusioneAffido(){
-        return this.caneSelezionato.conclusioneAffido();
+        Boolean esito = this.caneSelezionato.conclusioneAffido();
+        Boolean esitoVerifica = verificaIscrizione(this.clienteSelezionato);
+        if(esitoVerifica == false){
+            PeriodoAffido periodoCorrente = this.caneSelezionato.getAffido();
+            this.clienteSelezionato.annullamentoIscrizione(periodoCorrente);
+        }
+        return esito;
     }
 
 
@@ -248,12 +266,28 @@ public class PawBookings {
         cn = cl.getCane(codiceCane);
         if (cn == null) {
             setCaneSelezionato(cn);
+            setCaneSelezionato(cl);
             return null;
         } else {
             setCaneSelezionato(cn);
+            setCaneSelezionato(cl);
             return cn.getAffido();
         }
     }
+
+
+    public Boolean setClienteSelezionato(Cliente cl){
+        if(cl==null){
+            this.clienteSelezionato = null;
+            return false;
+        }
+        else{
+            this.clienteSelezionato = cl;
+            return true;
+        }
+    }
+
+
 
     public Boolean accediComeAdmin(int pin){
         return checkPin(pin);
@@ -311,4 +345,168 @@ public class PawBookings {
 
         return true;
     }
+
+
+
+    public Boolean inserisciNuovoCorso(String tipoCorso, int capienza, float costo){
+        int codiceCorso = this.generaCodiceCorso();
+        Corso nuovCorso = new Corso(codiceCorso, capienza, costo, tipoCorso);
+        return this.elencoCorsi.add(nuovCorso);
+    }
+
+    public int generaCodiceCorso(){
+        return (this.elencoCorsi.size() +1);
+    }
+
+
+    public LinkedList<Corso> modificaInformazioniCorso(){
+        return this.elencoCorsi;
+    }
+
+
+    public void selezionaCorso(Corso cs){
+        this.setCorsoSelezionato(cs);
+    }
+
+    public Boolean setCorsoSelezionato(Corso cs){
+        if(cs == null){
+            this.corsoSelezionato = null;
+            return true;
+        }
+        else{
+            this.corsoSelezionato = null;
+            return false;
+        }
+    }
+
+
+    public Boolean modificaCorso(int capienza, float costo){
+            return this.corsoSelezionato.aggiornaInformazioni(capienza,costo);  
+    }
+
+    public LinkedList<Corso> modificaProgrammaCorso(){
+        return this.elencoCorsi;
+    }
+
+    public void nuovaLezione(String nome){
+
+    }
+
+    public void inserisciEsercizio(String nome, String descrizione){
+
+
+    }
+
+
+    public Boolean confermaLezione(){
+
+    }
+
+
+    public int generaCodiceLezione(){
+
+    }
+
+
+    public LinkedList<Corso> inserisciTurnoLezione(){
+
+    }
+
+
+    public LinkedList<Lezione> selezionaCorsoModificaTurni(Corso cs){
+
+    }
+    
+
+    public void selezionaLezione(Lezione lz){
+
+    }
+
+
+    public Boolean nuovoTurno(LocalDate data, LocalTime oraInizio, LocalTime oraFine){
+
+    }
+    
+    
+    public LinkedList<Corso>  calcolaCorsiConCaniIscritti(){
+
+    }
+
+
+    public LinkedList<Turno> scambioTurno(){
+
+    }
+
+
+    public void selezionaTurnoScambio(Turno ts){
+
+    }
+
+
+    public Boolean selezionaCaneScambioTurno(Cane cn){
+
+    }
+
+    public Boolean verificaIdoneitaScambioTurno(Turno tc){
+
+    }
+
+    public LinkedList<Corso> visualizzaProgrammaCorso(){
+
+    }
+
+    public LinkedList<Lezione> visualizzaProgramma(Corso cs){
+
+    }
+
+    public Boolean selezionaCanePrenotazioneTurno(Cane cn){
+
+    }
+
+
+
+    public Boolean verificaIdoneitaPrenotazioneTurno(){
+
+
+    }
+
+
+
+    public Map<String,LinkedList<Lezione>> mostraStatoAvanzamentoCorso(){
+
+    }
+
+    public LinkedList<PeriodoAffido> notificaStatoSalute(){
+
+    }
+
+    public LinkedList<Cane> mostraCaniInAffido(PeriodoAffido pa){
+
+    }
+
+
+    public LinkedList<PeriodoAffido> calcolaPeriodoCaneRegistrato(){
+
+
+    }
+
+
+
+    public void notificaClienti(Map<Integer,String> mappaStatoSalute){
+
+    }
+
+    public LinkedList<Map<String,String>> leggiStatoSalute(){
+
+    }
+
+    public Boolean verificaDatiTurno(LocalDate data, LocalTime oraInizio, LocalTime oraFine){
+        if((data.isBefore(LocalDate.now().plusDays(1))) && (oraInizio.isBefore(oraFine))){
+            return true;
+        }
+        else return false;
+    }
+
+
+
 }
