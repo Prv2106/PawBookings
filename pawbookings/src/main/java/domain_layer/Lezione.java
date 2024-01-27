@@ -3,6 +3,7 @@ package domain_layer;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 
@@ -19,7 +20,6 @@ public class Lezione {
         // Inizializzazione dei campi con i valori passati come parametri
         this.codiceLezione = codiceLezione;
         this.nome = nome;
-        // Inizializzazione dell'elenco dei turni disponibili come un nuovo ArrayList
         this.elencoTurniDisponibili = new LinkedList<>();
     }
 
@@ -41,3 +41,8 @@ public class Lezione {
 
 
 }
+
+
+
+
+
