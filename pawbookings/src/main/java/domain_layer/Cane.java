@@ -12,6 +12,7 @@ public class Cane {
     private PeriodoAffido affidoCorrente;
     private LinkedList<Corso> corsiCompletati;
     private LinkedList<Lezione> lezioniSeguite;
+    private Turno turnoCorrente;
 
     public Cane(int codiceCane, String nome, String razza) {
         this.codiceCane = codiceCane;
@@ -40,6 +41,8 @@ public class Cane {
     public void aggiornaStatoAvanzamento(Turno ts) {
         LinkedList<Lezione> programma = this.corsoCorrente.getLezioni();
         Lezione lezioneSuccessiva = calcolaLezioneSuccessiva(programma);
+        this.setTurnoCorrente(ts);
+
         lezioneSuccessiva.aggiornaTurniDisponibili(ts);
         lezioniSeguite.add(lezioneSuccessiva);
 
@@ -49,6 +52,20 @@ public class Cane {
             aggiornaAttualmenteIscritto(corsoCorrente);
         }
     }
+
+
+   public Boolean setTurnoCorrente(Turno ts){
+        if(ts != null){
+           this.turnoCorrente = ts;
+           return true;
+        }
+        else{
+            this.turnoCorrente = null;
+            return false;
+        }
+   }
+
+
 
     // Il metodo aggiorna lo stato attualmente in affido.
     public void aggiornaAttualmenteInAffido(PeriodoAffido pa) {
