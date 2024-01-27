@@ -2,7 +2,6 @@ package org.sample.pawbookings;
 
 import java.io.IOException;
 import java.net.URL;
-
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
@@ -20,7 +19,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
-public class AvailableShiftsController implements Initializable {
+public class AvailableShiftsToSwitchController implements Initializable {
+
+    @FXML
+    private Button backButton;
 
     @FXML
     private ListView<Turno> list;
@@ -29,9 +31,7 @@ public class AvailableShiftsController implements Initializable {
     ObservableList<Turno> items = FXCollections.observableArrayList();
 
     @FXML
-    private Button backButton;
-    @FXML
-    void onBackPressed(ActionEvent event) throws IOException {
+    void onBackPressed(ActionEvent event) {
         try {
             MainApplication.simpleBack();
         } catch (IOException e) {
@@ -39,12 +39,10 @@ public class AvailableShiftsController implements Initializable {
         }
     }
 
-    // metodo che viene richiamato all'apertura della schermata
-    @Override
+        @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // popoliamo la lista dinamica
         PawBookings PB = PawBookings.getInstance();  
-        LinkedList<Turno> elencoTurni = PB.prenotaTurnoLezione();
+        LinkedList<Turno> elencoTurni = PB.scambioTurno();
 
         items.addAll(elencoTurni);
         this.list.setItems(items);
@@ -64,12 +62,10 @@ public class AvailableShiftsController implements Initializable {
                         } else {
                             // data, ora inizio e ora fine
                             VBox vbox = new VBox();
-                            Label dataLabel = new Label("Data: " + turno.getData());
-                            Label oraInizioLabel = new Label("Ora Inizio: " + turno.getOraFine());
-                            Label oraFineLabel = new Label("Ora fine: " + turno.getOraFine());
-
-                            vbox.getChildren().addAll(dataLabel, oraInizioLabel, oraFineLabel);
-
+                            vbox.getChildren().add(new Label("Data: " + turno.getData()));
+                            vbox.getChildren().add(new Label("Ora Inizio: " + turno.getOraFine()));
+                            vbox.getChildren().add(new Label("Ora fine: " + turno.getOraFine()));
+                        
                             // Imposta il contenuto della cella
                             setGraphic(vbox);
 
@@ -77,7 +73,7 @@ public class AvailableShiftsController implements Initializable {
                             setOnMouseClicked(event -> {
                                 // Azioni da eseguire quando un elemento viene cliccato
                                 try {
-                                    PB.selezionaTurno(turno);
+                                    PB.selezionaTurnoScambio(turno);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -95,7 +91,5 @@ public class AvailableShiftsController implements Initializable {
             }
         });
     }
-
-
 
 }

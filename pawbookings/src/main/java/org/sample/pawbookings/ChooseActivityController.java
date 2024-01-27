@@ -1,8 +1,6 @@
 package org.sample.pawbookings;
 
 import java.io.IOException;
-
-import domain_layer.PawBookings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,11 +21,24 @@ public class ChooseActivityController {
         }
     }
 
+    // PULSANTI SCHERMATA
+
     @FXML
     void onNuovaIscrizioneCorsoClicked(ActionEvent event) {
         // passiamo alla schermata che mostra l'elenco dei corsi disponibili
         try {
             MainApplication.setRoot("available_courses-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+    @FXML
+    void onMostraStatoAvanzamentoCorsoClicked(ActionEvent event) {
+        // passiamo alla schermata che mostra lo stato di avanzamento del cane 'ShowCourseState'
+        try {
+            MainApplication.setRoot("show_course_state-view.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,6 +62,16 @@ public class ChooseActivityController {
                 errorController.setTextError("probabilmente il cane non è iscritto ad un corso");
                  // andiamo nella schermata di errore
             MainApplication.goTo(secondRoot);
+        }
+    }
+
+    @FXML
+    void onScambiaTurnoClicked(ActionEvent event) {
+        // passiamo alla schermata che mostra l'elenco dei turni disponibili
+        try {
+            MainApplication.setRoot("available_shifts_to_switch-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
