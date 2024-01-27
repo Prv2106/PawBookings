@@ -152,11 +152,11 @@ public class PawBookings {
     public Boolean confermaAffido(Cane cn){
         int numeroPostiDisponibili;
         Boolean esito;
-        Boolean esitoVerifica = verificaIscrizione(this.ClienteLoggato);
+        Boolean esitoVerifica = this.periodoSelezionato.verificaIscrizione(this.clienteLoggato);
         esito = this.periodoSelezionato.registraAffido(cn);
 
         if(esitoVerifica == false){
-            this.ClienteLoggato.iscrizioneNotificheStatoSalute(this.periodoSelezionato);
+            this.clienteLoggato.iscrizioneNotificheStatoSalute(this.periodoSelezionato);
         }
 
         cn.aggiornaAttualmenteInAffido(periodoSelezionato);
@@ -180,7 +180,7 @@ public class PawBookings {
 
     public Boolean confermaConclusioneAffido(){
         Boolean esito = this.caneSelezionato.conclusioneAffido();
-        Boolean esitoVerifica = verificaIscrizione(this.clienteSelezionato);
+        Boolean esitoVerifica = this.periodoSelezionato.verificaIscrizione(this.clienteSelezionato);
         if(esitoVerifica == false){
             PeriodoAffido periodoCorrente = this.caneSelezionato.getAffido();
             this.clienteSelezionato.annullamentoIscrizione(periodoCorrente);
@@ -524,7 +524,7 @@ public class PawBookings {
 
 
     public void notificaClienti(Map<Integer,String> mappaStatoSalute){
-        this.aggiornaStatoSalute(mappaStatoSalute);
+        this.periodoSelezionato.aggiornaStatoSalute(mappaStatoSalute);
     }
 
     public LinkedList<Map<String,String>> leggiStatoSalute(){

@@ -78,7 +78,9 @@ public class Cliente implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-    Map<Integer,String> mappaStatoSalute = (PeriodoAffido) o.getState();
+    
+    PeriodoAffido pa = (PeriodoAffido) o;
+    Map<Integer,String> mappaStatoSalute = pa.getState();
 
     // esempio di un elemento della mappa: {1: "In ottima forma"} 
     Map<String,String> mappaStatoSaluteCani = new HashMap<>();
