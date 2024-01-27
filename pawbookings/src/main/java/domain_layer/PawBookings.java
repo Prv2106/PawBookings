@@ -266,11 +266,11 @@ public class PawBookings {
         cn = cl.getCane(codiceCane);
         if (cn == null) {
             setCaneSelezionato(cn);
-            setCaneSelezionato(cl);
+            setClienteSelezionato(cl);
             return null;
         } else {
             setCaneSelezionato(cn);
-            setCaneSelezionato(cl);
+            setClienteSelezionato(cl);
             return cn.getAffido();
         }
     }
@@ -389,66 +389,90 @@ public class PawBookings {
     }
 
     public void nuovaLezione(String nome){
-
+        int codiceLezione = this.generaCodiceLezione();
+        this.corsoSelezionato.nuovaLezione(codiceLezione, nome);
     }
 
     public void inserisciEsercizio(String nome, String descrizione){
-
-
+        this.corsoSelezionato.aggiornaLezione(nome, descrizione);
     }
 
 
     public Boolean confermaLezione(){
-
+        return this.corsoSelezionato.confermaInserimentoLezione();
     }
 
 
     public int generaCodiceLezione(){
-
+        int codiceLezione=0;
+        for(Corso c: this.elencoCorsi){
+            codiceLezione += c.programma.size();
+        }
+        return (codiceLezione+1);
     }
 
 
     public LinkedList<Corso> inserisciTurnoLezione(){
-
+        return this.calcolaCorsiConCaniIscritti();
     }
 
 
-    public LinkedList<Lezione> selezionaCorsoModificaTurni(Corso cs){
-
+    public LinkedList<Lezione> selezionaCorsoModificaTurni(Corso cs){   
+        LinkedList<Lezione> programma = cs.getLezioni();
+        this.setCorsoSelezionato(cs);
+        return programma;
     }
     
 
     public void selezionaLezione(Lezione lz){
-
+        this.corsoSelezionato.setLezioneSelezionata(lz);
     }
 
 
     public Boolean nuovoTurno(LocalDate data, LocalTime oraInizio, LocalTime oraFine){
-
+        Boolean esito = verificaDatiTurno(data, oraInizio, oraFine);
+        if(esito){
+            this.corsoSelezionato.aggiungiTurnoLezione(data, oraInizio, oraFine);
+        }
+        return esito;
     }
     
     
     public LinkedList<Corso>  calcolaCorsiConCaniIscritti(){
-
+        LinkedList<Corso> corsiConCani = new LinkedList<>();
+        for(Corso c: elencoCorsi){
+            if(c.elencoCaniIscritti.size()>0){
+                corsiConCani.add(c);
+            }
+        } 
+        return corsiConCani;
     }
 
 
     public LinkedList<Turno> scambioTurno(){
-
+        Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
+        return ultimaLezioneSeguita.getTurniDisponibili();
     }
 
 
     public void selezionaTurnoScambio(Turno ts){
-
-    }
+        Turno tc = this.caneSelezionato.getTurnoCorrente();
+        Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
+        ultimaLezioneSeguita.effettuaScambioTurno(tc, ts);
+    }   
 
 
     public Boolean selezionaCaneScambioTurno(Cane cn){
-
+        Turno tc = cn.getTurnoCorrente();
+        return this.verificaIdoneitaScambioTurno(tc);
     }
 
     public Boolean verificaIdoneitaScambioTurno(Turno tc){
-
+        if((tc.getData().isBefore(LocalDate.now().plusDays(1))) && (tc != null)){
+            return true;
+        } else{
+            return false;
+        }
     }
 
     public LinkedList<Corso> visualizzaProgrammaCorso(){

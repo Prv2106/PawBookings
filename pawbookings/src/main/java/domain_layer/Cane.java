@@ -75,8 +75,8 @@ public class Cane {
         }
     }
 
-    public Map<String, List<Lezione>> getAvanzamentoCorso() {
-        return calcolaStatoAvanzamento(this.lezioniSeguite);
+    public Map<String, LinkedList<Lezione>> getAvanzamentoCorso() {
+        return this.corsoCorrente.calcolaStatoAvanzamento(this.lezioniSeguite);
 
     }
 
@@ -139,6 +139,17 @@ public class Cane {
 
     public PeriodoAffido getAffidoCorrente(){
         return this.affidoCorrente;
+    }
+
+
+
+    public Turno getTurnoCorrente(){
+        return this.turnoCorrente;
+    }
+
+
+    public Lezione getUltimaLezioneSeguita(){
+        return this.lezioniSeguite.getLast();
     }
 
 }

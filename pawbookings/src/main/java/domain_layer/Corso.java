@@ -1,6 +1,8 @@
 package domain_layer;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -102,12 +104,33 @@ public class Corso {
     }
 
     public void aggiornaLezione(String nome, String descrizione){
-        nuovoEsercizio(nome, descrizione);
+        this.lezioneCorrente.nuovoEsercizio(nome, descrizione);
     }
 
+
+
+    public Boolean setLezioneSelezionata(Lezione lz){
+        if(lz == null){
+            this.lezioneSelezionata = null;
+            return false;
+        }
+        else{
+            this.lezioneSelezionata = lz;
+            return true;
+        }
+    }
+
+
+
+    public void aggiungiTurnoLezione(LocalDate data, LocalTime oraInizio, LocalTime oraFine){
+        int codiceTurno = this.generaCodiceTurno();
+        this.lezioneSelezionata.nuovoTurno(codiceTurno, data, oraInizio, oraFine);
+    }
+
+
+
     public boolean confermaInserimentoLezione(){
-        this.programma.add(this.lezioneCorrente);
-        return true;
+        return this.programma.add(this.lezioneCorrente);
     }
     
     public int generaCodiceTurno(){
