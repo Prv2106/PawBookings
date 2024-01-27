@@ -1,6 +1,8 @@
 package domain_layer;
 
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class Cane {
     private final int codiceCane;
@@ -8,9 +10,9 @@ public class Cane {
     private final String razza;
     private boolean attualmenteIscritto;
     private Corso corsoCorrente;
+    private LinkedList<Corso> corsiCompletati;
     public boolean attualmenteInAffido;
     private PeriodoAffido affidoCorrente;
-    private LinkedList<Corso> corsiCompletati;
     private LinkedList<Lezione> lezioniSeguite;
     private Turno turnoCorrente;
 
@@ -41,10 +43,9 @@ public class Cane {
     public void aggiornaStatoAvanzamento(Turno ts) {
         LinkedList<Lezione> programma = this.corsoCorrente.getLezioni();
         Lezione lezioneSuccessiva = calcolaLezioneSuccessiva(programma);
-        this.setTurnoCorrente(ts);
-
         lezioneSuccessiva.aggiornaTurniDisponibili(ts);
         lezioniSeguite.add(lezioneSuccessiva);
+        setTurnoCorrente(ts);
 
         if (lezioniSeguite.size() == programma.size()) {
             corsiCompletati.add(corsoCorrente);
@@ -52,20 +53,6 @@ public class Cane {
             aggiornaAttualmenteIscritto(corsoCorrente);
         }
     }
-
-
-   public Boolean setTurnoCorrente(Turno ts){
-        if(ts != null){
-           this.turnoCorrente = ts;
-           return true;
-        }
-        else{
-            this.turnoCorrente = null;
-            return false;
-        }
-   }
-
-
 
     // Il metodo aggiorna lo stato attualmente in affido.
     public void aggiornaAttualmenteInAffido(PeriodoAffido pa) {
@@ -86,6 +73,11 @@ public class Cane {
             this.corsoCorrente.annullaIscrizione(this);
             corsoCorrente.elencoCaniIscritti.remove(this);
         }
+    }
+
+    public Map<String, List<Lezione>> getAvanzamentoCorso() {
+        return calcolaStatoAvanzamento(this.lezioniSeguite);
+
     }
 
     // ********** getters 'semplici' *********
@@ -119,10 +111,16 @@ public class Cane {
 
 
 
-    // setters
+    // ************ setters ************************
     public void setAttualmenteIscritto(boolean bl) {
         this.attualmenteIscritto = bl;
     }
+
+    public void setTurnoCorrente(Turno ts) {
+        this.turnoCorrente = ts;
+    }
+
+
 
     /****      metodi per testing        ****/  
 
@@ -142,12 +140,5 @@ public class Cane {
     public PeriodoAffido getAffidoCorrente(){
         return this.affidoCorrente;
     }
-
-
-
-
-
-
-
 
 }
