@@ -2,8 +2,11 @@ package domain_layer;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
-public class PeriodoAffido {
+public class PeriodoAffido extends Observable{
     // attributi
     private final int codice;
     private final LocalDate dataInizio;
@@ -11,6 +14,7 @@ public class PeriodoAffido {
     private final float costo;
     private int numPosti; // derivato, sono i posti disponibili
     private int CapienzaMassima;
+    Map<Integer, String> mappaStatoSalute;
 
     // riferimenti
     private LinkedList<Cane> elencoCaniAffido;
@@ -42,6 +46,38 @@ public class PeriodoAffido {
 
     public void aggiornaNumeroPosti() {
         this.numPosti = this.CapienzaMassima - this.elencoCaniAffido.size();
+    }
+
+    public boolean verificaIscrizione(Cliente cl){
+        for(Cane c: cl.getCani()){
+            for(Cane cpa: this.elencoCaniAffido){
+                if(c.equals(cpa)){
+                    return true;
+                }
+            } 
+        }
+        return false;
+    }
+
+    public void aggiornaStatoSalute(Map<Integer, String> mappaStatoSalute){
+        setMappaStatoSalute(mappaStatoSalute);
+        setChanged();
+        notifyObservers();
+    }
+
+    public boolean setMappaStatoSalute(Map<Integer, String> mappaStatoSalute){
+        if(mappaStatoSalute != null){
+            this.mappaStatoSalute = mappaStatoSalute;
+            return true;
+        }
+        else{
+            this.mappaStatoSalute = null;
+            return false;
+        }
+    }
+
+    public Map<Integer, String> getState(){
+        return this.mappaStatoSalute;
     }
 
     public int getNumeroPosti(){

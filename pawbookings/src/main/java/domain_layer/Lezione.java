@@ -14,6 +14,7 @@ public class Lezione {
     private int codiceLezione;
     private String nome;
     private LinkedList<Turno> elencoTurniDisponibili;
+    private LinkedList<Esercizio> esercizi;
 
     // Costruttore della classe Lezione
     public Lezione(int codiceLezione, String nome) {
@@ -21,6 +22,7 @@ public class Lezione {
         this.codiceLezione = codiceLezione;
         this.nome = nome;
         this.elencoTurniDisponibili = new LinkedList<>();
+        this.esercizi = new LinkedList<>();
     }
 
     // Metodo per aggiornare l'elenco dei turni disponibili
@@ -39,7 +41,20 @@ public class Lezione {
         return this.nome;
     }
 
+    public void nuovoEsercizio(String nome, String descrizione) {
+        Esercizio nuovEsercizio = new Esercizio(nome, descrizione);
+        this.esercizi.add(nuovEsercizio);
+    }
 
+    public void nuovoTurno(int codiceTurno,LocalDate data, LocalTime oraInizio, LocalTime oraFine) {
+        Turno nuovoTurno = new Turno(codiceTurno, data, oraInizio, oraFine);
+        this.elencoTurniDisponibili.add(nuovoTurno);
+    }
+
+    public void effettuaScambioTurno(Turno tc, Turno ts){
+        this.elencoTurniDisponibili.add(tc);
+        this.elencoTurniDisponibili.remove(ts);
+    }
 }
 
 

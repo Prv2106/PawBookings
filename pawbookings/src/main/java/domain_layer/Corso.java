@@ -1,15 +1,20 @@
 package domain_layer;
 
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class Corso {
     private int codice;
     private int capienza;
     private float costo;
     private String tipoCorso;
+    private int numTurni;
     protected LinkedList<Cane> elencoCaniIscritti;
     protected LinkedList<Lezione> programma;
+    private Lezione lezioneCorrente;
+    private Lezione lezioneSelezionata;
 
     
     //Costruttore dell classe Corso
@@ -72,8 +77,65 @@ public class Corso {
     }
 
 
+    public boolean aggiornaInformazioni(int capienza, float costo){
+        if(capienza <= 0 || costo <= 0){
+            return false;
+        } else {
+            this.capienza = capienza;
+            this.costo = costo;
+            return true;
+        }
+    }
 
-
-
+    public void nuovaLezione(int codiceLezione, String nome) {
+        Lezione nuovaLezione = new Lezione(codiceLezione, nome);
+        setLezioneCorrente(nuovaLezione);
+    }
     
+    public boolean setLezioneCorrente(Lezione nuovaLezione){
+        if(nuovaLezione == null){
+            return false;
+        } else {
+            this.lezioneCorrente = nuovaLezione;
+            return true;
+        }
+    }
+
+    public void aggiornaLezione(String nome, String descrizione){
+        nuovoEsercizio(nome, descrizione);
+    }
+
+    public boolean confermaInserimentoLezione(){
+        this.programma.add(this.lezioneCorrente);
+        return true;
+    }
+    
+    public int generaCodiceTurno(){
+        numTurni++;
+        return numTurni;
+    }
+
+    public Map<String, LinkedList<Lezione>> calcolaStatoAvanzamento(LinkedList<Lezione> lezioniSeguite){
+        LinkedList<Lezione> lezioniCorsoSeguite = new LinkedList<>();
+        LinkedList<Lezione> lezioniCorsoMancanti = new LinkedList<>();
+        Map<String, LinkedList<Lezione>> mappaLezioni = new HashMap<>();  
+
+        for(Lezione l: lezioniSeguite){
+            for(Lezione lp: this.programma){
+                if(l.equals(lp)){lezioniCorsoSeguite.add(l);
+            }
+            }
+            for(Lezione l2: lezioniSeguite){
+                for(Lezione lp: this.programma){
+                if(!l2.equals(lp)){lezioniCorsoMancanti.add(l2);
+            }
+            }
+   
+            mappaLezioni.put("lezioni seguite", lezioniCorsoSeguite);
+            mappaLezioni.put("lezioni mancanti", lezioniCorsoMancanti);
+            
+            }
+        }
+        return mappaLezioni;
+    }
 }
