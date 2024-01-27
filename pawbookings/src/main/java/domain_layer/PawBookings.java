@@ -266,11 +266,11 @@ public class PawBookings {
         cn = cl.getCane(codiceCane);
         if (cn == null) {
             setCaneSelezionato(cn);
-            setCaneSelezionato(cl);
+            setClienteSelezionato(cl);
             return null;
         } else {
             setCaneSelezionato(cn);
-            setCaneSelezionato(cl);
+            setClienteSelezionato(cl);
             return cn.getAffido();
         }
     }
