@@ -101,4 +101,8 @@ public class PeriodoAffido extends Observable{
     public int getCodice() {
         return this.codice;
     }
+
+    public int getCapienzaMassima() {
+        return this.CapienzaMassima;
+    }
 }

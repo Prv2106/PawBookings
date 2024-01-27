@@ -452,11 +452,11 @@ public class PawBookings {
     }
 
     public LinkedList<Corso> visualizzaProgrammaCorso(){
-
+        return this.elencoCorsi;
     }
 
     public LinkedList<Lezione> visualizzaProgramma(Corso cs){
-
+        return cs.getLezioni();
     }
 
     public Boolean selezionaCanePrenotazioneTurno(Cane cn){
@@ -473,31 +473,38 @@ public class PawBookings {
 
 
     public Map<String,LinkedList<Lezione>> mostraStatoAvanzamentoCorso(){
-
+        return caneSelezionato.getAvanzamentoCorso();
     }
 
     public LinkedList<PeriodoAffido> notificaStatoSalute(){
-
+        return calcolaPeriodoCaneRegistrato();
     }
 
     public LinkedList<Cane> mostraCaniInAffido(PeriodoAffido pa){
-
+        LinkedList<Cane> elencoCaniAffido = pa.getCaniAffido();
+        setPeriodoSelezionato(pa);
+        return elencoCaniAffido;
     }
 
 
     public LinkedList<PeriodoAffido> calcolaPeriodoCaneRegistrato(){
-
-
+        LinkedList<PeriodoAffido> elencoPeriodiAffidoCaniRegistrati= new LinkedList<>();
+        for(PeriodoAffido pa: this.elencoPeriodi){
+            if(pa.getNumeroPosti()<pa.getCapienzaMassima()){
+                elencoPeriodiAffidoCaniRegistrati.add(pa);
+            }
+        }
+        return elencoPeriodiAffidoCaniRegistrati; 
     }
 
 
 
     public void notificaClienti(Map<Integer,String> mappaStatoSalute){
-
+        this.aggiornaStatoSalute(mappaStatoSalute);
     }
 
     public LinkedList<Map<String,String>> leggiStatoSalute(){
-
+        
     }
 
     public Boolean verificaDatiTurno(LocalDate data, LocalTime oraInizio, LocalTime oraFine){
