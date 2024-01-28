@@ -141,27 +141,21 @@ public class Corso {
         return numTurni;
     }
 
-    public Map<String, LinkedList<Lezione>> calcolaStatoAvanzamento(LinkedList<Lezione> lezioniSeguite){
+    public Map<String, LinkedList<Lezione>> calcolaStatoAvanzamento(LinkedList<Lezione> lezioniSeguite) {
         LinkedList<Lezione> lezioniCorsoSeguite = new LinkedList<>();
         LinkedList<Lezione> lezioniCorsoMancanti = new LinkedList<>();
         Map<String, LinkedList<Lezione>> mappaLezioni = new HashMap<>();  
 
-        for(Lezione l: lezioniSeguite){
-            for(Lezione lp: this.programma){
-                if(l.equals(lp)){lezioniCorsoSeguite.add(l);
-            }
-            }
-            for(Lezione l2: lezioniSeguite){
-                for(Lezione lp: this.programma){
-                if(!l2.equals(lp)){lezioniCorsoMancanti.add(l2);
-            }
-            }
-   
-            mappaLezioni.put("lezioni seguite", lezioniCorsoSeguite);
-            mappaLezioni.put("lezioni mancanti", lezioniCorsoMancanti);
-            
-            }
+        for (Lezione l: this.programma) {
+            if (lezioniSeguite.contains(l)) 
+                lezioniCorsoSeguite.add(l);
+            else
+                lezioniCorsoMancanti.add(l);
         }
+
+        mappaLezioni.put("lezioni seguite", lezioniCorsoSeguite);
+        mappaLezioni.put("lezioni mancanti", lezioniCorsoMancanti);
+            
         return mappaLezioni;
     }
 

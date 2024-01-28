@@ -166,6 +166,13 @@ public class MainApplication extends Application {
          PB.inserisciEsercizio("Tunnel e Passaggi Angusti", "Pratica il passaggio attraverso tunnel e spazi angusti, incoraggiando il cane a seguire una sequenza specifica di ostacoli e a sviluppare agilità e destrezza.");
          PB.confermaLezione();
 
+         // Il codice di questa lezione sarà 7
+         PB.nuovaLezione("Salto dei coni");
+         PB.inserisciEsercizio("Attraversamento a Zigzag", "Guida il cane attraverso una sequenza di ostacoli posti in uno schema a zigzag, sviluppando la coordinazione e la capacità di seguire istruzioni durante il percorso.");
+         PB.inserisciEsercizio("Salto degli Ostacoli", "Insegna al cane a saltare ostacoli di diverse altezze in una sequenza, migliorando la forza e la precisione nei movimenti.");
+         PB.inserisciEsercizio("Tunnel e Passaggi Angusti", "Pratica il passaggio attraverso tunnel e spazi angusti, incoraggiando il cane a seguire una sequenza specifica di ostacoli e a sviluppare agilità e destrezza.");
+         PB.confermaLezione();
+
 
         // Iscrizione di un Cane di Daniele al Corso Base
         PB.accedi("Daniele3", "0000");
