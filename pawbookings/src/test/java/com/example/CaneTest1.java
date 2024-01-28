@@ -7,16 +7,50 @@ import domain_layer.Turno;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
-class CaneTest {
+
+
+/*
+ * Test dei casi d'uso UC1-UC2
+ */
+
+class CaneTest1 {
     static PawBookings PB;
 
     @BeforeAll
     public static void initTest() {
         //Configurazioni che ci servono prima dell'esecuzione dei metodi di test
         PB = PawBookings.getInstance();
+        PB.inserisciNuovoCorso("Corso Base", 10, 200.0F);
+        Corso corsoBase = PB.modificaProgrammaCorso().get(0);
+        PB.selezionaCorso(corsoBase);
+
+        // Il codice di questa lezione sarà 1
+        PB.nuovaLezione("Comandi di Base");
+        PB.inserisciEsercizio("Saluto amichevole", "Questo esercizio aiuta a promuovere una socializzazione positiva tra cani");
+        PB.inserisciEsercizio("Resta", "'Resta'per rimanere in posizione, aumentando gradualmente la distanza dal proprietario");
+        PB.inserisciEsercizio("Richiamo", "Insegna al cane a rispondere al comando di richiamo del padrone");
+        PB.confermaLezione();
+
+        // Il codice di questa lezione sarà 2
+        PB.nuovaLezione("Guinzaglio e Camminare al Guinzaglio");
+        PB.inserisciEsercizio("Introduzione al Guinzaglio", "Insegnare ai proprietari come presentare il guinzaglio al cane in modo positivo, facendolo abituare gradualmente alla sensazione e premiando il comportamento calmo e collaborativo.");
+        PB.inserisciEsercizio("Camminata Focalizzata", "Praticare una camminata controllata in cui il cane cammina al fianco del proprietario senza tirare al guinzaglio. Utilizzare comandi verbali e premi per incoraggiare un comportamento desiderato.");
+        PB.inserisciEsercizio("Affrontare Distrazioni", "Introdurre gradualmente distrazioni durante la camminata al guinzaglio, come altri cani o stimoli ambientali. Insegnare ai proprietari come gestire le situazioni, mantenendo il controllo del cane e premiando il comportamento desiderato in presenza di distrazioni.");
+        PB.confermaLezione();
+
+        // Inserimento turni
+        PB.selezionaCorsoModificaTurni(corsoBase);
+        PB.selezionaLezione(corsoBase.getLezioni().get(0));
+        PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
+        PB.selezionaLezione(corsoBase.getLezioni().get(1));
+        PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
+
         PB.selezionaCane(new Cane(10, "Luna", "Barboncino"));
         PB.getCaneSelezionato().aggiornaAttualmenteIscritto(PB.elencoCorsi.get(0));
     }
@@ -102,20 +136,30 @@ class CaneTest {
      // Questo deve essere l'ultimo metodo di test chiamato
      @AfterAll
      static void testCompletamentoCorso() {
-         // 2) verfichiamo il caso in cui il Luna termina il programma di un Corso:
- 
-         Turno t;
-         Cane Luna = PB.getCaneSelezionato();
+        // 2) verfichiamo il caso in cui il Luna termina il programma di un Corso:
+
+        // Inseriamo dei turni per le 2 lezioni del corsoBase
+        Corso corsoBase = PB.getCorsi().getFirst();
+
+        // Inserimento turni
+        PB.selezionaCorsoModificaTurni(corsoBase);
+        PB.selezionaLezione(corsoBase.getLezioni().get(0));
+        PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
+        PB.selezionaLezione(corsoBase.getLezioni().get(1));
+        PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
+
+
+
+        Turno t;
+        Cane Luna = PB.getCaneSelezionato();
+        
        
          // Simuliamo la prenotazione di Luna ad un turno di ciascuna lezione del Corso Base
-         t = PB.getCorsi().get(0).getLezioni().get(0).getTurniDisponibili().get(0);
+         t = corsoBase.getLezioni().get(0).getTurniDisponibili().get(0);
          Luna.aggiornaStatoAvanzamento(t);
-         t = PB.getCorsi().get(0).getLezioni().get(1).getTurniDisponibili().get(0);
+         t = corsoBase.getLezioni().get(1).getTurniDisponibili().get(1);
          Luna.aggiornaStatoAvanzamento(t);
-         t = PB.getCorsi().get(0).getLezioni().get(2).getTurniDisponibili().get(0);
-         Luna.aggiornaStatoAvanzamento(t);
-         t = PB.getCorsi().get(0).getLezioni().get(3).getTurniDisponibili().get(0);
-         Luna.aggiornaStatoAvanzamento(t);
+       
  
          // Verifichiamo che l'attributo attualmenteIscritto di cn è diventato false
          assertFalse(Luna.getAttualmenteIscritto());
@@ -123,8 +167,8 @@ class CaneTest {
          // Verifichiamo che l'attributo corsoCorrente di cn è diventato null
          assertEquals(null, Luna.getCorsoCorrente());
  
-         // Verifichiamo che la lunghezza della lista lezioniSeguite di cn è diventata 4
-         assertEquals(4, Luna.getLezioniSeguite().size());
+         // Verifichiamo che la lunghezza della lista lezioniSeguite di cn è diventata 2
+         assertEquals(2, Luna.getLezioniSeguite().size());
  
          // Verifichiamo che nell'elenco Corsi completati di cn sia presente il corso che abbiamo completato
          assertTrue(Luna.getCorsiCompletati().contains(PB.getCorsi().get(0)));

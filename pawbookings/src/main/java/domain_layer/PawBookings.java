@@ -374,7 +374,7 @@ public class PawBookings {
             return true;
         }
         else{
-            this.corsoSelezionato = null;
+            this.corsoSelezionato = cs;
             return false;
         }
     }
@@ -522,12 +522,16 @@ public class PawBookings {
     }
 
     public Boolean verificaDatiTurno(LocalDate data, LocalTime oraInizio, LocalTime oraFine){
-        if((data.isBefore(LocalDate.now().plusDays(1))) && (oraInizio.isBefore(oraFine))){
+        if((LocalDate.now().isBefore(data)) && (oraInizio.isBefore(oraFine))){
             return true;
         }
         else return false;
     }
 
 
+
+    public LinkedList<Corso> getCorso(){
+        return this.elencoCorsi;
+    }
 
 }
