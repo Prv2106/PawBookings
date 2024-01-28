@@ -70,7 +70,7 @@ public class CaneTest2 {
         assertEquals(null, cane.getAffidoCorrente());
 
         // aggiorniamo lo stato attualmente in affido
-        cane.aggiornaAttualmenteInAffido(PB.getPeriodiDisponibili().get(1));
+        cane.aggiornaAttualmenteInAffido(PB.getPeriodiAffidoDisponibili().get(1));
         // verifichiamo che il cane sia attualmente in affido
         assertTrue(cane.getAttualmenteInAffido());
     }
@@ -79,7 +79,7 @@ public class CaneTest2 {
     void testConclusioneAffido(){
         // nel test verifichiamo che il cane venga rimosso dalla lista dei cani in affido
         Cane cane = new Cane(12, "Ginevra", "Belgian Malinois");
-        cane.aggiornaAttualmenteInAffido(PB.getPeriodiDisponibili().get(1));
+        cane.aggiornaAttualmenteInAffido(PB.getPeriodiAffidoDisponibili().get(1));
         // verifichiamo che il cane sia attualmente in affido
         assertTrue(cane.getAttualmenteInAffido());
         cane.conclusioneAffido();
