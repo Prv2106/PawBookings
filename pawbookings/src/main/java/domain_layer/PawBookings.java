@@ -14,12 +14,12 @@ public class PawBookings {
     private int pinAdmin;
 
     // Riferimenti
-    public LinkedList<Corso> elencoCorsi;
+    private LinkedList<Corso> elencoCorsi;
     private LinkedList<Corso> elencoCorsiDisponibili;
     private Map<String, Cliente> clienti;
     private Cane caneSelezionato;
     private LinkedList<PeriodoAffido> elencoPeriodiDisponibili;
-    private LinkedList<PeriodoAffido> elencoPeriodi;
+    private LinkedList<PeriodoAffido> elencoPeriodiAffido;
     private Cliente clienteLoggato;
     private Cliente clienteSelezionato;
     private PeriodoAffido periodoSelezionato;
@@ -32,18 +32,17 @@ public class PawBookings {
     private PawBookings(){
         this.elencoCorsi = new LinkedList<>();
         this.elencoCorsiDisponibili = new LinkedList<>();
-        this.clienti = new HashMap<>();
+        this.elencoPeriodiAffido = new LinkedList<>();
         this.elencoPeriodiDisponibili = new LinkedList<>();
+        this.clienti = new HashMap<>();
         this.pinAdmin = 1234;
         this.numCani= 0;
-        this.elencoPeriodiDisponibili = new LinkedList<>();
-        this.elencoPeriodiDisponibili = new LinkedList<>();
         this.loadPeriodiAffido();
     }
 
-
-     // metodo per recuperare l'unica istanza della classe PawBookings per il pattern GoF Singleton
-     public static PawBookings getInstance() {
+    
+    // metodo per recuperare l'unica istanza della classe PawBookings per il pattern GoF Singleton
+    public static PawBookings getInstance() {
          if(PB == null)
              PB = new PawBookings();
         return PB;
@@ -63,7 +62,10 @@ public class PawBookings {
         this.elencoPeriodiDisponibili.add(p2);
         this.elencoPeriodiDisponibili.add(p3);
 
-        
+        this.elencoPeriodiAffido.add(p1);
+        this.elencoPeriodiAffido.add(p2);
+        this.elencoPeriodiAffido.add(p3);
+
     }
 
 
@@ -80,6 +82,7 @@ public class PawBookings {
         }
         return elencoCorsiDisponibili;
     }
+    
 
     public Boolean confermaIscrizioneCorso(Corso cs){
         if(cs == null){
@@ -501,7 +504,7 @@ public class PawBookings {
 
     public LinkedList<PeriodoAffido> calcolaPeriodoCaneRegistrato(){
         LinkedList<PeriodoAffido> elencoPeriodiAffidoCaniRegistrati= new LinkedList<>();
-        for(PeriodoAffido pa: this.elencoPeriodi){
+        for(PeriodoAffido pa: this.elencoPeriodiAffido){
             if(pa.getNumeroPosti()<pa.getCapienzaMassima()){
                 elencoPeriodiAffidoCaniRegistrati.add(pa);
             }
@@ -532,4 +535,18 @@ public class PawBookings {
     public Corso getCorsoSelezionato() {
         return this.corsoSelezionato;
     }
+
+    public LinkedList<Corso> getCorso(){
+        return this.elencoCorsi;
+    }
+
+
+    public LinkedList<PeriodoAffido> getPeriodiAffido(){
+        return this.elencoPeriodiAffido;
+    }
+
+    public LinkedList<PeriodoAffido> getPeriodiAffidoDisponibili(){
+        return this.elencoPeriodiDisponibili;
+    }
+
 }

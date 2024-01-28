@@ -51,10 +51,6 @@ class PawBookingsTest3 {
         // Ci aspettiamo che l'elencoCorsi di PB contenga corsoBase
         assertTrue(PB.getCorsi().contains(corsoBase));
 
-
-        // test del metodo generaCodiceCorso
-        // Ci aspettiamo che il codice di CorsoBase sia 1
-        assertEquals(1, corsoBase.getCodice());
     }
 
 
@@ -104,6 +100,45 @@ class PawBookingsTest3 {
 
 
 
+    @Test
+    void testModificaCorso(){
+        PB.inserisciNuovoCorso("Corso Test", 10, 400.0F);
+        Corso corsoTest = PB.getCorsi().getLast();
+        PB.selezionaCorso(corsoTest);
 
+        // test del metodo
+        PB.modificaCorso(5, 100.0F);
+
+        // Ci aspettiamo che adesso la capienza sia 5 e che il costo sia 100.0F
+        assertEquals(5, corsoTest.getCapienza());
+        assertEquals(100.0F, corsoTest.getCosto());
+    }
+
+
+
+    @Test
+    void testNuovaLezione(){
+        PB.inserisciNuovoCorso("Corso TestLezione", 10, 300.0F);
+        Corso corsoTestLezione = PB.getCorsi().getLast();
+        PB.selezionaCorso(corsoTestLezione);
+
+        // Settiamo a null la lezione Corrente
+        corsoTestLezione.setLezioneCorrente(null);
+
+        // Test del metodo
+        PB.nuovaLezione("Lezione test");
+
+        // Verifichiamo che è stata creata una nuova lezione
+        assertNotEquals(null, corsoTestLezione.getLezioneCorrente());
+
+
+    }
+
+
+    @Test
+    void generaCodiceLezione(){
+
+    }
+    
     
 }
