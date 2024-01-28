@@ -88,6 +88,7 @@ class PawBookingsTest2 {
         assertEquals(expected.size(), PB.getPeriodiAffido().size());
         // Ci aspettiamo che l'elencoPeriodiAffidoDisponibili di PB abbia la stessa lunghezza di expected
         assertEquals(expected.size(), PB.getPeriodiAffidoDisponibili().size());
+
     }
   
 
@@ -414,10 +415,10 @@ class PawBookingsTest2 {
         PB.selezionaPeriodo(lp.get(2));
         Cane Stella = PB.getClienti().get("Alberto1").getCane(1);
         PB.confermaAffido(Stella);
-        PeriodoAffido pa;
+    
       
         // tramite concludiAffido settiamo il caneSelezionato con stella
-        pa = PB.concludiAffido("Alberto1", 1);
+        PB.concludiAffido("Alberto1", 1);
 
 
         // Test del metodo
