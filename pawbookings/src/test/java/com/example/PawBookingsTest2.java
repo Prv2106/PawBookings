@@ -84,26 +84,10 @@ class PawBookingsTest2 {
         expected.add(p2);
         expected.add(p3);
 
-        /*
-        *       PB.getPeriodiAffidoDisponibili().clear();
-                PB.getPeriodiAffido().clear();
-
-                PB.getPeriodiAffido().add(p1);
-                PB.getPeriodiAffido().add(p2);
-                PB.getPeriodiAffido().add(p3);
-                assertTrue(PB.getPeriodiAffido().containsAll(expected));
-        * 
-        * 
-        */
         // Ci aspettiamo che l'elencoPeriodiAffido di PB abbia la stessa lunghezza di expected
         assertEquals(expected.size(), PB.getPeriodiAffido().size());
         // Ci aspettiamo che l'elencoPeriodiAffidoDisponibili di PB abbia la stessa lunghezza di expected
         assertEquals(expected.size(), PB.getPeriodiAffidoDisponibili().size());
-
-        // Ci aspettiamo che l'elencoPeriodoAffido di PB contenga gli stessi periodi affido di expected
-        // assertTrue(PB.getPeriodiAffido().containsAll(expected));
-        // Ci aspettiamo che l'elencoPeriodoAffidoDisponibili di PB contenga gli stessi periodi affido di expected
-        // assertTrue(PB.getPeriodiAffidoDisponibili().containsAll(expected));
     }
   
 
@@ -330,7 +314,7 @@ class PawBookingsTest2 {
         // verifichiamo che nella lista restituita da selezionaPeriodo non sia presente il cane messo in affido prima
         LinkedList<Cane> elencoCaniNonInAffido = PB.selezionaPeriodo(PB.affido().get(0));
         for (Cane cane : elencoCaniNonInAffido) {
-            assertFalse(cane.attualmenteInAffido);
+            assertFalse(cane.getAttualmenteInAffido());
         }
 
         // viene anche testato che periodoSlezionato sia uguale a PB.affido().get(0)
