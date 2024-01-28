@@ -483,18 +483,6 @@ public class PawBookings {
         return cs.getLezioni();
     }
 
-    public Boolean selezionaCanePrenotazioneTurno(Cane cn){
-
-    }
-
-
-
-    public Boolean verificaIdoneitaPrenotazioneTurno(){
-
-
-    }
-
-
 
     public Map<String,LinkedList<Lezione>> mostraStatoAvanzamentoCorso(){
         return caneSelezionato.getAvanzamentoCorso();
@@ -528,7 +516,9 @@ public class PawBookings {
     }
 
     public LinkedList<Map<String,String>> leggiStatoSalute(){
-        
+        LinkedList<Map<String,String>> statoSaluteCani = this.clienteLoggato.getStatoSalute();
+        this.clienteLoggato.resettaStatoSaluteCani();
+        return statoSaluteCani;
     }
 
     public Boolean verificaDatiTurno(LocalDate data, LocalTime oraInizio, LocalTime oraFine){

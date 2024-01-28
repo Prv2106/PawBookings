@@ -146,5 +146,9 @@ public class Cliente implements Observer {
 
    
 
+    public LinkedList<Map<String,String>> getStatoSalute(){
+        return this.statoSaluteCani;
+    }
+
 
 }
