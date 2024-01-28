@@ -63,7 +63,7 @@ public class Cane {
     public boolean conclusioneAffido() {
         Boolean esito;
         esito = affidoCorrente.concludiAffido(this);
-        this.aggiornaAttualmenteInAffido(affidoCorrente);
+        this.aggiornaAttualmenteInAffido(null);
         return esito;
     }
     
@@ -122,6 +122,11 @@ public class Cane {
 
 
     /****      metodi per testing        ****/  
+
+
+    public void setAttualmenteInAffido(Boolean val){
+       this.attualmenteInAffido = val;
+    }
 
     public void aggiungiLezioneSeguita(Lezione lz) {
         this.lezioniSeguite.add(lz);

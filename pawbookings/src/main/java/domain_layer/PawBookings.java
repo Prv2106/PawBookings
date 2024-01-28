@@ -182,10 +182,10 @@ public class PawBookings {
     }
 
     public Boolean confermaConclusioneAffido(){
+        PeriodoAffido periodoCorrente = this.caneSelezionato.getAffido();
         Boolean esito = this.caneSelezionato.conclusioneAffido();
-        Boolean esitoVerifica = this.periodoSelezionato.verificaIscrizione(this.clienteSelezionato);
+        Boolean esitoVerifica = periodoCorrente.verificaIscrizione(this.clienteSelezionato);
         if(esitoVerifica == false){
-            PeriodoAffido periodoCorrente = this.caneSelezionato.getAffido();
             this.clienteSelezionato.annullamentoIscrizione(periodoCorrente);
         }
         return esito;
