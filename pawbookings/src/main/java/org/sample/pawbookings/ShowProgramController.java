@@ -1,22 +1,17 @@
 package org.sample.pawbookings;
-
 import java.io.IOException;
-import java.net.URL;
-import java.util.LinkedList;
-import java.util.ResourceBundle;
-
 import domain_layer.Corso;
+import domain_layer.Esercizio;
 import domain_layer.Lezione;
-import domain_layer.PawBookings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -65,13 +60,18 @@ public class ShowProgramController {
                             // nome lezione
                             VBox vbox = new VBox();
                             vbox.getChildren().add(new Label("Nome: " + lezione.getNome()));
-                            vbox.getChildren().add(new Label("Esercizi (" + lezione.getEsercizi().size() + ")"));
+                            vbox.getChildren().add(new Label("Esercizi (" + lezione.getEsercizi().size() + "):"));
                            
                             // elenco esercizi (nome esercizio e descrizione)
                             for (int i = 0; i < lezione.getEsercizi().size(); i++) {
                                 Esercizio esercizio = lezione.getEsercizi().get(i);
                                 vbox.getChildren().add(new Label("   - " + (i+1) +") " + esercizio.getNome()));
-                                vbox.getChildren().add(new Label("       - " + (i+1) +") " + esercizio.getDescrizione()));
+                                TextArea descrizione = new TextArea();
+                                descrizione.setText(esercizio.getDescrizione());
+                                descrizione.setEditable(false);
+                                descrizione.setWrapText(true);
+                                descrizione.setPrefSize(300, 10);
+                                vbox.getChildren().add(descrizione);
                             }
 
                             // Imposta il contenuto della cella

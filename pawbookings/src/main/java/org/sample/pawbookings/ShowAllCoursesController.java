@@ -40,10 +40,10 @@ public class ShowAllCoursesController implements Initializable{
         }
     }
     
-        @Override
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
         PawBookings PB = PawBookings.getInstance();  
-        LinkedList<Corso> elencoCorsi = PB.getElencoCorsi();
+        LinkedList<Corso> elencoCorsi = PB.getCorsi();
         
         items.addAll(elencoCorsi);
         this.list.setItems(items);

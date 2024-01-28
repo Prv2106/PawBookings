@@ -1,12 +1,11 @@
 package org.sample.pawbookings;
-
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
-
 import domain_layer.PawBookings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,16 +20,16 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 public class ReadNotificationsController implements Initializable {
-    private Map<String, String> mappa;
-    private Set<String> keys; // tutte le chiavi della mappa
+    private LinkedList<Map<String, String>> listaMappa;
+    
 
     @FXML
     private Button backButton;
 
     @FXML
-    private ListView<String> list;
+    private ListView<Map<String, String>> list;
     // creiamo una lista osservabile per le notifiche (stringhe)
-    ObservableList<String> notifiche = FXCollections.observableArrayList();
+    ObservableList<Map<String, String>> notifiche = FXCollections.observableArrayList();
 
 
     @FXML
@@ -42,48 +41,44 @@ public class ReadNotificationsController implements Initializable {
         }
     }
 
-    private String getKeyByIndex(int index) {
-        String key = "";
-
-        int counter = 0;
-        for (String k : keys) {
-            if (index == counter) {
-                key = k;
-            }
-            counter++;
-        }
-         return key;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         PawBookings PB = PawBookings.getInstance();  
-        mappa = PB.leggiStatoSalute();
-        keys = mappa.keySet();
-        
-        // recuperiamo le notifiche mettiamole nella UI
-        notifiche.addAll(mappa.values());
+        listaMappa = PB.leggiStatoSalute();
+                
+        notifiche.addAll(listaMappa);
         this.list.setItems(notifiche);
+
+        
 
     
         // definiamo la grafica 
-        int counter = 0;
-    
-        this.list.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            
+        this.list.setCellFactory(new Callback<ListView<Map<String, String>>, ListCell<Map<String, String>>>() {
             @Override
-            public ListCell<String> call(ListView<String> listView) {
-                return new ListCell<String>() {
+            public ListCell<Map<String, String>> call(ListView<Map<String, String>> listView) {
+                return new ListCell<Map<String, String>>() {
+                    
+                    // travasiamo tutte le chiavi della mappa in una lista così da
+                    // poter ottenere una determinata chiave
+                    int counter = 0;
+                    List<String> listaChiavi = new ArrayList<>();
+
                     @Override
-                    protected void updateItem(String notifica, boolean empty) {
+                    protected void updateItem(Map<String, String> notifica, boolean empty) {
                         // per ogni elemento (notifica)
                         super.updateItem(notifica, empty);
+
+                        for (String chiave: notifica.keySet()) 
+                            listaChiavi.add(chiave);
 
                         if (notifica == null || empty) {
                             setText(null);
                         } else {
                             // a sx il nome del cane, a dx il messaggio
                             VBox vbox = new VBox();
-                            vbox.getChildren().add(new Label(getKeyByIndex(counter) + ": " + notifica));
+                            vbox.getChildren().add(new Label(listaChiavi.get(counter) + ": " + notifica.get(listaChiavi.get(counter))));
                             setGraphic(vbox);
                         }
                          counter++;

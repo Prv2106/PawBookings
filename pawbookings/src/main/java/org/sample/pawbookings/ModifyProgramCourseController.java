@@ -37,11 +37,11 @@ public class ModifyProgramCourseController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // andiamo a reperire il corso selezionato
-        this.corsoSelezionato.setText(PawBookings.getInstance().getCorsoSelezionato());
+        this.corsoSelezionato.setText(PawBookings.getInstance().getCorsoSelezionato().getTipoCorso());
     }
 
     @FXML
-    void onAggiungiLezionePressed(ActionEvent event) {
+    void onAggiungiLezionePressed(ActionEvent event) throws IOException {
         // recuperiamo le informazione inserite dall'utente
         String nome = this.nome.getText();
 
@@ -55,14 +55,8 @@ public class ModifyProgramCourseController implements Initializable {
         // validiamole
         if (!nome.isEmpty()) {
             try {
-                if (PawBookings.getInstance().nuovaLezione(nome)) {
-                    MainApplication.setRoot("new_exercise-view.fxml");
-                } else {
-                    // messaggio errore
-                    errorController.setTextError("Qualcosa è andato storto durante l'inserimento della lezione corso...");
-                    // andiamo nella schermata di errore
-                    MainApplication.goTo(secondRoot);
-                }
+                PawBookings.getInstance().nuovaLezione(nome);
+                MainApplication.setRoot("new_exercise-view.fxml");
             } catch (Exception e) {
                 errorController.setTextError(e.getMessage());
                 // andiamo nella schermatav di errore

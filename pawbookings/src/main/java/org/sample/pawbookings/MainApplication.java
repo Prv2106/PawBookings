@@ -12,7 +12,6 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 import domain_layer.Corso;
-import domain_layer.Lezione;
 import domain_layer.PawBookings; 
 import domain_layer.PeriodoAffido;
 

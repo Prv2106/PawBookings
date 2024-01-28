@@ -3,7 +3,6 @@ package domain_layer;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 
@@ -55,6 +54,13 @@ public class Lezione {
         this.elencoTurniDisponibili.add(tc);
         this.elencoTurniDisponibili.remove(ts);
     }
+
+    // ****** getters semplici ******
+    
+    public LinkedList<Esercizio> getEsercizi() {
+        return this.esercizi;
+    }
+
 }
 
 

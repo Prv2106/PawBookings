@@ -1,22 +1,16 @@
 package org.sample.pawbookings;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-
-import domain_layer.Corso;
 import domain_layer.Lezione;
 import domain_layer.PawBookings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -51,7 +45,7 @@ public class ShowCourseStateController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         PawBookings PB = PawBookings.getInstance();  
-        Map<String, List<Lezione>> lista = PB.mostraStatoAvanzamentoCorso();
+        Map<String, LinkedList<Lezione>> lista = PB.mostraStatoAvanzamentoCorso();
         
         // recuperiamo le lezioni seguite e mettiamole nella UI
         lezioniSeguite.addAll(lista.get("lezioni seguite"));

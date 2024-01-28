@@ -69,7 +69,7 @@ public class NewShiftController implements Initializable{
     }
 
     @FXML
-    void onInserisciNuovoCorsoPressed(ActionEvent event) {
+    void onInserisciNuovoCorsoPressed(ActionEvent event) throws IOException {
         // recuperiamo le informazione inserite dall'utente
         LocalDate data = this.data.getValue();
         LocalTime oraInizio = this.oraInizio.getValue();

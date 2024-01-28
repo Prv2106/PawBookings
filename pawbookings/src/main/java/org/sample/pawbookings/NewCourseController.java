@@ -37,8 +37,8 @@ public class NewCourseController {
     void onInserisciNuovoCorsoPressed(ActionEvent event) throws IOException {
         // recuperiamo le informazione inserite dall'utente
         String tipoCorso = this.tipoCorso.getText();
-        String capienza = this.capienza.getText();
-        String costo = this.costo.getText();
+        Integer capienza = Integer.parseInt(this.capienza.getText());
+        Float costo = Float.parseFloat(this.costo.getText());
 
         // recuperiamo il loader relativa alla schermata di errore (fxml)
         FXMLLoader loader = new FXMLLoader(getClass().getResource("admin_error-view.fxml"));
@@ -48,7 +48,7 @@ public class NewCourseController {
         AdminErrorController errorController = loader.getController();
 
         // validiamole
-        if (!tipoCorso.isEmpty() && !capienza.isEmpty() && !costo.isEmpty()) {
+        if (!tipoCorso.isEmpty() && capienza > 0 && costo > 0) {
             try {
                 if (PawBookings.getInstance().inserisciNuovoCorso(tipoCorso, capienza, costo)) {
                     MainApplication.setRoot("admin_ok-view.fxml");

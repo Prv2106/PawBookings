@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import domain_layer.Corso;
+import domain_layer.Esercizio;
 import domain_layer.Lezione;
 import domain_layer.PawBookings;
 import javafx.collections.FXCollections;
@@ -64,7 +65,7 @@ public class AdminAllCoursesController {
                                 Lezione lezione = corso.getLezioni().get(i);
                                 vbox.getChildren().add(new Label("   - " + (i+1) +") " + lezione.getNome()));
                                 // sotto ogni lezione, mettiamone gli esercizi
-                                for (int j = 0; j < lezione.getEsercizi().siize(); j++) {
+                                for (int j = 0; j < lezione.getEsercizi().size(); j++) {
                                     Esercizio esercizio = lezione.getEsercizi().get(j);
                                     vbox.getChildren().add(new Label("        - " + (j+1) +") " + esercizio.getNome()));
                                 }

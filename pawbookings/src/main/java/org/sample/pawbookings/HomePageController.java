@@ -135,7 +135,12 @@ public class HomePageController implements Initializable {
 
     @FXML
     void onVisualizzaProgrammaPressed(ActionEvent event) {
-        
+        // andiamo nella schermata relativa alla visualizzazione dei programmi
+        try {
+            MainApplication.setRoot("show_all_courses-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
 

@@ -161,4 +161,8 @@ public class Corso {
         }
         return mappaLezioni;
     }
+
+    public Lezione getLezioneCorrente() {
+        return this.lezioneCorrente;
+    }
 }

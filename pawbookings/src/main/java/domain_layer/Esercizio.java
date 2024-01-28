@@ -8,4 +8,13 @@ public class Esercizio {
         this.nome = nome;
         this.descrizione = descrizione;
     }
+
+    // ******* getters semplici *******
+    public String getNome() {
+        return this.nome;
+    }
+
+    public String getDescrizione() {
+        return this.descrizione;
+    }
 }
