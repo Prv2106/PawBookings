@@ -35,7 +35,7 @@ public class MainApplication extends Application {
         scene.setRoot(root);
     }
 
-    static void goTo(Parent root) throws IOException {
+    static void goTo(Parent root) {
         scene.setRoot(root);
         stackRoots.push(root);
     }

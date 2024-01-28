@@ -1,6 +1,10 @@
 package org.sample.pawbookings;
 
 import java.io.IOException;
+import java.util.LinkedList;
+
+import domain_layer.PawBookings;
+import domain_layer.Turno;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,16 +12,30 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 
 
-
 public class ChooseActivityController {
+    private ErrorController errorController;
+
     @FXML
     private Button backButton;
+
     @FXML
     void onBackPressed(ActionEvent event) throws IOException {
         try {
             MainApplication.simpleBack();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void goErrorPage(String text) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("error-view.fxml"));
+            Parent root = loader.load();
+            errorController = loader.getController();
+            errorController.setTextError(text);
+            MainApplication.goTo(root);
+        } catch (Exception e) {
+
         }
     }
 
@@ -50,18 +68,8 @@ public class ChooseActivityController {
         try {
             MainApplication.setRoot("available_shifts-view.fxml"); 
         } catch (IOException e) {
-                // probabilmente il cane non è iscritto al turno.... quindi:
-    
-                // recuperiamo il loader relativa alla schermata di errore (fxml)
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("error-view.fxml"));
-                Parent secondRoot = loader.load();
-                // ne recuperiamo il relativo controller
-                ErrorController errorController = loader.getController();
-    
-                // messaggio errore
-                errorController.setTextError("probabilmente il cane non è iscritto ad un corso");
-                 // andiamo nella schermata di errore
-            MainApplication.goTo(secondRoot);
+            // probabilmente il cane non è iscritto al turno.... quindi:
+            goErrorPage("probabilmente il cane non è iscritto ad un corso");
         }
     }
 
@@ -69,7 +77,19 @@ public class ChooseActivityController {
     void onScambiaTurnoClicked(ActionEvent event) {
         // passiamo alla schermata che mostra l'elenco dei turni disponibili
         try {
-            MainApplication.setRoot("available_shifts_to_switch-view.fxml");
+            PawBookings PB = PawBookings.getInstance();
+            LinkedList<Turno> elencoTurni = PB.scambioTurno();
+            if (elencoTurni == null) {
+                // nessun turno prenotato
+                goErrorPage("Nessun turno ancora prenotato!");
+            } else if (elencoTurni.isEmpty()) {
+                // nessun turno disponibile
+                goErrorPage("Nessun turno disponibile!");
+            } else {
+                // andiamo nella pagina coi turni disponibili
+                MainApplication.setRoot("available_shifts_to_switch-view.fxml");
+            }
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
