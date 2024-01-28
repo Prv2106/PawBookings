@@ -134,9 +134,9 @@ public class MainApplication extends Application {
         PB.selezionaCorso(corsoAvanzato);
 
         // Il codice di questa lezione sarà 3
-        PB.nuovaLezione("Svolte, dietro front e variazioni delle andature");
+        PB.nuovaLezione("Svolte, dietro front e variazioni andature");
         PB.inserisciEsercizio("Dietro Front", "Insegna al cane a girare rapidamente di 180 gradi su comando, promuovendo una risposta veloce e coordinata.");
-        PB.inserisciEsercizio("Variazioni delle Andature", "Pratica diverse andature come il passo veloce e il passo lento, migliorando il controllo del cane nelle varie situazioni.");
+        PB.inserisciEsercizio("Variazioni Andature", "Pratica diverse andature come il passo veloce e il passo lento, migliorando il controllo del cane nelle varie situazioni.");
         PB.inserisciEsercizio("Svolte", "Esercita il cane a eseguire svolte a destra e sinistra durante la camminata al guinzaglio, migliorando la coordinazione e la capacità di seguire le indicazioni del proprietario.");
         PB.confermaLezione();
 

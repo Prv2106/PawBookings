@@ -3,6 +3,7 @@ import java.io.IOException;
 import domain_layer.Corso;
 import domain_layer.Esercizio;
 import domain_layer.Lezione;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -44,6 +45,7 @@ public class ShowProgramController {
         items.addAll(corso.getLezioni());
         this.list.setItems(items);
 
+        this.courseName.setText(corso.getTipoCorso());
 
         // definiamo la grafica di ogni oggetto della lista
         this.list.setCellFactory(new Callback<ListView<Lezione>, ListCell<Lezione>>() {
@@ -59,18 +61,22 @@ public class ShowProgramController {
                         } else {
                             // nome lezione
                             VBox vbox = new VBox();
-                            vbox.getChildren().add(new Label("Nome: " + lezione.getNome()));
+                            vbox.getChildren().add(new Label("Nome lezione: " + lezione.getNome()));
                             vbox.getChildren().add(new Label("Esercizi (" + lezione.getEsercizi().size() + "):"));
                            
                             // elenco esercizi (nome esercizio e descrizione)
                             for (int i = 0; i < lezione.getEsercizi().size(); i++) {
                                 Esercizio esercizio = lezione.getEsercizi().get(i);
-                                vbox.getChildren().add(new Label("   - " + (i+1) +") " + esercizio.getNome()));
+                                vbox.getChildren().add(new Label(" - " + (i+1) +") " + esercizio.getNome()));
                                 TextArea descrizione = new TextArea();
                                 descrizione.setText(esercizio.getDescrizione());
+
+                                // un rigo è formato più o meno da 53 caratteri
+                                int numeroRighe = Math.round((esercizio.getDescrizione().length()) / 53);
                                 descrizione.setEditable(false);
                                 descrizione.setWrapText(true);
-                                descrizione.setPrefSize(300, 10);
+                                descrizione.setPrefWidth(300);
+                                descrizione.setPrefRowCount(numeroRighe + 1);
                                 vbox.getChildren().add(descrizione);
                             }
 

@@ -39,7 +39,7 @@ public class AvailableShiftsToSwitchController implements Initializable {
         }
     }
 
-        @Override
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
         PawBookings PB = PawBookings.getInstance();  
         LinkedList<Turno> elencoTurni = PB.scambioTurno();
