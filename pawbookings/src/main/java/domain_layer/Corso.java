@@ -13,8 +13,10 @@ public class Corso {
     private float costo;
     private String tipoCorso;
     private int numTurni;
-    protected LinkedList<Cane> elencoCaniIscritti;
-    protected LinkedList<Lezione> programma;
+
+    // riferimenti
+    private LinkedList<Cane> elencoCaniIscritti;
+    private LinkedList<Lezione> programma;
     private Lezione lezioneCorrente;
     private Lezione lezioneSelezionata;
 

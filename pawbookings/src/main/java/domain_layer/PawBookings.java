@@ -409,7 +409,7 @@ public class PawBookings {
     public int generaCodiceLezione(){
         int codiceLezione=0;
         for(Corso c: this.elencoCorsi){
-            codiceLezione += c.programma.size();
+            codiceLezione += c.getLezioni().size();
         }
         return (codiceLezione+1);
     }
@@ -444,7 +444,7 @@ public class PawBookings {
     public LinkedList<Corso>  calcolaCorsiConCaniIscritti(){
         LinkedList<Corso> corsiConCani = new LinkedList<>();
         for(Corso c: elencoCorsi){
-            if(c.elencoCaniIscritti.size()>0){
+            if(c.getCaniIscritti().size()>0){
                 corsiConCani.add(c);
             }
         } 
@@ -548,5 +548,10 @@ public class PawBookings {
     public LinkedList<PeriodoAffido> getPeriodiAffidoDisponibili(){
         return this.elencoPeriodiDisponibili;
     }
+
+
+
+
+
 
 }

@@ -70,7 +70,7 @@ public class Cane {
     public void aggiornaAssociazioniCane(){
         if (this.attualmenteIscritto) {
             this.corsoCorrente.annullaIscrizione(this);
-            corsoCorrente.elencoCaniIscritti.remove(this);
+            corsoCorrente.getCaniIscritti().remove(this);
         }
     }
 

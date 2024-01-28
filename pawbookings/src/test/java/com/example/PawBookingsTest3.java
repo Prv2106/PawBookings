@@ -137,8 +137,28 @@ class PawBookingsTest3 {
 
     @Test
     void generaCodiceLezione(){
+        int expected;
+        int numLezioni=0;
+      
+        for(Corso c: PB.getCorsi()){
+            numLezioni += c.getLezioni().size();
+        }
+        expected = numLezioni +1;
+        // test del metodo
+        //Ci aspettiamo che il codice sia uguale al numero delle lezioni + 1
+        assertEquals(expected, PB.generaCodiceLezione());
+
 
     }
     
     
+
+
+
+
+
+
+
+
+
 }
