@@ -1,10 +1,6 @@
 package org.sample.pawbookings;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.LinkedList;
-import java.util.ResourceBundle;
-
 import domain_layer.Corso;
 import domain_layer.Esercizio;
 import domain_layer.Lezione;
@@ -13,7 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -102,10 +97,7 @@ public class AdminAllCoursesController {
         });
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        
-    }
+   
 
 }
 

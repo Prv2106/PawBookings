@@ -3,10 +3,9 @@ package domain_layer;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
 
-public class PeriodoAffido extends Observable{
+
+public class PeriodoAffido extends Observable {
     // attributi
     private final int codice;
     private final LocalDate dataInizio;
@@ -61,7 +60,6 @@ public class PeriodoAffido extends Observable{
 
     public void aggiornaStatoSalute(Map<Integer, String> mappaStatoSalute) {
         setMappaStatoSalute(mappaStatoSalute);
-        setChanged();
         notifyObservers();
     }
 

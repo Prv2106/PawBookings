@@ -522,7 +522,7 @@ public class PawBookings {
 
     public LinkedList<Map<String,String>> leggiStatoSalute(){
         LinkedList<Map<String,String>> statoSaluteCani = this.clienteLoggato.getStatoSalute();
-        this.clienteLoggato.resettaStatoSaluteCani();
+        
         return statoSaluteCani;
     }
 
