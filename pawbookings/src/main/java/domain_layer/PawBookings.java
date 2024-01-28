@@ -371,11 +371,11 @@ public class PawBookings {
     public Boolean setCorsoSelezionato(Corso cs){
         if(cs == null){
             this.corsoSelezionato = null;
-            return true;
+            return false;
         }
         else{
             this.corsoSelezionato = cs;
-            return false;
+            return true;
         }
     }
 
@@ -449,11 +449,16 @@ public class PawBookings {
     }
 
 
-    public LinkedList<Turno> scambioTurno(){
-        Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
-        return ultimaLezioneSeguita.getTurniDisponibili();
+    public LinkedList<Turno> scambioTurno() {
+        Turno tc = this.caneSelezionato.getTurnoCorrente();
+        Boolean esito = this.verificaIdoneitaScambioTurno(tc);
+        if (esito) {
+            Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
+            return ultimaLezioneSeguita.getTurniDisponibili();
+        } else {
+            return null;
+        }
     }
-
 
     public void selezionaTurnoScambio(Turno ts){
         Turno tc = this.caneSelezionato.getTurnoCorrente();
@@ -461,11 +466,6 @@ public class PawBookings {
         ultimaLezioneSeguita.effettuaScambioTurno(tc, ts);
     }   
 
-
-    public Boolean selezionaCaneScambioTurno(Cane cn){
-        Turno tc = cn.getTurnoCorrente();
-        return this.verificaIdoneitaScambioTurno(tc);
-    }
 
     public Boolean verificaIdoneitaScambioTurno(Turno tc){
         if((tc.getData().isBefore(LocalDate.now().plusDays(1))) && (tc != null)){
