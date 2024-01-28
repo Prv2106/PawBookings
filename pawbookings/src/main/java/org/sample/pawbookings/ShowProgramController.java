@@ -3,7 +3,6 @@ import java.io.IOException;
 import domain_layer.Corso;
 import domain_layer.Esercizio;
 import domain_layer.Lezione;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

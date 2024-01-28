@@ -23,15 +23,13 @@ import javafx.scene.text.Text;
 import javafx.util.Callback;
 
 public class AvailableShiftsToSwitchController implements Initializable {
-
+    
     @FXML
     private Button backButton;
 
     @FXML
     private ListView<Turno> list;
 
-    @FXML
-    private Text text;
 
     // creiamo una lista osservabile per i turni
     ObservableList<Turno> items = FXCollections.observableArrayList();
@@ -45,76 +43,56 @@ public class AvailableShiftsToSwitchController implements Initializable {
         }
     }
 
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         PawBookings PB = PawBookings.getInstance();
-        LinkedList<Turno> elencoTurni;
+        LinkedList<Turno> elencoTurni = PB.scambioTurno();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("error-view.fxml"));
-            ErrorController controller = loader.getController();
+        items.addAll(elencoTurni);
+        this.list.setItems(items);
 
-        try {
-            Parent root = loader.load();
-            elencoTurni = PB.scambioTurno();
-            if (elencoTurni == null) {
-                // allora il cliente non ha prenotato alcun turno per il suo cane
-                controller.setTextError("Devi prima prenotare un turno!");
-                MainApplication.goTo(root);
-            } else if (elencoTurni.isEmpty()) {
-                // nessun turno disponbile
-                this.text.setText("Nessun turno disponibile");
-            } else {
-                items.addAll(elencoTurni);
-                this.list.setItems(items);
-        
-                // definiamo la grafica di ogni oggetto della lista
-                this.list.setCellFactory(new Callback<ListView<Turno>, ListCell<Turno>>() {
+        // definiamo la grafica di ogni oggetto della lista
+        this.list.setCellFactory(new Callback<ListView<Turno>, ListCell<Turno>>() {
+            @Override
+            public ListCell<Turno> call(ListView<Turno> listView) {
+                return new ListCell<Turno>() {
                     @Override
-                    public ListCell<Turno> call(ListView<Turno> listView) {
-                        return new ListCell<Turno>() {
-                            @Override
-                            protected void updateItem(Turno turno, boolean empty) {
-                                // per ogni elemento (turno)
-                                super.updateItem(turno, empty);
-        
-                                if (turno == null || empty) {
-                                    setText(null);
-                                } else {
-                                    // data, ora inizio e ora fine
-                                    VBox vbox = new VBox();
-                                    vbox.getChildren().add(new Label("Data: " + turno.getData()));
-                                    vbox.getChildren().add(new Label("Ora Inizio: " + turno.getOraFine()));
-                                    vbox.getChildren().add(new Label("Ora fine: " + turno.getOraFine()));
+                    protected void updateItem(Turno turno, boolean empty) {
+                        // per ogni elemento (turno)
+                        super.updateItem(turno, empty);
+
+                        if (turno == null || empty) {
+                            setText(null);
+                        } else {
+                            // data, ora inizio e ora fine
+                            VBox vbox = new VBox();
+                            vbox.getChildren().add(new Label("Data: " + turno.getData()));
+                            vbox.getChildren().add(new Label("Ora Inizio: " + turno.getOraInizio()));
+                            vbox.getChildren().add(new Label("Ora fine: " + turno.getOraFine()));
+                        
+                            // Imposta il contenuto della cella
+                            setGraphic(vbox);
+
+    // -------------------> Aggiungiamo il listener per l'evento di click
+                            setOnMouseClicked(event -> {
+                                // Azioni da eseguire quando un elemento viene cliccato
+                                PB.selezionaTurnoScambio(turno);
+
+                                // passiamo alla schermata successiva
+                                    try {
+                                        MainApplication.setRoot("ok-view.fxml");
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                 
-                                    // Imposta il contenuto della cella
-                                    setGraphic(vbox);
-        
-            // -------------------> Aggiungiamo il listener per l'evento di click
-                                    setOnMouseClicked(event -> {
-                                        // Azioni da eseguire quando un elemento viene cliccato
-                                        try {
-                                            PB.selezionaTurnoScambio(turno);
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
-            
-                                        // passiamo alla schermata successiva
-                                        try {
-                                            MainApplication.setRoot("ok-view.fxml");
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-                                    });
-                                }
-                            }
-                        };
+                            });
+                        }
                     }
-                });
+                };
             }
-        } catch (Exception e) {
-            // probabilmente il cliente non ha prenotato nessun turno
-            controller.setTextError("Probabilmente non hai ancora prenotato");
-        }  
+        });
+        
     }
 
 }

@@ -409,7 +409,7 @@ public class PawBookings {
     public int generaCodiceLezione(){
         int codiceLezione=0;
         for(Corso c: this.elencoCorsi){
-            codiceLezione += c.programma.size();
+            codiceLezione += c.getLezioni().size();
         }
         return (codiceLezione+1);
     }
@@ -444,7 +444,7 @@ public class PawBookings {
     public LinkedList<Corso>  calcolaCorsiConCaniIscritti(){
         LinkedList<Corso> corsiConCani = new LinkedList<>();
         for(Corso c: elencoCorsi){
-            if(c.elencoCaniIscritti.size()>0){
+            if(c.getCaniIscritti().size()>0){
                 corsiConCani.add(c);
             }
         } 
@@ -470,12 +470,14 @@ public class PawBookings {
     }   
 
 
-    public Boolean verificaIdoneitaScambioTurno(Turno tc){
-        if((tc.getData().isBefore(LocalDate.now().plusDays(1))) && (tc != null)){
-            return true;
-        } else{
+    public Boolean verificaIdoneitaScambioTurno(Turno tc) {
+        if (tc != null) {
+            if (tc.getData().isAfter(LocalDate.now())) 
+                return true;
+            else 
+                return false;
+        } else 
             return false;
-        }
     }
 
     public LinkedList<Corso> visualizzaProgrammaCorso(){
@@ -540,7 +542,18 @@ public class PawBookings {
         return this.elencoCorsi;
     }
 
-    public LinkedList<PeriodoAffido> getPeriodiDisponibili(){
+
+    public LinkedList<PeriodoAffido> getPeriodiAffido(){
+        return this.elencoPeriodiAffido;
+    }
+
+    public LinkedList<PeriodoAffido> getPeriodiAffidoDisponibili(){
         return this.elencoPeriodiDisponibili;
     }
+
+
+
+
+
+
 }

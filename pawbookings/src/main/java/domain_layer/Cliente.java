@@ -44,7 +44,7 @@ public class Cliente implements Observer {
     public LinkedList<Cane> calcolaCaniNonInAffido() {
         LinkedList<Cane> elencoCaniNonInAffido = new LinkedList<>();
         for (Cane cn : this.caniPosseduti) {
-            if (!cn.attualmenteInAffido) {
+            if (!cn.getAttualmenteInAffido()) {
                 elencoCaniNonInAffido.add(cn);
             }
         }
