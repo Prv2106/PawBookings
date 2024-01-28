@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import domain_layer.Cane;
 import domain_layer.Cliente;
 import domain_layer.Corso;
+import domain_layer.Esercizio;
 import domain_layer.PawBookings;
 import domain_layer.PeriodoAffido;
 
@@ -131,7 +132,9 @@ class PawBookingsTest3 {
         // Verifichiamo che è stata creata una nuova lezione
         assertNotEquals(null, corsoTestLezione.getLezioneCorrente());
 
-
+        // resettiamo le condizioni di partenza
+        corsoTestLezione.setLezioneCorrente(null);
+        PB.selezionaCorso(null);
     }
 
 
@@ -148,12 +151,27 @@ class PawBookingsTest3 {
         //Ci aspettiamo che il codice sia uguale al numero delle lezioni + 1
         assertEquals(expected, PB.generaCodiceLezione());
 
-
     }
     
     
 
+    @Test
+    void testInserisciEsercizio(){
+        PB.inserisciNuovoCorso("Corso Test Esercizio", 10, 400.0F);
+        Corso corsoTest = PB.getCorsi().getLast();
+        PB.selezionaCorso(corsoTest);
+        PB.nuovaLezione("Lezione test");
 
+        
+        // test del metodo 
+        PB.inserisciEsercizio("Esercizio test", "esercizio fittizio per eseguire il test del metodo");
+
+        // Ci aspettiamo che la lunghezza della lista di esercizi di Lezione test sia 1
+        assertEquals(corsoTest.getLezioneCorrente(), corsoTest);
+
+
+
+    }
 
 
 
