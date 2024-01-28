@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 
 public class ManageCourseController {
@@ -11,10 +13,14 @@ public class ManageCourseController {
     @FXML
     private Button backButton;
 
-    private void showAllCourses() {
+    private void showAllCourses(String nextDestination) {
         // andiamo nella pagina contenente l'elenco di tutti i corsi esistenti
         try {
-            MainApplication.setRoot("admin_all_courses-view");;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("admin_all_courses-view.fxml"));
+            Parent root = loader.load();
+            AdminAllCoursesController controller = loader.getController();
+            controller.initialize(nextDestination);
+            MainApplication.goTo(root);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -33,7 +39,7 @@ public class ManageCourseController {
     void onInserisciCorsoPressed(ActionEvent event) {
         // andiamo nella pagina dove l'amministratore può inserire un corso
         try {
-            MainApplication.simpleBack();
+            MainApplication.setRoot("new_course-view.fxml");;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -41,12 +47,12 @@ public class ManageCourseController {
 
     @FXML
     void onModificaInformazioniCorsoPressed(ActionEvent event) {
-        showAllCourses();
+        showAllCourses("modify_info_course-view.fxml");
     }
 
     @FXML
     void onModificaProgrammaCorsoPressed(ActionEvent event) {
-        showAllCourses();
+        showAllCourses("modify_program_course-view.fxml");
     }
 
 }

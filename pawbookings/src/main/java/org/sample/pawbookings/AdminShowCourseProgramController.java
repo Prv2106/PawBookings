@@ -48,16 +48,17 @@ public class AdminShowCourseProgramController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         PawBookings PB = PawBookings.getInstance();
         this.nomeCorsoSelezionato.setText(PB.getCorsoSelezionato().getTipoCorso());
+
         LinkedList<Lezione> programma = PB.getCorsoSelezionato().getLezioni();
         items.addAll(programma);
         this.list.setItems(items);
 
+        
         // definiamo la grafica di ogni oggetto della lista (lezione)
         this.list.setCellFactory(new Callback<ListView<Lezione>, ListCell<Lezione>>() {
             @Override
             public ListCell<Lezione> call(ListView<Lezione> listView) {
                 return new ListCell<Lezione>() {
-                    int counter = 0;
                     @Override
                     protected void updateItem(Lezione lezione, boolean empty) {
                         // per ogni elemento (lezione)
@@ -66,9 +67,10 @@ public class AdminShowCourseProgramController implements Initializable {
                         if (lezione == null || empty) {
                             setText(null);
                         } else {
+                            
                             // nome lezione
                             VBox vbox = new VBox();
-                            vbox.getChildren().add(new Label("lezione " + counter + ": " + lezione.getNome()));
+                            vbox.getChildren().add(new Label("lezione " + (programma.indexOf(lezione)+1) + ": " + lezione.getNome()));
                             // sotto ogni lezione, mettiamone gli esercizi
                             for (int j = 0; j < lezione.getEsercizi().size(); j++) {
                                 Esercizio esercizio = lezione.getEsercizi().get(j);
@@ -76,6 +78,8 @@ public class AdminShowCourseProgramController implements Initializable {
                             }
                             // Imposta il contenuto della cella
                             setGraphic(vbox);
+
+                            
                           }
                             
     // -------------------> Aggiungiamo il listener per l'evento di click
@@ -85,13 +89,16 @@ public class AdminShowCourseProgramController implements Initializable {
 
                                 // passiamo alla schermata successiva
                                 try {
-                                    MainApplication.setRoot("new_shift-view");
+                                    MainApplication.setRoot("new_shift-view.fxml");
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
                             });
+
+                            
                         }
                     };
+                    
                 }
             });
         }

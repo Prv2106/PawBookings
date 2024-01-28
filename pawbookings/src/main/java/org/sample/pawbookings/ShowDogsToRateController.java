@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -65,15 +66,18 @@ public class ShowDogsToRateController {
                                 // a sx vogliamo le informazioni del cane, quindi: nome, razza e codice
                                 // a dx vogliamo un TextField dove mettere il commento
                                 HBox hBox = new HBox();
+                                hBox.setAlignment(Pos.CENTER);
 
                                 // elementi di sinistra
                                 VBox vbox = new VBox();
+                                vbox.setPrefWidth(150);
                                 vbox.getChildren().add(new Label("Nome: " + cane.getNome()));
                                 vbox.getChildren().add(new Label("Razza: " + cane.getRazza()));
                                 vbox.getChildren().add(new Label("Codice: " + cane.getCodiceCane()));
 
                                 // elemento di destra
                                 TextField textField = new TextField();
+                                textField.setPrefWidth(400);
                                 mappaBoxsCommenti.put(cane.getCodiceCane(), textField);
 
                                 // mettiamo gli elementi di sinistra e destra nell'hbox
@@ -121,6 +125,7 @@ public class ShowDogsToRateController {
 
         // operazione di sistema
         PawBookings.getInstance().notificaClienti(mappaStatoSalute);
+        MainApplication.setRoot("admin_ok-view.fxml");
     }
 
 }

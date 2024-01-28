@@ -61,7 +61,7 @@ public class NewExerciseController implements Initializable {
         if (!nome.isEmpty() && !descrizione.isEmpty()) {
             try {
                 PawBookings.getInstance().inserisciEsercizio(nome, descrizione);
-                MainApplication.setRoot("exercise_added-view");
+                MainApplication.setRoot("exercise_added-view.fxml");
             } catch (IOException e) {
                 errorController.setTextError("qualcosa è andato storto :(");
                 MainApplication.goTo(secondRoot);

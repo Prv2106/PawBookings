@@ -59,7 +59,7 @@ public class PeriodoAffido extends Observable{
         return false;
     }
 
-    public void aggiornaStatoSalute(Map<Integer, String> mappaStatoSalute){
+    public void aggiornaStatoSalute(Map<Integer, String> mappaStatoSalute) {
         setMappaStatoSalute(mappaStatoSalute);
         setChanged();
         notifyObservers();
