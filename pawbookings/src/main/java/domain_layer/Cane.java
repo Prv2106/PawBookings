@@ -142,7 +142,7 @@ public class Cane {
 
 
 
-    public Turno getTurnoCorrente(){
+    public Turno getTurnoCorrente() {
         return this.turnoCorrente;
     }
 

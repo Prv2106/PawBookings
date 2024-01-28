@@ -470,12 +470,14 @@ public class PawBookings {
     }   
 
 
-    public Boolean verificaIdoneitaScambioTurno(Turno tc){
-        if((tc.getData().isBefore(LocalDate.now().plusDays(1))) && (tc != null)){
-            return true;
-        } else{
+    public Boolean verificaIdoneitaScambioTurno(Turno tc) {
+        if (tc != null) {
+            if (tc.getData().isAfter(LocalDate.now())) 
+                return true;
+            else 
+                return false;
+        } else 
             return false;
-        }
     }
 
     public LinkedList<Corso> visualizzaProgrammaCorso(){

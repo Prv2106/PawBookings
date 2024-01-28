@@ -35,7 +35,7 @@ public class MainApplication extends Application {
         scene.setRoot(root);
     }
 
-    static void goTo(Parent root) throws IOException {
+    static void goTo(Parent root) {
         scene.setRoot(root);
         stackRoots.push(root);
     }
@@ -187,6 +187,7 @@ public class MainApplication extends Application {
         PB.selezionaCorsoModificaTurni(corsoBase);
         PB.selezionaLezione(corsoBase.getLezioni().get(0));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
+        PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(15, 0), LocalTime.of(16, 0));
         PB.selezionaLezione(corsoBase.getLezioni().get(1));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
         
