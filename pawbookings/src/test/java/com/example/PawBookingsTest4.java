@@ -23,7 +23,7 @@ import java.util.LinkedList;
 
 
 
-class PawBookingsTest3 {
+class PawBookingsTest4 {
     static PawBookings PB;
 
     // Il metodo viene eseguito prima di tutti i test

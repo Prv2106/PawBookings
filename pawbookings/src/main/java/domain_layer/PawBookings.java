@@ -371,11 +371,11 @@ public class PawBookings {
     public Boolean setCorsoSelezionato(Corso cs){
         if(cs == null){
             this.corsoSelezionato = null;
-            return true;
+            return false;
         }
         else{
             this.corsoSelezionato = cs;
-            return false;
+            return true;
         }
     }
 
@@ -529,6 +529,11 @@ public class PawBookings {
     }
 
 
+    /* Metodi per il test */
+
+    public Corso getCorsoSelezionato(){
+        return this.corsoSelezionato;
+    }
 
     public LinkedList<Corso> getCorso(){
         return this.elencoCorsi;
