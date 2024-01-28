@@ -13,8 +13,10 @@ public class Corso {
     private float costo;
     private String tipoCorso;
     private int numTurni;
-    protected LinkedList<Cane> elencoCaniIscritti;
-    protected LinkedList<Lezione> programma;
+
+    // riferimenti
+    private LinkedList<Cane> elencoCaniIscritti;
+    private LinkedList<Lezione> programma;
     private Lezione lezioneCorrente;
     private Lezione lezioneSelezionata;
 
@@ -96,6 +98,7 @@ public class Corso {
     
     public boolean setLezioneCorrente(Lezione nuovaLezione){
         if(nuovaLezione == null){
+            this.lezioneCorrente = null;
             return false;
         } else {
             this.lezioneCorrente = nuovaLezione;
@@ -162,7 +165,13 @@ public class Corso {
         return mappaLezioni;
     }
 
-    public Lezione getLezioneCorrente() {
+
+
+
+    /* Metodi per il test */
+
+    public Lezione getLezioneCorrente(){
         return this.lezioneCorrente;
     }
+
 }

@@ -10,7 +10,7 @@ public class Cane {
     private boolean attualmenteIscritto;
     private Corso corsoCorrente;
     private LinkedList<Corso> corsiCompletati;
-    public boolean attualmenteInAffido;
+    private boolean attualmenteInAffido;
     private PeriodoAffido affidoCorrente;
     private LinkedList<Lezione> lezioniSeguite;
     private Turno turnoCorrente;
@@ -70,7 +70,7 @@ public class Cane {
     public void aggiornaAssociazioniCane(){
         if (this.attualmenteIscritto) {
             this.corsoCorrente.annullaIscrizione(this);
-            corsoCorrente.elencoCaniIscritti.remove(this);
+            corsoCorrente.getCaniIscritti().remove(this);
         }
     }
 

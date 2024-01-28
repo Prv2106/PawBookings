@@ -52,7 +52,7 @@ class CaneTest1 {
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
 
         PB.selezionaCane(new Cane(10, "Luna", "Barboncino"));
-        PB.getCaneSelezionato().aggiornaAttualmenteIscritto(PB.elencoCorsi.get(0));
+        PB.getCaneSelezionato().aggiornaAttualmenteIscritto(PB.getCorsi().get(0));
     }
     
 
@@ -64,7 +64,7 @@ class CaneTest1 {
         assertEquals(null, cn.getCorsoCorrente());
 
         // simuliamo che il cane si iscrivi al corso base
-        cn.aggiornaAttualmenteIscritto(PB.elencoCorsi.get(0));
+        cn.aggiornaAttualmenteIscritto(PB.getCorsi().get(0));
         assertTrue(cn.getAttualmenteIscritto());
         assertEquals(1, cn.getCorsoCorrente().getCodice());
     }

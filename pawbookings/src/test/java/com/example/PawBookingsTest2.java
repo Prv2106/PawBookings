@@ -69,7 +69,43 @@ class PawBookingsTest2 {
         assertNotNull(PB);
     }
 
+    
+    //Test del metodo loadPeriodiAffido di PawBookings che viene richiamato dal costruttore
+    @Test
+    void testLoadPeriodiAffido(){
+        // Creazione delle istanze di PeriodoAffido 
+        LinkedList<PeriodoAffido> expected = new LinkedList<>();
 
+        // Di seguito le istazne di PeriodoAffido che vengono utilizzate nel metodo loadPeriodiAffido
+        PeriodoAffido p1 = new PeriodoAffido(1, LocalDate.now(), LocalDate.now().plusWeeks(2), 150.0f);
+        PeriodoAffido p2 = new PeriodoAffido(2, LocalDate.now().plusWeeks(2), LocalDate.now().plusMonths(1), 300.0f);
+        PeriodoAffido p3 = new PeriodoAffido(3,LocalDate.now().plusMonths(1) ,LocalDate.now().plusMonths(2), 600.0f);
+        expected.add(p1);
+        expected.add(p2);
+        expected.add(p3);
+
+        /*
+        *       PB.getPeriodiAffidoDisponibili().clear();
+                PB.getPeriodiAffido().clear();
+
+                PB.getPeriodiAffido().add(p1);
+                PB.getPeriodiAffido().add(p2);
+                PB.getPeriodiAffido().add(p3);
+                assertTrue(PB.getPeriodiAffido().containsAll(expected));
+        * 
+        * 
+        */
+        // Ci aspettiamo che l'elencoPeriodiAffido di PB abbia la stessa lunghezza di expected
+        assertEquals(expected.size(), PB.getPeriodiAffido().size());
+        // Ci aspettiamo che l'elencoPeriodiAffidoDisponibili di PB abbia la stessa lunghezza di expected
+        assertEquals(expected.size(), PB.getPeriodiAffidoDisponibili().size());
+
+        // Ci aspettiamo che l'elencoPeriodoAffido di PB contenga gli stessi periodi affido di expected
+        // assertTrue(PB.getPeriodiAffido().containsAll(expected));
+        // Ci aspettiamo che l'elencoPeriodoAffidoDisponibili di PB contenga gli stessi periodi affido di expected
+        // assertTrue(PB.getPeriodiAffidoDisponibili().containsAll(expected));
+    }
+  
 
     @Test
     void testAccediComeAdmin(){

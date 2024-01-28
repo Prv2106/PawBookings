@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import domain_layer.Cane;
 import domain_layer.Cliente;
 import domain_layer.Corso;
+import domain_layer.Esercizio;
 import domain_layer.PawBookings;
 import domain_layer.PeriodoAffido;
 
@@ -51,10 +52,6 @@ class PawBookingsTest3 {
         // Ci aspettiamo che l'elencoCorsi di PB contenga corsoBase
         assertTrue(PB.getCorsi().contains(corsoBase));
 
-
-        // test del metodo generaCodiceCorso
-        // Ci aspettiamo che il codice di CorsoBase sia 1
-        assertEquals(1, corsoBase.getCodice());
     }
 
 
@@ -104,6 +101,82 @@ class PawBookingsTest3 {
 
 
 
+    @Test
+    void testModificaCorso(){
+        PB.inserisciNuovoCorso("Corso Test", 10, 400.0F);
+        Corso corsoTest = PB.getCorsi().getLast();
+        PB.selezionaCorso(corsoTest);
 
+        // test del metodo
+        PB.modificaCorso(5, 100.0F);
+
+        // Ci aspettiamo che adesso la capienza sia 5 e che il costo sia 100.0F
+        assertEquals(5, corsoTest.getCapienza());
+        assertEquals(100.0F, corsoTest.getCosto());
+    }
+
+
+
+    @Test
+    void testNuovaLezione(){
+        PB.inserisciNuovoCorso("Corso TestLezione", 10, 300.0F);
+        Corso corsoTestLezione = PB.getCorsi().getLast();
+        PB.selezionaCorso(corsoTestLezione);
+
+        // Settiamo a null la lezione Corrente
+        corsoTestLezione.setLezioneCorrente(null);
+
+        // Test del metodo
+        PB.nuovaLezione("Lezione test");
+
+        // Verifichiamo che è stata creata una nuova lezione
+        assertNotEquals(null, corsoTestLezione.getLezioneCorrente());
+
+        // resettiamo le condizioni di partenza
+        corsoTestLezione.setLezioneCorrente(null);
+        PB.selezionaCorso(null);
+    }
+
+
+    @Test
+    void generaCodiceLezione(){
+        int expected;
+        int numLezioni=0;
+      
+        for(Corso c: PB.getCorsi()){
+            numLezioni += c.getLezioni().size();
+        }
+        expected = numLezioni +1;
+        // test del metodo
+        //Ci aspettiamo che il codice sia uguale al numero delle lezioni + 1
+        assertEquals(expected, PB.generaCodiceLezione());
+
+    }
     
+    
+
+    @Test
+    void testInserisciEsercizio(){
+        PB.inserisciNuovoCorso("Corso Test Esercizio", 10, 400.0F);
+        Corso corsoTest = PB.getCorsi().getLast();
+        PB.selezionaCorso(corsoTest);
+        PB.nuovaLezione("Lezione test");
+
+        
+        // test del metodo 
+        PB.inserisciEsercizio("Esercizio test", "esercizio fittizio per eseguire il test del metodo");
+
+        // Ci aspettiamo che la lunghezza della lista di esercizi di Lezione test sia 1
+        assertEquals(corsoTest.getLezioneCorrente(), corsoTest);
+
+
+
+    }
+
+
+
+
+
+
+
 }

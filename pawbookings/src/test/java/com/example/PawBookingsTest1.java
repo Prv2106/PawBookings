@@ -57,7 +57,7 @@ class PawBookingsTest1 {
 
         PB.selezionaCane(new Cane(10, "Luna", "Barboncino"));
         // Luna è iscritta al corso Base
-        PB.confermaIscrizioneCorso(PB.elencoCorsi.get(0));
+        PB.confermaIscrizioneCorso(PB.getCorsi().get(0));
     }
 
     // Il metodo restituisce un'istanza della classe PawBookings se PB è null.
