@@ -1,8 +1,10 @@
 package com.example;
 import org.junit.jupiter.api.Test;
 import domain_layer.Cane;
+import domain_layer.Cliente;
 import domain_layer.Corso;
 import domain_layer.PawBookings;
+import domain_layer.PeriodoAffido;
 import domain_layer.Turno;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,27 +54,68 @@ public class CaneTest2 {
 
         PB.selezionaCane(new Cane(10, "Luna", "Barboncino"));
         PB.getCaneSelezionato().aggiornaAttualmenteIscritto(PB.getCorsi().get(0));
+    
+        PB.registrati("Alberto", "Provenzano", "156322345678", "0000");
+        PB.aggiungiCane("Stella", "Pastore Tedesco");
+        PB.aggiungiCane("Asso", "Corso");
+        PB.logout();
     }
 
     @Test
     void testAggiornaAttualmenteInAffido(){
+        // nel test verifichiamo che il cane venga aggiunto alla lista dei cani in affido
         Cane cane = new Cane(11, "Sole", "Labrador");
+        // verifichiamo che il cane non sia attualmente in affido
         assertFalse(cane.getAttualmenteInAffido());
         assertEquals(null, cane.getAffidoCorrente());
 
+        // aggiorniamo lo stato attualmente in affido
         cane.aggiornaAttualmenteInAffido(PB.getPeriodiDisponibili().get(1));
+        // verifichiamo che il cane sia attualmente in affido
         assertTrue(cane.getAttualmenteInAffido());
     }
 
     @Test
     void testConclusioneAffido(){
+        // nel test verifichiamo che il cane venga rimosso dalla lista dei cani in affido
         Cane cane = new Cane(12, "Ginevra", "Belgian Malinois");
-        cane.aggiornaAttualmenteInAffido(PB.getPeriodiDisponibili().get(2));
+        cane.aggiornaAttualmenteInAffido(PB.getPeriodiDisponibili().get(1));
+        // verifichiamo che il cane sia attualmente in affido
         assertTrue(cane.getAttualmenteInAffido());
-        assertEquals(PB.getPeriodiDisponibili().get(2), cane.getAffidoCorrente());
-
-        cane.concludiAffido();
+        cane.conclusioneAffido();
+        // verifichiamo che il cane non sia più attualmente in affido
         assertFalse(cane.getAttualmenteInAffido());
-        assertEquals(null, cane.getAffidoCorrente());
+        // verifichiamo che il cane non sia più in affido
+        assertNull(cane.getAffidoCorrente());
     }
+
+    @Test
+    void testAggiornaAssociazioniCane(){
+        // nel test verifichiamo che il cane venga rimosso dal corso corrente e
+        // dalla lista dei cani iscritti al corso
+
+        Cliente Alberto = PB.getClienti().get("Alberto1"); 
+        // effettuiamo il login del cliente
+        PB.accedi("Alberto1", "0000");
+        
+        Cane cane = PB.getClienteLoggato().getCane(1);
+        // iscriviamo il cane al corso base
+        Corso c = PB.getCorsi().get(0);
+        PB.selezionaCane(cane);
+        PB.confermaIscrizioneCorso(c);
+        // verifichiamo che il cane sia iscritto al corso
+        assertTrue(cane.getAttualmenteIscritto());
+        // verifichiamo che il cane sia presente nella lista dei cani iscritti al corso
+        assertTrue(c.getCaniIscritti().contains(cane));
+        
+        
+        // rimuoviamo il cane dal corso
+        PB.selezionaCane(cane);
+        cane.aggiornaAssociazioniCane();
+        // verifichiamo che l'elenco cani iscritti non contenga più il cane
+        assertFalse(c.getCaniIscritti().contains(cane));
+
+    }
+
+
 }

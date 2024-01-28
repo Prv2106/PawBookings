@@ -540,4 +540,7 @@ public class PawBookings {
         return this.elencoCorsi;
     }
 
+    public LinkedList<PeriodoAffido> getPeriodiDisponibili(){
+        return this.elencoPeriodiDisponibili;
+    }
 }
