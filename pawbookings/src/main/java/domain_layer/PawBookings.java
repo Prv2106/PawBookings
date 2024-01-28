@@ -467,6 +467,7 @@ public class PawBookings {
         Turno tc = this.caneSelezionato.getTurnoCorrente();
         Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
         ultimaLezioneSeguita.effettuaScambioTurno(tc, ts);
+        this.caneSelezionato.setTurnoCorrente(ts);
     }   
 
 

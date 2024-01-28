@@ -7,7 +7,7 @@ import domain_layer.Cliente;
 import domain_layer.Corso;
 import domain_layer.PawBookings;
 import domain_layer.PeriodoAffido;
-
+import domain_layer.Turno;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -70,6 +70,66 @@ class PawBookingsTest4 {
     }
 
 
+    /*
+     * if (tc != null) {
+            if (tc.getData().isAfter(LocalDate.now())) 
+                return true;
+            else 
+                return false;
+        } else 
+            return false;
+     */
+    
+    @Test
+    void testVerificaIdoneitaScambioTurno(){
+        // Turno valido
+        Turno t1 = new Turno(10, LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
+        assertTrue(PB.verificaIdoneitaScambioTurno(t1));
+        
+        //Turno non valido
+        Turno t2 = new Turno(10, LocalDate.now(), LocalTime.of(9, 0), LocalTime.of(10, 0));
+        assertFalse(PB.verificaIdoneitaScambioTurno(t2));
+        //Turno mancante
+        assertFalse(PB.verificaIdoneitaScambioTurno(null));
+    }
+
+
+    @Test
+    void testScambioTurno(){
+        PB.accedi("Alberto1", "0000");
+        Cane Stella = PB.getClienteLoggato().getCane(1);
+        PB.setCaneSelezionato(Stella);
+        PB.confermaIscrizioneCorso(PB.getCorsi().getFirst());
+        
+        Turno t1 = PB.getCorsi().getFirst().getLezioni().getFirst().getTurniDisponibili().getFirst();
+        PB.selezionaTurno(t1);
+
+        // Ci aspettiamo che venga restituita la lista dei turni disponibili e che tra tali turni non sia presente t1
+        assertFalse(PB.scambioTurno().contains(t1));
+    }
+
+
+    @Test
+    void testSelezionaTurnoScambio(){
+        PB.accedi("Alberto1", "0000");
+        Cane Asso = PB.getClienteLoggato().getCane(2);
+        PB.setCaneSelezionato(Asso);
+        PB.confermaIscrizioneCorso(PB.getCorsi().getFirst());
+        
+        Turno t1 = PB.getCorsi().getFirst().getLezioni().get(1).getTurniDisponibili().getFirst();
+        PB.selezionaTurno(t1);
+        assertEquals(t1,Asso.getTurnoCorrente());
+
+        LinkedList<Turno> turniDisponibili = PB.scambioTurno();
+        Turno t2 = turniDisponibili.getFirst();
+
+        //Test del metodo
+        PB.selezionaTurnoScambio(t2);
+
+        //Ci aspettiamo che il turno corrente di Asso adesso sia t2
+        assertEquals(t2,Asso.getTurnoCorrente());
+
+    }
 
 
 
