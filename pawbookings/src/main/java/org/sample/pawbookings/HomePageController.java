@@ -9,6 +9,9 @@ import javafx.util.Callback;
 
 import domain_layer.Cane;
 import domain_layer.PawBookings;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,19 +42,24 @@ public class HomePageController implements Initializable {
     private ImageView notificationIcon;
 
 
+    private BooleanProperty myBooleanProperty;
+
+
     // metodo che viene richiamato all'apertura della schermata
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         PawBookings PB = PawBookings.getInstance();  
 
-        // preoccupiamoci dell'icon della "posta"
-        if (PB.getClienteLoggato().getNotifica()) {
-            // se l'utente ha notifiche da leggere
-            noNotificationIcon.setVisible(false);
-        } else {
-            notificationIcon.setVisible(false);
-        }
-        
+        // preoccupiamoci dell'icona delle "notifiche"
+        myBooleanProperty = new SimpleBooleanProperty(PB.getClienteLoggato().getNotifica());
+
+        // Aggiunge un listener per rilevare i cambiamenti nella proprietà booleana "notitifca" di Cliente
+        myBooleanProperty.addListener((observable, oldValue, newValue) -> {});
+
+        noNotificationIcon.visibleProperty().bind(myBooleanProperty.not());
+        notificationIcon.visibleProperty().bind(myBooleanProperty);
+           
+
         // Caricamento dei Cani del Cliente per l'avviamento
         LinkedList<Cane> listaCani = PB.getClienteLoggato().getCani();
 
