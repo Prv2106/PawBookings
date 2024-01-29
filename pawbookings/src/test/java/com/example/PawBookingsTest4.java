@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -46,7 +47,11 @@ class PawBookingsTest4 {
         PB.aggiungiCane("Walker", "Pastore Tedesco");
         PB.logout();
 
-
+        PB.registrati("Daniele", "Lucifora", "9921319", "0000");
+        PB.aggiungiCane("Sole", "Barboncino");
+        PB.aggiungiCane("Luna", "Rottweiler");
+        PB.aggiungiCane("Vanessa", "Labrador");
+        PB.logout();
 
         PB.inserisciNuovoCorso("Corso Base", 10, 200.0F);
         Corso corsoBase = PB.modificaProgrammaCorso().get(0);
@@ -213,17 +218,7 @@ class PawBookingsTest4 {
 
     }
 
-    /*
-     * {
-        LinkedList<PeriodoAffido> elencoPeriodiAffidoCaniRegistrati= new LinkedList<>();
-        for(PeriodoAffido pa: this.elencoPeriodiAffido){
-            if(pa.getNumeroPosti()<pa.getCapienzaMassima()){
-                elencoPeriodiAffidoCaniRegistrati.add(pa);
-            }
-        }
-        return elencoPeriodiAffidoCaniRegistrati; 
-    }
-     */
+    
 
     @Test
     void testCalcolaPeriodoCaneRegistrato(){
@@ -239,7 +234,6 @@ class PawBookingsTest4 {
 
         int lunghezzaIniziale = elencoPeriodiAffidoCaniRegistrati.size();
 
-        // attualmente nessun cane è registrato ad un periodoAffido
         // Test del metodo
         // Ci aspettiamo che venga restituita una lista con lunghezza pari a lunghezzaIniziale
         assertEquals(lunghezzaIniziale, PB.calcolaPeriodoCaneRegistrato().size());
@@ -288,7 +282,6 @@ class PawBookingsTest4 {
         Cane Maya = PB.getClienteLoggato().getCane(3);
         int lunghezzaIniziale = periodo3.getCaniAffido().size();
 
-        // Nel periodo 3 non sono presenti cani in affido
         // test del metodo
         
         // Ci aspettiamo che venga restituita una lista di lunghezza pari a lunghezzaIniziale
@@ -331,17 +324,118 @@ class PawBookingsTest4 {
     @Test
     void testNotificaClienti(){
         PB.accedi("Alberto1", "0000");
+        Cliente Alberto = PB.getClienteLoggato();
         Cane Duchessa = PB.getClienteLoggato().getCane(5);
         PeriodoAffido periodo3 = PB.getPeriodiAffido().get(2);
         PB.selezionaPeriodo(periodo3);
         // Mettiamo Duchessa in affido nel periodo 3
         PB.confermaAffido(Duchessa);
 
+        PB.accedi("Giuseppe2", "0000");
+        Cliente Giuseppe = PB.getClienteLoggato();
+        Cane Walker = PB.getClienteLoggato().getCane(6);
+        PB.selezionaPeriodo(periodo3);
+        // Mettiamo Walker in affido nel periodo 3
+        PB.confermaAffido(Walker);
 
 
+        PB.accedi("Daniele3", "0000");
+        Cliente Daniele = PB.getClienteLoggato();
+
+        Map<Integer,String> mappaStatoSalute = new HashMap<>();
+        mappaStatoSalute.put(5, "test stato salute Duchessa");
+        mappaStatoSalute.put(6, "test stato salute Walker");
+        PB.setPeriodoSelezionato(periodo3);
+
+        // Test del metodo
+        PB.notificaClienti(mappaStatoSalute);
+
+        // Ci aspettiamo che la mappaStatoSalute di periodoSelezionato sia stata settata a mappaStatoSalute
+        assertEquals(mappaStatoSalute, periodo3.getMappaStatoSalute());
+
+        // Ci aspettiamo che l'attributo notifica di Alberto e di Giuseppe sia diventato true
+        // Ci aspettiamo che l'attributo notifica di Daniele sia rimasto false
+         // Ci aspettiamo che la lista statoSaluteCani di Giuseppe e di Alberto non sia vuota
+        // Ci aspettiamo che la lista statoSaluteCani di Daniele sia vuota
+        assertTrue(Alberto.getNotifica());
+        assertTrue(Giuseppe.getNotifica());
+        assertFalse(Daniele.getNotifica());
+        assertEquals(1, Alberto.getStatoSalute().size());
+        assertEquals(1, Giuseppe.getStatoSalute().size());
+        assertEquals(0, Daniele.getStatoSalute().size());
+
+
+
+        // Ripristino le condizioni iniziali
+        PB.setClienteSelezionato(Alberto);
+        PB.setCaneSelezionato(Duchessa);
+        PB.confermaConclusioneAffido();
+
+        PB.setClienteSelezionato(Giuseppe);
+        PB.setCaneSelezionato(Walker);
+        PB.confermaConclusioneAffido();
+
+        PB.setCaneSelezionato(null);
 
     }
 
+
+
+
+    @Test
+    void testCancellaNotifiche(){
+        PB.accedi("Alberto1", "0000");
+        Cliente Alberto = PB.getClienteLoggato();
+        Cane Duchessa = PB.getClienteLoggato().getCane(5);
+        PeriodoAffido periodo3 = PB.getPeriodiAffido().get(2);
+        PB.selezionaPeriodo(periodo3);
+        // Mettiamo Duchessa in affido nel periodo 3
+        PB.confermaAffido(Duchessa);
+
+        PB.accedi("Giuseppe2", "0000");
+        Cliente Giuseppe = PB.getClienteLoggato();
+        Cane Walker = PB.getClienteLoggato().getCane(6);
+        PB.selezionaPeriodo(periodo3);
+        // Mettiamo Walker in affido nel periodo 3
+        PB.confermaAffido(Walker);
+        
+        // Imposto le condizioni iniziali
+        Alberto.getStatoSalute().clear();
+        Giuseppe.getStatoSalute().clear();
+
+        Map<Integer,String> mappaStatoSalute = new HashMap<>();
+        mappaStatoSalute.put(5, "test stato salute Duchessa");
+        mappaStatoSalute.put(6, "test stato salute Walker");
+        PB.setPeriodoSelezionato(periodo3);
+
+        PB.notificaClienti(mappaStatoSalute);
+
+        // Ci aspettiamo che la mappaStatoSalute di periodoSelezionato sia stata settata a mappaStatoSalute
+        assertEquals(mappaStatoSalute, periodo3.getMappaStatoSalute());
+
+        // Ci aspettiamo che l'attributo notifica di Alberto e di Giuseppe sia diventato true
+        // Ci aspettiamo che l'attributo notifica di Daniele sia rimasto false
+        assertTrue(Alberto.getNotifica());
+        assertTrue(Giuseppe.getNotifica());
+
+
+        // Test del metodo
+        // Accedendo con Alberto e richiamando il metodo cancellaNotifiche
+        // Ci aspettiamo che l'attributo Notifica di Alberto sia diventato false
+        // Ci aspettiamo che la lista statoSaluteCani di Alberto sia diventata vuota
+        // Ci aspettiamo che l'attributo Notifica di Giuseppe sia ancora true
+        // Ci aspettiamo che la lista statoSaluteCani di Giuseppe non sia vuota
+        PB.accedi("Alberto1", "0000");
+        PB.cancellaNotifiche();
+        assertFalse(Alberto.getNotifica());
+        assertEquals(0, Alberto.getStatoSalute().size());
+        assertTrue(Giuseppe.getNotifica());
+        assertEquals(1, Giuseppe.getStatoSalute().size());
+
+        
+
+
+    }
 
     
 }

@@ -556,7 +556,9 @@ public class PawBookings {
     }
 
 
-
+    public void addPeriodoAffido(PeriodoAffido pa) {
+        this.elencoPeriodiAffido.add(pa);
+    }
 
 
 
