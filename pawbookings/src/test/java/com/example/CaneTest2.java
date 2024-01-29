@@ -18,7 +18,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 
 /*
- * Test dei casi d'uso UC3-UC4-UC5-UC6-UC7-UC8-UC9-UC10-UC11-UC12-UC13
+ * Test dei casi d'uso UC3-UC4-UC5-UC6-UC7-UC8-UC9-UC11-UC12-UC13
  */
 
 public class CaneTest2 {
