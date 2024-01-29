@@ -47,8 +47,8 @@ public class PeriodoAffido extends Observable {
         this.numPosti = this.CapienzaMassima - this.elencoCaniAffido.size();
     }
 
-    public boolean verificaIscrizione(Cliente cl){
-        for(Cane c: cl.getCani()){
+    public boolean verificaIscrizione(Cliente cl) {
+        for(Cane c: cl.getCani()) {
             for(Cane cpa: this.elencoCaniAffido){
                 if(c.equals(cpa)){
                     return true;
@@ -64,11 +64,11 @@ public class PeriodoAffido extends Observable {
     }
 
     public boolean setMappaStatoSalute(Map<Integer, String> mappaStatoSalute){
-        if(mappaStatoSalute != null){
+        if (mappaStatoSalute != null) {
             this.mappaStatoSalute = mappaStatoSalute;
             return true;
         }
-        else{
+         else {
             this.mappaStatoSalute = null;
             return false;
         }
@@ -90,6 +90,10 @@ public class PeriodoAffido extends Observable {
         return this.dataFine;
     }
 
+    public float getCosto() {
+        return this.costo;
+    }
+
     /**** metodi per i test ****/
 
     public LinkedList<Cane> getCaniAffido(){
@@ -103,4 +107,5 @@ public class PeriodoAffido extends Observable {
     public int getCapienzaMassima() {
         return this.CapienzaMassima;
     }
+    
 }

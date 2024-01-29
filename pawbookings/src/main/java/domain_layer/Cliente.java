@@ -133,8 +133,6 @@ public class Cliente implements Observer {
     }
 
 
-
-
     public String getNumTelefono() {
         return this.numeroTelefono;
     }
@@ -144,10 +142,14 @@ public class Cliente implements Observer {
     }
 
    
-
     public LinkedList<Map<String,String>> getStatoSalute(){
         return this.statoSaluteCani;
     }
+
+    public void addCane(Cane cn) {
+        this.caniPosseduti.add(cn);
+    }
+
 
 
 }
