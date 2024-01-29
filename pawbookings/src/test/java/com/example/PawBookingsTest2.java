@@ -89,6 +89,29 @@ class PawBookingsTest2 {
         // Ci aspettiamo che l'elencoPeriodiAffidoDisponibili di PB abbia la stessa lunghezza di expected
         assertEquals(expected.size(), PB.getPeriodiAffidoDisponibili().size());
 
+        boolean areEquals = true;
+
+        // Ci aspettiamo che l'elencoPeriodoAffido di PB contenga gli stessi periodi affido di expected
+        LinkedList<PeriodoAffido> elencoPeriodi = PB.getPeriodiAffido();
+        
+        for (int i = 0; i < elencoPeriodi.size(); i++) {
+            if (elencoPeriodi.get(i).getCodice() != expected.get(i).getCodice()) {
+                areEquals = false;
+            }
+        }
+
+        assertTrue(areEquals);
+
+        // Ci aspettiamo che l'elencoPeriodoAffidoDisponibili di PB contenga gli stessi periodi affido di expected
+        LinkedList<PeriodoAffido> elencoPeriodiDisponibili = PB.getPeriodiAffidoDisponibili();
+
+        for (int i = 0; i < elencoPeriodiDisponibili.size(); i++) {
+            if (elencoPeriodi.get(i).getCodice() != expected.get(i).getCodice()) {
+                areEquals = false;
+            }
+        }
+
+        assertTrue(areEquals);
     }
   
 

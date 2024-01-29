@@ -15,13 +15,11 @@ import domain_layer.PeriodoAffido;
 
 class PeriodoAffidoTest {
     static PeriodoAffido pa;
-    static Cliente cl;
     static Cane cn;
 
     @BeforeAll
     public static void initTest() {
         pa = new PeriodoAffido(1, LocalDate.now(), LocalDate.now().plusWeeks(2), 150.0f);
-        cl = new Cliente("Giuseppe2", "Giuseppe", "Leocata", "0000", "0123456789");
         cn = new Cane(0, "Dog", "Chihuahua");
     }
 
@@ -70,15 +68,16 @@ class PeriodoAffidoTest {
         // se uno tra i cani posseduti da un cliente sia già 
         // in affido per questo periodo di affido
 
-        // associamo un cane ad un cliente
-        cl.addCane(cn);
+        // associamo un cane ad un cliente nuovo
+        Cliente cl = new Cliente("Giuseppe2", "Giuseppe", "Leocata", "0000", "0123456789");
+        cl.registraCane("Doggino", "Carlino", 0);
 
         // invocando ora il metodo, ci aspettiamo che il metodo restituisca false
         // in quanto cn non è nell'elenco dei cani in affido in pa
         assertFalse(pa.verificaIscrizione(cl));
 
         // ora aggiungiamo cn al periodo affido
-        pa.registraAffido(cn);
+        pa.registraAffido(cl.getCane(0));
 
         // ci aspettiamo adesso, invece, true
         assertTrue(pa.verificaIscrizione(cl));
