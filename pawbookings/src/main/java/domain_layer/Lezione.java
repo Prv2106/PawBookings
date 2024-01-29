@@ -61,6 +61,9 @@ public class Lezione {
         return this.esercizi;
     }
 
+    public LinkedList<Turno> getElencoTurniDisponibili() {
+        return this.elencoTurniDisponibili;
+    }
 }
 
 

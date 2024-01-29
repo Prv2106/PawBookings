@@ -4,15 +4,12 @@ import domain_layer.Cane;
 import domain_layer.Cliente;
 import domain_layer.Corso;
 import domain_layer.PawBookings;
-import domain_layer.PeriodoAffido;
-import domain_layer.Turno;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 

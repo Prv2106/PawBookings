@@ -168,4 +168,15 @@ public class Corso {
         return this.lezioneCorrente;
     }
 
+    public LinkedList<Lezione> getProgramma(){
+        return this.programma;
+    }
+
+    public int getNumTurni(){
+        return this.numTurni;
+    }
+
+    public Lezione getLezioneSelezionata(){
+        return this.lezioneSelezionata;
+    }
 }
