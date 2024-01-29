@@ -13,15 +13,15 @@ public class Lezione {
     private int codiceLezione;
     private String nome;
     private LinkedList<Turno> elencoTurniDisponibili;
+    private LinkedList<Esercizio> esercizi;
 
     // Costruttore della classe Lezione
     public Lezione(int codiceLezione, String nome) {
         // Inizializzazione dei campi con i valori passati come parametri
         this.codiceLezione = codiceLezione;
         this.nome = nome;
-        // Inizializzazione dell'elenco dei turni disponibili come un nuovo ArrayList
         this.elencoTurniDisponibili = new LinkedList<>();
-        this.loadTurni();
+        this.esercizi = new LinkedList<>();
     }
 
     // Metodo per aggiornare l'elenco dei turni disponibili
@@ -40,22 +40,33 @@ public class Lezione {
         return this.nome;
     }
 
-
-
-    private void  loadTurni(){
-
-        Turno t1 = new Turno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
-        Turno t2 = new Turno(LocalDate.now().plusDays(1), LocalTime.of(15, 0), LocalTime.of(16, 0));
-        Turno t3 = new Turno(LocalDate.now().plusDays(1), LocalTime.of(18, 0), LocalTime.of(19, 0));
-        
-      
-        this.elencoTurniDisponibili.add(t1);
-        this.elencoTurniDisponibili.add(t2);
-        this.elencoTurniDisponibili.add(t3);
-
-        
+    public void nuovoEsercizio(String nome, String descrizione) {
+        Esercizio nuovEsercizio = new Esercizio(nome, descrizione);
+        this.esercizi.add(nuovEsercizio);
     }
 
+    public void nuovoTurno(int codiceTurno,LocalDate data, LocalTime oraInizio, LocalTime oraFine) {
+        Turno nuovoTurno = new Turno(codiceTurno, data, oraInizio, oraFine);
+        this.elencoTurniDisponibili.add(nuovoTurno);
+    }
 
+    public void effettuaScambioTurno(Turno tc, Turno ts){
+        this.elencoTurniDisponibili.add(tc);
+        this.elencoTurniDisponibili.remove(ts);
+    }
 
+    // ****** getters semplici ******
+    
+    public LinkedList<Esercizio> getEsercizi() {
+        return this.esercizi;
+    }
+
+    public LinkedList<Turno> getElencoTurniDisponibili() {
+        return this.elencoTurniDisponibili;
+    }
 }
+
+
+
+
+

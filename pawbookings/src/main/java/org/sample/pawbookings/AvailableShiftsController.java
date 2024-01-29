@@ -25,7 +25,7 @@ public class AvailableShiftsController implements Initializable {
     @FXML
     private ListView<Turno> list;
 
-    // creiamo una lista osservabile per i corsi
+    // creiamo una lista osservabile per i turni
     ObservableList<Turno> items = FXCollections.observableArrayList();
 
     @FXML
@@ -65,7 +65,7 @@ public class AvailableShiftsController implements Initializable {
                             // data, ora inizio e ora fine
                             VBox vbox = new VBox();
                             Label dataLabel = new Label("Data: " + turno.getData());
-                            Label oraInizioLabel = new Label("Ora Inizio: " + turno.getOraFine());
+                            Label oraInizioLabel = new Label("Ora Inizio: " + turno.getOraInizio());
                             Label oraFineLabel = new Label("Ora fine: " + turno.getOraFine());
 
                             vbox.getChildren().addAll(dataLabel, oraInizioLabel, oraFineLabel);

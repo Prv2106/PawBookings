@@ -9,6 +9,9 @@ import javafx.util.Callback;
 
 import domain_layer.Cane;
 import domain_layer.PawBookings;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -31,12 +35,31 @@ public class HomePageController implements Initializable {
     @FXML
     private Text text;
 
+    @FXML
+    private ImageView noNotificationIcon;
+
+    @FXML
+    private ImageView notificationIcon;
+
+
+    private BooleanProperty myBooleanProperty;
+
+
     // metodo che viene richiamato all'apertura della schermata
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // popoliamo la lista
         PawBookings PB = PawBookings.getInstance();  
-        
+
+        // preoccupiamoci dell'icona delle "notifiche"
+        myBooleanProperty = new SimpleBooleanProperty(PB.getClienteLoggato().getNotifica());
+
+        // Aggiunge un listener per rilevare i cambiamenti nella proprietà booleana "notitifca" di Cliente
+        myBooleanProperty.addListener((observable, oldValue, newValue) -> {});
+
+        noNotificationIcon.visibleProperty().bind(myBooleanProperty.not());
+        notificationIcon.visibleProperty().bind(myBooleanProperty);
+           
+
         // Caricamento dei Cani del Cliente per l'avviamento
         LinkedList<Cane> listaCani = PB.getClienteLoggato().getCani();
 
@@ -88,6 +111,16 @@ public class HomePageController implements Initializable {
         }
     }
 
+    @FXML
+    void onNotificationIconPressed(ActionEvent event) {
+       // andiamo nella schermata relativa alla letture delle notifiche
+       try {
+        MainApplication.setRoot("read_notifications-view.fxml");
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    }
+
      @FXML
     void onDogTabPressed(ActionEvent event) {
         // andiamo nella schermata relativa all'affido
@@ -103,6 +136,16 @@ public class HomePageController implements Initializable {
         // andiamo nella schermata relativa al profilo dell'utente
         try {
             MainApplication.setRoot("profile-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void onVisualizzaProgrammaPressed(ActionEvent event) {
+        // andiamo nella schermata relativa alla visualizzazione dei programmi
+        try {
+            MainApplication.setRoot("show_all_courses-view.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -2,6 +2,7 @@ package domain_layer;
 
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -9,16 +10,20 @@ import java.util.Map;
 public class PawBookings {
     
     private static PawBookings PB;
+    private int numCani;
+    private int pinAdmin;
 
-    public LinkedList<Corso> elencoCorsi;
+    // Riferimenti
+    private LinkedList<Corso> elencoCorsi;
     private LinkedList<Corso> elencoCorsiDisponibili;
     private Map<String, Cliente> clienti;
     private Cane caneSelezionato;
-    private int pinAdmin;
     private LinkedList<PeriodoAffido> elencoPeriodiDisponibili;
+    private LinkedList<PeriodoAffido> elencoPeriodiAffido;
     private Cliente clienteLoggato;
+    private Cliente clienteSelezionato;
     private PeriodoAffido periodoSelezionato;
-    private int numCani;
+    private Corso corsoSelezionato;
 
 
  
@@ -27,36 +32,24 @@ public class PawBookings {
     private PawBookings(){
         this.elencoCorsi = new LinkedList<>();
         this.elencoCorsiDisponibili = new LinkedList<>();
-        this.clienti = new HashMap<>();
+        this.elencoPeriodiAffido = new LinkedList<>();
         this.elencoPeriodiDisponibili = new LinkedList<>();
+        this.clienti = new HashMap<>();
         this.pinAdmin = 1234;
         this.numCani= 0;
-        this.elencoPeriodiDisponibili = new LinkedList<>();
-        this.loadCorsi();
         this.loadPeriodiAffido();
     }
 
-
-     // metodo per recuperare l'unica istanza della classe PawBookings per il pattern GoF Singleton
-     public static PawBookings getInstance() {
+    
+    // metodo per recuperare l'unica istanza della classe PawBookings per il pattern GoF Singleton
+    public static PawBookings getInstance() {
          if(PB == null)
              PB = new PawBookings();
         return PB;
     }
 
 
-    public void loadCorsi(){
-        CorsoBase corsoBase = new CorsoBase(1,10,200.0F,"Corso Base");
-        CorsoAvanzato corsoAvanzato = new CorsoAvanzato(2,10,250.0F,"Corso Avanzato");
-        CorsoAgility corsoAgility = new CorsoAgility(3,5,300.0F,"Corso Agility");
-
-        this.elencoCorsi.add(corsoBase);
-        this.elencoCorsi.add(corsoAvanzato);
-        this.elencoCorsi.add(corsoAgility);
-
-        System.out.println("Caricamento Corsi completato con successo!");        
-    }
-
+  
 
     public void loadPeriodiAffido(){
 
@@ -69,7 +62,10 @@ public class PawBookings {
         this.elencoPeriodiDisponibili.add(p2);
         this.elencoPeriodiDisponibili.add(p3);
 
-        
+        this.elencoPeriodiAffido.add(p1);
+        this.elencoPeriodiAffido.add(p2);
+        this.elencoPeriodiAffido.add(p3);
+
     }
 
 
@@ -77,6 +73,7 @@ public class PawBookings {
         int capienza;
         // per ciascun corso presente in elencoCorsi viene verificato che il corso non sia pieno 
         // e in caso affermativo viene aggiunto all'elencoCorsiDisponibili
+        elencoCorsiDisponibili.clear();
         for(Corso i: elencoCorsi){
             capienza = i.getCapienza();
             if(capienza > 0){
@@ -85,6 +82,7 @@ public class PawBookings {
         }
         return elencoCorsiDisponibili;
     }
+    
 
     public Boolean confermaIscrizioneCorso(Corso cs){
         if(cs == null){
@@ -95,9 +93,6 @@ public class PawBookings {
             // l'attributo attualmenteIscritto di caneSelezionato diventa true 
             // e viene inizializzata la variabile corsoCorrente di caneSelezionato
             caneSelezionato.aggiornaAttualmenteIscritto(cs);
-
-            // la lista elencoCorsiDisponibili viene svuotata
-            elencoCorsiDisponibili.clear();
 
             return true;
         }
@@ -113,6 +108,7 @@ public class PawBookings {
         return lezioneSuccesiva.getTurniDisponibili();
     }
 
+    
 
 
     public Boolean selezionaTurno(Turno ts){
@@ -159,7 +155,13 @@ public class PawBookings {
     public Boolean confermaAffido(Cane cn){
         int numeroPostiDisponibili;
         Boolean esito;
+        Boolean esitoVerifica = this.periodoSelezionato.verificaIscrizione(this.clienteLoggato);
         esito = this.periodoSelezionato.registraAffido(cn);
+
+        if(esitoVerifica == false){
+            this.clienteLoggato.iscrizioneNotificheStatoSalute(this.periodoSelezionato);
+        }
+
         cn.aggiornaAttualmenteInAffido(periodoSelezionato);
         numeroPostiDisponibili= this.periodoSelezionato.getNumeroPosti();
         if(numeroPostiDisponibili == 0){
@@ -180,7 +182,13 @@ public class PawBookings {
     }
 
     public Boolean confermaConclusioneAffido(){
-        return this.caneSelezionato.conclusioneAffido();
+        PeriodoAffido periodoCorrente = this.caneSelezionato.getAffido();
+        Boolean esito = this.caneSelezionato.conclusioneAffido();
+        Boolean esitoVerifica = periodoCorrente.verificaIscrizione(this.clienteSelezionato);
+        if(esitoVerifica == false){
+            this.clienteSelezionato.annullamentoIscrizione(periodoCorrente);
+        }
+        return esito;
     }
 
 
@@ -220,10 +228,15 @@ public class PawBookings {
     public Boolean registrati(String nome, String cognome, String numeroTelefono, String password) {
         String codiceCliente;
         Cliente nuovoCliente;
-        codiceCliente = this.generaCodiceCliente(nome);
-        nuovoCliente = new Cliente(codiceCliente,nome,cognome,password,numeroTelefono);
-        this.clienti.putIfAbsent(codiceCliente, nuovoCliente);
-        return setClienteLoggato(nuovoCliente);
+        Boolean esito = checkNumTelefono(numeroTelefono);
+        if (esito) {
+            codiceCliente = this.generaCodiceCliente(nome);
+            nuovoCliente = new Cliente(codiceCliente,nome,cognome,password,numeroTelefono);
+            this.clienti.putIfAbsent(codiceCliente, nuovoCliente);
+            return setClienteLoggato(nuovoCliente);
+        } else {
+            return false;
+        }
     }
 
     
@@ -254,10 +267,30 @@ public class PawBookings {
         Cane cn;
         cl = this.clienti.get(codiceCliente);
         cn = cl.getCane(codiceCane);
-        setCaneSelezionato(cn);
-        return cn.getAffido();
-      
+        if (cn == null) {
+            setCaneSelezionato(cn);
+            setClienteSelezionato(cl);
+            return null;
+        } else {
+            setCaneSelezionato(cn);
+            setClienteSelezionato(cl);
+            return cn.getAffido();
+        }
     }
+
+
+    public Boolean setClienteSelezionato(Cliente cl){
+        if(cl==null){
+            this.clienteSelezionato = null;
+            return false;
+        }
+        else{
+            this.clienteSelezionato = cl;
+            return true;
+        }
+    }
+
+
 
     public Boolean accediComeAdmin(int pin){
         return checkPin(pin);
@@ -306,10 +339,226 @@ public class PawBookings {
         return this.numCani;
     }
 
+    public boolean checkNumTelefono(String numeroTelefono) {
+        for (Cliente c : this.clienti.values()) {
+            if (c.getNumTelefono().equals(numeroTelefono)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+
+    public Boolean inserisciNuovoCorso(String tipoCorso, int capienza, float costo){
+        int codiceCorso = this.generaCodiceCorso();
+        Corso nuovCorso = new Corso(codiceCorso, capienza, costo, tipoCorso);
+        return this.elencoCorsi.add(nuovCorso);
+    }
+
+    public int generaCodiceCorso(){
+        return (this.elencoCorsi.size() +1);
+    }
+
+
+    public LinkedList<Corso> modificaInformazioniCorso(){
+        return this.elencoCorsi;
+    }
+
+
+    public void selezionaCorso(Corso cs){
+        this.setCorsoSelezionato(cs);
+    }
+
+    public Boolean setCorsoSelezionato(Corso cs){
+        if(cs == null){
+            this.corsoSelezionato = null;
+            return false;
+        }
+        else{
+            this.corsoSelezionato = cs;
+            return true;
+        }
+    }
+
+
+    public Boolean modificaCorso(int capienza, float costo){
+            return this.corsoSelezionato.aggiornaInformazioni(capienza,costo);  
+    }
+
+    public LinkedList<Corso> modificaProgrammaCorso(){
+        return this.elencoCorsi;
+    }
+
+    public void nuovaLezione(String nome){
+        int codiceLezione = this.generaCodiceLezione();
+        this.corsoSelezionato.nuovaLezione(codiceLezione, nome);
+    }
+
+    public void inserisciEsercizio(String nome, String descrizione){
+        this.corsoSelezionato.aggiornaLezione(nome, descrizione);
+    }
+
+
+    public Boolean confermaLezione(){
+        return this.corsoSelezionato.confermaInserimentoLezione();
+    }
+
+
+    public int generaCodiceLezione(){
+        int codiceLezione=0;
+        for(Corso c: this.elencoCorsi){
+            codiceLezione += c.getLezioni().size();
+        }
+        return (codiceLezione+1);
+    }
+
+
+    public LinkedList<Corso> inserisciTurnoLezione(){
+        return this.calcolaCorsiConCaniIscritti();
+    }
+
+
+    public LinkedList<Lezione> selezionaCorsoModificaTurni(Corso cs){   
+        LinkedList<Lezione> programma = cs.getLezioni();
+        this.setCorsoSelezionato(cs);
+        return programma;
+    }
     
 
-    
+    public void selezionaLezione(Lezione lz){
+        this.corsoSelezionato.setLezioneSelezionata(lz);
+    }
 
+
+    public Boolean nuovoTurno(LocalDate data, LocalTime oraInizio, LocalTime oraFine){
+        Boolean esito = verificaDatiTurno(data, oraInizio, oraFine);
+        if(esito){
+            this.corsoSelezionato.aggiungiTurnoLezione(data, oraInizio, oraFine);
+        }
+        return esito;
+    }
+    
+    
+    public LinkedList<Corso>  calcolaCorsiConCaniIscritti(){
+        LinkedList<Corso> corsiConCani = new LinkedList<>();
+        for(Corso c: elencoCorsi){
+            if(c.getCaniIscritti().size()>0){
+                corsiConCani.add(c);
+            }
+        } 
+        return corsiConCani;
+    }
+
+
+    public LinkedList<Turno> scambioTurno() {
+        Turno tc = this.caneSelezionato.getTurnoCorrente();
+        Boolean esito = this.verificaIdoneitaScambioTurno(tc);
+        if (esito) {
+            Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
+            return ultimaLezioneSeguita.getTurniDisponibili();
+        } else {
+            return null;
+        }
+    }
+
+    public void selezionaTurnoScambio(Turno ts){
+        Turno tc = this.caneSelezionato.getTurnoCorrente();
+        Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
+        ultimaLezioneSeguita.effettuaScambioTurno(tc, ts);
+        this.caneSelezionato.setTurnoCorrente(ts);
+    }   
+
+
+    public Boolean verificaIdoneitaScambioTurno(Turno tc) {
+        if (tc != null) {
+            if (tc.getData().isAfter(LocalDate.now())) 
+                return true;
+            else 
+                return false;
+        } else 
+            return false;
+    }
+
+    public LinkedList<Corso> visualizzaProgrammaCorso(){
+        return this.elencoCorsi;
+    }
+
+    public LinkedList<Lezione> visualizzaProgramma(Corso cs){
+        return cs.getLezioni();
+    }
+
+
+    public Map<String,LinkedList<Lezione>> mostraStatoAvanzamentoCorso(){
+        return caneSelezionato.getAvanzamentoCorso();
+    }
+
+    public LinkedList<PeriodoAffido> notificaStatoSalute(){
+        return calcolaPeriodoCaneRegistrato();
+    }
+
+    public LinkedList<Cane> mostraCaniInAffido(PeriodoAffido pa){
+        LinkedList<Cane> elencoCaniAffido = pa.getCaniAffido();
+        setPeriodoSelezionato(pa);
+        return elencoCaniAffido;
+    }
+
+
+    public LinkedList<PeriodoAffido> calcolaPeriodoCaneRegistrato(){
+        LinkedList<PeriodoAffido> elencoPeriodiAffidoCaniRegistrati= new LinkedList<>();
+        for(PeriodoAffido pa: this.elencoPeriodiAffido){
+            if(pa.getNumeroPosti()<pa.getCapienzaMassima()){
+                elencoPeriodiAffidoCaniRegistrati.add(pa);
+            }
+        }
+        return elencoPeriodiAffidoCaniRegistrati; 
+    }
+
+
+
+    public void notificaClienti(Map<Integer,String> mappaStatoSalute){
+        this.periodoSelezionato.aggiornaStatoSalute(mappaStatoSalute);
+    }
+
+    public LinkedList<Map<String,String>> leggiStatoSalute(){
+        LinkedList<Map<String,String>> statoSaluteCani = this.clienteLoggato.getStatoSalute();
+        return statoSaluteCani;
+    }
+
+    public void cancellaNotifiche() {
+        this.clienteLoggato.resettaStatoSaluteCani();
+    }
+
+    public Boolean verificaDatiTurno(LocalDate data, LocalTime oraInizio, LocalTime oraFine){
+        if((LocalDate.now().isBefore(data)) && (oraInizio.isBefore(oraFine))){
+            return true;
+        }
+        else return false;
+    }
+
+
+    public Corso getCorsoSelezionato() {
+        return this.corsoSelezionato;
+    }
+
+    public LinkedList<Corso> getCorso(){
+        return this.elencoCorsi;
+    }
+
+
+    public LinkedList<PeriodoAffido> getPeriodiAffido(){
+        return this.elencoPeriodiAffido;
+    }
+
+    public LinkedList<PeriodoAffido> getPeriodiAffidoDisponibili(){
+        return this.elencoPeriodiDisponibili;
+    }
+
+
+    public void addPeriodoAffido(PeriodoAffido pa) {
+        this.elencoPeriodiAffido.add(pa);
+    }
 
 
 

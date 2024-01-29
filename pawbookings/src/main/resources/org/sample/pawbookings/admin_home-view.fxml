@@ -66,6 +66,27 @@
                         <Insets bottom="40.0" top="40.0" />
                      </VBox.margin>
                   </Button>
+                  <Button mnemonicParsing="false" onAction="#onGestisciCorsoPressed" prefHeight="53.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Gestisci corso" textFill="WHITE">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="40.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onInserisciTurnoLezionePressed" prefHeight="53.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Inserisci turno lezione" textFill="WHITE">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="40.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onNotificaStatoSalutePressed" prefHeight="53.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Notifica stato di salute" textFill="WHITE">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Button>
                </children>
             </VBox>
             <BorderPane prefHeight="87.0" prefWidth="350.0">

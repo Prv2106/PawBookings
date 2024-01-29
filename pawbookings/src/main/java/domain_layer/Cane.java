@@ -1,6 +1,7 @@
 package domain_layer;
 
 import java.util.LinkedList;
+import java.util.Map;
 
 public class Cane {
     private final int codiceCane;
@@ -8,10 +9,11 @@ public class Cane {
     private final String razza;
     private boolean attualmenteIscritto;
     private Corso corsoCorrente;
-    public boolean attualmenteInAffido;
-    private PeriodoAffido affidoCorrente;
     private LinkedList<Corso> corsiCompletati;
+    private boolean attualmenteInAffido;
+    private PeriodoAffido affidoCorrente;
     private LinkedList<Lezione> lezioniSeguite;
+    private Turno turnoCorrente;
 
     public Cane(int codiceCane, String nome, String razza) {
         this.codiceCane = codiceCane;
@@ -42,6 +44,7 @@ public class Cane {
         Lezione lezioneSuccessiva = calcolaLezioneSuccessiva(programma);
         lezioneSuccessiva.aggiornaTurniDisponibili(ts);
         lezioniSeguite.add(lezioneSuccessiva);
+        setTurnoCorrente(ts);
 
         if (lezioniSeguite.size() == programma.size()) {
             corsiCompletati.add(corsoCorrente);
@@ -60,15 +63,20 @@ public class Cane {
     public boolean conclusioneAffido() {
         Boolean esito;
         esito = affidoCorrente.concludiAffido(this);
-        this.aggiornaAttualmenteInAffido(affidoCorrente);
+        this.aggiornaAttualmenteInAffido(null);
         return esito;
     }
     
     public void aggiornaAssociazioniCane(){
         if (this.attualmenteIscritto) {
             this.corsoCorrente.annullaIscrizione(this);
-            corsoCorrente.elencoCaniIscritti.remove(this);
+            corsoCorrente.getCaniIscritti().remove(this);
         }
+    }
+
+    public Map<String, LinkedList<Lezione>> getAvanzamentoCorso() {
+        return this.corsoCorrente.calcolaStatoAvanzamento(this.lezioniSeguite);
+
     }
 
     // ********** getters 'semplici' *********
@@ -102,12 +110,23 @@ public class Cane {
 
 
 
-    // setters
+    // ************ setters ************************
     public void setAttualmenteIscritto(boolean bl) {
         this.attualmenteIscritto = bl;
     }
 
+    public void setTurnoCorrente(Turno ts) {
+        this.turnoCorrente = ts;
+    }
+
+
+
     /****      metodi per testing        ****/  
+
+
+    public void setAttualmenteInAffido(Boolean val){
+       this.attualmenteInAffido = val;
+    }
 
     public void aggiungiLezioneSeguita(Lezione lz) {
         this.lezioniSeguite.add(lz);
@@ -128,9 +147,13 @@ public class Cane {
 
 
 
+    public Turno getTurnoCorrente() {
+        return this.turnoCorrente;
+    }
 
 
-
-
+    public Lezione getUltimaLezioneSeguita(){
+        return this.lezioniSeguite.getLast();
+    }
 
 }

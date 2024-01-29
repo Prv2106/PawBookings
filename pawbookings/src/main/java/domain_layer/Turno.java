@@ -9,10 +9,12 @@ public class Turno {
     private LocalDate data;
     private LocalTime oraInizio;
     private LocalTime oraFine;
+    private int codiceTurno;
     
 
 
-    public Turno(LocalDate data, LocalTime oraInizio, LocalTime oraFine){
+    public Turno(int codiceTurno,LocalDate data, LocalTime oraInizio, LocalTime oraFine){
+        this.codiceTurno = codiceTurno;
         this.data=data;
         this.oraInizio=oraInizio;
         this.oraFine=oraFine;

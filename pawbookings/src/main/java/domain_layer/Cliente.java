@@ -1,14 +1,21 @@
 package domain_layer;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
-public class Cliente {
+
+public class Cliente implements Observer {
+    private boolean notifica;
     private String codiceCliente;
     private String nome;
     private String cognome;
     private String password;
     private String numeroTelefono;
     private LinkedList<Cane> caniPosseduti;
+    private LinkedList<Map<String, String>> statoSaluteCani;
+    private LinkedList<PeriodoAffido> periodiAffido;
+
 
     public Cliente (String codiceCliente, String nome, String cognome,String password,String numeroTelefono) {
         this.codiceCliente = codiceCliente;
@@ -16,7 +23,11 @@ public class Cliente {
         this.cognome = cognome;
         this.password = password;
         this.numeroTelefono = numeroTelefono;
+        this.notifica = false;
         this.caniPosseduti = new LinkedList<>();
+        this.statoSaluteCani = new LinkedList<>();
+        this.statoSaluteCani = new LinkedList<>();
+        this.periodiAffido = new LinkedList<>();
     }
 
     // public void loadCani(int codiceCane, String nome, String razza){
@@ -32,7 +43,7 @@ public class Cliente {
     public LinkedList<Cane> calcolaCaniNonInAffido() {
         LinkedList<Cane> elencoCaniNonInAffido = new LinkedList<>();
         for (Cane cn : this.caniPosseduti) {
-            if (!cn.attualmenteInAffido) {
+            if (!cn.getAttualmenteInAffido()) {
                 elencoCaniNonInAffido.add(cn);
             }
         }
@@ -45,7 +56,49 @@ public class Cliente {
         return caniPosseduti.add(nuovoCane);
     }
 
-    // Il metodo genera un codice cane, che è il risultato della somma tra il numero di cani posseduti e 1.
+    public Boolean rimuoviCane(Cane cn) {
+        return this.caniPosseduti.remove(cn);
+    }
+
+    public void iscrizioneNotificheStatoSalute(PeriodoAffido periodoSelezionato) {
+        periodoSelezionato.addObserver(this);
+    }
+
+    public void annullamentoIscrizione(PeriodoAffido periodoCorrente) {
+        periodoCorrente.deleteObserver(this);
+    }
+
+    public void  resettaStatoSaluteCani() {
+        this.notifica = false;
+        this.statoSaluteCani.clear();
+    }
+    
+
+
+    @Override
+    public void update(Observable o) {
+    
+    PeriodoAffido pa = (PeriodoAffido) o;
+    Map<Integer,String> mappaStatoSalute = pa.getState();
+
+    // esempio di un elemento della mappa: {1: "In ottima forma"} 
+    Map<String,String> mappaStatoSaluteCani = new HashMap<>();
+
+    for (Cane c: this.caniPosseduti) {
+        for (Integer codiceCane: mappaStatoSalute.keySet()) {
+            // Se nella mappaStatoSalute vi è un codiceCane corrispondente al codiceCane di un cane del cliente
+            // lo aggiungiamo, insieme al relativo stato di salute, alla mappa statoSaluteCani 
+            if (c.getCodiceCane()==codiceCane) {
+                mappaStatoSaluteCani.put(c.getNome(),mappaStatoSalute.get(codiceCane));
+            }
+        }
+    }
+
+    // Aggiungiamo la mappaStatoSaluteCani creata alla lista statoSaluteCani del Cliente
+    this.statoSaluteCani.add(mappaStatoSaluteCani);
+    this.notifica = true;
+}
+
    
     
     // Metodi per recuperare gli attributi
@@ -80,14 +133,25 @@ public class Cliente {
     }
 
 
-
-
-    public Boolean rimuoviCane(Cane cn){
-        return this.caniPosseduti.remove(cn);
+    public String getNumTelefono() {
+        return this.numeroTelefono;
     }
 
+    public boolean getNotifica() {
+        return this.notifica;
+    }
 
+   
+    public LinkedList<Map<String,String>> getStatoSalute(){
+        return this.statoSaluteCani;
+    }
 
+    public void setStatoSaluteCani(LinkedList<Map<String, String>> mappaStatoSalute){
+        this.statoSaluteCani = mappaStatoSalute;
+    }
+    public void addCane(Cane cn) {
+        this.caniPosseduti.add(cn);
+    }
 
 
 

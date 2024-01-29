@@ -12,9 +12,17 @@ import domain_layer.PeriodoAffido;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.LinkedList;
 
-class PawBookingsTestIterazione2 {
+
+/*
+ * Test dei casi d'uso UC3-UC4-UC5-UC6
+ */
+
+
+class PawBookingsTest2 {
 
     static PawBookings PB;
 
@@ -24,10 +32,35 @@ class PawBookingsTestIterazione2 {
     @BeforeAll
     public static void initTest() {
         PB = PawBookings.getInstance();
-        PB.registrati("Alberto", "Provenzano", "12345678", "0000");
+        PB.registrati("Alberto", "Provenzano", "156322345678", "0000");
         PB.aggiungiCane("Stella", "Pastore Tedesco");
         PB.aggiungiCane("Asso", "Corso");
-        PB.logout();    
+        PB.logout();
+        
+        PB.inserisciNuovoCorso("Corso Base", 10, 200.0F);
+        Corso corsoBase = PB.modificaProgrammaCorso().get(0);
+        PB.selezionaCorso(corsoBase);
+
+        // Il codice di questa lezione sarà 1
+        PB.nuovaLezione("Comandi di Base");
+        PB.inserisciEsercizio("Saluto amichevole", "Questo esercizio aiuta a promuovere una socializzazione positiva tra cani");
+        PB.inserisciEsercizio("Resta", "'Resta'per rimanere in posizione, aumentando gradualmente la distanza dal proprietario");
+        PB.inserisciEsercizio("Richiamo", "Insegna al cane a rispondere al comando di richiamo del padrone");
+        PB.confermaLezione();
+
+        // Il codice di questa lezione sarà 2
+        PB.nuovaLezione("Guinzaglio e Camminare al Guinzaglio");
+        PB.inserisciEsercizio("Introduzione al Guinzaglio", "Insegnare ai proprietari come presentare il guinzaglio al cane in modo positivo, facendolo abituare gradualmente alla sensazione e premiando il comportamento calmo e collaborativo.");
+        PB.inserisciEsercizio("Camminata Focalizzata", "Praticare una camminata controllata in cui il cane cammina al fianco del proprietario senza tirare al guinzaglio. Utilizzare comandi verbali e premi per incoraggiare un comportamento desiderato.");
+        PB.inserisciEsercizio("Affrontare Distrazioni", "Introdurre gradualmente distrazioni durante la camminata al guinzaglio, come altri cani o stimoli ambientali. Insegnare ai proprietari come gestire le situazioni, mantenendo il controllo del cane e premiando il comportamento desiderato in presenza di distrazioni.");
+        PB.confermaLezione();
+
+        // Inserimento turni
+        PB.selezionaCorsoModificaTurni(corsoBase);
+        PB.selezionaLezione(corsoBase.getLezioni().get(0));
+        PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
+        PB.selezionaLezione(corsoBase.getLezioni().get(1));
+        PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
     }
 
     // Il metodo restituisce un'istanza della classe PawBookings se PB è null.
@@ -36,7 +69,52 @@ class PawBookingsTestIterazione2 {
         assertNotNull(PB);
     }
 
-   
+    
+    //Test del metodo loadPeriodiAffido di PawBookings che viene richiamato dal costruttore
+    @Test
+    void testLoadPeriodiAffido(){
+        // Creazione delle istanze di PeriodoAffido 
+        LinkedList<PeriodoAffido> expected = new LinkedList<>();
+
+        // Di seguito le istazne di PeriodoAffido che vengono utilizzate nel metodo loadPeriodiAffido
+        PeriodoAffido p1 = new PeriodoAffido(1, LocalDate.now(), LocalDate.now().plusWeeks(2), 150.0f);
+        PeriodoAffido p2 = new PeriodoAffido(2, LocalDate.now().plusWeeks(2), LocalDate.now().plusMonths(1), 300.0f);
+        PeriodoAffido p3 = new PeriodoAffido(3,LocalDate.now().plusMonths(1) ,LocalDate.now().plusMonths(2), 600.0f);
+        expected.add(p1);
+        expected.add(p2);
+        expected.add(p3);
+
+        // Ci aspettiamo che l'elencoPeriodiAffido di PB abbia la stessa lunghezza di expected
+        assertEquals(expected.size(), PB.getPeriodiAffido().size());
+        // Ci aspettiamo che l'elencoPeriodiAffidoDisponibili di PB abbia la stessa lunghezza di expected
+        assertEquals(expected.size(), PB.getPeriodiAffidoDisponibili().size());
+
+        boolean areEquals = true;
+
+        // Ci aspettiamo che l'elencoPeriodoAffido di PB contenga gli stessi periodi affido di expected
+        LinkedList<PeriodoAffido> elencoPeriodi = PB.getPeriodiAffido();
+        
+        for (int i = 0; i < elencoPeriodi.size(); i++) {
+            if (elencoPeriodi.get(i).getCodice() != expected.get(i).getCodice()) {
+                areEquals = false;
+            }
+        }
+
+        assertTrue(areEquals);
+
+        // Ci aspettiamo che l'elencoPeriodoAffidoDisponibili di PB contenga gli stessi periodi affido di expected
+        LinkedList<PeriodoAffido> elencoPeriodiDisponibili = PB.getPeriodiAffidoDisponibili();
+
+        for (int i = 0; i < elencoPeriodiDisponibili.size(); i++) {
+            if (elencoPeriodi.get(i).getCodice() != expected.get(i).getCodice()) {
+                areEquals = false;
+            }
+        }
+
+        assertTrue(areEquals);
+    }
+  
+
     @Test
     void testAccediComeAdmin(){
         // Inserendo Pin corretto -> 1234
@@ -260,7 +338,7 @@ class PawBookingsTestIterazione2 {
         // verifichiamo che nella lista restituita da selezionaPeriodo non sia presente il cane messo in affido prima
         LinkedList<Cane> elencoCaniNonInAffido = PB.selezionaPeriodo(PB.affido().get(0));
         for (Cane cane : elencoCaniNonInAffido) {
-            assertFalse(cane.attualmenteInAffido);
+            assertFalse(cane.getAttualmenteInAffido());
         }
 
         // viene anche testato che periodoSlezionato sia uguale a PB.affido().get(0)
@@ -360,10 +438,10 @@ class PawBookingsTestIterazione2 {
         PB.selezionaPeriodo(lp.get(2));
         Cane Stella = PB.getClienti().get("Alberto1").getCane(1);
         PB.confermaAffido(Stella);
-        PeriodoAffido pa;
+    
       
         // tramite concludiAffido settiamo il caneSelezionato con stella
-        pa = PB.concludiAffido("Alberto1", 1);
+        PB.concludiAffido("Alberto1", 1);
 
 
         // Test del metodo
