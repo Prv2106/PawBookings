@@ -70,6 +70,14 @@
                               <Font size="18.0" />
                            </font>
                         </Text>
+                        <Button mnemonicParsing="false" onAction="#onDeletePressed" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #e85143;" text="Cancella" textFill="WHITE">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="11.0" />
+                           </HBox.margin>
+                        </Button>
                      </children>
                   </HBox>
                   <ListView id="list" fx:id="list" prefHeight="384.0" prefWidth="350.0">

@@ -522,8 +522,11 @@ public class PawBookings {
 
     public LinkedList<Map<String,String>> leggiStatoSalute(){
         LinkedList<Map<String,String>> statoSaluteCani = this.clienteLoggato.getStatoSalute();
-        
         return statoSaluteCani;
+    }
+
+    public void cancellaNotifiche() {
+        this.clienteLoggato.resettaStatoSaluteCani();
     }
 
     public Boolean verificaDatiTurno(LocalDate data, LocalTime oraInizio, LocalTime oraFine){

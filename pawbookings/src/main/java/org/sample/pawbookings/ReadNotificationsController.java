@@ -2,7 +2,6 @@ package org.sample.pawbookings;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +27,7 @@ public class ReadNotificationsController implements Initializable {
     @FXML
     private ListView<String> list;
     // creiamo una lista osservabile per le notifiche (stringhe)
-    ObservableList<String> notifiche = FXCollections.observableArrayList();
+    ObservableList<String> items = FXCollections.observableArrayList();
 
 
     @FXML
@@ -47,24 +46,30 @@ public class ReadNotificationsController implements Initializable {
         // avremo una mappa per ogni periodo affido al quale siamo "iscritti"
         LinkedList<Map<String, String>> listaMappa = PB.leggiStatoSalute();
         
+        // prendiamo tutti i nomi cani e li mettiamo in un ArrayList
+        List<String> nomiCani = new ArrayList<>();
+        // prendiamo tutti i messaggi e li mettiamo in un ArrayList
+        List<String> messaggi = new ArrayList<>();
         
-        // unifichiamo le mappe in una sola
-        Map<String, String> mappa = new HashMap<>();
 
         for (Map<String, String> m: listaMappa) {
-            mappa.putAll(m);
+            // per ogni mappa della lista
+            messaggi.addAll(m.values());
+
+            for (String k: m.keySet()) {
+                nomiCani.add(k);
+            }
         }
 
-        // travasiamo le chiavi in una lista
-        List<String> nomiCani = new ArrayList<>();
-        for (String nomeCane: mappa.keySet()) {
-            nomiCani.add(nomeCane);
-        }
+        // unifichiamo nome e messaggio in un'unica Stringa
+        List<String> notifiche = new ArrayList<>();
 
-
+        for (int i = 0; i < messaggi.size(); i++) 
+            notifiche.add(nomiCani.get(i) + ": " + messaggi.get(i));
+        
                 
-        notifiche.addAll(nomiCani);
-        this.list.setItems(notifiche);
+        items.addAll(notifiche);
+        this.list.setItems(items);
 
         
         // definiamo la grafica 
@@ -73,22 +78,33 @@ public class ReadNotificationsController implements Initializable {
             public ListCell<String> call(ListView<String> listView) {
                 return new ListCell<String>() {
                     @Override
-                    protected void updateItem(String cane, boolean empty) {
+                    protected void updateItem(String notifica, boolean empty) {
                         // per ogni elemento (nome del cane)
-                        super.updateItem(cane, empty);
+                        super.updateItem(notifica, empty);
 
-                        if (cane == null || empty) {
+                        if (notifica == null || empty) {
                             setText(null);
                         } else {
                             // a sx il nome del cane, a dx il messaggio
                             VBox vbox = new VBox();
-                            vbox.getChildren().add(new Label(cane + ":  " + mappa.get(cane)));
+                            vbox.getChildren().add(new Label(notifica));
                             setGraphic(vbox);
                         }
                     }
                 };
             }
         });
+    }
+
+    @FXML
+    void onDeletePressed(ActionEvent event) {
+        // dobbiamo cancellare le notifiche del cliente
+        PawBookings.getInstance().cancellaNotifiche();
+        try {
+            MainApplication.setRoot("home_page-view.fxml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
