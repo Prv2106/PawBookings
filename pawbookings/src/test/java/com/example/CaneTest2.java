@@ -1,7 +1,7 @@
 package com.example;
 import org.junit.jupiter.api.Test;
 import domain_layer.Cane;
-import domain_layer.Cliente;
+
 import domain_layer.Corso;
 import domain_layer.PawBookings;
 
@@ -91,7 +91,7 @@ public class CaneTest2 {
         // nel test verifichiamo che il cane venga rimosso dal corso corrente e
         // dalla lista dei cani iscritti al corso
 
-        Cliente Alberto = PB.getClienti().get("Alberto1"); 
+        PB.getClienti().get("Alberto1"); 
         // effettuiamo il login del cliente
         PB.accedi("Alberto1", "0000");
         
