@@ -3,6 +3,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import domain_layer.Cane;
+import domain_layer.Cliente;
 import domain_layer.Corso;
 import domain_layer.Lezione;
 import domain_layer.PawBookings;
