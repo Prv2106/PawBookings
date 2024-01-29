@@ -2,6 +2,7 @@ package org.sample.pawbookings;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -19,17 +20,15 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
-public class ReadNotificationsController implements Initializable {
-    private LinkedList<Map<String, String>> listaMappa;
-    
+public class ReadNotificationsController implements Initializable {   
 
     @FXML
     private Button backButton;
 
     @FXML
-    private ListView<Map<String, String>> list;
+    private ListView<String> list;
     // creiamo una lista osservabile per le notifiche (stringhe)
-    ObservableList<Map<String, String>> notifiche = FXCollections.observableArrayList();
+    ObservableList<String> notifiche = FXCollections.observableArrayList();
 
 
     @FXML
@@ -45,43 +44,47 @@ public class ReadNotificationsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         PawBookings PB = PawBookings.getInstance();  
-        listaMappa = PB.leggiStatoSalute();
+        // avremo una mappa per ogni periodo affido al quale siamo "iscritti"
+        LinkedList<Map<String, String>> listaMappa = PB.leggiStatoSalute();
+        
+        
+        // unifichiamo le mappe in una sola
+        Map<String, String> mappa = new HashMap<>();
+
+        for (Map<String, String> m: listaMappa) {
+            mappa.putAll(m);
+        }
+
+        // travasiamo le chiavi in una lista
+        List<String> nomiCani = new ArrayList<>();
+        for (String nomeCane: mappa.keySet()) {
+            nomiCani.add(nomeCane);
+        }
+
+
                 
-        notifiche.addAll(listaMappa);
+        notifiche.addAll(nomiCani);
         this.list.setItems(notifiche);
 
         
-
-    
         // definiamo la grafica 
-            
-        this.list.setCellFactory(new Callback<ListView<Map<String, String>>, ListCell<Map<String, String>>>() {
+        this.list.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
             @Override
-            public ListCell<Map<String, String>> call(ListView<Map<String, String>> listView) {
-                return new ListCell<Map<String, String>>() {
-                    
-                    // travasiamo tutte le chiavi della mappa in una lista così da
-                    // poter ottenere una determinata chiave
-                    int counter = 0;
-                    List<String> listaChiavi = new ArrayList<>();
-
+            public ListCell<String> call(ListView<String> listView) {
+                return new ListCell<String>() {
                     @Override
-                    protected void updateItem(Map<String, String> notifica, boolean empty) {
-                        // per ogni elemento (notifica)
-                        super.updateItem(notifica, empty);
+                    protected void updateItem(String cane, boolean empty) {
+                        // per ogni elemento (nome del cane)
+                        super.updateItem(cane, empty);
 
-                        for (String chiave: notifica.keySet()) 
-                            listaChiavi.add(chiave);
-
-                        if (notifica == null || empty) {
+                        if (cane == null || empty) {
                             setText(null);
                         } else {
                             // a sx il nome del cane, a dx il messaggio
                             VBox vbox = new VBox();
-                            vbox.getChildren().add(new Label(listaChiavi.get(counter) + ": " + notifica.get(listaChiavi.get(counter))));
+                            vbox.getChildren().add(new Label(cane + ":  " + mappa.get(cane)));
                             setGraphic(vbox);
                         }
-                         counter++;
                     }
                 };
             }

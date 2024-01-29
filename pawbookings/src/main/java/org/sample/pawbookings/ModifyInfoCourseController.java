@@ -1,16 +1,19 @@
 package org.sample.pawbookings;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import domain_layer.PawBookings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-public class ModifyInfoCourseController {
+public class ModifyInfoCourseController implements Initializable {
 
     @FXML
     private Button backButton;
@@ -28,6 +31,13 @@ public class ModifyInfoCourseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // allo start, settiamo nei TextFields i valori attuali
+        this.capienza.setText(String.valueOf(PawBookings.getInstance().getCorsoSelezionato().getCapienza()));
+        this.costo.setText(String.valueOf(PawBookings.getInstance().getCorsoSelezionato().getCosto()));   
     }
 
     @FXML
@@ -68,5 +78,7 @@ public class ModifyInfoCourseController {
             MainApplication.goTo(secondRoot);
         }
     }
+
+    
 
 }

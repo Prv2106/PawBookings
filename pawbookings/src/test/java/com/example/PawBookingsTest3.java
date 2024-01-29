@@ -3,25 +3,18 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import domain_layer.Cane;
-import domain_layer.Cliente;
 import domain_layer.Corso;
-import domain_layer.Esercizio;
+import domain_layer.Lezione;
 import domain_layer.PawBookings;
-import domain_layer.PeriodoAffido;
-
-
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.LinkedList;
+
 
 
 /*
  * Test dei casi d'uso UC7-UC8
- */
-
-
+*/
 
 class PawBookingsTest3 {
     static PawBookings PB;
@@ -161,21 +154,108 @@ class PawBookingsTest3 {
         Corso corsoTest = PB.getCorsi().getLast();
         PB.selezionaCorso(corsoTest);
         PB.nuovaLezione("Lezione test");
-
-        
         // test del metodo 
         PB.inserisciEsercizio("Esercizio test", "esercizio fittizio per eseguire il test del metodo");
-
         // Ci aspettiamo che la lunghezza della lista di esercizi di Lezione test sia 1
-        assertEquals(corsoTest.getLezioneCorrente(), corsoTest);
+        assertEquals(1, corsoTest.getLezioneCorrente().getEsercizi().size());
+        PB.inserisciEsercizio("Esercizio test2", "esercizio fittizio per eseguire il test del metodo");
+        // Ci aspettiamo che la lunghezza della lista di esercizi di Lezione test sia 2
+        assertEquals(2, corsoTest.getLezioneCorrente().getEsercizi().size());
+
+    }
 
 
+    @Test
+    void testConfermaLezione(){
+        PB.inserisciNuovoCorso("Corso Test Conferma Lezione", 10, 400.0F);
+        Corso corsoTest = PB.getCorsi().getLast();
+        PB.selezionaCorso(corsoTest);
+        PB.nuovaLezione("Lezione test");
+        PB.inserisciEsercizio("Esercizio test", "esercizio fittizio per eseguire il test del metodo");
+        Lezione nuovaLezione = corsoTest.getLezioneCorrente();
+        int lunghezzaPrecedente = corsoTest.getLezioni().size();
+        // Test del metodo
+        PB.confermaLezione();
+
+        // Ci aspettiamo che nuovaLezione sia stata inserita nel programma del corsoTest
+        assertTrue(corsoTest.getLezioni().contains(nuovaLezione));
+
+        // Ci aspettiamo che la lunghezza del programma del corsoTest sia aumentata di 1
+        assertEquals(lunghezzaPrecedente + 1, corsoTest.getLezioni().size());
+
+    }
+
+
+    @Test
+    void testCalcolaCorsiConCaniIscritti(){
+        PB.inserisciNuovoCorso("Corso Test Con Cane Iscritto", 10, 400.0F);
+        Corso corsoTest1 = PB.getCorsi().getLast();
+        corsoTest1.getCaniIscritti().add(new Cane(11, "Stella", "Pastore Tedesco"));
+        PB.inserisciNuovoCorso("Corso Test senza Cani Iscritti", 10, 400.0F);
+        Corso corsoTest2 = PB.getCorsi().getLast();
+        // Test del metodo
+        // Ci aspettiamo che non sia Presente corsoTest2
+        assertFalse(PB.calcolaCorsiConCaniIscritti().contains(corsoTest2));
+
+        // Ci aspettiamo che  sia Presente corsoTest1
+        assertTrue(PB.calcolaCorsiConCaniIscritti().contains(corsoTest1));
 
     }
 
 
 
+    @Test
+    void testSelezionaLezione(){
+        Lezione nuovaLezione = new Lezione(10, "Test");
+        PB.inserisciNuovoCorso("Corso Test Seleziona Lezione", 10, 400.0F);
+        Corso corsoTest = PB.getCorsi().getLast();
+        PB.selezionaCorso(corsoTest);
 
+        // Ci aspettiamo che lezioneSelezionata sua uguale a nuovaLezione
+        PB.selezionaLezione(nuovaLezione);
+        assertEquals(nuovaLezione,corsoTest.getLezioneSelezionata());
+    }
+
+
+
+    @Test
+    void testVerificaDatiTurno(){       
+        // Turno Valido
+        assertTrue(PB.verificaDatiTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0)));
+        // Turno non valido per la data
+        assertFalse(PB.verificaDatiTurno(LocalDate.now(), LocalTime.of(9, 0), LocalTime.of(10, 0)));
+        // Turno non valido per l'ora
+        assertFalse(PB.verificaDatiTurno(LocalDate.now().plusDays(1), LocalTime.of(19, 0), LocalTime.of(10, 0)));
+        // Turno non valido per data e ora
+        assertFalse(PB.verificaDatiTurno(LocalDate.now(), LocalTime.of(19, 0), LocalTime.of(10, 0)));
+        
+    }
+
+    @Test
+    void testNuovoTurno(){
+        PB.inserisciNuovoCorso("Corso Test nuovo Turno", 10, 400.0F);
+        Corso corsoTest = PB.getCorsi().getLast();
+        PB.selezionaCorso(corsoTest);
+        PB.nuovaLezione("Lezione test");
+        PB.inserisciEsercizio("Esercizio test", "esercizio fittizio per eseguire il test del metodo");
+        Lezione nuovaLezione = corsoTest.getLezioneCorrente();
+        PB.confermaLezione();
+        corsoTest.setLezioneSelezionata(nuovaLezione);
+        int numeroTurniDisponibili = nuovaLezione.getTurniDisponibili().size();
+
+        // test del metodo
+        // Inserendo valori validi di turno
+        PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
+        // Ci aspettiamo che la lunghezza dell'elencoTurniDisponibili di nuovaLezione sia aumentata di 1
+        assertEquals(numeroTurniDisponibili+1, nuovaLezione.getTurniDisponibili().size());
+        numeroTurniDisponibili = nuovaLezione.getTurniDisponibili().size();
+        // Inserendo valori errati di turno
+        PB.nuovoTurno(LocalDate.now(), LocalTime.of(9, 0), LocalTime.of(10, 0));
+        // Ci aspettiamo che la lunghezza dell'elencoTurniDisponibili di nuovaLezione sia rimasta invariata
+        assertEquals(numeroTurniDisponibili, nuovaLezione.getTurniDisponibili().size());
+
+
+    }
 
 
 

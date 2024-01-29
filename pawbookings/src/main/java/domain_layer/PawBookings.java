@@ -182,10 +182,10 @@ public class PawBookings {
     }
 
     public Boolean confermaConclusioneAffido(){
+        PeriodoAffido periodoCorrente = this.caneSelezionato.getAffido();
         Boolean esito = this.caneSelezionato.conclusioneAffido();
-        Boolean esitoVerifica = this.periodoSelezionato.verificaIscrizione(this.clienteSelezionato);
+        Boolean esitoVerifica = periodoCorrente.verificaIscrizione(this.clienteSelezionato);
         if(esitoVerifica == false){
-            PeriodoAffido periodoCorrente = this.caneSelezionato.getAffido();
             this.clienteSelezionato.annullamentoIscrizione(periodoCorrente);
         }
         return esito;
@@ -467,6 +467,7 @@ public class PawBookings {
         Turno tc = this.caneSelezionato.getTurnoCorrente();
         Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
         ultimaLezioneSeguita.effettuaScambioTurno(tc, ts);
+        this.caneSelezionato.setTurnoCorrente(ts);
     }   
 
 
@@ -522,7 +523,7 @@ public class PawBookings {
 
     public LinkedList<Map<String,String>> leggiStatoSalute(){
         LinkedList<Map<String,String>> statoSaluteCani = this.clienteLoggato.getStatoSalute();
-        this.clienteLoggato.resettaStatoSaluteCani();
+        
         return statoSaluteCani;
     }
 

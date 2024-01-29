@@ -97,8 +97,9 @@ public class MainApplication extends Application {
         PB.aggiungiCane("Sole", "Barboncino");
         PB.aggiungiCane("Luna", "Rottweiler");
         PB.aggiungiCane("Vanessa", "Labrador");
+        PB.logout();
         
-
+        PB.accedi("Giuseppe2", "0000");
         LinkedList<PeriodoAffido> lp = PB.affido();
         PB.selezionaPeriodo(lp.get(0));
         PB.confermaAffido(PB.getClienti().get("Giuseppe2").getCane(3));

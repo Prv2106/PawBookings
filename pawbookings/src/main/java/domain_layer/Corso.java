@@ -167,6 +167,10 @@ public class Corso {
     public Lezione getLezioneCorrente(){
         return this.lezioneCorrente;
     }
+    
+    public Lezione getLezioneSelezionata(){
+        return this.lezioneSelezionata;
+    }
 
     public LinkedList<Lezione> getProgramma(){
         return this.programma;
