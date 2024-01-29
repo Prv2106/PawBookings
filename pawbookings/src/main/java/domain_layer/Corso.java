@@ -180,7 +180,4 @@ public class Corso {
         return this.numTurni;
     }
 
-    public Lezione getLezioneSelezionata(){
-        return this.lezioneSelezionata;
-    }
 }
