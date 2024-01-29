@@ -35,7 +35,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -62,35 +62,35 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="79.0" prefWidth="350.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Data:" wrappingWidth="30.948116302490234">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo Corso:" wrappingWidth="62.116939544677734">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Text>
-                        <DatePicker prefHeight="26.0" prefWidth="253.0" />
+                        <TextField fx:id="tipoCorso" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="79.0" prefWidth="350.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ora inizio:" wrappingWidth="52.766292572021484">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Capienza:" wrappingWidth="52.766292572021484">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Text>
-                        <DatePicker prefHeight="26.0" prefWidth="253.0" />
+                        <TextField fx:id="capienza" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="79.0" prefWidth="350.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ora fine:" wrappingWidth="47.779293060302734">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Costo:" wrappingWidth="36.558528900146484">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Text>
-                        <DatePicker prefHeight="26.0" prefWidth="253.0" />
+                        <TextField fx:id="costo" />
                      </children>
                   </VBox>
-                  <Button mnemonicParsing="false" onAction="#onInserisciNuovoCorsoPressed" prefHeight="54.0" prefWidth="253.0" style="-fx-background-color: #4facfe;" text="Inserisci nuovo turno" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#onInserisciNuovoCorsoPressed" prefHeight="54.0" prefWidth="363.0" style="-fx-background-color: #4facfe;" text="Inserisci nuovo corso" textFill="WHITE">
                      <font>
                         <Font size="23.0" />
                      </font>

@@ -45,11 +45,12 @@ public class NewShiftController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.data.setValue(LocalDate.now().plusDays(1));
+
         // Configura il Spinner per accettare orari nel formato HH:mm
-        SpinnerValueFactory<LocalTime> valueFactory = new SpinnerValueFactory<LocalTime>() {
+        SpinnerValueFactory<LocalTime> valueFactory1 = new SpinnerValueFactory<LocalTime>() {
             {
                 setConverter(new LocalTimeStringConverter());
-                setValue(LocalTime.now()); // Imposta l'orario iniziale
+                setValue(LocalTime.of(8, 0)); // Imposta l'orario iniziale
                 setWrapAround(true); // Per consentire il wrap-around (riavvolgimento) se si raggiunge il limite
             }
 
@@ -64,8 +65,27 @@ public class NewShiftController implements Initializable{
             }
         };
 
-        oraInizio.setValueFactory(valueFactory);
-        oraFine.setValueFactory(valueFactory);
+        // Configura il Spinner per accettare orari nel formato HH:mm
+        SpinnerValueFactory<LocalTime> valueFactory2 = new SpinnerValueFactory<LocalTime>() {
+            {
+                setConverter(new LocalTimeStringConverter());
+                setValue(LocalTime.of(16, 0)); // Imposta l'orario iniziale
+                setWrapAround(true); // Per consentire il wrap-around (riavvolgimento) se si raggiunge il limite
+            }
+
+            @Override
+            public void decrement(int steps) {
+                setValue(getValue().minusMinutes(30*steps)); // Decrementa l'orario
+            }
+
+            @Override
+            public void increment(int steps) {
+                setValue(getValue().plusMinutes(30*steps)); // Incrementa l'orario
+            }
+        };
+
+        oraInizio.setValueFactory(valueFactory1);
+        oraFine.setValueFactory(valueFactory2);
     }
 
     @FXML

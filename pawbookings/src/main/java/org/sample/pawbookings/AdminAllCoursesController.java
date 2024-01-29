@@ -1,8 +1,6 @@
 package org.sample.pawbookings;
 
 import java.io.IOException;
-import java.util.LinkedList;
-
 import domain_layer.Corso;
 import domain_layer.Esercizio;
 import domain_layer.Lezione;
@@ -37,9 +35,9 @@ public class AdminAllCoursesController {
         }
     }
 
-    // metodo che viene attivato dal controller chiamante
-    public void initialize(String nextDestination, LinkedList<Corso> corsi) throws IOException {
-        items.addAll(corsi);
+    // invocato dal metodo chiamante
+    public void initialize(String nextDestination) throws IOException {
+        items.addAll(PawBookings.getInstance().getCorsi());
         this.list.setItems(items);
 
         // definiamo la grafica di ogni oggetto della lista (corso)
@@ -58,19 +56,25 @@ public class AdminAllCoursesController {
                             // tipo corso e costo
                             VBox vbox = new VBox();
                             vbox.getChildren().add(new Label("Tipo Corso: " + corso.getTipoCorso()));
-                            vbox.getChildren().add(new Label("Costo: " + corso.getCosto() + "€"));
-                            // programma
-                            vbox.getChildren().add(new Label("Programma (num. lezioni: " + corso.getLezioni().size() +")"));
-                            for (int i = 0; i < corso.getLezioni().size(); i++) {
+
+                            if (nextDestination.equals("modify_info_course-view.fxml")) {
+                                // se devo modificare le info (capienza e costo), mostro solo le info del corso
+                                vbox.getChildren().add(new Label("Capienza: " + corso.getCapienza()));
+                                vbox.getChildren().add(new Label("Costo: " + corso.getCosto() + "€"));
+                            } else {
+                                // devo modificare il programma, quindi mostro il programma
+                                vbox.getChildren().add(new Label("Programma (num. lezioni: " + corso.getLezioni().size() +")"));
+                                for (int i = 0; i < corso.getLezioni().size(); i++) {
                                 Lezione lezione = corso.getLezioni().get(i);
                                 vbox.getChildren().add(new Label("   - " + (i+1) +") " + lezione.getNome()));
-                                // sotto ogni lezione, mettiamone gli esercizi
-                                for (int j = 0; j < lezione.getEsercizi().size(); j++) {
-                                    Esercizio esercizio = lezione.getEsercizi().get(j);
-                                    vbox.getChildren().add(new Label("        - " + (j+1) +") " + esercizio.getNome()));
+                                    // sotto ogni lezione, mettiamone gli esercizi
+                                    for (int j = 0; j < lezione.getEsercizi().size(); j++) {
+                                        Esercizio esercizio = lezione.getEsercizi().get(j);
+                                        vbox.getChildren().add(new Label("        - " + (j+1) +") " + esercizio.getNome()));
+                                    }
                                 }
                             }
-
+                            
                             // Imposta il contenuto della cella
                             setGraphic(vbox);
 
@@ -92,6 +96,8 @@ public class AdminAllCoursesController {
             }
         });
     }
+
+   
 
 }
 

@@ -58,7 +58,7 @@ public class ChooseActivityController {
         try {
             MainApplication.setRoot("show_course_state-view.fxml");
         } catch (IOException e) {
-            e.printStackTrace();
+            goErrorPage("probabilmente il cane non è iscritto ad un corso");
         }
     }
 

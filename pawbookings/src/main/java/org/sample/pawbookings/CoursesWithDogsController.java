@@ -70,7 +70,7 @@ public class CoursesWithDogsController implements Initializable {
 
                                 // passiamo alla schermata successiva
                                 try {
-                                    MainApplication.setRoot("show_course_program-view");
+                                    MainApplication.setRoot("admin_show_course_program-view.fxml");
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }

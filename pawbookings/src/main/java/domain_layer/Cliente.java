@@ -3,8 +3,7 @@ package domain_layer;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
+
 
 public class Cliente implements Observer {
     private boolean notifica;
@@ -77,7 +76,7 @@ public class Cliente implements Observer {
 
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable o) {
     
     PeriodoAffido pa = (PeriodoAffido) o;
     Map<Integer,String> mappaStatoSalute = pa.getState();

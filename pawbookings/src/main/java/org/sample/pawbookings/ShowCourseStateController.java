@@ -96,7 +96,7 @@ public class ShowCourseStateController implements Initializable {
                             } else {
                                 // nome lezione
                                 VBox vbox = new VBox();
-                                vbox.getChildren().add(new Label("Lezione: " + lezione.getNome()));
+                                vbox.getChildren().add(new Label(lezione.getNome()));
                                 setGraphic(vbox);
                             }
                         }
