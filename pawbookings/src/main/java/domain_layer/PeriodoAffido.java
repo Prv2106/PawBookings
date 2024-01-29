@@ -103,4 +103,9 @@ public class PeriodoAffido extends Observable {
     public int getCapienzaMassima() {
         return this.CapienzaMassima;
     }
+
+
+    public Map<Integer, String> getMappaStatoSalute(){
+        return this.mappaStatoSalute;
+    }
 }
