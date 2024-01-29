@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.Map;
 
+import java.util.List;
+
 
 public class PeriodoAffido extends Observable {
     // attributi
@@ -102,5 +104,9 @@ public class PeriodoAffido extends Observable {
 
     public int getCapienzaMassima() {
         return this.CapienzaMassima;
+    }
+
+    public List<Observer> getObservers() {
+        return this.observers;
     }
 }

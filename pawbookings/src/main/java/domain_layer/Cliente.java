@@ -149,5 +149,7 @@ public class Cliente implements Observer {
         return this.statoSaluteCani;
     }
 
-
+    public void setStatoSaluteCani(LinkedList<Map<String, String>> mappaStatoSalute){
+        this.statoSaluteCani = mappaStatoSalute;
+    }
 }
