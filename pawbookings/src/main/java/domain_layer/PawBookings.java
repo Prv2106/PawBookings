@@ -72,54 +72,71 @@ public class PawBookings {
 
     public LinkedList<Corso> nuovaIscrizioneCorso(){
         int capienza;
-        Boolean esito =this.caneSelezionato
-        // per ciascun corso presente in elencoCorsi viene verificato che il corso non sia pieno 
-        // e in caso affermativo viene aggiunto all'elencoCorsiDisponibili
-        elencoCorsiDisponibili.clear();
-        for(Corso i: elencoCorsi){
-            capienza = i.getCapienza();
-            if(capienza > 0){
-                elencoCorsiDisponibili.add(i);
+        Boolean esito =this.caneSelezionato.checkNuovaIscrizioneCorso(elencoCorsiDisponibili);
+        if(esito){ // estensione 3a e 3b
+            // per ciascun corso presente in elencoCorsi viene verificato che il corso non sia pieno 
+            // e in caso affermativo viene aggiunto all'elencoCorsiDisponibili
+            elencoCorsiDisponibili.clear();
+            for(Corso i: elencoCorsi){
+                capienza = i.getCapienza();
+                if(capienza > 0){
+                    elencoCorsiDisponibili.add(i);
+                }
             }
+            return elencoCorsiDisponibili;
         }
-        return elencoCorsiDisponibili;
+        else{
+            return null;
+        }
     }
     
 
     public Boolean confermaIscrizioneCorso(Corso cs){
-        if(cs == null){
-            return false;
-        } else {
+        Boolean esito = this.caneSelezionato.checkConfermaIscrizioneCorso(cs);
+        if(esito){
             cs.confermaIscrizione(caneSelezionato);
-
             // l'attributo attualmenteIscritto di caneSelezionato diventa true 
             // e viene inizializzata la variabile corsoCorrente di caneSelezionato
             caneSelezionato.aggiornaAttualmenteIscritto(cs);
-
             return true;
+        }
+        else{
+            return false;
         }
     }
 
 
     public LinkedList<Turno> prenotaTurnoLezione(){
         Lezione lezioneSuccesiva;
-        //viene recuperata l'istanza della lezione successiva
-        lezioneSuccesiva = caneSelezionato.getLezioneSuccessiva();
-        
-        // Vengono restituiti i turni disponibili relativi alla lezione successiva
-        return lezioneSuccesiva.getTurniDisponibili();
+        Boolean esito = this.caneSelezionato.getAttualmenteIscritto();
+        if(esito){
+            //viene recuperata l'istanza della lezione successiva
+            lezioneSuccesiva = caneSelezionato.getLezioneSuccessiva();
+            
+            // Vengono restituiti i turni disponibili relativi alla lezione successiva
+            return lezioneSuccesiva.getTurniDisponibili();
+        }
+        else{
+            return null;
+        }
     }
 
     
 
 
     public Boolean selezionaTurno(Turno ts){
-        if(ts == null){
-            return false;
+        Boolean esito = this.caneSelezionato.checkSovrapposizioneDate(ts);
+        if(esito){ // estensione 5b
+            try { // estensione 5a
+                this.caneSelezionato.aggiornaStatoAvanzamento(ts);
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
         }
         else{
-            this.caneSelezionato.aggiornaStatoAvanzamento(ts);
-            return true;
+            return false;
         }
     }
 
@@ -156,21 +173,33 @@ public class PawBookings {
 
     public Boolean confermaAffido(Cane cn){
         int numeroPostiDisponibili;
+        int numPosti = periodoSelezionato.getNumeroPosti();
         Boolean esito;
-        Boolean esitoCheckSovrapposizione = this.clienteLoggato.checkSovrapposizioneDate(cn, periodoSelezionato);
-        Boolean esitoVerifica = this.periodoSelezionato.verificaIscrizione(this.clienteLoggato);
-        esito = this.periodoSelezionato.registraAffido(cn);
+        if(numPosti > 0){ // estensione 6a
+            Boolean esitoCheckSovrapposizione = this.clienteLoggato.checkSovrapposizioneDate(cn, periodoSelezionato);
+            if(esitoCheckSovrapposizione){ // estensione 6b
+                Boolean esitoVerifica = this.periodoSelezionato.verificaIscrizione(this.clienteLoggato);
+                esito = this.periodoSelezionato.registraAffido(cn);
+                if(esitoVerifica == false){
+                    this.clienteLoggato.iscrizioneNotificheStatoSalute(this.periodoSelezionato);
+                }
+                cn.aggiornaAttualmenteInAffido(periodoSelezionato);
+                numeroPostiDisponibili= this.periodoSelezionato.getNumeroPosti();
+                if(numeroPostiDisponibili == 0){
+                    esito = this.elencoPeriodiDisponibili.remove(this.periodoSelezionato);
+                }
+                return esito;
 
-        if(esitoVerifica == false){
-            this.clienteLoggato.iscrizioneNotificheStatoSalute(this.periodoSelezionato);
-        }
+            }
+            else{
+                return false;
+            }
 
-        cn.aggiornaAttualmenteInAffido(periodoSelezionato);
-        numeroPostiDisponibili= this.periodoSelezionato.getNumeroPosti();
-        if(numeroPostiDisponibili == 0){
-            esito = this.elencoPeriodiDisponibili.remove(this.periodoSelezionato);
+
         }
-        return esito;
+        else{
+            return false;
+        }
     }
 
     public Boolean setPeriodoSelezionato(PeriodoAffido pa){
@@ -519,7 +548,13 @@ public class PawBookings {
 
 
     public Map<String,LinkedList<Lezione>> mostraStatoAvanzamentoCorso(){
-        return caneSelezionato.getAvanzamentoCorso();
+        Boolean esito = this.caneSelezionato.getAttualmenteIscritto();
+        if(esito){
+            return caneSelezionato.getAvanzamentoCorso();
+        }
+        else{
+            return null;
+        }
     }
 
     public LinkedList<PeriodoAffido> notificaStatoSalute(){
