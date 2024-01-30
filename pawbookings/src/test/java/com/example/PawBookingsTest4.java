@@ -180,6 +180,8 @@ class PawBookingsTest4 {
         assertFalse(Leila.getAttualmenteIscritto());
         PB.selezionaCane(Leila);
 
+        //AGGIUNGERE IL CORSO BASE AI CORSI COMPLETATI
+
         // Simuliamo l'iscrizione di Leila al Corso Avanzato
         PB.confermaIscrizioneCorso(PB.getCorsi().get(1));
 

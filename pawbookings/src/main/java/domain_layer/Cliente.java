@@ -70,7 +70,7 @@ public class Cliente implements Observer {
     }
 
     public void  resettaStatoSaluteCani() {
-        this.notifica = false;
+        this.setNotifica(false);
         this.statoSaluteCani.clear();
     }
     
@@ -78,28 +78,36 @@ public class Cliente implements Observer {
 
     @Override
     public void update(Observable o) {
-    
-    PeriodoAffido pa = (PeriodoAffido) o;
-    Map<Integer,String> mappaStatoSalute = pa.getState();
+        PeriodoAffido pa = (PeriodoAffido) o;
+        Map<Integer,String> mappaStatoSalute = pa.getState();
+        int codiceCane;
+        String nomeCane;
+        String stato;
 
-    // esempio di un elemento della mappa: {1: "In ottima forma"} 
-    Map<String,String> mappaStatoSaluteCani = new HashMap<>();
+        // esempio di un elemento della mappa: {1: "In ottima forma"} 
+        Map<String,String> mappaStatoSaluteCani = new HashMap<>();
 
-    for (Cane c: this.caniPosseduti) {
-        for (Integer codiceCane: mappaStatoSalute.keySet()) {
-            // Se nella mappaStatoSalute vi è un codiceCane corrispondente al codiceCane di un cane del cliente
-            // lo aggiungiamo, insieme al relativo stato di salute, alla mappa statoSaluteCani 
-            if (c.getCodiceCane()==codiceCane) {
-                mappaStatoSaluteCani.put(c.getNome(),mappaStatoSalute.get(codiceCane));
+        for (Cane c: this.caniPosseduti) {
+            codiceCane = c.getCodiceCane();
+            nomeCane = c.getNome();
+            for (Integer codiceCaneMappa: mappaStatoSalute.keySet()) {
+                // Se nella mappaStatoSalute vi è un codiceCane corrispondente al codiceCane di un cane del cliente
+                // lo aggiungiamo, insieme al relativo stato di salute, alla mappa statoSaluteCani 
+                if (codiceCane==codiceCaneMappa) {
+                    stato = mappaStatoSalute.get(codiceCane);
+                    mappaStatoSaluteCani.put(nomeCane,stato);
+                }
             }
         }
+
+        // Aggiungiamo la mappaStatoSaluteCani creata alla lista statoSaluteCani del Cliente
+        this.statoSaluteCani.add(mappaStatoSaluteCani);
+        this.setNotifica(true);
     }
 
-    // Aggiungiamo la mappaStatoSaluteCani creata alla lista statoSaluteCani del Cliente
-    this.statoSaluteCani.add(mappaStatoSaluteCani);
-    this.notifica = true;
-}
-
+    public void setNotifica(Boolean val){
+        this.notifica = val;
+    }
    
     
     // Metodi per recuperare gli attributi

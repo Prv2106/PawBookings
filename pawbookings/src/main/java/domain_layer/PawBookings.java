@@ -96,7 +96,7 @@ public class PawBookings {
 
     public Boolean confermaIscrizioneCorso(Corso cs){
         Boolean esito = this.caneSelezionato.checkConfermaIscrizioneCorso(cs);
-        if(esito){
+        if(esito){ // estensione 5a
             cs.confermaIscrizione(caneSelezionato);
             // l'attributo attualmenteIscritto di caneSelezionato diventa true 
             // e viene inizializzata la variabile corsoCorrente di caneSelezionato
