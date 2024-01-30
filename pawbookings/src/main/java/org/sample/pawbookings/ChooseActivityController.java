@@ -65,8 +65,7 @@ public class ChooseActivityController {
     }
 
     @FXML
-    void onScambiaTurnoClicked(ActionEvent event) {
-        // passiamo alla schermata che mostra l'elenco dei turni disponibili
+    void onScambiaTurnoClicked(ActionEvent event) throws IOException {
         try {
             PawBookings PB = PawBookings.getInstance();
             LinkedList<Turno> elencoTurni = PB.scambioTurno();
@@ -80,9 +79,8 @@ public class ChooseActivityController {
                 // andiamo nella pagina coi turni disponibili
                 MainApplication.setRoot("available_shifts_to_switch-view.fxml");
             }
-            
         } catch (IOException e) {
-            e.printStackTrace();
+            MainApplication.goClientErrorPage(e.getMessage());
         }
     }
 }
