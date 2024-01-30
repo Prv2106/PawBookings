@@ -83,11 +83,16 @@ public class AvailableCoursesController implements Initializable {
     // -------------------> Aggiungiamo il listener per l'evento di click
                             setOnMouseClicked(event -> {
                                 // Azioni da eseguire quando un elemento viene cliccato
-                                PB.confermaIscrizioneCorso(corso);
+                                
 
                                 // passiamo alla schermata successiva
                                 try {
-                                    MainApplication.setRoot("ok-view.fxml");
+                                    if (PB.confermaIscrizioneCorso(corso)) {
+                                        MainApplication.setRoot("ok-view.fxml");
+                                    } else {
+                                        MainApplication.goErrorPage("error-view.fxml", "il tuo cane non ha ancora completato il corso del livello inferiore");
+                                    }
+                                    
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }

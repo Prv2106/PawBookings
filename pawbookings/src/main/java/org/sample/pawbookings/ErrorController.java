@@ -3,11 +3,12 @@ package org.sample.pawbookings;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.text.Text;
+import javafx.scene.control.TextArea;
+
 
 public class ErrorController {
     @FXML
-    private Text textError;
+    private TextArea textError;
 
     public void setTextError(String txt) {
         this.textError.setText(txt);

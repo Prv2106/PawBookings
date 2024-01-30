@@ -121,16 +121,21 @@ public class Cane {
     }
 
     public Boolean checkConfermaIscrizioneCorso(Corso cs){
-        if(corsiCompletati.size()==0){
+        if(corsiCompletati.size()==0 && cs.getCodice() == 1){
+            // caso in cui si seleziona in corso base
             return true;
         }
         else{
+            // se selezioniamo un qualsiasi altro corso che non sia quello base
+            if (corsiCompletati.size() == 0) {
+                return false;
+            }
+            
             Corso ultimoCorsoSeguito = corsiCompletati.getLast();
             if(cs.getCodice() == (ultimoCorsoSeguito.getCodice() +1)){
                 return true;
             }
             else return false;
-    
         }
     }
 

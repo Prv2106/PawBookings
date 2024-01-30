@@ -72,17 +72,20 @@ public class PawBookings {
 
     public LinkedList<Corso> nuovaIscrizioneCorso(){
         int capienza;
-        Boolean esito =this.caneSelezionato.checkNuovaIscrizioneCorso(elencoCorsiDisponibili);
-        if(esito){ // estensione 3a e 3b
-            // per ciascun corso presente in elencoCorsi viene verificato che il corso non sia pieno 
-            // e in caso affermativo viene aggiunto all'elencoCorsiDisponibili
-            elencoCorsiDisponibili.clear();
-            for(Corso i: elencoCorsi){
-                capienza = i.getCapienza();
-                if(capienza > 0){
-                    elencoCorsiDisponibili.add(i);
-                }
+        elencoCorsiDisponibili.clear();
+
+         // per ciascun corso presente in elencoCorsi viene verificato che il corso non sia pieno 
+        // e in caso affermativo viene aggiunto all'elencoCorsiDisponibili
+        for(Corso i: elencoCorsi){
+            capienza = i.getCapienza();
+            if(capienza > 0){
+                elencoCorsiDisponibili.add(i);
             }
+        }
+
+        Boolean esito = this.caneSelezionato.checkNuovaIscrizioneCorso(elencoCorsiDisponibili);
+        if(esito){ // estensione 3a e 3b
+           
             return elencoCorsiDisponibili;
         }
         else{
@@ -238,8 +241,12 @@ public class PawBookings {
 
 
     public Cliente verificaCliente(String codiceCliente, String password){
-        if(clienti.get(codiceCliente).getPassword().equals(password)){
-            return clienti.get(codiceCliente);
+        Cliente cl = clienti.get(codiceCliente);
+        if (cl != null) {
+            if(cl.getPassword().equals(password))
+                return clienti.get(codiceCliente);
+            else  
+                return null;
         }
         else return null;
     }

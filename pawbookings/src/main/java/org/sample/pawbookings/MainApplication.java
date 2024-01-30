@@ -35,6 +35,14 @@ public class MainApplication extends Application {
         scene.setRoot(root);
     }
 
+    static void goErrorPage(String fxml, String msg) throws IOException {
+        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource(fxml));
+        Parent root = loader.load();
+        ErrorController controller = loader.getController();
+        controller.setTextError(msg);
+        goTo(root);
+    }
+
     static void goTo(Parent root) {
         scene.setRoot(root);
         stackRoots.push(root);
