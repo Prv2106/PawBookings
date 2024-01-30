@@ -62,7 +62,7 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="79.0" prefWidth="350.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Codice cdelega:" wrappingWidth="83.9351806640625">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Codice delega:" wrappingWidth="77.07806396484375">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
@@ -72,7 +72,7 @@
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="79.0" prefWidth="350.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Codice cane:" wrappingWidth="80.81829833984375">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Codice cane:" wrappingWidth="68.97418212890625">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>

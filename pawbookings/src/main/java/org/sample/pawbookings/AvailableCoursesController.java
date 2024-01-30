@@ -90,7 +90,7 @@ public class AvailableCoursesController implements Initializable {
                                     if (PB.confermaIscrizioneCorso(corso)) {
                                         MainApplication.setRoot("ok-view.fxml");
                                     } else {
-                                        MainApplication.goErrorPage("error-view.fxml", "il tuo cane non ha ancora completato il corso del livello inferiore");
+                                        MainApplication.goClientErrorPage("il tuo cane non ha ancora completato il corso del livello inferiore");
                                     }
                                     
                                 } catch (IOException e) {

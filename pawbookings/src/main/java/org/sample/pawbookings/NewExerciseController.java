@@ -7,9 +7,7 @@ import java.util.ResourceBundle;
 import domain_layer.PawBookings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -46,16 +44,9 @@ public class NewExerciseController implements Initializable {
 
     @FXML
     void onAggiungiEsercizioPressed(ActionEvent event) throws IOException {
-        // recuperiamo le informazione inserite dall'utente
+        // recuperiamo le informazione inserite dall'amministratore
         String nome = this.nome.getText();
         String descrizione = this.descrizione.getText();
-
-        // recuperiamo il loader relativa alla schermata di errore (fxml)
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("admin_error-view.fxml"));
-        Parent secondRoot = loader.load();
-
-        // ne recuperiamo il relativo controller
-        AdminErrorController errorController = loader.getController();
 
         // validiamole
         if (!nome.isEmpty() && !descrizione.isEmpty()) {
@@ -63,13 +54,11 @@ public class NewExerciseController implements Initializable {
                 PawBookings.getInstance().inserisciEsercizio(nome, descrizione);
                 MainApplication.setRoot("exercise_added-view.fxml");
             } catch (IOException e) {
-                errorController.setTextError("qualcosa è andato storto :(");
-                MainApplication.goTo(secondRoot);
+                MainApplication.goAdminErrorPage("qualcosa è andato storto :(");
             }
         } else {
             // uno dei campi è vuoto
-            errorController.setTextError("devi compilare tutti i campi!");
-            MainApplication.goTo(secondRoot);
+            MainApplication.goAdminErrorPage("devi compilare tutti i campi!");
         }
        
     }

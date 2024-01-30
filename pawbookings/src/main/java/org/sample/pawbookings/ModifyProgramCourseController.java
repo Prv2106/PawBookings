@@ -7,9 +7,7 @@ import java.util.ResourceBundle;
 import domain_layer.PawBookings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -42,15 +40,8 @@ public class ModifyProgramCourseController implements Initializable {
 
     @FXML
     void onAggiungiLezionePressed(ActionEvent event) throws IOException {
-        // recuperiamo le informazione inserite dall'utente
+        // recuperiamo le informazione inserite dall'amministratore
         String nome = this.nome.getText();
-
-        // recuperiamo il loader relativa alla schermata di errore (fxml)
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("admin_error-view.fxml"));
-        Parent secondRoot = loader.load();
-
-        // ne recuperiamo il relativo controller
-        AdminErrorController errorController = loader.getController();
 
         // validiamole
         if (!nome.isEmpty()) {
@@ -58,17 +49,11 @@ public class ModifyProgramCourseController implements Initializable {
                 PawBookings.getInstance().nuovaLezione(nome);
                 MainApplication.setRoot("new_exercise-view.fxml");
             } catch (Exception e) {
-                errorController.setTextError(e.getMessage());
-                // andiamo nella schermatav di errore
-                MainApplication.goTo(secondRoot);
+                MainApplication.goAdminErrorPage(e.getMessage());
             }
         } else {
             // i campi sono vuoti...
-
-            // messaggio errore
-            errorController.setTextError("devi prima compilare il campo di testo");
-            // andiamo nella schermatav di errore
-            MainApplication.goTo(secondRoot);
+            MainApplication.goAdminErrorPage("devi prima compilare il campo di testo");
         }
     }
 

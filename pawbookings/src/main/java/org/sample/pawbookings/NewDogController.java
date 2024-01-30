@@ -5,8 +5,6 @@ import java.io.IOException;
 import domain_layer.PawBookings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
@@ -35,12 +33,6 @@ public class NewDogController {
         String nome = this.nome.getText();
         String razza = this.razza.getText();
 
-        // recuperiamo il loader relativa alla schermata di errore (fxml)
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("error-view.fxml"));
-        Parent secondRoot = loader.load();
-        // ne recuperiamo il relativo controller
-        ErrorController errorController = loader.getController();
-
         // validiamole
         if (!nome.isEmpty() && !razza.isEmpty()) {
             // operazione di sistema
@@ -50,17 +42,11 @@ public class NewDogController {
                 MainApplication.setRoot("ok-view.fxml");
             } catch (Exception e) {
                 // messaggio errore
-                errorController.setTextError(e.getMessage());
-                // andiamo nella schermata di errore
-                MainApplication.goTo(secondRoot);
+                MainApplication.goClientErrorPage(e.getMessage());
             }
         } else {
             // i campi sono vuoti...
-
-            // messaggio errore
-            errorController.setTextError("devi prima compilare entrambi i campi");
-            // andiamo nella schermata di errore
-            MainApplication.goTo(secondRoot);
+           MainApplication.goClientErrorPage("devi prima compilare entrambi i campi!");
         }
     }
 

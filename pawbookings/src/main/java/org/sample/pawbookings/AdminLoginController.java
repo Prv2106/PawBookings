@@ -5,8 +5,6 @@ import java.io.IOException;
 import domain_layer.PawBookings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
@@ -31,13 +29,6 @@ public class AdminLoginController {
         // recuperiamo le informazione inserite dall'amministratore
         String pin = this.pin.getText();
         
-        // recuperiamo il loader relativa alla schermata di errore (fxml)
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("admin_error-view.fxml"));
-        Parent secondRoot = loader.load();
-
-        // ne recuperiamo il relativo controller
-        AdminErrorController errorController = loader.getController();
-
         // validiamole
         if (!pin.isEmpty()) {
             // operazione di sistema
@@ -47,23 +38,14 @@ public class AdminLoginController {
                     MainApplication.setRoot("admin_home-view.fxml");
                 } else {
                     // pin errato... quindi:
-                    // messaggio errore
-                    errorController.setTextError("PIN ERRATO");
-                    // andiamo nella schermata di errore
-                    MainApplication.goTo(secondRoot);
+                    MainApplication.goAdminErrorPage("Pin errato!");
                 }
             } catch (Exception e) {
-                errorController.setTextError(e.getMessage());
-                // andiamo nella schermata di errore
-                MainApplication.goTo(secondRoot);
+                MainApplication.goAdminErrorPage(e.getMessage());
             }
         } else {
             // i campi sono vuoti...
-
-            // messaggio errore
-            errorController.setTextError("non puoi lasciare il campo vuoto");
-            // andiamo nella schermata di errore
-            MainApplication.goTo(secondRoot);
+            MainApplication.goAdminErrorPage("Non puoi lasciare il campo vuoto!");
         }
     }
 }

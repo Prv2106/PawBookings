@@ -29,6 +29,7 @@ public class Cliente implements Observer {
         this.statoSaluteCani = new LinkedList<>();
         this.statoSaluteCani = new LinkedList<>();
         this.periodiAffido = new LinkedList<>();
+        this.codiceDelega = 0;
     }
 
     // public void loadCani(int codiceCane, String nome, String razza){

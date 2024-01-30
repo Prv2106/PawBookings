@@ -37,13 +37,6 @@ public class LoginController {
         String codice = this.codice.getText();
         String password = this.password.getText();
 
-        // recuperiamo il loader relativa alla schermata di errore (fxml)
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("error-view.fxml"));
-        Parent secondRoot = loader.load();
-
-        // ne recuperiamo il relativo controller
-        ErrorController errorController = loader.getController();
-
         // validiamole
         if (!codice.isEmpty() && !password.isEmpty()) {
             // operazione di sistema
@@ -53,23 +46,14 @@ public class LoginController {
                     MainApplication.setRoot("home_page-view.fxml");
                 } else {
                     // utente non trovato
-                    // messaggio errore
-                    errorController.setTextError("UTENTE NON TROVATO");
-                    // andiamo nella schermata di errore
-                    MainApplication.goTo(secondRoot);
+                    MainApplication.goClientErrorPage("Utente non trovato");
                 }
             } catch (Exception e) {
-                errorController.setTextError(e.getMessage());
-                // andiamo nella schermatav di errore
-                MainApplication.goTo(secondRoot);
+                MainApplication.goClientErrorPage(e.getMessage());
             }
         } else {
             // i campi sono vuoti...
-
-            // messaggio errore
-            errorController.setTextError("devi prima compilare entrambi i campi");
-            // andiamo nella schermatav di errore
-            MainApplication.goTo(secondRoot);
+            MainApplication.goClientErrorPage("Devi prima compilare tutti i campi di testo!");
         }
     }
 

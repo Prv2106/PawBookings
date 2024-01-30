@@ -9,7 +9,6 @@ import javafx.util.Callback;
 
 import domain_layer.Cane;
 import domain_layer.PawBookings;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;

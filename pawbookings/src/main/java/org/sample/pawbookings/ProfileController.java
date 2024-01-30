@@ -17,8 +17,16 @@ public class ProfileController implements Initializable {
     private Text username;
 
     @FXML
+    private Text label;
+
+    @FXML
+    private Text text;
+
+    @FXML
     void onDelegaPressed(ActionEvent event) {
-        
+        label.setVisible(true);
+        text.setVisible(true);
+        text.setText("" + PawBookings.getInstance().delega());
     }
 
     @FXML
@@ -76,6 +84,13 @@ public class ProfileController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.username.setText(PawBookings.getInstance().getClienteLoggato().getNome());
+
+        int codiceDelega = PawBookings.getInstance().getClienteLoggato().getCodiceDelega();
+        if (codiceDelega != 0) {
+            label.setVisible(true);
+            text.setVisible(true);
+            text.setText("" + codiceDelega);
+        }
     }
 
 }

@@ -38,7 +38,6 @@ public class DettagliAffidoController {
 
     @FXML
     void onConcludiAffidoPressed(ActionEvent event) {
-        // passiamo alla schermata che mostra l'elenco dei corsi disponibili
         try {
             PawBookings.getInstance().confermaConclusioneAffido();
             MainApplication.setRoot("admin_ok-view.fxml");
