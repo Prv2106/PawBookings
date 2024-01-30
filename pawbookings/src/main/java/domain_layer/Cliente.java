@@ -159,11 +159,15 @@ public class Cliente implements Observer {
     }
 
     public boolean checkSovrapposizioneDate(Cane cn, PeriodoAffido pa){
-        if((cn.getTurnoCorrente().getData().isAfter(pa.getDataInizio())) && (cn.getTurnoCorrente().getData().isBefore(pa.getDataFine()))){
-            return false;
-        }
-        else{
+        if (cn.getTurnoCorrente() == null) {
             return true;
+        } else {
+            if((cn.getTurnoCorrente().getData().isAfter(pa.getDataInizio())) && (cn.getTurnoCorrente().getData().isBefore(pa.getDataFine()))){
+                return false;
+            }
+            else{
+                return true;
+            }
         }
     }
 

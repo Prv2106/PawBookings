@@ -24,11 +24,10 @@ public class ConcludiAffido {
             PawBookings PB = PawBookings.getInstance();  
             
             try {
-                                
                 PeriodoAffido pa = delega 
-                ? PB.concludiAffidoDelega(str1, Integer.parseInt(str2)) 
+                ? PB.concludiAffidoDelega(Integer.parseInt(str1), Integer.parseInt(str2)) 
                 : PB.concludiAffido(str1, Integer.parseInt(str2));
-                
+
                 if (pa != null) {
                     // recuperiamo il loader relativa alla schermata di dettagli affido (fxml)
                     FXMLLoader ld = new FXMLLoader(getClass().getResource("dettagli_affido-view.fxml"));

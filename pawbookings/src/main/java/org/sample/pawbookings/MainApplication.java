@@ -59,6 +59,7 @@ public class MainApplication extends Application {
         stackRoots.pop();
         scene.setRoot(stackRoots.getLast());
     }
+    
 
     static void setRootAndChangePlatform(String fxml, boolean isMobile) throws IOException {
         Parent root = new FXMLLoader(MainApplication.class.getResource(fxml)).load();

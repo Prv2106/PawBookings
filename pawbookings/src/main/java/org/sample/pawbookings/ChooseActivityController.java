@@ -45,9 +45,15 @@ public class ChooseActivityController {
     void onNuovaIscrizioneCorsoClicked(ActionEvent event) {
         // passiamo alla schermata che mostra l'elenco dei corsi disponibili
         try {
-            MainApplication.setRoot("available_courses-view.fxml");
+            if (PawBookings.getInstance().nuovaIscrizioneCorso() != null) {
+                MainApplication.setRoot("available_courses-view.fxml");
+            } else {
+                goErrorPage("probabilmente il tuo cane risulta già essere iscritto ad un corso, oppure ha già completato tutti i corsi disponibili");
+            }
+            
         } catch (IOException e) {
             e.printStackTrace();
+            goErrorPage("errore generico");
         }
     }
 

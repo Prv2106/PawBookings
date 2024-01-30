@@ -135,11 +135,15 @@ public class Cane {
     }
 
     public Boolean checkSovrapposizioneDate(Turno ts){
-        if((ts.getData().isAfter(affidoCorrente.getDataInizio()))&& (ts.getData().isBefore(affidoCorrente.getDataFine()))){
-            return false;
-        }
-        else{
+        if (affidoCorrente == null) {
             return true;
+        } else {
+            if ((ts.getData().isAfter(affidoCorrente.getDataInizio()))&& (ts.getData().isBefore(affidoCorrente.getDataFine()))) {
+                return false;
+            }
+            else {
+                return true;
+            }
         }
     }
 
