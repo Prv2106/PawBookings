@@ -15,6 +15,7 @@ public class Cliente implements Observer {
     private LinkedList<Cane> caniPosseduti;
     private LinkedList<Map<String, String>> statoSaluteCani;
     private LinkedList<PeriodoAffido> periodiAffido;
+    private int codiceDelega;
 
 
     public Cliente (String codiceCliente, String nome, String cognome,String password,String numeroTelefono) {
@@ -152,6 +153,29 @@ public class Cliente implements Observer {
     public void addCane(Cane cn) {
         this.caniPosseduti.add(cn);
     }
+
+    public void setCodiceDelega(int codiceDelega) {
+        this.codiceDelega = codiceDelega;
+    }
+
+    public boolean checkSovrapposizioneDate(Cane cn, PeriodoAffido pa){
+        if((cn.getTurnoCorrente().getData().isAfter(pa.getDataInizio())) && (cn.getTurnoCorrente().getData().isBefore(pa.getDataFine()))){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    
+    public int getCodiceDelega(){
+        return this.codiceDelega;
+    }
+
+
+
+
+
 
 
 

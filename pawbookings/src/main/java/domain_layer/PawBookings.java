@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Random;
 
 public class PawBookings {
     
@@ -71,6 +72,7 @@ public class PawBookings {
 
     public LinkedList<Corso> nuovaIscrizioneCorso(){
         int capienza;
+        Boolean esito =this.caneSelezionato
         // per ciascun corso presente in elencoCorsi viene verificato che il corso non sia pieno 
         // e in caso affermativo viene aggiunto all'elencoCorsiDisponibili
         elencoCorsiDisponibili.clear();
@@ -155,6 +157,7 @@ public class PawBookings {
     public Boolean confermaAffido(Cane cn){
         int numeroPostiDisponibili;
         Boolean esito;
+        Boolean esitoCheckSovrapposizione = this.clienteLoggato.checkSovrapposizioneDate(cn, periodoSelezionato);
         Boolean esitoVerifica = this.periodoSelezionato.verificaIscrizione(this.clienteLoggato);
         esito = this.periodoSelezionato.registraAffido(cn);
 
@@ -267,21 +270,42 @@ public class PawBookings {
         Cane cn;
         cl = this.clienti.get(codiceCliente);
         cn = cl.getCane(codiceCane);
+        setCaneSelezionato(cn);
+        setClienteSelezionato(cl);
         if (cn == null) {
-            setCaneSelezionato(cn);
-            setClienteSelezionato(cl);
             return null;
         } else {
-            setCaneSelezionato(cn);
-            setClienteSelezionato(cl);
             return cn.getAffido();
         }
     }
 
-    public PeriodoAffido concludiAffidoDelega(String codiceDelega, int codiceCane) {
-        
-    }
+    public PeriodoAffido concludiAffidoDelega(int codiceDelega, int codiceCane){
+        int cd;
+        int codC;
+        LinkedList<Cane> caniPosseduti;
+        for(Cliente cl: clienti.values()){
+            cd=cl.getCodiceDelega();
+            if(cd == codiceDelega){
+                caniPosseduti = cl.getCani();
+                for(Cane c: caniPosseduti){
+                    codC=c.getCodiceCane();
+                    if(codC == codiceCane){
+                        PB.setClienteSelezionato(cl);
+                    }
+                }
+                
+            }
+        }
 
+        Cane cn;
+        cn = clienteSelezionato.getCane(codiceCane);
+        setCaneSelezionato(cn);
+        if (cn == null) {
+            return null;
+        } else {
+            return cn.getAffido();
+        }
+    }
 
     public Boolean setClienteSelezionato(Cliente cl){
         if(cl==null){
@@ -539,6 +563,17 @@ public class PawBookings {
             return true;
         }
         else return false;
+    }
+
+    public int delega(){
+        int codiceDelega = this.generaCodiceDelega();
+        this.clienteLoggato.setCodiceDelega(codiceDelega);
+        return codiceDelega;
+    }
+
+    public int generaCodiceDelega(){
+        Random random = new Random();
+        return random.nextInt(999);
     }
 
 

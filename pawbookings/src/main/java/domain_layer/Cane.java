@@ -110,6 +110,47 @@ public class Cane {
 
 
 
+    public Boolean checkNuovaIscrizioneCorso(LinkedList<Corso> elencoCorsiDisponibili){
+        if((attualmenteIscritto == true) || (corsiCompletati.containsAll(elencoCorsiDisponibili))){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
+
+    public Boolean checkConfermaIscrizioneCorso(Corso cs){
+        if(corsiCompletati.size()==0){
+            return true;
+        }
+        else{
+            Corso ultimoCorsoSeguito = corsiCompletati.getLast();
+            if(cs.getCodice() == (ultimoCorsoSeguito.getCodice() +1)){
+                return true;
+            }
+            else return false;
+    
+        }
+    }
+
+    public Boolean checkSovrapposizioneDate(Turno ts){
+        if((ts.getData().isAfter(affidoCorrente.getDataInizio()))&& (ts.getData().isBefore(affidoCorrente.getDataFine()))){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+
+
+
+
+
+
+
+
     // ************ setters ************************
     public void setAttualmenteIscritto(boolean bl) {
         this.attualmenteIscritto = bl;
@@ -121,6 +162,7 @@ public class Cane {
 
 
 
+    
     /****      metodi per testing        ****/  
 
 
