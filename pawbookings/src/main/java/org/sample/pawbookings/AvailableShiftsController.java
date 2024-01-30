@@ -77,10 +77,13 @@ public class AvailableShiftsController implements Initializable {
                             setOnMouseClicked(event -> {
                                 // Azioni da eseguire quando un elemento viene cliccato
                                 try {
-                                    if (PB.selezionaTurno(turno)) {
+                                    boolean b = PB.selezionaTurno(turno);
+                                    if (b) {
                                         MainApplication.setRoot("ok-view.fxml");
-                                    } else {
+                                    } else if (b == false) {
                                         MainApplication.goClientErrorPage("Il tuo cane risulta essere in affido per quel periodo");
+                                    } else {
+                                        MainApplication.goClientErrorPage("Il turno non è più disponibile :(");
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();

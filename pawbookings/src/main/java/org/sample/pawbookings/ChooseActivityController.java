@@ -57,7 +57,11 @@ public class ChooseActivityController {
     void onPrenotaTurnoLezioneClicked(ActionEvent event) throws IOException {
         // passiamo alla schermata che mostra l'elenco dei turni disponibili
         try {
-            MainApplication.setRoot("available_shifts-view.fxml"); 
+            if (PawBookings.getInstance().prenotaTurnoLezione() == null) {
+                MainApplication.goClientErrorPage("Il tuo cane non è ancora iscritto a nessun corso di addestramento...");
+            } else {
+                MainApplication.setRoot("available_shifts-view.fxml"); 
+            }
         } catch (IOException e) {
             // probabilmente il cane non è iscritto al turno.... quindi:
             MainApplication.goClientErrorPage("probabilmente il cane non è iscritto ad un corso");

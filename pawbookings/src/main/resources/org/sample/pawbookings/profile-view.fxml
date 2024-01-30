@@ -47,16 +47,26 @@
                         </Text>
                      </children>
                   </HBox>
-                  <HBox prefHeight="42.0" prefWidth="350.0">
+                  <HBox alignment="BASELINE_LEFT" prefHeight="42.0" prefWidth="350.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#onDelegaPressed" prefHeight="35.0" prefWidth="107.0" style="-fx-background-color: #4facfe;" text="Delega" textFill="WHITE">
                            <HBox.margin>
-                              <Insets left="20.0" />
+                              <Insets left="20.0" right="50.0" />
                            </HBox.margin>
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Button>
+                        <Text fx:id="label" fill="#565454" strokeType="OUTSIDE" strokeWidth="0.0" text="codice delega:" visible="false" wrappingWidth="79.94987487792969">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Text>
+                        <Text fx:id="text" strokeType="OUTSIDE" strokeWidth="0.0" text="1023971" visible="false">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
                      </children>
                      <VBox.margin>
                         <Insets top="-30.0" />

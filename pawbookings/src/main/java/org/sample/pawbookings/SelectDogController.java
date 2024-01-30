@@ -42,9 +42,11 @@ public class SelectDogController {
 
     public void start(LinkedList<Cane> elencoCaniDaAffidare) {
         PawBookings PB = PawBookings.getInstance();
+
         if (elencoCaniDaAffidare.isEmpty()) {
             text.setText("Nessun cane disponibile per l'affido");
             text.setFont(new Font(16));
+
         } else {
             items.addAll(elencoCaniDaAffidare);
             this.list.setItems(items);
@@ -75,9 +77,15 @@ public class SelectDogController {
                                 setOnMouseClicked(event -> {
                                     try {
                                         // Azioni da eseguire quando un elemento viene cliccato
-                                        if (PB.confermaAffido(cane)) {
+                                        boolean b = PB.confermaAffido(cane);
+                                        if (b) {
                                             // notifica positiva
                                             MainApplication.setRoot("ok-view.fxml");
+                                        } else if (!b) {
+                                            MainApplication.goClientErrorPage("Hai selezionato un periodo durante il quale il cane ha attiva la prenotazione ad un turno...");
+                                        } else {
+                                            // b == null
+                                            MainApplication.goClientErrorPage("Il periodo di affido risulta adesso essere non più disponibile...");
                                         }
                                     } catch (IOException e) {
                                         e.printStackTrace();
