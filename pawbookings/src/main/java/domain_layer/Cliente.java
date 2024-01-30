@@ -167,4 +167,16 @@ public class Cliente implements Observer {
         }
     }
 
+    
+    public int getCodiceDelega(){
+        return this.codiceDelega;
+    }
+
+
+
+
+
+
+
+
 }

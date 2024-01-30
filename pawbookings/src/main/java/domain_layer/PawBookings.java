@@ -72,6 +72,7 @@ public class PawBookings {
 
     public LinkedList<Corso> nuovaIscrizioneCorso(){
         int capienza;
+        Boolean esito =this.caneSelezionato
         // per ciascun corso presente in elencoCorsi viene verificato che il corso non sia pieno 
         // e in caso affermativo viene aggiunto all'elencoCorsiDisponibili
         elencoCorsiDisponibili.clear();
@@ -269,17 +270,42 @@ public class PawBookings {
         Cane cn;
         cl = this.clienti.get(codiceCliente);
         cn = cl.getCane(codiceCane);
+        setCaneSelezionato(cn);
+        setClienteSelezionato(cl);
         if (cn == null) {
-            setCaneSelezionato(cn);
-            setClienteSelezionato(cl);
             return null;
         } else {
-            setCaneSelezionato(cn);
-            setClienteSelezionato(cl);
             return cn.getAffido();
         }
     }
 
+    public PeriodoAffido concludiAffidoDelega(int codiceDelega, int codiceCane){
+        int cd;
+        int codC;
+        LinkedList<Cane> caniPosseduti;
+        for(Cliente cl: clienti.values()){
+            cd=cl.getCodiceDelega();
+            if(cd == codiceDelega){
+                caniPosseduti = cl.getCani();
+                for(Cane c: caniPosseduti){
+                    codC=c.getCodiceCane();
+                    if(codC == codiceCane){
+                        PB.setClienteSelezionato(cl);
+                    }
+                }
+                
+            }
+        }
+
+        Cane cn;
+        cn = clienteSelezionato.getCane(codiceCane);
+        setCaneSelezionato(cn);
+        if (cn == null) {
+            return null;
+        } else {
+            return cn.getAffido();
+        }
+    }
 
     public Boolean setClienteSelezionato(Cliente cl){
         if(cl==null){
