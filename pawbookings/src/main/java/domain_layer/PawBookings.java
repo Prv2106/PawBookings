@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Random;
 
 public class PawBookings {
     
@@ -155,6 +156,7 @@ public class PawBookings {
     public Boolean confermaAffido(Cane cn){
         int numeroPostiDisponibili;
         Boolean esito;
+        Boolean esitoCheckSovrapposizione = this.clienteLoggato.checkSovrapposizioneDate(cn, periodoSelezionato);
         Boolean esitoVerifica = this.periodoSelezionato.verificaIscrizione(this.clienteLoggato);
         esito = this.periodoSelezionato.registraAffido(cn);
 
@@ -535,6 +537,17 @@ public class PawBookings {
             return true;
         }
         else return false;
+    }
+
+    public int delega(){
+        int codiceDelega = this.generaCodiceDelega();
+        this.clienteLoggato.setCodiceDelega(codiceDelega);
+        return codiceDelega;
+    }
+
+    public int generaCodiceDelega(){
+        Random random = new Random();
+        return random.nextInt(999);
     }
 
 
