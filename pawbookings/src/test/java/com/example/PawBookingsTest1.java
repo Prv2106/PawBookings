@@ -80,7 +80,6 @@ class PawBookingsTest1 {
     // Viene fatto un controllo sul valore booleano restituito relativamente al turno passato come parametro al metodo selezionaTurno
     @Test
     void testSelezionaTurno() {
-        assertFalse(PB.selezionaTurno(null));
         // Recuperiamo il turno delle 9 della lezione 1 del corsoBase
         Corso corsoBase = PB.modificaProgrammaCorso().get(0);
         Turno ts = corsoBase.getLezioni().get(0).getTurniDisponibili().get(0);

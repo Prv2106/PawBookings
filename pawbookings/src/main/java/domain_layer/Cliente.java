@@ -171,7 +171,9 @@ public class Cliente implements Observer {
         if (cn.getTurnoCorrente() == null) {
             return true;
         } else {
-            if((cn.getTurnoCorrente().getData().isAfter(pa.getDataInizio())) && (cn.getTurnoCorrente().getData().isBefore(pa.getDataFine()))){
+            if((cn.getTurnoCorrente().getData().isAfter(pa.getDataInizio())) && (cn.getTurnoCorrente().getData().isBefore(pa.getDataFine()))
+                || (cn.getTurnoCorrente().getData().equals(pa.getDataInizio())) 
+                || (cn.getTurnoCorrente().getData().equals(pa.getDataFine()))){
                 return false;
             }
             else{

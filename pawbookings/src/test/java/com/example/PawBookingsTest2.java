@@ -28,7 +28,6 @@ class PawBookingsTest2 {
 
     // Il metodo viene eseguito prima di tutti i test
     // inizializza l'istanza di PawBookings
-    // crea un'istanza di Cane e la seleziona
     @BeforeAll
     public static void initTest() {
         PB = PawBookings.getInstance();

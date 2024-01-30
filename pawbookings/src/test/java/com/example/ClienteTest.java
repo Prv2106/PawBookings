@@ -147,4 +147,11 @@ public class ClienteTest {
         // verifichiamo che la lista contenga un elemento
         assertEquals(expectedList, Giuseppe.getStatoSalute());
     }
+
+
+
+    @Test
+    void testCheckSovrapposizioneDate(){
+        
+    }
 }

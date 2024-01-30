@@ -117,7 +117,6 @@ public class Cane {
         else{
             return true;
         }
-
     }
 
     public Boolean checkConfermaIscrizioneCorso(Corso cs){
@@ -143,7 +142,9 @@ public class Cane {
         if (affidoCorrente == null) {
             return true;
         } else {
-            if ((ts.getData().isAfter(affidoCorrente.getDataInizio()))&& (ts.getData().isBefore(affidoCorrente.getDataFine()))) {
+            if ((ts.getData().isAfter(affidoCorrente.getDataInizio())) && (ts.getData().isBefore(affidoCorrente.getDataFine())) 
+            || (ts.getData().equals(affidoCorrente.getDataInizio())) 
+            || (ts.getData().equals(affidoCorrente.getDataFine()))) {
                 return false;
             }
             else {
@@ -173,6 +174,10 @@ public class Cane {
 
     
     /****      metodi per testing        ****/  
+
+    public void setAffidoCorrente(PeriodoAffido pa){
+        this.affidoCorrente = pa;
+    }
 
 
     public void setAttualmenteInAffido(Boolean val){
@@ -206,5 +211,7 @@ public class Cane {
     public Lezione getUltimaLezioneSeguita(){
         return this.lezioniSeguite.getLast();
     }
+
+
 
 }

@@ -55,17 +55,18 @@ public class PawBookings {
     public void loadPeriodiAffido(){
 
         // Creazione delle istanze di PeriodoAffido 
-        PeriodoAffido p1 = new PeriodoAffido(1, LocalDate.now(), LocalDate.now().plusWeeks(2), 150.0f);
+        PeriodoAffido p1 = new PeriodoAffido(1, LocalDate.now().plusDays(1), LocalDate.now().plusWeeks(2), 150.0f);
         PeriodoAffido p2 = new PeriodoAffido(2, LocalDate.now().plusWeeks(2), LocalDate.now().plusMonths(1), 300.0f);
         PeriodoAffido p3 = new PeriodoAffido(3,LocalDate.now().plusMonths(1) ,LocalDate.now().plusMonths(2), 600.0f);
-        
+
         this.elencoPeriodiDisponibili.add(p1);
         this.elencoPeriodiDisponibili.add(p2);
         this.elencoPeriodiDisponibili.add(p3);
-       
+
         this.elencoPeriodiAffido.add(p1);
         this.elencoPeriodiAffido.add(p2);
         this.elencoPeriodiAffido.add(p3);
+
     }
 
 
@@ -134,9 +135,10 @@ public class PawBookings {
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
-                return null;
+                return false;
             }
-        } else {
+        }
+        else{
             return false;
         }
     }
@@ -191,11 +193,15 @@ public class PawBookings {
                 }
                 return esito;
 
-            } else {
+            }
+            else{
                 return false;
             }
-        } else {
-            return null;
+
+
+        }
+        else{
+            return false;
         }
     }
 
@@ -609,7 +615,7 @@ public class PawBookings {
 
     public int generaCodiceDelega(){
         Random random = new Random();
-        return random.nextInt(998) + 1;
+        return random.nextInt(999);
     }
 
 

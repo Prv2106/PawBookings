@@ -117,4 +117,11 @@ public class PeriodoAffido extends Observable {
     public Map<Integer, String> getMappaStatoSalute(){
         return this.mappaStatoSalute;
     }
+
+    public void setNumPosti(int val){
+        this.numPosti = val;
+    }
+
+
+
 }
