@@ -35,7 +35,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -44,6 +43,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
 <StackPane maxHeight="625.0" maxWidth="350.0" minHeight="625.0" minWidth="350.0" prefHeight="625.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sample.pawbookings.ErrorController">
    <children>
@@ -68,11 +68,11 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </Text>
-                  <TextArea fx:id="textError" editable="false" prefHeight="62.0" prefWidth="329.0" wrapText="true" VBox.vgrow="ALWAYS">
+                  <TextFlow fx:id="textError" prefHeight="44.0" prefWidth="350.0" textAlignment="CENTER">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" />
                      </VBox.margin>
-                  </TextArea>
+                  </TextFlow>
                   <ImageView fitHeight="191.0" fitWidth="200.0">
                      <image>
                         <Image url="@../../../assets/warning.png" />

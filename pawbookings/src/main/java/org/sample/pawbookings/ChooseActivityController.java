@@ -7,13 +7,10 @@ import domain_layer.PawBookings;
 import domain_layer.Turno;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 
 
 public class ChooseActivityController {
-    private ErrorController errorController;
 
     @FXML
     private Button backButton;
@@ -27,44 +24,32 @@ public class ChooseActivityController {
         }
     }
 
-    private void goErrorPage(String text) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("error-view.fxml"));
-            Parent root = loader.load();
-            errorController = loader.getController();
-            errorController.setTextError(text);
-            MainApplication.goTo(root);
-        } catch (Exception e) {
-
-        }
-    }
-
     // PULSANTI SCHERMATA
 
     @FXML
-    void onNuovaIscrizioneCorsoClicked(ActionEvent event) {
+    void onNuovaIscrizioneCorsoClicked(ActionEvent event) throws IOException {
         // passiamo alla schermata che mostra l'elenco dei corsi disponibili
         try {
             if (PawBookings.getInstance().nuovaIscrizioneCorso() != null) {
                 MainApplication.setRoot("available_courses-view.fxml");
             } else {
-                goErrorPage("probabilmente il tuo cane risulta già essere iscritto ad un corso, oppure ha già completato tutti i corsi disponibili");
+                MainApplication.goClientErrorPage("probabilmente il tuo cane risulta già essere iscritto ad un corso, oppure ha già completato tutti i corsi disponibili");
             }
             
         } catch (IOException e) {
             e.printStackTrace();
-            goErrorPage("errore generico");
+            MainApplication.goClientErrorPage("errore generico");
         }
     }
 
     
     @FXML
-    void onMostraStatoAvanzamentoCorsoClicked(ActionEvent event) {
+    void onMostraStatoAvanzamentoCorsoClicked(ActionEvent event) throws IOException {
         // passiamo alla schermata che mostra lo stato di avanzamento del cane 'ShowCourseState'
         try {
             MainApplication.setRoot("show_course_state-view.fxml");
         } catch (IOException e) {
-            goErrorPage("probabilmente il cane non è iscritto ad un corso");
+            MainApplication.goClientErrorPage("probabilmente il cane non è iscritto ad un corso");
         }
     }
 
@@ -75,7 +60,7 @@ public class ChooseActivityController {
             MainApplication.setRoot("available_shifts-view.fxml"); 
         } catch (IOException e) {
             // probabilmente il cane non è iscritto al turno.... quindi:
-            goErrorPage("probabilmente il cane non è iscritto ad un corso");
+            MainApplication.goClientErrorPage("probabilmente il cane non è iscritto ad un corso");
         }
     }
 
@@ -87,10 +72,10 @@ public class ChooseActivityController {
             LinkedList<Turno> elencoTurni = PB.scambioTurno();
             if (elencoTurni == null) {
                 // nessun turno prenotato
-                goErrorPage("Nessun turno ancora prenotato!");
+                MainApplication.goClientErrorPage("Nessun turno ancora prenotato!");
             } else if (elencoTurni.isEmpty()) {
                 // nessun turno disponibile
-                goErrorPage("Nessun turno disponibile!");
+                MainApplication.goClientErrorPage("Nessun turno disponibile!");
             } else {
                 // andiamo nella pagina coi turni disponibili
                 MainApplication.setRoot("available_shifts_to_switch-view.fxml");

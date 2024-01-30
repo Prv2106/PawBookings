@@ -11,9 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.util.Callback;
 
 public class ShowProgramController {
@@ -43,6 +43,7 @@ public class ShowProgramController {
     public void initialize(Corso corso) { // metodo richiamato dal controller chiamante
         items.addAll(corso.getLezioni());
         this.list.setItems(items);
+                        
 
         this.courseName.setText(corso.getTipoCorso());
 
@@ -60,6 +61,7 @@ public class ShowProgramController {
                         } else {
                             // nome lezione
                             VBox vbox = new VBox();
+                            vbox.setMaxWidth(300);
                             vbox.getChildren().add(new Label("Nome lezione: " + lezione.getNome()));
                             vbox.getChildren().add(new Label("Esercizi (" + lezione.getEsercizi().size() + "):"));
                            
@@ -67,20 +69,19 @@ public class ShowProgramController {
                             for (int i = 0; i < lezione.getEsercizi().size(); i++) {
                                 Esercizio esercizio = lezione.getEsercizi().get(i);
                                 vbox.getChildren().add(new Label(" - " + (i+1) +") " + esercizio.getNome()));
-                                TextArea descrizione = new TextArea();
-                                descrizione.setText(esercizio.getDescrizione());
+                                TextFlow boxDescrizione = new TextFlow();
 
-                                // un rigo è formato più o meno da 53 caratteri
-                                int numeroRighe = Math.round((esercizio.getDescrizione().length()) / 53);
-                                descrizione.setEditable(false);
-                                descrizione.setWrapText(true);
-                                descrizione.setPrefWidth(300);
-                                descrizione.setPrefRowCount(numeroRighe + 1);
-                                vbox.getChildren().add(descrizione);
+                                Text descrizione = new Text(esercizio.getDescrizione());                                                                
+                                boxDescrizione.getChildren().add(descrizione);
+                                
+                                vbox.getChildren().add(boxDescrizione);
                             }
 
                             // Imposta il contenuto della cella
+
                             setGraphic(vbox);
+
+                            
                         }
                     }
                 };

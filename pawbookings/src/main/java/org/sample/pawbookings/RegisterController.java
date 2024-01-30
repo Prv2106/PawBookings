@@ -5,8 +5,6 @@ import java.io.IOException;
 import domain_layer.PawBookings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
@@ -43,13 +41,6 @@ public class RegisterController {
         String tel = this.tel.getText();
         String password = this.password.getText();
 
-        // recuperiamo il loader relativa alla schermata di errore (fxml)
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("error-view.fxml"));
-        Parent secondRoot = loader.load();
-
-        // ne recuperiamo il relativo controller
-        ErrorController errorController = loader.getController();
-
         // validiamole
         if (!name.isEmpty() && !surname.isEmpty() && !password.isEmpty() && !tel.isEmpty()) {
             // operazione di sistema
@@ -59,20 +50,14 @@ public class RegisterController {
                     MainApplication.setRoot("ok-view.fxml");
                 } else {
                     // utente già iscritto
-                    errorController.setTextError("Il numero di telefono inserito risulta già presente nel sistema");
-                    // andiamo nella schermata di errore
-                    MainApplication.goTo(secondRoot);
+                    MainApplication.goClientErrorPage("Il numero di telefono inserito risulta già presente nel sistema");
                 }
             } catch (Exception e) {
-                errorController.setTextError(e.getMessage());
-                // andiamo nella schermata di errore
-                MainApplication.goTo(secondRoot);
+                MainApplication.goClientErrorPage(e.getMessage());
             }
         } else {
             // messaggio errore
-            errorController.setTextError("devi prima compilare tutti i campi");
-            // andiamo nella schermata di errore
-            MainApplication.goTo(secondRoot);
+            MainApplication.goClientErrorPage("devi prima compilare tutti i campi");
         }
     }
 

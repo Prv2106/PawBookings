@@ -9,9 +9,7 @@ import java.util.ResourceBundle;
 import domain_layer.PawBookings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Spinner;
@@ -94,27 +92,15 @@ public class NewShiftController implements Initializable{
         LocalDate data = this.data.getValue();
         LocalTime oraInizio = this.oraInizio.getValue();
         LocalTime oraFine = this.oraFine.getValue();
-
-        // recuperiamo il loader relativa alla schermata di errore (fxml)
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("admin_error-view.fxml"));
-        Parent secondRoot = loader.load();
-
-        // ne recuperiamo il relativo controller
-        AdminErrorController errorController = loader.getController();
         
         try {
             if (PawBookings.getInstance().nuovoTurno(data, oraInizio, oraFine)) {
                 MainApplication.setRoot("admin_ok-view.fxml");
             } else {
-                // messaggio errore
-                errorController.setTextError("Qualcosa è andato storto durante l'inserimento del turno...");
-                // andiamo nella schermata di errore
-                MainApplication.goTo(secondRoot);
+               MainApplication.goAdminErrorPage("Qualcosa è andato storto durante l'inserimento del turno...");
             }
         } catch (Exception e) {
-            errorController.setTextError(e.getMessage());
-            // andiamo nella schermatav di errore
-            MainApplication.goTo(secondRoot);
+            MainApplication.goAdminErrorPage(e.getMessage());
         }
         
     }
