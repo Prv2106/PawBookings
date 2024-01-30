@@ -47,9 +47,13 @@ public class ChooseActivityController {
     void onMostraStatoAvanzamentoCorsoClicked(ActionEvent event) throws IOException {
         // passiamo alla schermata che mostra lo stato di avanzamento del cane 'ShowCourseState'
         try {
-            MainApplication.setRoot("show_course_state-view.fxml");
+            if (PawBookings.getInstance().mostraStatoAvanzamentoCorso() == null) {
+                MainApplication.goClientErrorPage("Il cane non è iscirtto ad alcun corso!");
+            } else {
+                MainApplication.setRoot("show_course_state-view.fxml");
+            }
         } catch (IOException e) {
-            MainApplication.goClientErrorPage("probabilmente il cane non è iscritto ad un corso");
+            MainApplication.goClientErrorPage(e.getMessage());
         }
     }
 
@@ -75,7 +79,7 @@ public class ChooseActivityController {
             LinkedList<Turno> elencoTurni = PB.scambioTurno();
             if (elencoTurni == null) {
                 // nessun turno prenotato
-                MainApplication.goClientErrorPage("Nessun turno ancora prenotato!");
+                MainApplication.goClientErrorPage("Non hai ancora prenotato nessun turno, oppure non è troppo tardi per scambiare il tuo turno...");
             } else if (elencoTurni.isEmpty()) {
                 // nessun turno disponibile
                 MainApplication.goClientErrorPage("Nessun turno disponibile!");
