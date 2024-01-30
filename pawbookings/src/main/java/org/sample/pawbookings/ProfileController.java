@@ -17,6 +17,11 @@ public class ProfileController implements Initializable {
     private Text username;
 
     @FXML
+    void onDelegaPressed(ActionEvent event) {
+        
+    }
+
+    @FXML
     void onNewDogPressed(ActionEvent event) {
         try {
             MainApplication.setRoot("new_dog-view.fxml");

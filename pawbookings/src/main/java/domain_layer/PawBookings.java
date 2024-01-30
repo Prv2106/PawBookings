@@ -278,6 +278,10 @@ public class PawBookings {
         }
     }
 
+    public PeriodoAffido concludiAffidoDelega(String codiceDelega, int codiceCane) {
+        
+    }
+
 
     public Boolean setClienteSelezionato(Cliente cl){
         if(cl==null){

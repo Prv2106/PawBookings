@@ -32,27 +32,42 @@
                         <Insets bottom="50.0" />
                      </VBox.margin>
                      <children>
-                        <Text fill="#696767" strokeType="OUTSIDE" strokeWidth="0.0" text="cliente: " wrappingWidth="68.17633438110352">
+                        <Text fill="#696767" strokeType="OUTSIDE" strokeWidth="0.0" text="cliente: " wrappingWidth="56.955631256103516">
                            <HBox.margin>
                               <Insets left="22.0" />
                            </HBox.margin>
                            <font>
-                              <Font size="18.0" />
+                              <Font size="16.0" />
                            </font>
                         </Text>
                         <Text fx:id="username" strokeType="OUTSIDE" strokeWidth="0.0" text="Alberto Provenzano" wrappingWidth="221.52698135375977">
                            <font>
-                              <Font size="20.0" />
+                              <Font size="16.0" />
                            </font>
                         </Text>
                      </children>
+                  </HBox>
+                  <HBox prefHeight="42.0" prefWidth="350.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#onDelegaPressed" prefHeight="35.0" prefWidth="107.0" style="-fx-background-color: #4facfe;" text="Delega" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="-30.0" />
+                     </VBox.margin>
                   </HBox>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNewDogPressed" prefHeight="85.0" prefWidth="314.0" style="-fx-background-color: #8ceb34;" text="Aggiungi un cane" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="30.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="30.0" left="10.0" right="10.0" top="35.0" />
                      </VBox.margin>
                   </Button>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onRemoveDogPressed" prefHeight="85.0" prefWidth="314.0" style="-fx-background-color: #fc0349;" text="Rimuovi un cane" textAlignment="CENTER" textFill="WHITE">
@@ -72,7 +87,10 @@
                                     <Image url="@../../../assets/logout.png" />
                                  </image>
                               </ImageView>
-                              <Button mnemonicParsing="false" onAction="#onLogoutPressed" prefHeight="67.0" prefWidth="198.0" style="-fx-background-color: #00000000;" />
+                              <Button mnemonicParsing="false" onAction="#onLogoutPressed" prefHeight="67.0" prefWidth="198.0" style="-fx-background-color: #00000000;">
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin></Button>
                            </children>
                         </StackPane>
                      </children>
@@ -84,7 +102,7 @@
             </VBox>
             <BorderPane prefHeight="87.0" prefWidth="350.0">
                <top>
-                  <HBox alignment="CENTER" prefHeight="65.0" prefWidth="350.0" BorderPane.alignment="CENTER">
+                  <HBox alignment="CENTER" prefHeight="78.0" prefWidth="350.0" BorderPane.alignment="CENTER">
                      <children>
                         <Button mnemonicParsing="false" onAction="#onDogTabPressed" prefHeight="61.0" prefWidth="80.0" style="-fx-background-color: #00000000;">
                            <HBox.margin>

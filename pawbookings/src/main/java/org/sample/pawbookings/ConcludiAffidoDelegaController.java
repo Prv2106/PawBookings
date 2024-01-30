@@ -1,37 +1,38 @@
 package org.sample.pawbookings;
 
 import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-
-public class ConcludiAffidoController extends ConcludiAffido{
+public class ConcludiAffidoDelegaController extends ConcludiAffido{
 
     @FXML
-    private TextField codiceCliente;
+    private Button backButton;
 
     @FXML
     private TextField codiceCane;
 
     @FXML
-    private Button backButton;
+    private TextField codiceDelega;
+
     @FXML
-    void onBackPressed(ActionEvent event) throws IOException {
+    void onBackPressed(ActionEvent event) {
         try {
             MainApplication.simpleBack();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     @FXML
     void onConcludiAffidoPressed(ActionEvent event) throws IOException {
         // recuperiamo le informazione inserite dall'amministratore
-        String codiceCliente = this.codiceCliente.getText();
+        String codiceDelega = this.codiceDelega.getText();
         String codiceCane = this.codiceCane.getText();
-        goNext(codiceCliente, codiceCane, false);
+        goNext(codiceDelega, codiceCane, true);
     }
 
 }

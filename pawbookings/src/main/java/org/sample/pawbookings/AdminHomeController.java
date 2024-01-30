@@ -11,7 +11,7 @@ public class AdminHomeController {
     void onConcludiAffidoPressed(ActionEvent event) {
         // passiamo alla schermata dove inserire le info date dal cliente in struttura
         try {
-            MainApplication.setRoot("concludi_affido-view.fxml");
+            MainApplication.setRoot("admin_choose_concludi_affido-view.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
