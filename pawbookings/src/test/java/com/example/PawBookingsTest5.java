@@ -3,11 +3,12 @@ package com.example;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ import domain_layer.Turno;
 
 /*
  * Test degli scenari alternativi dei casi d'uso degli UC1-UC2-UC3-UC4
+ * Test del flusso base del caso d'uso UC14
  */
 
 
@@ -72,8 +74,6 @@ public class PawBookingsTest5 {
         PB.inserisciEsercizio("Introduzione al Guinzaglio", "Insegnare ai proprietari come presentare il guinzaglio al cane in modo positivo, facendolo abituare gradualmente alla sensazione e premiando il comportamento calmo e collaborativo.");
         PB.confermaLezione();
 
-   
-
         PB.inserisciNuovoCorso("Corso Avanzato", 10, 250.0F);
         corsoAvanzato = PB.modificaProgrammaCorso().get(1);
         PB.selezionaCorso(corsoAvanzato);
@@ -90,10 +90,14 @@ public class PawBookingsTest5 {
         PB.selezionaCorsoModificaTurni(corsoBase);
         PB.selezionaLezione(corsoBase.getLezioni().get(0));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
-        PB.selezionaLezione(corsoBase.getLezioni().get(1));
+        PB.selezionaLezione(corsoBase.getLezioni().get(0));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
-        PB.selezionaLezione(corsoBase.getLezioni().get(1));
+        PB.selezionaLezione(corsoBase.getLezioni().get(0));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(11, 0), LocalTime.of(12, 0));
+        PB.selezionaLezione(corsoBase.getLezioni().get(0));
+        PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(15, 0), LocalTime.of(16, 0));
+        PB.selezionaLezione(corsoBase.getLezioni().get(1));
+        PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(15, 0), LocalTime.of(16, 0));
         PB.selezionaLezione(corsoBase.getLezioni().get(1));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(15, 0), LocalTime.of(16, 0));
 
@@ -273,7 +277,6 @@ public class PawBookingsTest5 {
     }
 
 
-
     @Test
     void testMostraStatoAvanzamentoCorso(){
         /** Test UC10 estensione 2a **/
@@ -283,9 +286,6 @@ public class PawBookingsTest5 {
         PB.selezionaCane(Leila);
         assertEquals(null,PB.mostraStatoAvanzamentoCorso());
     }
-
-
-
 
 
     @Test
@@ -301,9 +301,6 @@ public class PawBookingsTest5 {
     }
 
 
-
-    
-
     @Test
     void testConcludiAffido(){
         /** Test UC4 estensione 4a **/
@@ -312,20 +309,74 @@ public class PawBookingsTest5 {
         assertEquals(null, PB.concludiAffido("126", 1)); 
         // Inserendo un codiceCane errato (e codiceCliente giusto) nel metodo ConcludiAffido ci aspettiamo che venga restituito null
         assertEquals(null, PB.concludiAffido("Alberto1", 3));
-
+        // Inserendo i parametri errati nel metodo ConcludiAffido ci aspettiamo che venga restituito null
+        assertEquals(null, PB.concludiAffido("Alberto123232", 3));
         /** Test UC4 estensione 4a **/
         // Asso non è in Affido 
         // Inserendo il codiceCliente e il codiceCane corretti nel metodo ConcludiAffido ci aspettiamo che venga restituito null
         assertEquals(null, PB.concludiAffido("Alberto1", 2));
-
     }
 
+    @Test
+    void testTimbraPrenotazioneTurno() {
+        /** TEST UC14 flusso base **/
 
+        // questo metodo, dato un codiceCliente ed un codiceCane,
+        // restituisce l'attributo 'turnoCorrente' della classe Cane, 
+        // il quale può essere null o un riferimento ad un'istanza di Turno.
+        // Inoltre, anche se il codice del cliente o il codice del cane sono sbagliati
+        // restituisce null.
+        // -> quindi, testeremo le 3 eventuali casistiche per cui può tornare null ed anche
+        //    la casistica in cui dovrebbe restituire un'istanza di Turno
 
+        // invocando il metodo adesso, passando entrambi i parametri errati ci aspettiamo null
+        assertNull(PB.timbraPrenotazioneTurno("sjhKD", 199));
 
+        Cliente cl = new Cliente("Cliente1", "Lupo", "Alberto", "0000", "0123456789");
+        Cane cn = new Cane(1, "Dog", "barboncino");
+        cl.addCane(cn);
+        PB.addCliente(cl);
 
+        // se passiamo adesso il codice cliente corretto, ma il codice cane errato, ci aspettiamo null
+        assertNull(PB.timbraPrenotazioneTurno("Cliente1", 199));
+        
+        // se passiamo adesso il codice cliente errato, ma il codice cane corretto, ci aspettiamo null
+        assertNull(PB.timbraPrenotazioneTurno("Cliente1987", 1));
 
+        // invocando il metodo adesso passando 'Cliente1' e '1', ci aspettiamo che restituisca null in quanto
+        // il cane non ha effettuato nessuna prenotazione
+        assertNull(PB.timbraPrenotazioneTurno("Cliente1", 1));
 
+        // simuliamo una prenotazione 
+        PB.setCaneSelezionato(cn);
+        PB.confermaIscrizioneCorso(corsoBase);
+        Turno turnoDisponibile = PB.prenotaTurnoLezione().getLast();
+        PB.selezionaTurno(turnoDisponibile);
+
+        // invocando il metodo adesso passando 'Cliente1' e '1', ci aspettiamo che restituisca il turno con codice..
+        assertEquals(turnoDisponibile.getCodice() , PB.timbraPrenotazioneTurno("Cliente1", 1).getCodice());
+    }
+
+    @Test
+    void testConfermaTimbroTurno() {
+        /** TEST UC14 flusso base **/
+
+        // questo metodo si occupa di settare a null il riferimento che possiede un Cane 
+        // sull'istanza turno corrente della classe Turno
+        
+        // invochiamo il test precedente così da avere una prenotazione di un turno
+        // associata al cane selezionato
+        testTimbraPrenotazioneTurno();
+
+        // testiamo che il turno associato al cane non sia null
+        assertNotNull(PB.getCaneSelezionato().getTurnoCorrente());
+
+        // inochiamo il metodo sotto test
+        PB.confermaTimbroTurno();
+
+         // testiamo che il turno associato al cane sia null
+         assertNull(PB.getCaneSelezionato().getTurnoCorrente());
+    }
 
 
 }
