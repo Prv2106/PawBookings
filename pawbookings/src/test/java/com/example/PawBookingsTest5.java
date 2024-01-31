@@ -187,6 +187,7 @@ public class PawBookingsTest5 {
     @Test
     void testPrenotaTurnoLezione(){
         PB.accedi("Alberto1", "0000");
+        /** Test UC2 estensione 3a **/
         // Asso non è iscritto ad alcun corso e non ha completato ancora alcun corso
         Cane Asso = PB.getClienteLoggato().getCane(2);
         PB.selezionaCane(Asso);
@@ -198,6 +199,13 @@ public class PawBookingsTest5 {
         PB.selezionaCane(Stella);
         // Mentre effettuando la stessa chiamata con Stella (che è iscritta al corsoBase) avremo un valore diverso da null
         assertNotEquals(null, PB.prenotaTurnoLezione());
+
+        /** Test UC2 estensione 3b **/
+        // Settando il turno corrente di Stella ad un valore diverso da null ci aspettiamo che venga restituito false
+        Turno t = new Turno(12, LocalDate.now(), LocalTime.of(10, 0), LocalTime.of(12,0));
+        Stella.setTurnoCorrente(t);
+        assertEquals(null, PB.prenotaTurnoLezione());
+
     }
 
 
@@ -250,7 +258,7 @@ public class PawBookingsTest5 {
     @Test
     void testConcludiAffidoDelega(){
         PeriodoAffido periodo3 =PB.getPeriodiAffido().getLast();
-        /** Test UC4 estensione 4a **/
+        /** Test UC4 estensione 4c **/
         // Alberto ha Leila in affido nel periodo 3
         assertEquals(Leila.getAffidoCorrente(), periodo3);  
         assertTrue(periodo3.getCaniAffido().contains(Leila));
@@ -272,13 +280,55 @@ public class PawBookingsTest5 {
 
     @Test
     void testMostraStatoAvanzamentoCorso(){
-         /** Test UC10 estensione 2a **/
+        /** Test UC10 estensione 2a **/
         // Leila non è iscritta ad alcun corso
         // effettuando l'operazione mostraStatoAvanzamentoCorso
         // Ci aspettiamo che venga restituito false
         PB.selezionaCane(Leila);
         assertEquals(null,PB.mostraStatoAvanzamentoCorso());
     }
+
+
+
+
+
+    @Test
+    void testAccediComeAdmin(){
+        /** Test UC4 estensione 3a **/
+        // Inserendo Pin corretto -> 1234
+        // Ci asepttiamo che il metodo accediComeAdmin restituisca true
+        assertTrue(PB.accediComeAdmin(1234));
+
+        // Inserendo un pin errato
+        // Ci asepttiamo che il metodo accediComeAdmin restituisca false
+        assertFalse(PB.accediComeAdmin(0232));
+    }
+
+
+
+    
+
+    @Test
+    void testConcludiAffido(){
+        /** Test UC4 estensione 4a **/
+        // Stella è in affido nel periodo 1
+        // Inserendo un codiceCliente errato (e codiceCane giusto) nel metodo ConcludiAffido ci aspettiamo che venga restituito null
+        assertEquals(null, PB.concludiAffido("126", 1)); 
+        // Inserendo un codiceCane errato (e codiceCliente giusto) nel metodo ConcludiAffido ci aspettiamo che venga restituito null
+        assertEquals(null, PB.concludiAffido("Alberto1", 3));
+
+        /** Test UC4 estensione 4a **/
+        // Asso non è in Affido 
+        // Inserendo il codiceCliente e il codiceCane corretti nel metodo ConcludiAffido ci aspettiamo che venga restituito null
+        assertEquals(null, PB.concludiAffido("Alberto1", 2));
+
+    }
+
+
+
+
+
+
 
 
 

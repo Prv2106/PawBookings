@@ -112,12 +112,18 @@ public class PawBookings {
     public LinkedList<Turno> prenotaTurnoLezione(){
         Lezione lezioneSuccesiva;
         Boolean esito = this.caneSelezionato.getAttualmenteIscritto();
-        if(esito){
-            //viene recuperata l'istanza della lezione successiva
-            lezioneSuccesiva = caneSelezionato.getLezioneSuccessiva();
-            
-            // Vengono restituiti i turni disponibili relativi alla lezione successiva
-            return lezioneSuccesiva.getTurniDisponibili();
+        Turno tc = this.caneSelezionato.getTurnoCorrente();
+        if(tc == null){
+            if(esito){
+                //viene recuperata l'istanza della lezione successiva
+                lezioneSuccesiva = caneSelezionato.getLezioneSuccessiva();
+                
+                // Vengono restituiti i turni disponibili relativi alla lezione successiva
+                return lezioneSuccesiva.getTurniDisponibili();
+            }
+            else{
+                return null;
+            }
         }
         else{
             return null;
@@ -305,13 +311,18 @@ public class PawBookings {
         Cliente cl;
         Cane cn;
         cl = this.clienti.get(codiceCliente);
-        cn = cl.getCane(codiceCane);
-        setCaneSelezionato(cn);
-        setClienteSelezionato(cl);
-        if (cn == null) {
+        if(cl != null){
+            cn = cl.getCane(codiceCane);
+            setCaneSelezionato(cn);
+            setClienteSelezionato(cl);
+            if (cn == null) {
+                return null;
+            } else {
+                return cn.getAffido();
+            }
+        }
+        else{
             return null;
-        } else {
-            return cn.getAffido();
         }
     }
 
@@ -642,5 +653,30 @@ public class PawBookings {
     }
 
 
+   
+
+    public Turno timbraPrenotazioneTurno(String codiceCliente, int codiceCane){
+        Cliente cl = this.clienti.get(codiceCliente);
+        Cane cn;
+        if(cl != null){
+            cn = cl.getCane(codiceCane);
+            setCaneSelezionato(cn);
+            if (cn == null) {
+                return null;
+            } else {
+                return cn.getTurnoCorrente();
+            }
+        }
+        else{
+            return null;
+        }
+
+    }
+
+
+    public void confermaTimbroTurno(){
+        this.caneSelezionato.setTurnoCorrente(null);
+
+    }
 
 }

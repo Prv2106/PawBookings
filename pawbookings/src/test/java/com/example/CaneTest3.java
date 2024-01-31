@@ -1,5 +1,6 @@
 package com.example;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,12 +13,14 @@ import org.junit.jupiter.api.Test;
 
 import domain_layer.Cane;
 import domain_layer.Corso;
+import domain_layer.Lezione;
 import domain_layer.PawBookings;
 import domain_layer.PeriodoAffido;
 import domain_layer.Turno;
 
 /*
  * Test degli scenari alternativi dei casi d'uso degli UC1-UC2-UC3-UC4
+ * Test del metodo calcola lezioneSuccessiva modificato nel corso della quarta iterazione
  */
 
 
@@ -28,28 +31,32 @@ class CaneTest3 {
     static Corso corsoBase;
     static Corso corsoAvanzato;
     static Corso corsoAgility;
+    static PawBookings PB;
+     
 
-    // Il metodo viene eseguito prima di tutti i test
-    // inizializza l'istanza di PawBookings
+
 
     @BeforeAll
     public static void initTest() {
+        
         corsoBase = new Corso(1, 10, 200.0F, "CorsoBase");
         corsoAvanzato = new Corso (2, 10, 200.0F, "CorsoAvanzato");
         corsoAgility = new Corso(3, 10, 200.0F, "CorsoAgility");
         elencoCorsiDisponibili.add(corsoBase);
         elencoCorsiDisponibili.add(corsoAvanzato);
         elencoCorsiDisponibili.add(corsoAgility);
+
+        Lezione l1 = new Lezione(1, "lezione1");
+        Lezione l2 = new Lezione(2, "lezione2");
+        Lezione l3 = new Lezione(3, "lezione3");
+        Lezione l4 = new Lezione(4, "lezione4");
+        corsoBase.getLezioni().add(l1);
+        corsoBase.getLezioni().add(l2);
+        corsoAvanzato.getLezioni().add(l3);
+        corsoAvanzato.getLezioni().add(l4);       
     }
 
-    /*
-     * if((attualmenteIscritto == true) || (corsiCompletati.containsAll(elencoCorsiDisponibili))){
-            return false;
-        }
-        else{
-            return true;
-        }
-     */
+    
     @Test
     void testCheckNuovaIscrizioneCorso(){
         Cane caneTest = new Cane(1, "Dog", "Razza");
@@ -107,6 +114,37 @@ class CaneTest3 {
         // settando l'affido corrente di caneTest a p2 viene restituito true (perchè p2 non è sovrapposto a t)
         caneTest.setAffidoCorrente(p2);
         assertTrue(caneTest.checkSovrapposizioneDate(t));
+
+
+    }
+
+
+
+
+    @Test
+    void testCalcolaLezioneSuccessiva(){
+        // Bisogna verificare che:
+        // 1) Il metodo restituisca la lezione successiva del corso in cui il cane è iscritto (passiamo il programma del corso)
+        // 2) Bisogna verificare che a seguito del completamento delle lezioni di un corso 
+        // il metodo restituisca la lezione successiva del nuovo corso dove si iscrive il cane
+
+        Cane Dog = new Cane(1, "Dog", "Razza");
+
+        // Ipotizzando che Dog sia iscritto al corsoBase verifichiamo che la lezione successiva sia l1
+        assertEquals(corsoBase.getLezioni().getFirst(), Dog.calcolaLezioneSuccessiva(corsoBase.getLezioni()));
+        // Aggiungendo l1 all'elenco delle lezioni seguite da Dog adesso ci aspettiamo che la lezione successiva sia l2
+        Dog.getLezioniSeguite().add(corsoBase.getLezioni().getFirst());
+        assertEquals(corsoBase.getLezioni().get(1), Dog.calcolaLezioneSuccessiva(corsoBase.getLezioni()));
+
+        // Ipotizzando che dopo aver completato il corsoBase Dog sia iscritto al corsoAvanzato verifichiamo che la lezione successiva sia l3
+        Dog.getLezioniSeguite().add(corsoBase.getLezioni().get(1));
+        assertEquals(corsoAvanzato.getLezioni().getFirst(), Dog.calcolaLezioneSuccessiva(corsoAvanzato.getLezioni()));
+        // Aggiungendo l3 all'elenco delle lezioni seguite da Dog adesso ci aspettiamo che la lezione successiva sia l4
+        Dog.getLezioniSeguite().add(corsoAvanzato.getLezioni().get(0));
+        assertEquals(corsoAvanzato.getLezioni().get(1), Dog.calcolaLezioneSuccessiva(corsoAvanzato.getLezioni()));
+
+        
+        
 
 
     }

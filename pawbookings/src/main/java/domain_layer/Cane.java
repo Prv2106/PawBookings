@@ -30,8 +30,24 @@ public class Cane {
         return this.calcolaLezioneSuccessiva(programma);
     }
 
-    public Lezione calcolaLezioneSuccessiva(LinkedList<Lezione> programma) {
-        return programma.get(lezioniSeguite.size());
+    /*
+     * 
+     public Lezione calcolaLezioneSuccessiva(LinkedList<Lezione> programma) {
+         //SBAGLIATO
+         return programma.get(lezioniSeguite.size());
+     }
+     */
+
+    public Lezione calcolaLezioneSuccessiva(LinkedList<Lezione> programma){
+       LinkedList<Lezione> lezioniCorsoSeguite = new LinkedList<>();
+       Boolean esito;
+       for(Lezione lz: programma){
+             esito =this.lezioniSeguite.contains(lz);
+            if(esito){
+                lezioniCorsoSeguite.add(lz);
+            }
+       }
+       return programma.get(lezioniCorsoSeguite.size());
     }
 
     public void aggiornaAttualmenteIscritto(Corso cs) {

@@ -6,13 +6,15 @@ import domain_layer.Cane;
 import domain_layer.Cliente;
 import domain_layer.PawBookings;
 import domain_layer.PeriodoAffido;
-
+import domain_layer.Turno;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 import java.util.LinkedList;
 import java.util.Map;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 
 
@@ -149,9 +151,38 @@ public class ClienteTest {
     }
 
 
+  
 
     @Test
     void testCheckSovrapposizioneDate(){
+        Cliente Alberto = new Cliente("Alberto11", "ALberto", "Provenzano", "0000", "123456");
+        // Turno sovrapposto con dataInizio di periodoTest
+        Turno turnoTest1 = new Turno(16, LocalDate.now(), LocalTime.of(10, 0), LocalTime.of(12,0));
+        // Turno sovrapposto con dataFine di periodoTest
+        Turno turnoTest2 = new Turno(17, LocalDate.now().plusMonths(1), LocalTime.of(10, 0), LocalTime.of(12,0));
+        // Turno che si trova sovrapposto tra dataInizio e dataFine di periodoTest
+        Turno turnoTest3 = new Turno(18, LocalDate.now().plusWeeks(1), LocalTime.of(10, 0), LocalTime.of(12,0));
+        // Turno non sovrapposto a periodoTest
+        Turno turnoTest4 = new Turno(19, LocalDate.now().plusMonths(2), LocalTime.of(10, 0), LocalTime.of(12,0));
+        PeriodoAffido periodoTest = new PeriodoAffido(1, LocalDate.now(), LocalDate.now().plusMonths(1), 200.0F);
+
+        Cane Dog = new Cane(10, "Dog", "razza");
+       
+        // chiamndo il checkSovrapposizioneDate settando il turnoCorrente di Dog a null ci aspettiamo che venga restituito true
+        Dog.setTurnoCorrente(null);
+        assertTrue(Alberto.checkSovrapposizioneDate(Dog, periodoTest));
+        // chiamndo il checkSovrapposizioneDate settando il turnoCorrente di Dog a turnoTest1 ci aspettiamo che venga restituito false
+        Dog.setTurnoCorrente(turnoTest1);
+        assertFalse(Alberto.checkSovrapposizioneDate(Dog, periodoTest));  
+        // chiamndo il checkSovrapposizioneDate settando il turnoCorrente di Dog a turnoTest2 ci aspettiamo che venga restituito false
+        Dog.setTurnoCorrente(turnoTest2);
+        assertFalse(Alberto.checkSovrapposizioneDate(Dog, periodoTest));   
+        // chiamndo il checkSovrapposizioneDate settando il turnoCorrente di Dog a turnoTest3 ci aspettiamo che venga restituito false 
+        Dog.setTurnoCorrente(turnoTest3);
+        assertFalse(Alberto.checkSovrapposizioneDate(Dog, periodoTest));  
+        // chiamndo il checkSovrapposizioneDate settando il turnoCorrente di Dog a turnoTest4 ci aspettiamo che venga restituito true
+        Dog.setTurnoCorrente(turnoTest4);
+        assertTrue(Alberto.checkSovrapposizioneDate(Dog, periodoTest)); 
         
     }
 }
