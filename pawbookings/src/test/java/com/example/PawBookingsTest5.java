@@ -3,12 +3,11 @@ package com.example;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Period;
+
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -144,9 +143,6 @@ public class PawBookingsTest5 {
         // Facciamo in modo che il periodo 2 sia pieno
         periodo2 = PB.getPeriodiAffido().get(1);
         periodo2.setNumPosti(0);
-
-       
-
     }
 
 
