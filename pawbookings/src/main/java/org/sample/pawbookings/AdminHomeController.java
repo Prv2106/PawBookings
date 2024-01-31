@@ -2,6 +2,7 @@ package org.sample.pawbookings;
 
 import java.io.IOException;
 
+import domain_layer.PawBookings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -60,6 +61,7 @@ public class AdminHomeController {
     @FXML
     void onLogoutPressed(ActionEvent event) {
         try {
+            PawBookings.getInstance().logoutAdmin();
             MainApplication.setRoot("fork-view.fxml");
         } catch (IOException e) {
             e.printStackTrace();

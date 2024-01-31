@@ -26,14 +26,6 @@ public class DettagliTurnoController {
     @FXML
     private Text oraInizio;
 
-    @FXML
-    void onBackPressed(ActionEvent event) {
-        try {
-            MainApplication.simpleBack();
-        } catch (Exception e) {
-           e.printStackTrace();
-        }
-    }
 
     public void start(Turno t) {
         codice.setText(Integer.toString(t.getCodice()));
