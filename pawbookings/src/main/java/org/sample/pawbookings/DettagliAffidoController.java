@@ -37,12 +37,12 @@ public class DettagliAffidoController {
     }
 
     @FXML
-    void onConcludiAffidoPressed(ActionEvent event) {
+    void onConcludiAffidoPressed(ActionEvent event) throws IOException {
         try {
             PawBookings.getInstance().confermaConclusioneAffido();
             MainApplication.setRoot("admin_ok-view.fxml");
         } catch (IOException e) {
-            e.printStackTrace();
+            MainApplication.goAdminErrorPage("Qualcosa è andato storto...");
         }
     }
 

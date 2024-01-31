@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
-
-import domain_layer.Cane;
 import domain_layer.PawBookings;
 import domain_layer.Turno;
 import javafx.event.ActionEvent;

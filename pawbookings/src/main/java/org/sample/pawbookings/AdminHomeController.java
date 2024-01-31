@@ -38,8 +38,12 @@ public class AdminHomeController {
     }
 
     @FXML
-    void onTimbraPrenotazioneTurnoPressed(ActionEvent event) {
-        
+    void onTimbraPrenotazioneTurnoPressed(ActionEvent event) throws IOException {
+        try {
+            MainApplication.setRoot("timbra_turno-view.fxml");
+        } catch (Exception e) {
+            MainApplication.goAdminErrorPage("Qualcosa è andato storto");
+        }
     }
 
     @FXML
