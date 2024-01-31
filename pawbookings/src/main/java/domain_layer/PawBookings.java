@@ -284,6 +284,10 @@ public class PawBookings {
         }
     }
 
+    public void addCliente(Cliente cl) {
+        this.clienti.put(cl.getCodiceCliente(), cl);
+    }
+
     
     public String generaCodiceCliente(String nome){
         return (nome + (clienti.size() +1));
@@ -654,23 +658,19 @@ public class PawBookings {
 
 
    
-
     public Turno timbraPrenotazioneTurno(String codiceCliente, int codiceCane){
         Cliente cl = this.clienti.get(codiceCliente);
-        Cane cn;
-        if(cl != null){
-            cn = cl.getCane(codiceCane);
+        if (cl != null) {
+            Cane cn = cl.getCane(codiceCane);
             setCaneSelezionato(cn);
             if (cn == null) {
                 return null;
             } else {
                 return cn.getTurnoCorrente();
             }
-        }
-        else{
+        } else {
             return null;
         }
-
     }
 
 
