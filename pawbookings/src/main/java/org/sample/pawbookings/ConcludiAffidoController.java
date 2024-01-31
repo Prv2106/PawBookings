@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 
-public class ConcludiAffidoController extends ConcludiAffido{
+public class ConcludiAffidoController extends ConcludiAffido {
 
     @FXML
     private TextField codiceCliente;

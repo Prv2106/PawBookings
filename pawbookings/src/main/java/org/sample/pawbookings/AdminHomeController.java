@@ -38,6 +38,11 @@ public class AdminHomeController {
     }
 
     @FXML
+    void onTimbraPrenotazioneTurnoPressed(ActionEvent event) {
+        
+    }
+
+    @FXML
     void onNotificaStatoSalutePressed(ActionEvent event) {
         // passiamo alla pagina contenenti l'elenco dei periodi di affido con almeno un cane, appunto, in affido
         try {

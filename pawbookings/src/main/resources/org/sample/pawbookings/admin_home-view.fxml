@@ -53,12 +53,12 @@
             <Image url="@../../../assets/pc_view.png" />
          </image>
       </ImageView>
-      <VBox maxHeight="625.0" maxWidth="681.0" minHeight="625.0" minWidth="350.0" prefHeight="625.0" prefWidth="681.0">
+      <VBox maxHeight="625.0" maxWidth="797.0" minHeight="625.0" minWidth="350.0" prefHeight="625.0" prefWidth="797.0">
          <children>
             <BorderPane prefHeight="153.0" prefWidth="350.0" />
-            <VBox alignment="CENTER" prefHeight="392.0" prefWidth="377.0">
+            <VBox alignment="CENTER" prefHeight="446.0" prefWidth="802.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onConcludiAffidoPressed" prefHeight="53.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Concludi Affido" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#onConcludiAffidoPressed" prefHeight="45.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Concludi Affido" textFill="WHITE">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -66,7 +66,7 @@
                         <Insets bottom="40.0" top="40.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onGestisciCorsoPressed" prefHeight="53.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Gestisci corso" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#onGestisciCorsoPressed" prefHeight="45.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Gestisci corso" textFill="WHITE">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -74,7 +74,7 @@
                         <Insets bottom="40.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onInserisciTurnoLezionePressed" prefHeight="53.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Inserisci turno lezione" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#onInserisciTurnoLezionePressed" prefHeight="45.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Inserisci turno lezione" textFill="WHITE">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -82,19 +82,23 @@
                         <Insets bottom="40.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onNotificaStatoSalutePressed" prefHeight="53.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Notifica stato di salute" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#onTimbraPrenotazioneTurnoPressed" prefHeight="45.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Timbra prenotazione turno" textFill="WHITE">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="40.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onNotificaStatoSalutePressed" prefHeight="45.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Notifica stato di salute" textFill="WHITE">
                      <font>
                         <Font size="23.0" />
                      </font>
                   </Button>
                </children>
             </VBox>
-            <BorderPane prefHeight="87.0" prefWidth="350.0">
-               <top>
-                  <HBox prefHeight="65.0" prefWidth="350.0" BorderPane.alignment="CENTER" />
-               </top>
-            </BorderPane>
-            <HBox alignment="BOTTOM_RIGHT" prefHeight="60.0" prefWidth="350.0">
+            <BorderPane prefHeight="87.0" prefWidth="350.0" />
+            <HBox alignment="BOTTOM_RIGHT" prefHeight="70.0" prefWidth="694.0">
                <children>
                   <StackPane>
                      <HBox.margin>

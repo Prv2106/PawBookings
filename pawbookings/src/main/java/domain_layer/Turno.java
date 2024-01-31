@@ -33,4 +33,8 @@ public class Turno {
         return this.oraFine;
     }
 
+    public int getCodice() {
+        return this.codiceTurno;
+    }
+
 }

@@ -1,19 +1,41 @@
 package org.sample.pawbookings;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.LinkedList;
+import java.util.ResourceBundle;
 
+import domain_layer.Cane;
 import domain_layer.PawBookings;
 import domain_layer.Turno;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 
-public class ChooseActivityController {
+public class ChooseActivityController implements Initializable {
 
     @FXML
     private Button backButton;
+
+    @FXML
+    private VBox boxDettagliTurno;
+
+    @FXML
+    private Text codice;
+
+    @FXML
+    private Text data;
+
+    @FXML
+    private Text oraFine;
+
+    @FXML
+    private Text oraInizio;
+
 
     @FXML
     void onBackPressed(ActionEvent event) throws IOException {
@@ -21,6 +43,18 @@ public class ChooseActivityController {
             MainApplication.simpleBack();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Turno t = PawBookings.getInstance().getCaneSelezionato().getTurnoCorrente();
+        if (t != null) {
+            boxDettagliTurno.setVisible(true);
+            data.setText(t.getData().getDayOfMonth() + "/" + t.getData().getMonthValue() + "/" + t.getData().getYear());
+            oraInizio.setText(t.getOraInizio().toString());
+            oraFine.setText(t.getOraFine().toString());
+            codice.setText("" + t.getCodice());
         }
     }
 
@@ -68,7 +102,7 @@ public class ChooseActivityController {
             }
         } catch (IOException e) {
             // probabilmente il cane non è iscritto al turno.... quindi:
-            MainApplication.goClientErrorPage("probabilmente il cane non è iscritto ad un corso");
+            MainApplication.goClientErrorPage("probabilmente il cane non è iscritto ad un corso oppure hai già prenotato un turno");
         }
     }
 
@@ -91,4 +125,6 @@ public class ChooseActivityController {
             MainApplication.goClientErrorPage(e.getMessage());
         }
     }
+
+    
 }
