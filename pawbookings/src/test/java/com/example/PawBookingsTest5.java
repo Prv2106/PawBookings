@@ -260,7 +260,7 @@ public class PawBookingsTest5 {
 
     @Test
     void testConcludiAffidoDelega(){
-        PeriodoAffido periodo3 =PB.getPeriodiAffido().getLast();
+        PeriodoAffido periodo3 = PB.getPeriodiAffido().getLast();
         /** Test UC4 estensione 4c **/
         // Alberto ha Leila in affido nel periodo 3
         assertEquals(Leila.getAffidoCorrente(), periodo3);  
@@ -270,6 +270,16 @@ public class PawBookingsTest5 {
         Cliente Alberto = PB.getClienteLoggato();
         PB.delega();
         PB.logout();
+
+        // inserendo un codiceDelega errato ci aspettiamo null
+        assertNull(PB.concludiAffidoDelega(13244, 4));
+
+        // inserendo un codiceCane errato ci aspettiamo null
+        assertNull(PB.concludiAffidoDelega(Alberto.getCodiceDelega(), 421));
+
+        // inserendo entrambi i parametri errati ci aspettiamo null
+        assertNull(PB.concludiAffidoDelega(122412342, 421));
+
         // Invocando il metodo concludiAffidoDelega passando il codiceDelega e il codice di Leila 
         // Ci aspettiamo che stella venga rimossa dal periodo 1
         PB.concludiAffidoDelega(Alberto.getCodiceDelega(), 4);

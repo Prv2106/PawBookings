@@ -21,14 +21,7 @@ public class DettagliAffidoController {
 
     @FXML
     private Button backButton;
-    @FXML
-    void onBackPressed(ActionEvent event) throws IOException {
-        try {
-            MainApplication.simpleBack();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     public void start(PeriodoAffido pa) {
         codice.setText(Integer.toString(pa.getCodice()));
