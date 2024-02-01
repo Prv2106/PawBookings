@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-public class ConcludiAffidoDelegaController extends ConcludiAffido{
+public class ConcludiAffidoDelegaController extends ConcludiAffido {
 
     @FXML
     private Button backButton;
