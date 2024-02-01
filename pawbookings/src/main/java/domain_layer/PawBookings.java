@@ -334,6 +334,7 @@ public class PawBookings {
         int cd;
         int codC;
         LinkedList<Cane> caniPosseduti;
+        
         for(Cliente cl: clienti.values()){
             cd=cl.getCodiceDelega();
             if(cd == codiceDelega){
@@ -349,13 +350,18 @@ public class PawBookings {
         }
 
         Cane cn;
-        cn = clienteSelezionato.getCane(codiceCane);
-        setCaneSelezionato(cn);
-        if (cn == null) {
-            return null;
+        if (this.clienteSelezionato != null) {
+            cn = clienteSelezionato.getCane(codiceCane);
+            setCaneSelezionato(cn);
+            if (cn == null) {
+                return null;
+            } else {
+                return cn.getAffido();
+            }
         } else {
-            return cn.getAffido();
+            return null;
         }
+        
     }
 
     public Boolean setClienteSelezionato(Cliente cl){
@@ -656,7 +662,6 @@ public class PawBookings {
         this.elencoPeriodiAffido.add(pa);
     }
 
-
    
     public Turno timbraPrenotazioneTurno(String codiceCliente, int codiceCane){
         Cliente cl = this.clienti.get(codiceCliente);
@@ -674,9 +679,16 @@ public class PawBookings {
     }
 
 
-    public void confermaTimbroTurno(){
+    public void confermaTimbroTurno() {
         this.caneSelezionato.setTurnoCorrente(null);
 
+    }
+
+    public void logoutAdmin() {
+        setCaneSelezionato(null);
+        setClienteSelezionato(null);
+        setPeriodoSelezionato(null);
+        setCorsoSelezionato(null);
     }
 
 }
