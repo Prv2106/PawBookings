@@ -687,12 +687,31 @@ public class PawBookings {
     }
 
 
-    public void confermaTimbroTurno() {
+    public float confermaTimbroTurno() {
         this.caneSelezionato.setTurnoCorrente(null);
-        Boolean primaLezione = checkPrimaLezione();
-
-
-
+        float importoDovuto =0;
+        Boolean primaLezione = this.caneSelezionato.checkPrimaLezione();
+        Boolean recuperoLezione = this.caneSelezionato.getLezioneDaRecuperare();
+        Corso corsoCorrente = this.caneSelezionato.getCorsoCorrente();
+        int numCaniIscritti = this.clienteSelezionato.getNumCaniIscritti(corsoCorrente);
+        if((primaLezione)&&(recuperoLezione)){
+            this.caneSelezionato.setLezioneDaRecuperare(false);
+            importoDovuto = corsoCorrente.calcolaImportoDovuto(numCaniIscritti, "recuperoIscrizioneMultipla");
+        }
+        if((primaLezione)&&(recuperoLezione == false)){
+            importoDovuto = corsoCorrente.calcolaImportoDovuto(numCaniIscritti, "iscrizioneMultipla");
+        }
+        if((primaLezione == false)&&(recuperoLezione)){
+            this.caneSelezionato.setLezioneDaRecuperare(false);
+            if(corsoCorrente != null){
+                importoDovuto = corsoCorrente.calcolaImportoDovuto(numCaniIscritti,  "recuperoLezione");
+            }
+            else{
+                Corso cs = this.caneSelezionato.getCorsiCompletati().getLast();
+                importoDovuto = cs.calcolaImportoDovuto(numCaniIscritti,  "recuperoLezione");
+            }
+        }
+        return importoDovuto;
     }
 
     public void logoutAdmin() {

@@ -19,6 +19,7 @@ public class Corso {
     private LinkedList<Lezione> programma;
     private Lezione lezioneCorrente;
     private Lezione lezioneSelezionata;
+    
 
     
     //Costruttore dell classe Corso
@@ -164,7 +165,9 @@ public class Corso {
 
 
 
-    
+    public float calcolaImportoDovuto(int numCaniIscritti, String tipoPolitica){
+        
+    }
 
 
 

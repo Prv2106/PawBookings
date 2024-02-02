@@ -44,7 +44,17 @@ public class Cliente implements Observer {
         return numCaniAffido;
     }
 
-
+    public int getNumCaniIscritti(Corso corsoCorrente){
+        int numCaniIscritti =0;
+        Corso c;
+        for(Cane cn: this.caniPosseduti){
+            c = cn.getCorsoCorrente();
+            if(corsoCorrente.equals(c)){
+                numCaniIscritti++;
+            }
+        }
+        return numCaniIscritti;
+    }
 
     public LinkedList<Cane> getCaniNonInAffido() {
         return this.calcolaCaniNonInAffido();

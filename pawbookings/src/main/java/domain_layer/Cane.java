@@ -35,14 +35,23 @@ public class Cane {
         return this.calcolaLezioneSuccessiva(programma);
     }
 
-   public Boolean checkPrimaLezione(){
-        if(this.corsoCorrente !=null){
+    public Boolean checkPrimaLezione(){
+            if(this.corsoCorrente !=null){
+                Lezione primaLezione = this.corsoCorrente.getLezioni().getFirst();
+                return (lezioniSeguite.getFirst().equals(primaLezione));
+            }
+            else{
+                return false;
+            }
+    }
 
-        }
-        else{
-            return false;
-        }
-   }
+    public void setLezioneDaRecuperare(Boolean val){
+        this.lezioneDaRecuperare = val;
+    }
+
+    public Boolean getLezioneDaRecuperare(){
+        return this.lezioneDaRecuperare;
+    }
 
     public Lezione calcolaLezioneSuccessiva(LinkedList<Lezione> programma){
        LinkedList<Lezione> lezioniCorsoSeguite = new LinkedList<>();
