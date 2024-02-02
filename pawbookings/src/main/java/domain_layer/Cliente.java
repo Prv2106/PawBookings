@@ -32,10 +32,19 @@ public class Cliente implements Observer {
         this.codiceDelega = 0;
     }
 
-    // public void loadCani(int codiceCane, String nome, String razza){
-    //     Cane cn = new Cane(codiceCane, nome, razza);
-    //     this.caniPosseduti.add(cn);
-    // }
+    public int getNumCaniAffido(PeriodoAffido affidoCorrente){
+        int numCaniAffido =0;
+        PeriodoAffido pa;
+        for(Cane c: this.caniPosseduti){
+            pa = c.getAffidoCorrente();
+            if(affidoCorrente.equals(pa)){
+                numCaniAffido++;
+            }
+        }
+        return numCaniAffido;
+    }
+
+
 
     public LinkedList<Cane> getCaniNonInAffido() {
         return this.calcolaCaniNonInAffido();

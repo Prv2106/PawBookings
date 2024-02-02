@@ -1,5 +1,6 @@
 package domain_layer;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -7,10 +8,13 @@ public class Cane {
     private final int codiceCane;
     private final String nome;
     private final String razza;
+    private Boolean lezioneDaRecuperare;
     private boolean attualmenteIscritto;
+    private boolean attualmenteInAffido;
+
+    // Riferimenti
     private Corso corsoCorrente;
     private LinkedList<Corso> corsiCompletati;
-    private boolean attualmenteInAffido;
     private PeriodoAffido affidoCorrente;
     private LinkedList<Lezione> lezioniSeguite;
     private Turno turnoCorrente;
@@ -20,6 +24,7 @@ public class Cane {
         this.nome = nome;
         this.razza = razza;
         this.attualmenteIscritto = false;
+        this.lezioneDaRecuperare = false;
         this.corsiCompletati = new LinkedList<>();
         this.lezioniSeguite = new LinkedList<>();
     }
@@ -30,13 +35,14 @@ public class Cane {
         return this.calcolaLezioneSuccessiva(programma);
     }
 
-    /*
-     * 
-     public Lezione calcolaLezioneSuccessiva(LinkedList<Lezione> programma) {
-         //SBAGLIATO
-         return programma.get(lezioniSeguite.size());
-     }
-     */
+   public Boolean checkPrimaLezione(){
+        if(this.corsoCorrente !=null){
+
+        }
+        else{
+            return false;
+        }
+   }
 
     public Lezione calcolaLezioneSuccessiva(LinkedList<Lezione> programma){
        LinkedList<Lezione> lezioniCorsoSeguite = new LinkedList<>();
@@ -94,6 +100,27 @@ public class Cane {
         return this.corsoCorrente.calcolaStatoAvanzamento(this.lezioniSeguite);
 
     }
+
+
+    public Boolean verificaIdoneitaTurno(){
+         if (this.turnoCorrente != null) {
+            if (this.turnoCorrente.getData().isAfter(LocalDate.now())) 
+                return true;
+            else 
+                return false;
+        } else 
+            return false;
+    }
+
+
+
+
+
+
+
+
+
+
 
     // ********** getters 'semplici' *********
     public String getNome() {

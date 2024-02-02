@@ -4,6 +4,13 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.Map;
 
+import domain_layer.Cane;
+import domain_layer.Cliente;
+import domain_layer.Observable;
+import domain_layer.Observer;
+import domain_layer.gestione_politiche_sconto_affido.IpoliticaScontoAffido;
+import domain_layer.gestione_politiche_sconto_affido.PoliticaScontoAffidoFactory;
+
 import java.util.List;
 
 
@@ -19,6 +26,7 @@ public class PeriodoAffido extends Observable {
 
     // riferimenti
     private LinkedList<Cane> elencoCaniAffido;
+    private PoliticaScontoAffidoFactory PAF;
 
     public PeriodoAffido(int codice, LocalDate dataInizio, LocalDate dataFine, float costo) {
         this.codice = codice;
@@ -28,6 +36,7 @@ public class PeriodoAffido extends Observable {
         this.CapienzaMassima = 5;
         this.numPosti = this.CapienzaMassima;
         this.elencoCaniAffido = new LinkedList<>();
+        this.PAF = PoliticaScontoAffidoFactory.getInstance();
     }
 
     public boolean registraAffido(Cane cn) {
@@ -121,6 +130,22 @@ public class PeriodoAffido extends Observable {
     public void setNumPosti(int val){
         this.numPosti = val;
     }
+
+
+
+
+    public float calcolaImportoDovuto(int numCaniAffido, String tipoPolitica){
+        IpoliticaScontoAffido p;
+        p=PAF.getPoliticaScontoAffido(numCaniAffido, tipoPolitica);
+        return p.getPrezzo(null, numCaniAffido);
+    }
+
+
+
+    public Boolean verificaAnticipo(){
+        return (LocalDate.now().isBefore(dataFine.minusDays(6)));
+    }
+
 
 
 
