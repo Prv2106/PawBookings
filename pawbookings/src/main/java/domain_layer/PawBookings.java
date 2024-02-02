@@ -699,9 +699,35 @@ public class PawBookings {
 
     public boolean disdiciTurno() {
         boolean esito;
-        
+        esito = this.caneSelezionato.verificaIdoneitaTurno();
+        if (esito) {
+            this.caneSelezionato.setTurnoCorrente(null);
+            this.caneSelezionato.rimuoviUltimaLezioneSeguita();
+        }
+        return esito;        
     }
 
+    public LinkedList<Turno> recuperaLezione() {
+        boolean esito;
+        esito = this.caneSelezionato.verificaIdoneitaTurno();
+        if (!esito) {
+            Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
+            return ultimaLezioneSeguita.getTurniDisponibili();
+        } else {
+            return null;
+        }
+    }
+
+    public boolean selezionaTurnoRecupero(Turno ts) {
+        boolean esito;
+        esito = this.caneSelezionato.checkSovrapposizioneDate(ts);
+        if (esito) {
+            this.caneSelezionato.setTurnoCorrente(ts);
+            this.caneSelezionato.setLezioneDaRecuperare(true);
+            Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
+            ultimaLezioneSeguita.aggiornaTurniDisponibili(ts);
+        }
+    }
 
     public void logoutAdmin() {
         setCaneSelezionato(null);
