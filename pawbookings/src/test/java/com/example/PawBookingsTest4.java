@@ -120,18 +120,6 @@ class PawBookingsTest4 {
     }
 
 
-    @Test
-    void testVerificaIdoneitaScambioTurno(){
-        // Turno valido
-        Turno t1 = new Turno(10, LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
-        assertTrue(PB.verificaIdoneitaScambioTurno(t1));
-        
-        //Turno non valido
-        Turno t2 = new Turno(10, LocalDate.now(), LocalTime.of(9, 0), LocalTime.of(10, 0));
-        assertFalse(PB.verificaIdoneitaScambioTurno(t2));
-        //Turno mancante
-        assertFalse(PB.verificaIdoneitaScambioTurno(null));
-    }
 
 
     @Test

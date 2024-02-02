@@ -222,15 +222,33 @@ public class PawBookings {
         }
     }
 
-    public Boolean confermaConclusioneAffido(){
-        PeriodoAffido periodoCorrente = this.caneSelezionato.getAffido();
-        Boolean esito = this.caneSelezionato.conclusioneAffido();
-        Boolean esitoVerifica = periodoCorrente.verificaIscrizione(this.clienteSelezionato);
+    public float confermaConclusioneAffido(){
+        float importoDovuto = 0;
+        PeriodoAffido affidoCorrente = this.caneSelezionato.getAffido();
+        int numCaniAffido = this.clienteSelezionato.getNumCaniAffido(affidoCorrente);
+        this.caneSelezionato.conclusioneAffido();
+        Boolean esitoVerifica = affidoCorrente.verificaIscrizione(this.clienteSelezionato);
         if(esitoVerifica == false){
-            this.clienteSelezionato.annullamentoIscrizione(periodoCorrente);
+            this.clienteSelezionato.annullamentoIscrizione(affidoCorrente);
         }
-        return esito;
+        Boolean anticipo = affidoCorrente.verificaAnticipo();
+
+        if((anticipo == true)&&(numCaniAffido > 1)){
+            importoDovuto = affidoCorrente.calcolaImportoDovuto(numCaniAffido, "anticipoAffidoMultiplo");
+        }
+
+        if((anticipo == true)&&(numCaniAffido <= 1)){
+            importoDovuto = affidoCorrente.calcolaImportoDovuto(numCaniAffido, "anticipoAffido");
+        }
+
+        if(anticipo == false){
+            importoDovuto = affidoCorrente.calcolaImportoDovuto(numCaniAffido, "affidoMultiplo");
+        }
+
+        return importoDovuto;
+
     }
+
 
 
 
@@ -538,8 +556,7 @@ public class PawBookings {
 
 
     public LinkedList<Turno> scambioTurno() {
-        Turno tc = this.caneSelezionato.getTurnoCorrente();
-        Boolean esito = this.verificaIdoneitaScambioTurno(tc);
+        Boolean esito = this.caneSelezionato.verificaIdoneitaTurno();
         if (esito) {
             Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
             return ultimaLezioneSeguita.getTurniDisponibili();
@@ -556,16 +573,7 @@ public class PawBookings {
     }   
 
 
-    public Boolean verificaIdoneitaScambioTurno(Turno tc) {
-        if (tc != null) {
-            if (tc.getData().isAfter(LocalDate.now())) 
-                return true;
-            else 
-                return false;
-        } else 
-            return false;
-    }
-
+    
     public LinkedList<Corso> visualizzaProgrammaCorso(){
         return this.elencoCorsi;
     }
@@ -681,6 +689,9 @@ public class PawBookings {
 
     public void confermaTimbroTurno() {
         this.caneSelezionato.setTurnoCorrente(null);
+        Boolean primaLezione = checkPrimaLezione();
+
+
 
     }
 
@@ -690,5 +701,20 @@ public class PawBookings {
         setPeriodoSelezionato(null);
         setCorsoSelezionato(null);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
