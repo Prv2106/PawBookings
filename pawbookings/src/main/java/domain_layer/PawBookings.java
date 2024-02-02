@@ -685,6 +685,13 @@ public class PawBookings {
 
     }
 
+
+    public boolean disdiciTurno() {
+        boolean esito;
+        
+    }
+
+
     public void logoutAdmin() {
         setCaneSelezionato(null);
         setClienteSelezionato(null);
