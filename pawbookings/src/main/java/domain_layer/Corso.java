@@ -165,7 +165,9 @@ public class Corso {
 
 
 
-    
+    public float calcolaImportoDovuto(int numCaniIscritti, String tipoPolitica){
+        
+    }
 
 
 
