@@ -10,7 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 
@@ -20,7 +20,7 @@ public class ChooseActivityController implements Initializable {
     private Button backButton;
 
     @FXML
-    private VBox boxDettagliTurno;
+    private HBox boxDettagliTurno;
 
     @FXML
     private Text codice;
@@ -33,6 +33,9 @@ public class ChooseActivityController implements Initializable {
 
     @FXML
     private Text oraInizio;
+
+    @FXML
+    private Button disdiciButton;
 
 
     @FXML
@@ -49,14 +52,25 @@ public class ChooseActivityController implements Initializable {
         Turno t = PawBookings.getInstance().getCaneSelezionato().getTurnoCorrente();
         if (t != null) {
             boxDettagliTurno.setVisible(true);
+            boxDettagliTurno.setManaged(true);
             data.setText(t.getData().getDayOfMonth() + "/" + t.getData().getMonthValue() + "/" + t.getData().getYear());
             oraInizio.setText(t.getOraInizio().toString());
             oraFine.setText(t.getOraFine().toString());
             codice.setText("" + t.getCodice());
+        } else {
+            boxDettagliTurno.setVisible(false);
+            boxDettagliTurno.setManaged(false);
         }
     }
 
     // PULSANTI SCHERMATA
+
+    @FXML
+    void onDisdiciPressed(ActionEvent event) {
+        /* l'operazione di sistema restituisce un booleano, se è true restituisco l'ok-view, 
+        se è false metto la schermata di errore con il messaggio che il turno è scaduto */
+
+    }
 
     @FXML
     void onNuovaIscrizioneCorsoClicked(ActionEvent event) throws IOException {
@@ -122,6 +136,19 @@ public class ChooseActivityController implements Initializable {
         } catch (IOException e) {
             MainApplication.goClientErrorPage(e.getMessage());
         }
+    }
+
+    @FXML
+    void onRecuperaLezioneClicked(ActionEvent event) {
+                                                                                                /* 
+     -> al click, il sistema fa il check con l'operazione di sistema.
+     - se restituisce null, "il tuo turno corrente è ancora attivo, quindi puoi ancora disdirlo"
+     - se diverso da null, viene restituito l'elenco dei turni disponibili
+     -> al click su un turno, si chiama un'altra operazione simile al "selezionaTurno(ts)" 
+                                                                                                */
+    
+
+
     }
 
     

@@ -32,7 +32,7 @@
                         <Insets bottom="50.0" />
                      </VBox.margin>
                      <children>
-                        <Text fill="#696767" strokeType="OUTSIDE" strokeWidth="0.0" text="cliente: " wrappingWidth="56.955631256103516">
+                        <Text fill="#696767" strokeType="OUTSIDE" strokeWidth="0.0" text="Codice cliente: " wrappingWidth="109.31927108764648">
                            <HBox.margin>
                               <Insets left="22.0" />
                            </HBox.margin>
@@ -40,7 +40,7 @@
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <Text fx:id="username" strokeType="OUTSIDE" strokeWidth="0.0" text="Alberto Provenzano" wrappingWidth="221.52698135375977">
+                        <Text fx:id="username" strokeType="OUTSIDE" strokeWidth="0.0" text="Alberto1" wrappingWidth="221.52698135375977">
                            <font>
                               <Font size="16.0" />
                            </font>

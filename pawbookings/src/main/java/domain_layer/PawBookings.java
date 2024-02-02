@@ -270,7 +270,7 @@ public class PawBookings {
     }
     
 
-    public Boolean registrati(String nome, String cognome, String numeroTelefono, String password) {
+    public String registrati(String nome, String cognome, String numeroTelefono, String password) {
         String codiceCliente;
         Cliente nuovoCliente;
         Boolean esito = checkNumTelefono(numeroTelefono);
@@ -278,9 +278,10 @@ public class PawBookings {
             codiceCliente = this.generaCodiceCliente(nome);
             nuovoCliente = new Cliente(codiceCliente,nome,cognome,password,numeroTelefono);
             this.clienti.putIfAbsent(codiceCliente, nuovoCliente);
-            return setClienteLoggato(nuovoCliente);
+            setClienteLoggato(nuovoCliente);
+            return codiceCliente;
         } else {
-            return false;
+            return null;
         }
     }
 

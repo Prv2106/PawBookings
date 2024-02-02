@@ -7,6 +7,7 @@ import domain_layer.Turno;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 
 public class DettagliTurnoController {
@@ -25,6 +26,12 @@ public class DettagliTurnoController {
 
     @FXML
     private Text oraInizio;
+
+    @FXML
+    private Text importo;
+
+    @FXML
+    private Line line;
 
 
     public void start(Turno t) {
