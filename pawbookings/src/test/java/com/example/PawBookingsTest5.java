@@ -381,7 +381,7 @@ public class PawBookingsTest5 {
         // testiamo che il turno associato al cane non sia null
         assertNotNull(PB.getCaneSelezionato().getTurnoCorrente());
 
-        // inochiamo il metodo sotto test
+        // invochiamo il metodo sotto test
         PB.confermaTimbroTurno();
 
          // testiamo che il turno associato al cane sia null

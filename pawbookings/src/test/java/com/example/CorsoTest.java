@@ -6,9 +6,6 @@ import domain_layer.Lezione;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 class CorsoTest {
 
     // Verifica che il cane viene aggiunto alla lista dei cani iscritti al corso scelto

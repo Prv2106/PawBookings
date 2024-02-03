@@ -161,7 +161,7 @@ public class PawBookingsTest6 {
         PB.confermaAffido(Walker);
 
 
-        // Iscriviamo Stella al corsoBase
+        // Iscriviamo Sole al corsoBase
         PB.accedi("Daniele3", "0000");
         Daniele = PB.getClienteLoggato();
         Sole = Daniele.getCani().getFirst();
