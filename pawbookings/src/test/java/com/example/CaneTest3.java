@@ -21,7 +21,7 @@ import domain_layer.Turno;
 /*
  * Test degli scenari alternativi dei casi d'uso degli UC1-UC2-UC3-UC4
  * Test del metodo calcola lezioneSuccessiva modificato nel corso della quarta iterazione
- * Test del metodo verifica idoneitaTurno di UC2:SD4 (scenario alternativo)
+ * Test del metodo verificaIdoneitaTurno di UC2:SD4 (scenario alternativo)
  */
 
 

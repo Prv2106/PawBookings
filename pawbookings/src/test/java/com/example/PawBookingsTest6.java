@@ -24,7 +24,6 @@ import domain_layer.Turno;
 
 /*
  * Test degli scenari alternativi 3c e 3d dell UC2:Gestisci prenotazione turno lezione
- * Test delle regole di dominioR1-R2-R3-R4
  */
 
 
