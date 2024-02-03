@@ -500,7 +500,8 @@ public class PawBookings {
     }
 
     public void inserisciEsercizio(String nome, String descrizione){
-        this.corsoSelezionato.aggiornaLezione(nome, descrizione);
+        Lezione lezioneCorrente = this.corsoSelezionato.getLezioneCorrente();
+        lezioneCorrente.nuovoEsercizio(nome, descrizione);
     }
 
 
@@ -538,7 +539,9 @@ public class PawBookings {
     public Boolean nuovoTurno(LocalDate data, LocalTime oraInizio, LocalTime oraFine){
         Boolean esito = verificaDatiTurno(data, oraInizio, oraFine);
         if(esito){
-            this.corsoSelezionato.aggiungiTurnoLezione(data, oraInizio, oraFine);
+            int codiceTurno = this.corsoSelezionato.generaCodiceTurno();
+            Lezione lezioneSelezionata = this.corsoSelezionato.getLezioneSelezionata();
+            lezioneSelezionata.nuovoTurno(codiceTurno, data, oraInizio, oraFine);
         }
         return esito;
     }

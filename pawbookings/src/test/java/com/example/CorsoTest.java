@@ -106,16 +106,7 @@ class CorsoTest {
         assertEquals(1, corsoBase.getProgramma().size());
     }
 
-    @Test
-    void testAggiornaLezione(){
-        // Verifica che venga aggiunto un nuovo esercizio alla lezione corrente
-        Corso corsoBase = new Corso(1,10,200.0F,"Corso Base");
-        corsoBase.nuovaLezione(10, "Lezione test");
-        corsoBase.aggiornaLezione("Esercizio test", "Descrizione test");
-        corsoBase.aggiornaLezione("Esercizio test 2", "Descrizione test 2");
 
-        assertEquals(2, corsoBase.getLezioneCorrente().getEsercizi().size());
-    }
 
     @Test
     void testGeneraCodiceTurno(){
@@ -128,22 +119,5 @@ class CorsoTest {
         assertEquals(2, corsoBase.getNumTurni());
     }
 
-    @Test
-    void testAggiungiTurnoLezione(){
-        // Verifica che il turno venga aggiunto alla lezione corrente
-        Corso corsoBase = new Corso(1,10,200.0F,"Corso Base");
-        Lezione lz = new Lezione(10, "Lezione test");
-        corsoBase.setLezioneSelezionata(lz);
-        corsoBase.aggiungiTurnoLezione(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
-        corsoBase.aggiungiTurnoLezione(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
 
-        // verifichiamo che i turni siano stati aggiunti alla lezione corrente
-        assertEquals(2, corsoBase.getNumTurni());
-
-        // generiamo il codice turno e verifichiamo che venga generato il codice turno corretto
-        assertEquals(corsoBase.getNumTurni() + 1, corsoBase.generaCodiceTurno());
-
-        // verifichiamo che i turni siano stati aggiunti all'elencoTurniDisponibili della lista turni
-        assertEquals(2, corsoBase.getLezioneSelezionata().getElencoTurniDisponibili().size());
-    }
 }

@@ -107,9 +107,7 @@ public class Corso {
         }
     }
 
-    public void aggiornaLezione(String nome, String descrizione){
-        this.lezioneCorrente.nuovoEsercizio(nome, descrizione);
-    }
+  
 
 
 
@@ -126,10 +124,7 @@ public class Corso {
 
 
 
-    public void aggiungiTurnoLezione(LocalDate data, LocalTime oraInizio, LocalTime oraFine){
-        int codiceTurno = this.generaCodiceTurno();
-        this.lezioneSelezionata.nuovoTurno(codiceTurno, data, oraInizio, oraFine);
-    }
+    
 
 
 
@@ -164,10 +159,6 @@ public class Corso {
 
 
 
-
-    public float calcolaImportoDovuto(int numCaniIscritti, String tipoPolitica){
-        
-    }
 
 
 
