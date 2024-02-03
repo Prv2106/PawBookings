@@ -49,7 +49,9 @@ public class Cliente implements Observer {
         Corso c;
         for(Cane cn: this.caniPosseduti){
             c = cn.getCorsoCorrente();
-            if(corsoCorrente.equals(c)){
+            if(corsoCorrente.equals(c)
+                &&(cn.getTurnoCorrente()!=null)
+                &&(cn.getUltimaLezioneSeguita().equals(c.getLezioni().getFirst()))){
                 numCaniIscritti++;
             }
         }

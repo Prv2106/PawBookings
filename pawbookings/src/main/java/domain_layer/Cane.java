@@ -38,7 +38,7 @@ public class Cane {
     public Boolean checkPrimaLezione(){
             if(this.corsoCorrente !=null){
                 Lezione primaLezione = this.corsoCorrente.getLezioni().getFirst();
-                return (lezioniSeguite.getFirst().equals(primaLezione));
+                return (lezioniSeguite.getLast().equals(primaLezione));
             }
             else{
                 return false;

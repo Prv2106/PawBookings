@@ -693,12 +693,20 @@ public class PawBookings {
 
 
     public float confermaTimbroTurno() {
-        this.caneSelezionato.setTurnoCorrente(null);
         float importoDovuto =0;
         Boolean primaLezione = this.caneSelezionato.checkPrimaLezione();
         Boolean recuperoLezione = this.caneSelezionato.getLezioneDaRecuperare();
         Corso corsoCorrente = this.caneSelezionato.getCorsoCorrente();
-        int numCaniIscritti = this.clienteSelezionato.getNumCaniIscritti(corsoCorrente);
+        int numCaniIscritti;
+        Corso cs = null;
+        if(corsoCorrente!=null){
+            numCaniIscritti = this.clienteSelezionato.getNumCaniIscritti(corsoCorrente);
+        }
+        else{
+            cs = this.caneSelezionato.getCorsiCompletati().getLast();
+            numCaniIscritti = this.clienteSelezionato.getNumCaniIscritti(cs);
+        }
+        
         if((primaLezione)&&(recuperoLezione)){
             this.caneSelezionato.setLezioneDaRecuperare(false);
             importoDovuto = corsoCorrente.calcolaImportoDovuto(numCaniIscritti, "recuperoIscrizioneMultipla");
@@ -712,10 +720,11 @@ public class PawBookings {
                 importoDovuto = corsoCorrente.calcolaImportoDovuto(numCaniIscritti,  "recuperoLezione");
             }
             else{
-                Corso cs = this.caneSelezionato.getCorsiCompletati().getLast();
                 importoDovuto = cs.calcolaImportoDovuto(numCaniIscritti,  "recuperoLezione");
             }
         }
+
+        this.caneSelezionato.setTurnoCorrente(null);
         return importoDovuto;
     }
 
