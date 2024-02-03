@@ -680,6 +680,7 @@ public class PawBookings {
         if (cl != null) {
             Cane cn = cl.getCane(codiceCane);
             setCaneSelezionato(cn);
+            setClienteSelezionato(cl);
             if (cn == null) {
                 return null;
             } else {
@@ -723,6 +724,16 @@ public class PawBookings {
         boolean esito;
         esito = this.caneSelezionato.verificaIdoneitaTurno();
         if (esito) {
+            Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
+            Corso corsoCorrente = this.caneSelezionato.getCorsoCorrente();
+            Turno turnoCorrente = this.caneSelezionato.getTurnoCorrente();
+            LinkedList<Turno> elencoTurniDisponibili = ultimaLezioneSeguita.getElencoTurniDisponibili();
+            elencoTurniDisponibili.add(turnoCorrente);
+            if(corsoCorrente == null){
+                LinkedList<Corso> corsiCompletati = this.caneSelezionato.getCorsiCompletati();
+                Corso cs = corsiCompletati.getLast();
+                this.caneSelezionato.aggiornaAttualmenteIscritto(cs);
+            }
             this.caneSelezionato.setTurnoCorrente(null);
             this.caneSelezionato.rimuoviUltimaLezioneSeguita();
         }
