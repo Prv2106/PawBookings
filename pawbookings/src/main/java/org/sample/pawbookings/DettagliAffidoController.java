@@ -22,6 +22,13 @@ public class DettagliAffidoController {
     @FXML
     private Button backButton;
 
+    @FXML
+    private Text dataRitiro;
+
+    @FXML
+    private Text importo;
+
+
 
     public void start(PeriodoAffido pa) {
         codice.setText(Integer.toString(pa.getCodice()));

@@ -288,7 +288,7 @@ public class PawBookings {
     }
     
 
-    public Boolean registrati(String nome, String cognome, String numeroTelefono, String password) {
+    public String registrati(String nome, String cognome, String numeroTelefono, String password) {
         String codiceCliente;
         Cliente nuovoCliente;
         Boolean esito = checkNumTelefono(numeroTelefono);
@@ -296,9 +296,10 @@ public class PawBookings {
             codiceCliente = this.generaCodiceCliente(nome);
             nuovoCliente = new Cliente(codiceCliente,nome,cognome,password,numeroTelefono);
             this.clienti.putIfAbsent(codiceCliente, nuovoCliente);
-            return setClienteLoggato(nuovoCliente);
+            setClienteLoggato(nuovoCliente);
+            return codiceCliente;
         } else {
-            return false;
+            return null;
         }
     }
 
@@ -715,6 +716,39 @@ public class PawBookings {
             }
         }
         return importoDovuto;
+    }
+
+
+    public boolean disdiciTurno() {
+        boolean esito;
+        esito = this.caneSelezionato.verificaIdoneitaTurno();
+        if (esito) {
+            this.caneSelezionato.setTurnoCorrente(null);
+            this.caneSelezionato.rimuoviUltimaLezioneSeguita();
+        }
+        return esito;        
+    }
+
+    public LinkedList<Turno> recuperaLezione() {
+        boolean esito;
+        esito = this.caneSelezionato.verificaIdoneitaTurno();
+        if (!esito) {
+            Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
+            return ultimaLezioneSeguita.getTurniDisponibili();
+        } else {
+            return null;
+        }
+    }
+
+    public boolean selezionaTurnoRecupero(Turno ts) {
+        boolean esito;
+        esito = this.caneSelezionato.checkSovrapposizioneDate(ts);
+        if (esito) {
+            this.caneSelezionato.setTurnoCorrente(ts);
+            this.caneSelezionato.setLezioneDaRecuperare(true);
+            Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
+            ultimaLezioneSeguita.aggiornaTurniDisponibili(ts);
+        }
     }
 
     public void logoutAdmin() {

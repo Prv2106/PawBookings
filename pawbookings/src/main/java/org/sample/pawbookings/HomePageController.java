@@ -64,7 +64,7 @@ public class HomePageController implements Initializable {
 
         if (listaCani.isEmpty()) {
             text.setText("Non hai ancora aggiunto un cane");
-            text.setFont(new Font(16));
+            text.setFont(new Font(18));
         } else {
             items.addAll(listaCani);
             this.list.setItems(items);

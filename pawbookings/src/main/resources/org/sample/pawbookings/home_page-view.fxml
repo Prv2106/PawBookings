@@ -60,47 +60,36 @@
             <BorderPane prefHeight="155.0" prefWidth="350.0" />
             <VBox prefHeight="447.0" prefWidth="350.0">
                <children>
-                  <StackPane alignment="TOP_LEFT" prefWidth="350.0">
+                  <HBox alignment="BOTTOM_CENTER">
                      <children>
-                        <ImageView fx:id="notificationIcon" fitHeight="62.0" fitWidth="70.0">
-                           <image>
-                              <Image url="@../../../assets/notification.png" />
-                           </image>
-                           <StackPane.margin>
-                              <Insets left="20.0" />
-                           </StackPane.margin>
-                        </ImageView>
-                        <ImageView fx:id="noNotificationIcon" fitHeight="37.0" fitWidth="61.0">
-                           <image>
-                              <Image url="@../../../assets/no_notification.png" />
-                           </image>
-                           <StackPane.margin>
-                              <Insets left="20.0" />
-                           </StackPane.margin>
-                        </ImageView>
-                        <Button mnemonicParsing="false" onAction="#onNotificationIconPressed" prefHeight="49.0" prefWidth="70.0" style="-fx-background-color: #00000000;">
-                           <StackPane.margin>
-                              <Insets left="20.0" />
-                           </StackPane.margin>
-                        </Button>
-                     </children>
-                     <opaqueInsets>
-                        <Insets bottom="10.0" />
-                     </opaqueInsets>
-                  </StackPane>
-                  <HBox alignment="BOTTOM_LEFT">
-                     <VBox.margin>
-                        <Insets left="20.0" />
-                     </VBox.margin>
-                     <children>
-                        <Text fx:id="text" strokeType="OUTSIDE" strokeWidth="0.0" text="I tuoi cani">
-                           <font>
-                              <Font size="25.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets right="15.0" />
-                           </HBox.margin>
-                        </Text>
+                        <StackPane alignment="TOP_LEFT" prefHeight="62.0" prefWidth="146.0">
+                           <children>
+                              <ImageView fx:id="notificationIcon" fitHeight="62.0" fitWidth="70.0">
+                                 <image>
+                                    <Image url="@../../../assets/notification.png" />
+                                 </image>
+                                 <StackPane.margin>
+                                    <Insets left="20.0" />
+                                 </StackPane.margin>
+                              </ImageView>
+                              <ImageView fx:id="noNotificationIcon" fitHeight="37.0" fitWidth="61.0">
+                                 <image>
+                                    <Image url="@../../../assets/no_notification.png" />
+                                 </image>
+                                 <StackPane.margin>
+                                    <Insets left="20.0" />
+                                 </StackPane.margin>
+                              </ImageView>
+                              <Button mnemonicParsing="false" onAction="#onNotificationIconPressed" prefHeight="49.0" prefWidth="70.0" style="-fx-background-color: #00000000;">
+                                 <StackPane.margin>
+                                    <Insets left="20.0" />
+                                 </StackPane.margin>
+                              </Button>
+                           </children>
+                           <opaqueInsets>
+                              <Insets bottom="10.0" />
+                           </opaqueInsets>
+                        </StackPane>
                         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onVisualizzaProgrammaPressed" prefHeight="33.0" prefWidth="139.0" style="-fx-background-color: #4facfe;" text="Programmi" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font size="18.0" />
@@ -109,6 +98,21 @@
                               <Insets left="50.0" right="10.0" />
                            </HBox.margin>
                         </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="BOTTOM_LEFT" prefHeight="34.0" prefWidth="315.0">
+                     <VBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </VBox.margin>
+                     <children>
+                        <Text fx:id="text" strokeType="OUTSIDE" strokeWidth="0.0" text="I tuoi cani">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="15.0" top="5.0" />
+                           </HBox.margin>
+                        </Text>
                      </children>
                      <opaqueInsets>
                         <Insets top="5.0" />

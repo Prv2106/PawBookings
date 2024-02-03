@@ -9,6 +9,26 @@ Desktop:
 colore base:  #4facfe  
 
 
+//TODO, Lato Cliente
+
+- schermata ChooseActivity -> aggiungere pulsante "disdici" condizionatamente alla presenza del turno corrente.
+  (l'operazione di sistema restituisce un booleano, se è true restituisco l'ok-view, se è false metto la schermata di errore con
+    il messaggio che il turno è scaduto),
+
+- schermata ChooseActivity -> aggiungere pulsante "recupera lezione".
+    -> al click, il sistema fa il check con l'operazione di sistema.
+     - se restituisce null, "il tuo turno corrente è ancora attivo, quindi puoi ancora disdirlo"
+     - se diverso da null, viene restituito l'elenco dei turni disponibili
+     -> al click su un turno, si chiama un'altra operazione simile al "selezionaTurno(ts)"
+
+//TODO, Lato Amministratore
+
+- schermata Dettagli Affido, aggiungere la voce "importo dovuto dal Cliente" (lato Controller cambierà che si dovrà gestire una mappa)
+ 
+
+
+
+
 
 
 

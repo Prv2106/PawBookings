@@ -5,6 +5,8 @@ import java.io.IOException;
 import domain_layer.PawBookings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
@@ -46,8 +48,13 @@ public class RegisterController {
             // operazione di sistema
             PawBookings PB = PawBookings.getInstance();  
             try {
-                if (PB.registrati(name, surname, tel, password)) {
-                    MainApplication.setRoot("ok-view.fxml");
+                String codiceCliente = PB.registrati(name, surname, tel, password);
+                if (codiceCliente != null) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("signup_ok-view.fxml"));
+                    Parent root = loader.load();
+                    SignupOkController controller = loader.getController();
+                    controller.setCodiceCliente(codiceCliente);
+                    MainApplication.goTo(root);
                 } else {
                     // utente già iscritto
                     MainApplication.goClientErrorPage("Il numero di telefono inserito risulta già presente nel sistema");

@@ -41,6 +41,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -77,7 +78,7 @@
                               <Font size="20.0" />
                            </font>
                         </Text>
-                        <Text fx:id="codice" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="255.07637405395508">
+                        <Text fx:id="codice" strokeType="OUTSIDE" strokeWidth="0.0" text="1" wrappingWidth="255.07637405395508">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -97,7 +98,7 @@
                               <Font size="20.0" />
                            </font>
                         </Text>
-                        <Text fx:id="dataInizio" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="227.02438831329346">
+                        <Text fx:id="dataInizio" strokeType="OUTSIDE" strokeWidth="0.0" text="20/01/2024" wrappingWidth="227.02438831329346">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -117,9 +118,53 @@
                               <Font size="20.0" />
                            </font>
                         </Text>
-                        <Text fx:id="dataFine" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="225.1542100906372">
+                        <Text fx:id="dataFine" strokeType="OUTSIDE" strokeWidth="0.0" text="20/02/2024" wrappingWidth="225.1542100906372">
                            <HBox.margin>
                               <Insets left="10.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Line endX="236.94363403320312" endY="-0.0789911150932312" startX="-100.0" strokeWidth="2.0" />
+                  <HBox alignment="BOTTOM_LEFT" prefHeight="35.0" prefWidth="350.0">
+                     <children>
+                        <Text fill="#716f6f" strokeType="OUTSIDE" strokeWidth="0.0" text="data ritiro:" wrappingWidth="103.4637222290039">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="dataRitiro" strokeType="OUTSIDE" strokeWidth="0.0" text="18/02/2024 " wrappingWidth="102.3489465713501">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <HBox alignment="BOTTOM_LEFT" prefHeight="35.0" prefWidth="350.0">
+                     <children>
+                        <Text fill="#716f6f" strokeType="OUTSIDE" strokeWidth="0.0" text="importo dovuto dal Cliente:" wrappingWidth="246.2168960571289">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="importo" strokeType="OUTSIDE" strokeWidth="0.0" text="3000€" wrappingWidth="48.73859119415283">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" />
                            </HBox.margin>
                            <font>
                               <Font size="18.0" />
@@ -132,7 +177,7 @@
                         <Font size="23.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="40.0" top="40.0" />
+                        <Insets bottom="40.0" top="25.0" />
                      </VBox.margin>
                   </Button>
                </children>

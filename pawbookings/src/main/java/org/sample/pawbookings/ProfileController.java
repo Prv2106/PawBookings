@@ -83,7 +83,7 @@ public class ProfileController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.username.setText(PawBookings.getInstance().getClienteLoggato().getNome());
+        this.username.setText(PawBookings.getInstance().getClienteLoggato().getCodiceCliente());
 
         int codiceDelega = PawBookings.getInstance().getClienteLoggato().getCodiceDelega();
         if (codiceDelega != 0) {
