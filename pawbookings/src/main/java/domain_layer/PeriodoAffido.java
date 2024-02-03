@@ -135,9 +135,8 @@ public class PeriodoAffido extends Observable {
 
 
     public float calcolaImportoDovuto(int numCaniAffido, String tipoPolitica){
-        IpoliticaScontoAffido p;
-        p=PAF.getPoliticaScontoAffido(numCaniAffido, tipoPolitica);
-        return p.getPrezzo(null, numCaniAffido);
+        IpoliticaScontoAffido p=PAF.getPoliticaScontoAffido(numCaniAffido, tipoPolitica);
+        return p.getPrezzo(this, numCaniAffido);
     }
 
 

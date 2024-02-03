@@ -749,6 +749,7 @@ public class PawBookings {
             Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
             ultimaLezioneSeguita.aggiornaTurniDisponibili(ts);
         }
+        return esito;
     }
 
     public void logoutAdmin() {

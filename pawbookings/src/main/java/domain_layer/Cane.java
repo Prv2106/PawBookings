@@ -53,6 +53,10 @@ public class Cane {
         return this.lezioneDaRecuperare;
     }
 
+    public void rimuoviUltimaLezioneSeguita(){
+        this.lezioniSeguite.removeLast();
+    }
+
     public Lezione calcolaLezioneSuccessiva(LinkedList<Lezione> programma){
        LinkedList<Lezione> lezioniCorsoSeguite = new LinkedList<>();
        Boolean esito;
