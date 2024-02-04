@@ -20,7 +20,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
-public class AvailableShiftsController implements Initializable {
+public class AvailableShiftsRecoverLessonController implements Initializable {
 
     @FXML
     private ListView<Turno> list;
@@ -40,17 +40,14 @@ public class AvailableShiftsController implements Initializable {
         }
     }
 
-    // metodo che viene richiamato all'apertura della schermata
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // popoliamo la lista dinamica
         PawBookings PB = PawBookings.getInstance();  
-        LinkedList<Turno> elencoTurni = PB.prenotaTurnoLezione();
+        LinkedList<Turno> elencoTurni = PB.recuperaLezione();
 
         items.addAll(elencoTurni);
         this.list.setItems(items);
 
-        // definiamo la grafica di ogni oggetto della lista
         this.list.setCellFactory(new Callback<ListView<Turno>, ListCell<Turno>>() {
             @Override
             public ListCell<Turno> call(ListView<Turno> listView) {
@@ -78,13 +75,11 @@ public class AvailableShiftsController implements Initializable {
                             setOnMouseClicked(event -> {
                                 // Azioni da eseguire quando un elemento viene cliccato
                                 try {
-                                    boolean b = PB.selezionaTurno(turno);
+                                    boolean b = PB.selezionaTurnoRecupero(turno);
                                     if (b) {
                                         MainApplication.setRoot("ok-view.fxml");
-                                    } else if (b == false) {
+                                    } else  {
                                         MainApplication.goClientErrorPage("Il tuo cane risulta essere in affido per quel periodo");
-                                    } else {
-                                        MainApplication.goClientErrorPage("Il turno non è più disponibile :(");
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();

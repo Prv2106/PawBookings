@@ -66,10 +66,14 @@ public class ChooseActivityController implements Initializable {
     // PULSANTI SCHERMATA
 
     @FXML
-    void onDisdiciPressed(ActionEvent event) {
+    void onDisdiciPressed(ActionEvent event) throws IOException {
         /* l'operazione di sistema restituisce un booleano, se è true restituisco l'ok-view, 
         se è false metto la schermata di errore con il messaggio che il turno è scaduto */
-
+        if (PawBookings.getInstance().disdiciTurno()) {
+            MainApplication.setRoot("ok-view.fxml");
+        } else {
+            MainApplication.goClientErrorPage("il turno è scaduto");
+        }
     }
 
     @FXML
@@ -139,14 +143,20 @@ public class ChooseActivityController implements Initializable {
     }
 
     @FXML
-    void onRecuperaLezioneClicked(ActionEvent event) {
-                                                                                                /* 
-     -> al click, il sistema fa il check con l'operazione di sistema.
-     - se restituisce null, "il tuo turno corrente è ancora attivo, quindi puoi ancora disdirlo"
-     - se diverso da null, viene restituito l'elenco dei turni disponibili
-     -> al click su un turno, si chiama un'altra operazione simile al "selezionaTurno(ts)" 
-                                                                                                */
+    void onRecuperaLezioneClicked(ActionEvent event) throws IOException {
+    /* 
+        -> al click, il sistema fa il check con l'operazione di sistema.
+            - se restituisce null, "il tuo turno corrente è ancora attivo, quindi puoi ancora disdirlo"
+            - se diverso da null, viene restituito l'elenco dei turni disponibili
+                -> al click su un turno, si chiama un'altra operazione simile al "selezionaTurno(ts)" 
+        */
     
+        LinkedList<Turno> turni = PawBookings.getInstance().recuperaLezione();
+        if (turni != null) {
+            MainApplication.setRoot("available_shifts_recover_lesson-view.fxml");
+        } else {
+            MainApplication.goClientErrorPage("Sei ancora in tempo per disdire il turno!");
+        }
 
 
     }

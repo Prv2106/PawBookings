@@ -152,26 +152,6 @@
                         </Text>
                      </children>
                   </HBox>
-                  <HBox alignment="BOTTOM_LEFT" prefHeight="35.0" prefWidth="350.0">
-                     <children>
-                        <Text fill="#716f6f" strokeType="OUTSIDE" strokeWidth="0.0" text="importo dovuto dal Cliente:" wrappingWidth="246.2168960571289">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="importo" strokeType="OUTSIDE" strokeWidth="0.0" text="3000€" wrappingWidth="48.73859119415283">
-                           <HBox.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </HBox>
                   <Button mnemonicParsing="false" onAction="#onConcludiAffidoPressed" prefHeight="53.0" prefWidth="347.0" style="-fx-background-color: #4facfe;" text="Concludi Affido" textFill="WHITE">
                      <font>
                         <Font size="23.0" />
