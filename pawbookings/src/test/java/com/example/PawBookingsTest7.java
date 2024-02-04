@@ -248,17 +248,6 @@ public class PawBookingsTest7 {
         // Ci aspettiamo che l'importo dovuto sia 0 in quanto il turno corrisponde alla seconda lezione del corsoBase
         // di conseguenza il corso è stato già pagato
         assertEquals(0, PB.confermaTimbroTurno());
-        
-
     }
-
-
-
-
-
-
-
-
-
 
 }
