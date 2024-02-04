@@ -35,6 +35,14 @@ public class MainApplication extends Application {
         scene.setRoot(root);
     }
 
+    static void goAdminCashPage(float amount)  throws IOException {
+        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("admin_cash-view.fxml"));
+        Parent root = loader.load();
+        AdminCashController controller = loader.getController();
+        controller.setAmount(amount);
+        MainApplication.goTo(root);            
+    }
+
     static void goClientErrorPage(String msg) throws IOException {
         FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("error-view.fxml"));
         Parent root = loader.load();
@@ -76,7 +84,6 @@ public class MainApplication extends Application {
         scene.setRoot(stackRoots.getLast());
     }
     
-
     static void setRootAndChangePlatform(String fxml, boolean isMobile) throws IOException {
         Parent root = new FXMLLoader(MainApplication.class.getResource(fxml)).load();
         scene.setRoot(root);
@@ -91,6 +98,8 @@ public class MainApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+
 
 
     public static void main(String[] args) {

@@ -27,8 +27,6 @@ public class PawBookings {
     private Corso corsoSelezionato;
 
 
- 
-
     // metodo costruttore
     private PawBookings(){
         this.elencoCorsi = new LinkedList<>();
@@ -51,22 +49,26 @@ public class PawBookings {
 
 
   
+    public void loadPeriodiAffido() {
+        // Creazione delle istanze di PeriodoAffido (10€ al giorno)
 
-    public void loadPeriodiAffido(){
+        PeriodoAffido p0 = new PeriodoAffido(0, LocalDate.of(2024, 1, 8), LocalDate.of(2024, 2, 5), 280);
+        PeriodoAffido p1 = new PeriodoAffido(1, LocalDate.now().plusDays(1), LocalDate.now().plusWeeks(2), 140.0f);
+        PeriodoAffido p2 = new PeriodoAffido(2, LocalDate.now().plusWeeks(2), LocalDate.now().plusMonths(1), 280.0f);
+        PeriodoAffido p3 = new PeriodoAffido(3, LocalDate.now().plusMonths(1) ,LocalDate.now().plusMonths(2), 560.0f);
+        PeriodoAffido p4 = new PeriodoAffido(4, LocalDate.of(2024, 1, 21), LocalDate.of(2024, 2, 11), 210);
 
-        // Creazione delle istanze di PeriodoAffido 
-        PeriodoAffido p1 = new PeriodoAffido(1, LocalDate.now().plusDays(1), LocalDate.now().plusWeeks(2), 150.0f);
-        PeriodoAffido p2 = new PeriodoAffido(2, LocalDate.now().plusWeeks(2), LocalDate.now().plusMonths(1), 300.0f);
-        PeriodoAffido p3 = new PeriodoAffido(3,LocalDate.now().plusMonths(1) ,LocalDate.now().plusMonths(2), 600.0f);
-
+        this.elencoPeriodiDisponibili.add(p0);
         this.elencoPeriodiDisponibili.add(p1);
         this.elencoPeriodiDisponibili.add(p2);
         this.elencoPeriodiDisponibili.add(p3);
+        this.elencoPeriodiDisponibili.add(p4);
 
+        this.elencoPeriodiAffido.add(p0);
         this.elencoPeriodiAffido.add(p1);
         this.elencoPeriodiAffido.add(p2);
         this.elencoPeriodiAffido.add(p3);
-
+        this.elencoPeriodiAffido.add(p4);
     }
 
 
@@ -231,6 +233,7 @@ public class PawBookings {
         if(esitoVerifica == false){
             this.clienteSelezionato.annullamentoIscrizione(affidoCorrente);
         }
+
         Boolean anticipo = affidoCorrente.verificaAnticipo();
 
         if((anticipo == true)&&(numCaniAffido > 1)){

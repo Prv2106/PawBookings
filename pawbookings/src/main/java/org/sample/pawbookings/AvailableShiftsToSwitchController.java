@@ -64,7 +64,7 @@ public class AvailableShiftsToSwitchController implements Initializable {
                         } else {
                             // data, ora inizio e ora fine
                             VBox vbox = new VBox();
-                            vbox.getChildren().add(new Label("Data: " + turno.getData()));
+                            vbox.getChildren().add(new Label("Data: " + turno.getData().getDayOfMonth() + "/" + turno.getData().getMonthValue() + "/" + turno.getData().getYear()));
                             vbox.getChildren().add(new Label("Ora Inizio: " + turno.getOraInizio()));
                             vbox.getChildren().add(new Label("Ora fine: " + turno.getOraFine()));
                         

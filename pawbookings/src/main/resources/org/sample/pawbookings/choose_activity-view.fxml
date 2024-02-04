@@ -131,6 +131,14 @@
                         </Button>
                      </children>
                   </HBox>
+                  <Button fx:id="recover" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onRecuperaLezioneClicked" prefHeight="45.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Recupera Lezione" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Button>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNuovaIscrizioneCorsoClicked" prefHeight="45.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Nuova Iscrizione Corso" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
@@ -161,14 +169,6 @@
                      </font>
                      <VBox.margin>
                         <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onRecuperaLezioneClicked" prefHeight="45.0" prefWidth="314.0" style="-fx-background-color: #4facfe;" text="Recupera Lezione" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
                      </VBox.margin>
                   </Button>
                </children>

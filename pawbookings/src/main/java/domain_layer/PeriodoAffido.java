@@ -132,20 +132,13 @@ public class PeriodoAffido extends Observable {
     }
 
 
-
-
     public float calcolaImportoDovuto(int numCaniAffido, String tipoPolitica){
         IpoliticaScontoAffido p=PAF.getPoliticaScontoAffido(numCaniAffido, tipoPolitica);
         return p.getPrezzo(this, numCaniAffido);
     }
 
-
-
     public Boolean verificaAnticipo(){
         return (LocalDate.now().isBefore(dataFine.minusDays(6)));
     }
-
-
-
 
 }

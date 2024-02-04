@@ -62,7 +62,7 @@ public class AvailableShiftsRecoverLessonController implements Initializable {
                         } else {
                             // data, ora inizio e ora fine
                             VBox vbox = new VBox();
-                            Label dataLabel = new Label("Data: " + turno.getData());
+                            Label dataLabel = new Label("Data: " + turno.getData().getDayOfMonth() + "/" + turno.getData().getMonthValue() + "/" + turno.getData().getYear());
                             Label oraInizioLabel = new Label("Ora Inizio: " + turno.getOraInizio());
                             Label oraFineLabel = new Label("Ora fine: " + turno.getOraFine());
 

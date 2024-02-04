@@ -6,8 +6,6 @@ import domain_layer.PawBookings;
 import domain_layer.PeriodoAffido;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.text.Text;
 
 
@@ -37,11 +35,7 @@ public class DettagliAffidoController {
     void onConcludiAffidoPressed(ActionEvent event) throws IOException {
         try {
             float importo = PawBookings.getInstance().confermaConclusioneAffido();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("admin_cash-view.fxml"));
-            Parent root = loader.load();
-            AdminCashController controller = loader.getController();
-            controller.setAmount(importo);
-            MainApplication.goTo(root);            
+            MainApplication.goAdminCashPage(importo);
         } catch (IOException e) {
             MainApplication.goAdminErrorPage("Qualcosa è andato storto...");
         }

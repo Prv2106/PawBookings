@@ -27,12 +27,6 @@ public class DettagliTurnoController {
     @FXML
     private Text oraInizio;
 
-    @FXML
-    private Text importo;
-
-    @FXML
-    private Line line;
-
 
     public void start(Turno t) {
         codice.setText(Integer.toString(t.getCodice()));
@@ -44,8 +38,12 @@ public class DettagliTurnoController {
     @FXML
     void onConcludiAffidoPressed(ActionEvent event) throws IOException {
         try {
-            PawBookings.getInstance().confermaTimbroTurno();
-            MainApplication.setRoot("admin_ok-view.fxml");
+            float importo = PawBookings.getInstance().confermaTimbroTurno();
+            if (importo > 0) {
+                MainApplication.goAdminCashPage(importo);
+            } else {
+                MainApplication.setRoot("admin_ok-view.fxml");
+            }
         } catch (IOException e) {
             MainApplication.goAdminErrorPage("Qualcosa è andato storto..");
         }

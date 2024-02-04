@@ -11,9 +11,8 @@ public class AdminCashController {
     @FXML
     private Text importo;
 
-
-    public void setAmount(float f) {
-        this.importo.setText("" + f);
+    public void setAmount(float amount) {
+        this.importo.setText("" + String.format("%.2f", amount) + "€");
     }
 
     @FXML

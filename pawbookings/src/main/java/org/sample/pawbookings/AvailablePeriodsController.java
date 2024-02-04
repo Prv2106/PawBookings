@@ -52,11 +52,11 @@ public class AvailablePeriodsController implements Initializable{
                         if (periodo == null || empty) {
                             setText(null);
                         } else {
-                            // tipo corso e costo
                             VBox vbox = new VBox();
-                            vbox.getChildren().add(new Label("Data Inizio: " + periodo.getDataInizio()));
-                            vbox.getChildren().add(new Label("Data Fine: " + periodo.getDataFine()));
+                            vbox.getChildren().add(new Label("Data Inizio: " + periodo.getDataInizio().getDayOfMonth() + "/" + periodo.getDataInizio().getMonthValue() + "/" + periodo.getDataInizio().getYear()));
+                            vbox.getChildren().add(new Label("Data Fine: " + periodo.getDataFine().getDayOfMonth() + "/" + periodo.getDataFine().getMonthValue() + "/" + periodo.getDataFine().getYear()));
                             vbox.getChildren().add(new Label("Posti Disponibili: " + periodo.getNumeroPosti()));
+                            vbox.getChildren().add(new Label("Costo: " + String.format("%.2f", periodo.getCosto()) + "€"));
                                                        
                             // Imposta il contenuto della cella
                             setGraphic(vbox);

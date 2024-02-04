@@ -37,6 +37,9 @@ public class ChooseActivityController implements Initializable {
     @FXML
     private Button disdiciButton;
 
+    @FXML
+    private Button recover;
+
 
     @FXML
     void onBackPressed(ActionEvent event) throws IOException {
@@ -53,6 +56,8 @@ public class ChooseActivityController implements Initializable {
         if (t != null) {
             boxDettagliTurno.setVisible(true);
             boxDettagliTurno.setManaged(true);
+            recover.setVisible(true);
+            recover.setManaged(true);
             data.setText(t.getData().getDayOfMonth() + "/" + t.getData().getMonthValue() + "/" + t.getData().getYear());
             oraInizio.setText(t.getOraInizio().toString());
             oraFine.setText(t.getOraFine().toString());
@@ -60,6 +65,8 @@ public class ChooseActivityController implements Initializable {
         } else {
             boxDettagliTurno.setVisible(false);
             boxDettagliTurno.setManaged(false);
+            recover.setVisible(false);
+            recover.setManaged(false);
         }
     }
 
@@ -72,7 +79,7 @@ public class ChooseActivityController implements Initializable {
         if (PawBookings.getInstance().disdiciTurno()) {
             MainApplication.setRoot("ok-view.fxml");
         } else {
-            MainApplication.goClientErrorPage("il turno è scaduto");
+            MainApplication.goClientErrorPage("Non è più possibile disdire il turno in quanto è scaduto");
         }
     }
 
