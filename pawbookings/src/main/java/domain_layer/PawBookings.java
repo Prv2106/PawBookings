@@ -52,23 +52,26 @@ public class PawBookings {
     public void loadPeriodiAffido() {
         // Creazione delle istanze di PeriodoAffido (10€ al giorno)
 
-        PeriodoAffido p0 = new PeriodoAffido(0, LocalDate.of(2024, 1, 8), LocalDate.of(2024, 2, 5), 280);
+      
         PeriodoAffido p1 = new PeriodoAffido(1, LocalDate.now().plusDays(1), LocalDate.now().plusWeeks(2), 140.0f);
         PeriodoAffido p2 = new PeriodoAffido(2, LocalDate.now().plusWeeks(2), LocalDate.now().plusMonths(1), 280.0f);
         PeriodoAffido p3 = new PeriodoAffido(3, LocalDate.now().plusMonths(1) ,LocalDate.now().plusMonths(2), 560.0f);
         PeriodoAffido p4 = new PeriodoAffido(4, LocalDate.of(2024, 1, 21), LocalDate.of(2024, 2, 11), 210);
+        PeriodoAffido p5 = new PeriodoAffido(0, LocalDate.of(2024, 1, 8), LocalDate.of(2024, 2, 5), 280);
 
-        this.elencoPeriodiDisponibili.add(p0);
+        
         this.elencoPeriodiDisponibili.add(p1);
         this.elencoPeriodiDisponibili.add(p2);
         this.elencoPeriodiDisponibili.add(p3);
         this.elencoPeriodiDisponibili.add(p4);
+        this.elencoPeriodiDisponibili.add(p5);
 
-        this.elencoPeriodiAffido.add(p0);
+      
         this.elencoPeriodiAffido.add(p1);
         this.elencoPeriodiAffido.add(p2);
         this.elencoPeriodiAffido.add(p3);
         this.elencoPeriodiAffido.add(p4);
+        this.elencoPeriodiAffido.add(p5);
     }
 
 
@@ -754,11 +757,17 @@ public class PawBookings {
 
     public LinkedList<Turno> recuperaLezione() {
         boolean esito;
-        esito = this.caneSelezionato.verificaIdoneitaTurno();
-        if (!esito) {
-            Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
-            return ultimaLezioneSeguita.getTurniDisponibili();
-        } else {
+        Turno tc = this.caneSelezionato.getTurnoCorrente();
+        if(tc!=null){
+            esito = this.caneSelezionato.verificaIdoneitaTurno();
+            if (!esito) {
+                Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
+                return ultimaLezioneSeguita.getTurniDisponibili();
+            } else {
+                return null;
+            }
+        }
+        else{
             return null;
         }
     }

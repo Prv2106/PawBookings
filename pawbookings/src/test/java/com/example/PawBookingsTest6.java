@@ -294,25 +294,5 @@ public class PawBookingsTest6 {
     }
 
 
-    /* Test regole di dominio R2-R4 */
-    @Test
-    void confermaConclusioneAffido(){
-
-    }
-
-    /* Test regole di dominio R1-R3 */
-    @Test
-    void confermaTimbroTurno(){
-
-    }
-
-
-
-
-
-
-
-
-
 
 }

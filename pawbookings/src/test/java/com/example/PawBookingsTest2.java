@@ -79,9 +79,14 @@ class PawBookingsTest2 {
         PeriodoAffido p1 = new PeriodoAffido(1, LocalDate.now(), LocalDate.now().plusWeeks(2), 150.0f);
         PeriodoAffido p2 = new PeriodoAffido(2, LocalDate.now().plusWeeks(2), LocalDate.now().plusMonths(1), 300.0f);
         PeriodoAffido p3 = new PeriodoAffido(3,LocalDate.now().plusMonths(1) ,LocalDate.now().plusMonths(2), 600.0f);
+        PeriodoAffido p4 = new PeriodoAffido(4, LocalDate.of(2024, 1, 21), LocalDate.of(2024, 2, 11), 210);
+        PeriodoAffido p5 = new PeriodoAffido(0, LocalDate.of(2024, 1, 8), LocalDate.of(2024, 2, 5), 280);
+        
         expected.add(p1);
         expected.add(p2);
         expected.add(p3);
+        expected.add(p4);
+        expected.add(p5);
 
         // Ci aspettiamo che l'elencoPeriodiAffido di PB abbia la stessa lunghezza di expected
         assertEquals(expected.size(), PB.getPeriodiAffido().size());
