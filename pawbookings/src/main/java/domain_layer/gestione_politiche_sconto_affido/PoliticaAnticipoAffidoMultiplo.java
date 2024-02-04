@@ -11,7 +11,7 @@ public class PoliticaAnticipoAffidoMultiplo extends PoliticaScontoAffidoComposta
             importoDovuto += p.getPrezzo(pa, numCaniAffido);
         }
 
-        return importoDovuto;
+        return (importoDovuto - pa.getCosto());
     }
 
 }

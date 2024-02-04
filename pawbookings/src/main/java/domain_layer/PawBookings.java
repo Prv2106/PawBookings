@@ -501,7 +501,8 @@ public class PawBookings {
     }
 
     public void inserisciEsercizio(String nome, String descrizione){
-        this.corsoSelezionato.aggiornaLezione(nome, descrizione);
+        Lezione lezioneCorrente = this.corsoSelezionato.getLezioneCorrente();
+        lezioneCorrente.nuovoEsercizio(nome, descrizione);
     }
 
 
@@ -539,7 +540,9 @@ public class PawBookings {
     public Boolean nuovoTurno(LocalDate data, LocalTime oraInizio, LocalTime oraFine){
         Boolean esito = verificaDatiTurno(data, oraInizio, oraFine);
         if(esito){
-            this.corsoSelezionato.aggiungiTurnoLezione(data, oraInizio, oraFine);
+            int codiceTurno = this.corsoSelezionato.generaCodiceTurno();
+            Lezione lezioneSelezionata = this.corsoSelezionato.getLezioneSelezionata();
+            lezioneSelezionata.nuovoTurno(codiceTurno, data, oraInizio, oraFine);
         }
         return esito;
     }
@@ -677,6 +680,7 @@ public class PawBookings {
         if (cl != null) {
             Cane cn = cl.getCane(codiceCane);
             setCaneSelezionato(cn);
+            setClienteSelezionato(cl);
             if (cn == null) {
                 return null;
             } else {
@@ -689,12 +693,20 @@ public class PawBookings {
 
 
     public float confermaTimbroTurno() {
-        this.caneSelezionato.setTurnoCorrente(null);
         float importoDovuto =0;
         Boolean primaLezione = this.caneSelezionato.checkPrimaLezione();
         Boolean recuperoLezione = this.caneSelezionato.getLezioneDaRecuperare();
         Corso corsoCorrente = this.caneSelezionato.getCorsoCorrente();
-        int numCaniIscritti = this.clienteSelezionato.getNumCaniIscritti(corsoCorrente);
+        int numCaniIscritti;
+        Corso cs = null;
+        if(corsoCorrente!=null){
+            numCaniIscritti = this.clienteSelezionato.getNumCaniIscritti(corsoCorrente);
+        }
+        else{
+            cs = this.caneSelezionato.getCorsiCompletati().getLast();
+            numCaniIscritti = this.clienteSelezionato.getNumCaniIscritti(cs);
+        }
+        
         if((primaLezione)&&(recuperoLezione)){
             this.caneSelezionato.setLezioneDaRecuperare(false);
             importoDovuto = corsoCorrente.calcolaImportoDovuto(numCaniIscritti, "recuperoIscrizioneMultipla");
@@ -708,10 +720,11 @@ public class PawBookings {
                 importoDovuto = corsoCorrente.calcolaImportoDovuto(numCaniIscritti,  "recuperoLezione");
             }
             else{
-                Corso cs = this.caneSelezionato.getCorsiCompletati().getLast();
                 importoDovuto = cs.calcolaImportoDovuto(numCaniIscritti,  "recuperoLezione");
             }
         }
+
+        this.caneSelezionato.setTurnoCorrente(null);
         return importoDovuto;
     }
 
@@ -720,6 +733,16 @@ public class PawBookings {
         boolean esito;
         esito = this.caneSelezionato.verificaIdoneitaTurno();
         if (esito) {
+            Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
+            Corso corsoCorrente = this.caneSelezionato.getCorsoCorrente();
+            Turno turnoCorrente = this.caneSelezionato.getTurnoCorrente();
+            LinkedList<Turno> elencoTurniDisponibili = ultimaLezioneSeguita.getElencoTurniDisponibili();
+            elencoTurniDisponibili.add(turnoCorrente);
+            if(corsoCorrente == null){
+                LinkedList<Corso> corsiCompletati = this.caneSelezionato.getCorsiCompletati();
+                Corso cs = corsiCompletati.getLast();
+                this.caneSelezionato.aggiornaAttualmenteIscritto(cs);
+            }
             this.caneSelezionato.setTurnoCorrente(null);
             this.caneSelezionato.rimuoviUltimaLezioneSeguita();
         }
@@ -746,6 +769,7 @@ public class PawBookings {
             Lezione ultimaLezioneSeguita = this.caneSelezionato.getUltimaLezioneSeguita();
             ultimaLezioneSeguita.aggiornaTurniDisponibili(ts);
         }
+        return esito;
     }
 
     public void logoutAdmin() {

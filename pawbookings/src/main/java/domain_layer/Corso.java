@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import domain_layer.gestione_politiche_prezzo_corso.IpoliticaPrezzoCorso;
+import domain_layer.gestione_politiche_prezzo_corso.PoliticaPrezzoCorsoFactory;
+
 public class Corso {
     private int codice;
     private int capienza;
@@ -19,6 +22,7 @@ public class Corso {
     private LinkedList<Lezione> programma;
     private Lezione lezioneCorrente;
     private Lezione lezioneSelezionata;
+    private PoliticaPrezzoCorsoFactory PCF;
     
 
     
@@ -30,6 +34,7 @@ public class Corso {
         this.tipoCorso = tipoCorso;
         this.elencoCaniIscritti = new LinkedList<>();
         this.programma = new LinkedList<>();
+        this.PCF = PoliticaPrezzoCorsoFactory.getInstance();
         
     }
 
@@ -107,9 +112,7 @@ public class Corso {
         }
     }
 
-    public void aggiornaLezione(String nome, String descrizione){
-        this.lezioneCorrente.nuovoEsercizio(nome, descrizione);
-    }
+  
 
 
 
@@ -126,10 +129,7 @@ public class Corso {
 
 
 
-    public void aggiungiTurnoLezione(LocalDate data, LocalTime oraInizio, LocalTime oraFine){
-        int codiceTurno = this.generaCodiceTurno();
-        this.lezioneSelezionata.nuovoTurno(codiceTurno, data, oraInizio, oraFine);
-    }
+    
 
 
 
@@ -161,13 +161,12 @@ public class Corso {
     }
 
 
-
-
-
-
     public float calcolaImportoDovuto(int numCaniIscritti, String tipoPolitica){
-        
+        IpoliticaPrezzoCorso p = PCF.getPoliticaPrezzo(numCaniIscritti, tipoPolitica);
+        return p.getPrezzo(this, numCaniIscritti);
     }
+
+
 
 
 

@@ -21,6 +21,7 @@ import domain_layer.Turno;
 /*
  * Test degli scenari alternativi dei casi d'uso degli UC1-UC2-UC3-UC4
  * Test del metodo calcola lezioneSuccessiva modificato nel corso della quarta iterazione
+ * Test del metodo verificaIdoneitaTurno di UC2:SD4 (scenario alternativo)
  */
 
 
@@ -144,10 +145,26 @@ class CaneTest3 {
         assertEquals(corsoAvanzato.getLezioni().get(1), Dog.calcolaLezioneSuccessiva(corsoAvanzato.getLezioni()));
 
         
-        
-
-
+    
     }
 
+    @Test
+    void testVerificaIdoneitaTurno(){
+        Cane Dog = new Cane(1, "Dog", "razza");
+        // Turno valido
+        Turno t1 = new Turno(10, LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
+        Dog.setTurnoCorrente(t1);
+        assertTrue(Dog.verificaIdoneitaTurno());
+
+        //Turno non valido
+        Turno t2 = new Turno(10, LocalDate.now(), LocalTime.of(9, 0), LocalTime.of(10, 0));
+        Dog.setTurnoCorrente(t2);
+        assertFalse(Dog.verificaIdoneitaTurno());
+        //Turno mancante
+        Dog.setTurnoCorrente(null);
+        assertFalse(Dog.verificaIdoneitaTurno());
+        
+
+    }
 
 }
