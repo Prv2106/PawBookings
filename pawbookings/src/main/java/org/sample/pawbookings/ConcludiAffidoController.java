@@ -6,7 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-
+/**
+ * Controller for a direct foster-care pickup performed by the customer.
+ */
 public class ConcludiAffidoController extends ConcludiAffido {
 
     @FXML
@@ -17,7 +19,7 @@ public class ConcludiAffidoController extends ConcludiAffido {
 
     @FXML
     private Button backButton;
-    
+
     @FXML
     void onBackPressed(ActionEvent event) throws IOException {
         try {
@@ -26,10 +28,10 @@ public class ConcludiAffidoController extends ConcludiAffido {
             e.printStackTrace();
         }
     }
-    
+
     @FXML
     void onConcludiAffidoPressed(ActionEvent event) throws IOException {
-        // recuperiamo le informazione inserite dall'amministratore
+
         String codiceCliente = this.codiceCliente.getText();
         String codiceCane = this.codiceCane.getText();
         goNext(codiceCliente, codiceCane, false);

@@ -21,6 +21,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 
+/**
+ * Controller for removing a dog from the logged-in customer.
+ */
 public class RemoveDogController implements Initializable {
 
     @FXML
@@ -41,10 +44,12 @@ public class RemoveDogController implements Initializable {
         }
     }
 
-    // metodo che viene richiamato all'apertura della schermata
+    /**
+     * Populates the list of removable dogs and configures the removal handler.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        PawBookings PB = PawBookings.getInstance();  
+        PawBookings PB = PawBookings.getInstance();
         LinkedList<Cane> listaCani = PB.rimuoviCane();
 
         if (listaCani.isEmpty()) {
@@ -54,32 +59,29 @@ public class RemoveDogController implements Initializable {
             items.addAll(listaCani);
             this.list.setItems(items);
 
-            // definiamo la grafica di ogni oggetto della lista
             this.list.setCellFactory(new Callback<ListView<Cane>, ListCell<Cane>>() {
                 @Override
                 public ListCell<Cane> call(ListView<Cane> listView) {
                     return new ListCell<Cane>() {
                         @Override
                         protected void updateItem(Cane cane, boolean empty) {
-                            // per ogni elemento (cane)
+
                             super.updateItem(cane, empty);
 
                             if (cane == null || empty) {
                                 setText(null);
                             } else {
-                                // nome e razza
+
                                 VBox vbox = new VBox();
                                 Label nomeLabel = new Label("Nome: " + cane.getNome());
                                 Label razzaLabel = new Label("Razza: " + cane.getRazza());
                                 vbox.getChildren().addAll(nomeLabel, razzaLabel);
 
-                                // Imposta il contenuto della cella
                                 setGraphic(vbox);
 
-        // -------------------> Aggiungiamo il listener per l'evento di click
                                 setOnMouseClicked(event -> {
                                     try {
-                                        // Azioni da eseguire quando un elemento viene cliccato
+
                                         if (PB.confermaRimozioneCane(cane)) {
                                             MainApplication.setRoot("ok-view.fxml");
                                         }

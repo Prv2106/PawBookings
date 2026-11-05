@@ -7,6 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller for a foster-care pickup performed by a delegate using a delegation code.
+ */
 public class ConcludiAffidoDelegaController extends ConcludiAffido {
 
     @FXML
@@ -29,7 +32,7 @@ public class ConcludiAffidoDelegaController extends ConcludiAffido {
 
     @FXML
     void onConcludiAffidoPressed(ActionEvent event) throws IOException {
-        // recuperiamo le informazione inserite dall'amministratore
+
         String codiceDelega = this.codiceDelega.getText();
         String codiceCane = this.codiceCane.getText();
         goNext(codiceDelega, codiceCane, true);

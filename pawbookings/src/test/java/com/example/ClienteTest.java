@@ -10,14 +10,16 @@ import domain_layer.Turno;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 import java.util.LinkedList;
 import java.util.Map;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
 
-
+/**
+ * Unit tests for customer dog management, notification subscriptions, and date-overlap
+ * checks.
+ */
 public class ClienteTest {
     public static PawBookings PB;
 
@@ -31,73 +33,73 @@ public class ClienteTest {
     }
     @Test
     void testCalcolaCaniNonInAffido(){
-        // verifichiamo che il metodo calcolaCaniNonInAffido() restituisca l'elenco dei cani non in affido
+        // Verifies that the calculateCaniNonInAffido() method returns the list of dogs not in foster care.
         Cliente Giuseppe = PB.getClienti().get("Giuseppe1");
         PB.accedi("Giuseppe1", "0000");
 
-        // selezioniamo un periodo di affido e confermiamo l'affido di Garibaldi
+        // Selects a foster period and confirms Garibaldi's foster care.
         LinkedList<PeriodoAffido> lp = PB.affido();
         PB.selezionaPeriodo(lp.get(0));
         PB.confermaAffido(Giuseppe.getCane(1));
 
-        // verifichiamo che la lista contenga un solo cane(quello non in affido)
+        // Verifies that the list contains only the dog not in foster care.
         LinkedList<Cane> caniNonInAffido = Giuseppe.calcolaCaniNonInAffido();
         assertEquals(Giuseppe.getCani().size() - 1, caniNonInAffido.size());
-        // verifichiamo che la lista contenga il cane Einstein
+        // Verifies that the list contains Einstein the dog.
         Cane Einstein = Giuseppe.getCane(2);
         assertTrue(Giuseppe.calcolaCaniNonInAffido().contains(Einstein));
-        // verifichiamo che la lista non contenga il cane Garibaldi
+        // Verifies that the list does not contain the dog Garibaldi.
         Cane Garibaldi = Giuseppe.getCane(1);
         assertFalse(Giuseppe.calcolaCaniNonInAffido().contains(Garibaldi));
     }
 
     @Test
     void testRegistraCane(){
-        // verifichiamo che il cane venga aggiunto alla lista dei cani posseduti dal cliente
+        // Verifies that the dog is added to the list of dogs owned by the customer.
         Cliente Giuseppe = PB.getClienti().get("Giuseppe1");
         PB.accedi("Giuseppe1", "0000");
 
         int lunghezzaPrecedente = Giuseppe.getCani().size();
 
-        // aggiungiamo un cane e verifichiamo che la lista contenga un cane in più
+        // Adds a dog and verifies that the list contains one more dog.
         Giuseppe.registraCane("Cleopatra", "Cirneco", 3);
         assertEquals(lunghezzaPrecedente + 1, Giuseppe.getCani().size());
     }
 
     @Test
     void testRimuoviCane(){
-        // verifichiamo che il cane venga rimosso dalla lista dei cani posseduti dal cliente
+        // Verifies that the dog is removed from the list of dogs owned by the customer.
         Cliente Giuseppe = PB.getClienti().get("Giuseppe1");
         PB.accedi("Giuseppe1", "0000");
         int lunghezzaPrecedente = Giuseppe.getCani().size();
         PB.aggiungiCane("Betta", "Pastore del caucaso");
 
-        // verifichiamo che la lista contenga un cane in più
+        // Verifies that the list contains one more dog.
         assertEquals(lunghezzaPrecedente + 1, Giuseppe.getCani().size());
 
-        // rimuoviamo un cane e verifichiamo che la lista contenga un cane in meno
+        // Removes a dog and verifies that the list contains one fewer dog.
         Giuseppe.rimuoviCane(Giuseppe.getCani().getLast());
         assertEquals(lunghezzaPrecedente, Giuseppe.getCani().size());
     }
 
     @Test
     void testIscrizioneNotificheStatoSalute(){
-        // verifichiamo che il cliente sia stato aggiunto alla lista degli osservatori
+        // Verifies that the customer has been added to the observer list.
         Cliente Giuseppe = PB.getClienti().get("Giuseppe1");
         PB.accedi("Giuseppe1", "0000");
 
         PeriodoAffido p1 = PB.getPeriodiAffido().getFirst();
-        // verifichiamo che la lista degli osservatori sia vuota
+        // Verifies that the observer list is empty.
         assertEquals(0, p1.getObservers().size());
 
-        // iscriviamo il cliente e verifichiamo che la lista degli osservatori contenga un solo elemento
+        // Registers the customer and verifies that the observer list contains one element.
         Giuseppe.iscrizioneNotificheStatoSalute(p1);
         assertEquals(1, p1.getObservers().size());
     }
 
     @Test
     void testAnnullamentoIscrizione(){
-        // verifichiamo che il cliente sia stato eliminato alla lista degli osservatori
+        // Verifies that the customer has been removed from the observer list.
         Cliente Giuseppe = PB.getClienti().get("Giuseppe1");
         PB.accedi("Giuseppe1", "0000");
 
@@ -105,14 +107,14 @@ public class ClienteTest {
         Giuseppe.iscrizioneNotificheStatoSalute(p2);
         assertEquals(1, p2.getObservers().size());
 
-        // annulliamo l'iscrizione e verifichiamo che la lista degli osservatori sia vuota
+        // Unsubscribes and verifies that the observer list is empty.
         Giuseppe.annullamentoIscrizione(p2);
         assertEquals(0, p2.getObservers().size());
     }
 
     @Test
     void testResettaStatoSaluteCane(){
-        // verifichiamo che il metodo resettaStatoSaluteCani() svuoti la lista statoSaluteCani
+        // Verifies that resettaStatoSaluteCani() clears statoSaluteCani.
         LinkedList<Map<String, String>> mappaStatoSaluteCani = new LinkedList<>();
         Map<String, String> mappaStatoSalute = new HashMap<>();
         mappaStatoSalute.put("Garibaldi", "In ottima forma");
@@ -121,17 +123,17 @@ public class ClienteTest {
         Cliente Giuseppe = PB.getClienti().get("Giuseppe1");
         PB.accedi("Giuseppe1", "0000");
 
-        // verifichiamo che la lista contenga un elemento
+        // Verifies that the list contains an element.
         Giuseppe.setStatoSaluteCani(mappaStatoSaluteCani);
         assertEquals(1, mappaStatoSaluteCani.size());
-        // verifichiamo che la lista sia stata svuotata
+        // Verifies that the list has been emptied.
         Giuseppe.resettaStatoSaluteCani();
         assertEquals(0, mappaStatoSaluteCani.size());
     }
 
     @Test
     void testUpdate(){
-        // verifichiamo che il metodo update() aggiunga alla lista statoSaluteCani
+        // Verifies that update() adds an entry to the health-status list.
         Map<Integer, String> mappaStatoSalute = new HashMap<>();
         Map<String, String> expectedMappaStatoSaluteCani = new HashMap<>();
         LinkedList<Map<String, String>> expectedList = new LinkedList<>();
@@ -146,43 +148,40 @@ public class ClienteTest {
         p2.setMappaStatoSalute(mappaStatoSalute);
         p2.notifyObservers();
 
-        // verifichiamo che la lista contenga un elemento
+        // Verifies that the list contains an element.
         assertEquals(expectedList, Giuseppe.getStatoSalute());
     }
-
-
-  
 
     @Test
     void testCheckSovrapposizioneDate(){
         Cliente Alberto = new Cliente("Alberto11", "ALberto", "Provenzano", "0000", "123456");
-        // Turno sovrapposto con dataInizio di periodoTest
+        // Shift overlaps the start date of periodoTest.
         Turno turnoTest1 = new Turno(16, LocalDate.now(), LocalTime.of(10, 0), LocalTime.of(12,0));
-        // Turno sovrapposto con dataFine di periodoTest
+        // Shift overlaps the end date of periodoTest.
         Turno turnoTest2 = new Turno(17, LocalDate.now().plusMonths(1), LocalTime.of(10, 0), LocalTime.of(12,0));
-        // Turno che si trova sovrapposto tra dataInizio e dataFine di periodoTest
+        // Shift falls inside periodoTest.
         Turno turnoTest3 = new Turno(18, LocalDate.now().plusWeeks(1), LocalTime.of(10, 0), LocalTime.of(12,0));
-        // Turno non sovrapposto a periodoTest
+        // Shift does not overlap periodoTest.
         Turno turnoTest4 = new Turno(19, LocalDate.now().plusMonths(2), LocalTime.of(10, 0), LocalTime.of(12,0));
         PeriodoAffido periodoTest = new PeriodoAffido(1, LocalDate.now(), LocalDate.now().plusMonths(1), 200.0F);
 
         Cane Dog = new Cane(10, "Dog", "razza");
-       
-        // chiamndo il checkSovrapposizioneDate settando il turnoCorrente di Dog a null ci aspettiamo che venga restituito true
+
+        // With the dog's current shift null, checkSovrapposizioneDate returns true.
         Dog.setTurnoCorrente(null);
         assertTrue(Alberto.checkSovrapposizioneDate(Dog, periodoTest));
-        // chiamndo il checkSovrapposizioneDate settando il turnoCorrente di Dog a turnoTest1 ci aspettiamo che venga restituito false
+        // With the current shift set to turnoTest1, checkSovrapposizioneDate returns false.
         Dog.setTurnoCorrente(turnoTest1);
-        assertFalse(Alberto.checkSovrapposizioneDate(Dog, periodoTest));  
-        // chiamndo il checkSovrapposizioneDate settando il turnoCorrente di Dog a turnoTest2 ci aspettiamo che venga restituito false
+        assertFalse(Alberto.checkSovrapposizioneDate(Dog, periodoTest));
+        // With the current shift set to turnoTest2, checkSovrapposizioneDate returns false.
         Dog.setTurnoCorrente(turnoTest2);
-        assertFalse(Alberto.checkSovrapposizioneDate(Dog, periodoTest));   
-        // chiamndo il checkSovrapposizioneDate settando il turnoCorrente di Dog a turnoTest3 ci aspettiamo che venga restituito false 
+        assertFalse(Alberto.checkSovrapposizioneDate(Dog, periodoTest));
+        // With the current shift set to turnoTest3, checkSovrapposizioneDate returns false.
         Dog.setTurnoCorrente(turnoTest3);
-        assertFalse(Alberto.checkSovrapposizioneDate(Dog, periodoTest));  
-        // chiamndo il checkSovrapposizioneDate settando il turnoCorrente di Dog a turnoTest4 ci aspettiamo che venga restituito true
+        assertFalse(Alberto.checkSovrapposizioneDate(Dog, periodoTest));
+        // With the current shift set to turnoTest4, checkSovrapposizioneDate returns true.
         Dog.setTurnoCorrente(turnoTest4);
-        assertTrue(Alberto.checkSovrapposizioneDate(Dog, periodoTest)); 
-        
+        assertTrue(Alberto.checkSovrapposizioneDate(Dog, periodoTest));
+
     }
 }

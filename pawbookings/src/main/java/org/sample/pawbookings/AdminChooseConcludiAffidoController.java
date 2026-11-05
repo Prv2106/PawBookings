@@ -6,6 +6,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
+/**
+ * Controller that lets the administrator choose between a direct pickup and a
+ * delegated pickup.
+ */
 public class AdminChooseConcludiAffidoController {
 
     @FXML
@@ -22,7 +26,7 @@ public class AdminChooseConcludiAffidoController {
 
     @FXML
     void onRitiroClientePressed(ActionEvent event) {
-        // passiamo alla schermata dove inserire le info date dal cliente in struttura
+
         try {
             MainApplication.setRoot("concludi_affido-view.fxml");
         } catch (IOException e) {
@@ -32,7 +36,7 @@ public class AdminChooseConcludiAffidoController {
 
     @FXML
     void onRitiroConDelegaPressed(ActionEvent event) {
-        // passiamo alla schermata dove inserire le info date dal cliente in struttura
+
         try {
             MainApplication.setRoot("concludi_affido_delega-view.fxml");
         } catch (IOException e) {

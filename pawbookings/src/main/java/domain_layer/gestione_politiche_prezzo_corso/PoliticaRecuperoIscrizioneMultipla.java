@@ -2,18 +2,24 @@ package domain_layer.gestione_politiche_prezzo_corso;
 
 import domain_layer.Corso;
 
+/**
+ * Composite policy applied when a make-up lesson is combined with a multiple
+ * enrollment. Rules R1 and R3 may overlap because the course is paid at the
+ * check-in of the first lesson, so a missed first lesson can require both the
+ * course fee and the recovery fee.
+ */
 public class PoliticaRecuperoIscrizioneMultipla extends PoliticaComposta {
 
+    /**
+     * Sums the prices produced by the configured policies.
+     *
+     * @param cs course being priced
+     * @param numCaniIscritti number of dogs enrolled by the same customer
+     * @return aggregate amount due
+     */
     @Override
     public float getPrezzo(Corso cs, int numCaniIscritti) {
-    /*
-        Le regole R1 ed R3 si possono sovrapporre in quanto, siccome il pagamento di un corso
-        si effettua al timbro della prenotazione del turno relativo alla prima lezione di un corso,
-        è possibile che già dalla prima lezione il cliente non presenta il cane e dovrà quindi, oltre
-        che saldare il conto del corso, anche sostenere la "mora" per recuperare la lezione.
-     */
-    
-        float importoDovuto = 0;
+            float importoDovuto = 0;
 
         for (IpoliticaPrezzoCorso p: politicaPrezzoCorso) {
             importoDovuto += p.getPrezzo(cs, numCaniIscritti);
@@ -21,5 +27,5 @@ public class PoliticaRecuperoIscrizioneMultipla extends PoliticaComposta {
 
         return importoDovuto;
     }
-    
+
 }

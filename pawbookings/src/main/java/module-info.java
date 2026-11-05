@@ -1,3 +1,9 @@
+/**
+ * JavaFX application module for PawBookings.
+ *
+ * <p>Exports the presentation package to JavaFX FXML and opens it for
+ * reflective controller injection.</p>
+ */
 module org.sample.pawbookings {
     requires javafx.controls;
     requires javafx.fxml;

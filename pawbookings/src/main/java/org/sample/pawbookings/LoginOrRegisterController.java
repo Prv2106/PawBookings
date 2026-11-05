@@ -7,6 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+/**
+ * Controller that lets a customer choose between login and registration.
+ */
 public class LoginOrRegisterController  {
 
     @FXML
@@ -27,7 +30,7 @@ public class LoginOrRegisterController  {
 
     @FXML
     void onLoginPressed(ActionEvent event) {
-         // passiamo alla schermata di login per l'utente
+
         try {
             MainApplication.setRoot("login-view.fxml");
         } catch (IOException e) {
@@ -37,7 +40,7 @@ public class LoginOrRegisterController  {
 
     @FXML
     void onRegisterPressed(ActionEvent event) {
-        // passiamo alla schermata di registrazione per l'utente
+
         try {
             MainApplication.setRoot("register-view.fxml");
         } catch (IOException e) {

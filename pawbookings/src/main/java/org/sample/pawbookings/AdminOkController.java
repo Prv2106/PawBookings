@@ -5,6 +5,9 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
+/**
+ * Controller for the administrator confirmation screen.
+ */
 public class AdminOkController {
 
     @FXML

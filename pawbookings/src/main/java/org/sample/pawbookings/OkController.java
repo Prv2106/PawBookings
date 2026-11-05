@@ -5,6 +5,9 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
+/**
+ * Controller for the customer confirmation screen.
+ */
 public class OkController {
 
     @FXML

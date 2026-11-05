@@ -18,12 +18,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 
+/**
+ * Controller for selecting the dog to place in the chosen foster period.
+ */
 public class SelectDogController {
 
     @FXML
     private ListView<Cane> list;
 
-    // creiamo una lista osservabile per la ListView<Cane>
     ObservableList<Cane> items = FXCollections.observableArrayList();
 
     @FXML
@@ -40,6 +42,11 @@ public class SelectDogController {
         }
     }
 
+    /**
+     * Populates the dog list for foster-care selection.
+     *
+     * @param elencoCaniDaAffidare dogs eligible for foster care
+     */
     public void start(LinkedList<Cane> elencoCaniDaAffidare) {
         PawBookings PB = PawBookings.getInstance();
 
@@ -51,40 +58,37 @@ public class SelectDogController {
             items.addAll(elencoCaniDaAffidare);
             this.list.setItems(items);
 
-            // definiamo la grafica di ogni oggetto della lista
             this.list.setCellFactory(new Callback<ListView<Cane>, ListCell<Cane>>() {
                 @Override
                 public ListCell<Cane> call(ListView<Cane> listView) {
                     return new ListCell<Cane>() {
                         @Override
                         protected void updateItem(Cane cane, boolean empty) {
-                            // per ogni elemento (cane)
+
                             super.updateItem(cane, empty);
 
                             if (cane == null || empty) {
                                 setText(null);
                             } else {
-                                // nome e razza
+
                                 VBox vbox = new VBox();
                                 Label nomeLabel = new Label("Nome: " + cane.getNome());
                                 Label razzaLabel = new Label("Razza: " + cane.getRazza());
                                 vbox.getChildren().addAll(nomeLabel, razzaLabel);
 
-                                // Imposta il contenuto della cella
                                 setGraphic(vbox);
 
-        // -------------------> Aggiungiamo il listener per l'evento di click
                                 setOnMouseClicked(event -> {
                                     try {
-                                        // Azioni da eseguire quando un elemento viene cliccato
+
                                         boolean b = PB.confermaAffido(cane);
                                         if (b) {
-                                            // notifica positiva
+
                                             MainApplication.setRoot("ok-view.fxml");
                                         } else if (!b) {
                                             MainApplication.goClientErrorPage("Hai selezionato un periodo durante il quale il cane ha attiva la prenotazione ad un turno...");
                                         } else {
-                                            // b == null
+
                                             MainApplication.goClientErrorPage("Il periodo di affido risulta adesso essere non più disponibile...");
                                         }
                                     } catch (IOException e) {

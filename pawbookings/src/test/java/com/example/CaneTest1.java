@@ -10,15 +10,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-
 import org.junit.jupiter.api.BeforeAll;
 
-
-
-/*
- * Test dei casi d'uso UC1-UC2
+/**
+ * Unit tests for dog enrollment, lesson progression, and course completion (UC1-UC2).
  */
-
 class CaneTest1 {
     static PawBookings PB;
     static Cane Luna;
@@ -29,27 +25,27 @@ class CaneTest1 {
 
     @BeforeAll
     public static void initTest() {
-        //Configurazioni che ci servono prima dell'esecuzione dei metodi di test
+        // Initializes the fixtures required by the tests.
         PB = PawBookings.getInstance();
         PB.inserisciNuovoCorso("Corso Base", 10, 200.0F);
         corsoBase = PB.getCorsi().get(0);
         PB.selezionaCorso(corsoBase);
 
-        // Il codice di questa lezione sarà 1
+        // The lesson code is 1.
         PB.nuovaLezione("Comandi di Base");
         PB.inserisciEsercizio("Saluto amichevole", "Questo esercizio aiuta a promuovere una socializzazione positiva tra cani");
         PB.inserisciEsercizio("Resta", "'Resta'per rimanere in posizione, aumentando gradualmente la distanza dal proprietario");
         PB.inserisciEsercizio("Richiamo", "Insegna al cane a rispondere al comando di richiamo del padrone");
         PB.confermaLezione();
 
-        // Il codice di questa lezione sarà 2
+        // The lesson code is 2.
         PB.nuovaLezione("Guinzaglio e Camminare al Guinzaglio");
         PB.inserisciEsercizio("Introduzione al Guinzaglio", "Insegnare ai proprietari come presentare il guinzaglio al cane in modo positivo, facendolo abituare gradualmente alla sensazione e premiando il comportamento calmo e collaborativo.");
         PB.inserisciEsercizio("Camminata Focalizzata", "Praticare una camminata controllata in cui il cane cammina al fianco del proprietario senza tirare al guinzaglio. Utilizzare comandi verbali e premi per incoraggiare un comportamento desiderato.");
         PB.inserisciEsercizio("Affrontare Distrazioni", "Introdurre gradualmente distrazioni durante la camminata al guinzaglio, come altri cani o stimoli ambientali. Insegnare ai proprietari come gestire le situazioni, mantenendo il controllo del cane e premiando il comportamento desiderato in presenza di distrazioni.");
         PB.confermaLezione();
 
-        // Inserimento turni
+        // Adds shifts.
         PB.selezionaCorsoModificaTurni(corsoBase);
         PB.selezionaLezione(corsoBase.getLezioni().get(0));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
@@ -60,21 +56,21 @@ class CaneTest1 {
         corsoAvanzato = PB.getCorsi().get(1);
         PB.selezionaCorso(corsoAvanzato);
 
-        // Il codice di questa lezione sarà 3
+        // The lesson code is 3.
         PB.nuovaLezione("Svolte, dietro front e variazioni andature");
         PB.inserisciEsercizio("Dietro Front", "Insegna al cane a girare rapidamente di 180 gradi su comando, promuovendo una risposta veloce e coordinata.");
         PB.inserisciEsercizio("Variazioni Andature", "Pratica diverse andature come il passo veloce e il passo lento, migliorando il controllo del cane nelle varie situazioni.");
         PB.inserisciEsercizio("Svolte", "Esercita il cane a eseguire svolte a destra e sinistra durante la camminata al guinzaglio, migliorando la coordinazione e la capacità di seguire le indicazioni del proprietario.");
         PB.confermaLezione();
 
-        // Il codice di questa lezione sarà 4
+        // The lesson code is 4.
         PB.nuovaLezione("Riporto in piano di un oggetto");
         PB.inserisciEsercizio("Introduzione al Riporto", "Insegna al cane a prendere un oggetto e a rilasciarlo gentilmente, utilizzando rinforzi positivi come premi o carezze.");
         PB.inserisciEsercizio("Riporto con Distrazioni", " Pratica il riporto introducendo distrazioni come suoni o altri oggetti, migliorando la capacità del cane di concentrarsi sul compito principale.");
         PB.inserisciEsercizio("Riporto a Distanza", "Insegna al cane a riportare un oggetto anche a distanza, incrementando gradualmente la distanza tra il proprietario e il punto in cui l'oggetto deve essere riportato.");
         PB.confermaLezione();
 
-        // Inserimento turni
+        // Adds shifts.
 
         PB.selezionaCorsoModificaTurni(corsoAvanzato);
         PB.selezionaLezione(corsoAvanzato.getLezioni().get(0));
@@ -86,137 +82,99 @@ class CaneTest1 {
         Stella = new Cane(11, "Stella", "Pastore Tedesco");
         Dog = new Cane(12, "Dog", "Pastore Tedesco");
 
-        // Iscriviamo Stella al corsoBase
+        // Enrolls Stella in the basic course.
         Stella.aggiornaAttualmenteIscritto(corsoBase);
 
-        // PB.selezionaCane(new Cane(10, "Luna", "Barboncino"));
-        // PB.getCaneSelezionato().aggiornaAttualmenteIscritto(PB.getCorsi().get(0));
     }
-    
 
     @Test
     void testAggiornaAttualmenteIscritto() {
-        // il booleano è settato a false di default
-        Cane cn = new Cane(10, "Sole", "Labrador"); 
+        // The flag defaults to false.
+        Cane cn = new Cane(10, "Sole", "Labrador");
         assertFalse(cn.getAttualmenteIscritto());
         assertEquals(null, cn.getCorsoCorrente());
 
-        // simuliamo che il cane si iscrivi al corso base
+        // Simulates that the dog enrolls in the basic course.
         cn.aggiornaAttualmenteIscritto(PB.getCorsi().get(0));
         assertTrue(cn.getAttualmenteIscritto());
         assertEquals(1, cn.getCorsoCorrente().getCodice());
     }
 
-
-
     @Test
-    void testGetLezioneSuccessiva() { 
-        // Iscriviamo Luna al corsoBase e verifichiamo che la lezione successiva sia la prima
-        // dopo, aggiungiamo la prima lezione all'elenco delle lezioni seguite da Luna, 
-        // così da verificare successivamente che la lezione successiva sia la seconda del programma
-
-        /*  Il programma del corso base è il seguente:
-            Lezione lezione1 = new Lezione(1,"Comandi di Base");
-            Lezione lezione2 = new Lezione(2,"Guinzaglio e Camminare al Guinzaglio");
-        */
+    void testGetLezioneSuccessiva() {
+        // Enrolls Luna in the basic course and verifies that the next lesson is the first.
+        // Adds the first lesson to Luna's attended lessons so that
+        // the next lesson is the second programme lesson.
 
         Luna.aggiornaAttualmenteIscritto(corsoBase);
 
-        // ci aspettiamo che la lezione sia la prima in quanto Luna si è solo iscritta al corsoBase
+        // Expected: the first lesson, because Luna has only enrolled in the basic course.
         assertEquals("Comandi di Base", Luna.getLezioneSuccessiva().getNome());
 
-        // assumiamo che Luna abbia seguito la prima lezione
+        // Assumes that Luna took the first lesson.
         Luna.aggiungiLezioneSeguita(PB.getCorsi().get(0).getLezioni().get(1));
 
-        // Seconda verifica: ci aspettiamo che la lezione successiva sia la seconda
+        // Second check: the next lesson must be the second one.
         assertEquals("Guinzaglio e Camminare al Guinzaglio", Luna.getLezioneSuccessiva().getNome());
 
-        // Ripristino lo stato iniziale
+        // Restores the initial state.
         Luna.getLezioniSeguite().clear();
     }
 
-
-    
     @Test
     void testAggiornaAvanzamentoCorso() {
-        // 1) dimensione elenco lezioni seguite, ovvero
-        // controlliamo che la lezione successiva sia aggiunta all'elenco
+        // 1) Verifies that the attended-lesson list size increases.
+        // Verifies that the next lesson is added to the list.
 
-        // prendiamo un cane
+        // Retrieves a dog.
         int lunghezzaPrecedente = Stella.getLezioniSeguite().size();
 
-       
-
-        // recuperiamo il primo turno della prima lezione del corso base a cui è iscritto
+        // Retrieves the first shift of the first lesson of the enrolled basic course.
         Turno t1 = corsoBase.getLezioni().get(0).getTurniDisponibili().get(0);
 
         Stella.aggiornaStatoAvanzamento(t1);
 
         assertEquals(lunghezzaPrecedente + 1, Stella.getLezioniSeguite().size());
 
-        // verifichiamo che l'elenco delle lezioni seguite da Stella contenga la lezione
-        // relativa al turno scelto
+        // Verifies that the list of lessons attended by Stella contains the lesson.
+        // associated with the chosen shift.
         assertTrue(Stella.getLezioniSeguite().contains(corsoBase.getLezioni().get(0)));
 
-        // Ripristino lo stato iniziale
+        // Restores the initial state.
         Stella.getLezioniSeguite().clear();
 
     }
-    
 
-
-
-    @Test 
+    @Test
     void testCompletamentoCorso() {
         Turno t;
-        // 2) verfichiamo il caso in cui il Dog termina il programma di un Corso:
-        // Iscriviamo Dog al corsoAvanzato (per farlo assumiamo che abbia completato il corsoBase)
+        // 2) Verifies the case in which the dog completes the course programme:
+        // Enrolls the dog in the advanced course, assuming it completed the basic course.
         Dog.getCorsiCompletati().add(corsoBase);
         Dog.aggiornaAttualmenteIscritto(corsoAvanzato);
 
-        // Simuliamo la prenotazione di Dog ad un turno di ciascuna lezione del corsoAvanzato
+        // Simulates booking the dog for one shift of each advanced-course lesson.
         t = corsoAvanzato.getLezioni().get(0).getTurniDisponibili().get(0);
         Dog.aggiornaStatoAvanzamento(t);
         t = corsoAvanzato.getLezioni().get(1).getTurniDisponibili().get(0);
         Dog.aggiornaStatoAvanzamento(t);
-       
- 
-         // Verifichiamo che l'attributo attualmenteIscritto di Dog è diventato false
+
+         // Verifies that dog's attualmenteIscritto attribute has become false.
          assertFalse(Dog.getAttualmenteIscritto());
- 
-         // Verifichiamo che l'attributo corsoCorrente di Dog è diventato null
+
+         // Verifies that dog's corsoCorrente attribute has become null.
          assertEquals(null, Dog.getCorsoCorrente());
- 
-         // Verifichiamo che la lunghezza della lista lezioniSeguite di Dog è diventata 2
+
+         // Verifies that the length of dog's attended lessons list has become 2.
          assertEquals(2, Dog.getLezioniSeguite().size());
- 
-         // Verifichiamo che nell'elenco Corsi completati di Dog sia presente il corso che abbiamo completato
+
+         // Verifies that the completed course is present in the dog's completed-course list.
          assertTrue(Dog.getCorsiCompletati().contains(corsoAvanzato));
- 
-         // Verifichiamo che l'istanza Dog di Cane non sia più presente nell'elencoCaniIscritti del Corso interessato
+
+         // Verifies that the Cane instance is no longer in the course enrolled-dog list.
          assertFalse(corsoAvanzato.getCaniIscritti().contains(Dog));
- 
+
      }
 
-
-
-
-   
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
 

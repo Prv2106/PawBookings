@@ -19,16 +19,18 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
-public class ReadNotificationsController implements Initializable {   
+/**
+ * Controller for reading and clearing customer health-status notifications.
+ */
+public class ReadNotificationsController implements Initializable {
 
     @FXML
     private Button backButton;
 
     @FXML
     private ListView<String> list;
-    // creiamo una lista osservabile per le notifiche (stringhe)
-    ObservableList<String> items = FXCollections.observableArrayList();
 
+    ObservableList<String> items = FXCollections.observableArrayList();
 
     @FXML
     void onBackPressed(ActionEvent event) {
@@ -39,21 +41,22 @@ public class ReadNotificationsController implements Initializable {
         }
     }
 
-
+    /**
+     * Combines and displays the logged-in customer's health-status notifications.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        PawBookings PB = PawBookings.getInstance();  
-        // avremo una mappa per ogni periodo affido al quale siamo "iscritti"
+        PawBookings PB = PawBookings.getInstance();
+        // One map is stored for each foster period the customer subscribed to.
         LinkedList<Map<String, String>> listaMappa = PB.leggiStatoSalute();
-        
-        // prendiamo tutti i nomi cani e li mettiamo in un ArrayList
+
+        // Collects dog names.
         List<String> nomiCani = new ArrayList<>();
-        // prendiamo tutti i messaggi e li mettiamo in un ArrayList
+        // Collects health-status messages.
         List<String> messaggi = new ArrayList<>();
-        
 
         for (Map<String, String> m: listaMappa) {
-            // per ogni mappa della lista
+
             messaggi.addAll(m.values());
 
             for (String k: m.keySet()) {
@@ -61,31 +64,28 @@ public class ReadNotificationsController implements Initializable {
             }
         }
 
-        // unifichiamo nome e messaggio in un'unica Stringa
+        // Combines each dog name with its health-status message.
         List<String> notifiche = new ArrayList<>();
 
-        for (int i = 0; i < messaggi.size(); i++) 
+        for (int i = 0; i < messaggi.size(); i++)
             notifiche.add(nomiCani.get(i) + ": " + messaggi.get(i));
-        
-                
+
         items.addAll(notifiche);
         this.list.setItems(items);
 
-        
-        // definiamo la grafica 
         this.list.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
             @Override
             public ListCell<String> call(ListView<String> listView) {
                 return new ListCell<String>() {
                     @Override
                     protected void updateItem(String notifica, boolean empty) {
-                        // per ogni elemento (nome del cane)
+
                         super.updateItem(notifica, empty);
 
                         if (notifica == null || empty) {
                             setText(null);
                         } else {
-                            // a sx il nome del cane, a dx il messaggio
+
                             VBox vbox = new VBox();
                             vbox.getChildren().add(new Label(notifica));
                             setGraphic(vbox);
@@ -98,7 +98,7 @@ public class ReadNotificationsController implements Initializable {
 
     @FXML
     void onDeletePressed(ActionEvent event) {
-        // dobbiamo cancellare le notifiche del cliente
+        // Clears the current customer's notifications.
         PawBookings.getInstance().cancellaNotifiche();
         try {
             MainApplication.setRoot("home_page-view.fxml");

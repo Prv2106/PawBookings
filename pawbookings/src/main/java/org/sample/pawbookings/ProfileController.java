@@ -11,6 +11,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * Controller for the customer profile. Exposes delegation, dog management, logout, and
+ * navigation actions.
+ */
 public class ProfileController implements Initializable {
 
     @FXML
@@ -59,11 +63,9 @@ public class ProfileController implements Initializable {
         }
     }
 
-
-    // PULSANTI NAVBAR
     @FXML
     void onDogTabPressed(ActionEvent event) {
-        // andiamo nella sezione relativa all'affido
+
         try {
             MainApplication.setRoot("available_periods-view.fxml");
         } catch (IOException e) {
@@ -73,7 +75,7 @@ public class ProfileController implements Initializable {
 
     @FXML
     void onHomeTabPressed(ActionEvent event) {
-        // andiamo nella home page
+
         try {
             MainApplication.setRoot("home_page-view.fxml");
         } catch (IOException e) {
@@ -81,6 +83,9 @@ public class ProfileController implements Initializable {
         }
     }
 
+    /**
+     * Displays the logged-in customer code and delegation code when available.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.username.setText(PawBookings.getInstance().getClienteLoggato().getCodiceCliente());

@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-
 import domain_layer.Esercizio;
 import domain_layer.Lezione;
 import domain_layer.PawBookings;
@@ -22,6 +21,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 
+/**
+ * Controller for displaying the programme of a course selected by the administrator
+ * and for selecting a lesson to manage its shifts.
+ */
 public class AdminShowCourseProgramController implements Initializable {
 
     @FXML
@@ -29,7 +32,7 @@ public class AdminShowCourseProgramController implements Initializable {
 
     @FXML
     private ListView<Lezione> list;
-    // creiamo una lista osservabile per le lezioni
+
     ObservableList<Lezione> items = FXCollections.observableArrayList();
 
     @FXML
@@ -44,6 +47,9 @@ public class AdminShowCourseProgramController implements Initializable {
         }
     }
 
+    /**
+     * Displays the selected course programme and configures lesson selection.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         PawBookings PB = PawBookings.getInstance();
@@ -53,41 +59,35 @@ public class AdminShowCourseProgramController implements Initializable {
         items.addAll(programma);
         this.list.setItems(items);
 
-        
-        // definiamo la grafica di ogni oggetto della lista (lezione)
         this.list.setCellFactory(new Callback<ListView<Lezione>, ListCell<Lezione>>() {
             @Override
             public ListCell<Lezione> call(ListView<Lezione> listView) {
                 return new ListCell<Lezione>() {
                     @Override
                     protected void updateItem(Lezione lezione, boolean empty) {
-                        // per ogni elemento (lezione)
+
                         super.updateItem(lezione, empty);
 
                         if (lezione == null || empty) {
                             setText(null);
                         } else {
-                            
-                            // nome lezione
+
                             VBox vbox = new VBox();
                             vbox.getChildren().add(new Label("lezione " + (programma.indexOf(lezione)+1) + ": " + lezione.getNome()));
-                            // sotto ogni lezione, mettiamone gli esercizi
+
                             for (int j = 0; j < lezione.getEsercizi().size(); j++) {
                                 Esercizio esercizio = lezione.getEsercizi().get(j);
                                 vbox.getChildren().add(new Label("   - " + (j+1) +") " + esercizio.getNome()));
                             }
-                            // Imposta il contenuto della cella
+
                             setGraphic(vbox);
 
-                            
                           }
-                            
-    // -------------------> Aggiungiamo il listener per l'evento di click
+
                             setOnMouseClicked(event -> {
-                                // Azioni da eseguire quando un elemento viene cliccato
+
                                 PB.selezionaLezione(lezione);
 
-                                // passiamo alla schermata successiva
                                 try {
                                     MainApplication.setRoot("new_shift-view.fxml");
                                 } catch (IOException e) {
@@ -95,10 +95,9 @@ public class AdminShowCourseProgramController implements Initializable {
                                 }
                             });
 
-                            
                         }
                     };
-                    
+
                 }
             });
         }

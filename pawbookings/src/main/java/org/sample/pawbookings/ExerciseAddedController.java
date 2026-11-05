@@ -6,6 +6,10 @@ import domain_layer.PawBookings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
+/**
+ * Controller shown after an exercise is added. Allows adding another exercise or
+ * confirming the lesson.
+ */
 public class ExerciseAddedController {
 
     @FXML
@@ -25,11 +29,11 @@ public class ExerciseAddedController {
             } else {
                 MainApplication.simpleBack();
             }
-           
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }  
+    }
 
 }
 

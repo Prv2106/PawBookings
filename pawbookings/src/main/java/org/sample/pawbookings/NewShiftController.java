@@ -16,6 +16,9 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.util.converter.LocalTimeStringConverter;
 
+/**
+ * Controller for creating a bookable shift in the selected lesson.
+ */
 public class NewShiftController implements Initializable{
 
     @FXML
@@ -30,7 +33,6 @@ public class NewShiftController implements Initializable{
     @FXML
     private Spinner<LocalTime> oraInizio;
 
-
     @FXML
     void onBackPressed(ActionEvent event) {
         try {
@@ -40,45 +42,48 @@ public class NewShiftController implements Initializable{
         }
     }
 
+    /**
+     * Initializes the date picker and the time spinners.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.data.setValue(LocalDate.now().plusDays(1));
 
-        // Configura il Spinner per accettare orari nel formato HH:mm
+        // Configures the spinner to accept times in HH:mm format.
         SpinnerValueFactory<LocalTime> valueFactory1 = new SpinnerValueFactory<LocalTime>() {
             {
                 setConverter(new LocalTimeStringConverter());
-                setValue(LocalTime.of(8, 0)); // Imposta l'orario iniziale
-                setWrapAround(true); // Per consentire il wrap-around (riavvolgimento) se si raggiunge il limite
+                setValue(LocalTime.of(8, 0)); // Initial time.
+                setWrapAround(true); // Enables wrap-around at the limits.
             }
 
             @Override
             public void decrement(int steps) {
-                setValue(getValue().minusMinutes(30*steps)); // Decrementa l'orario
+                setValue(getValue().minusMinutes(30*steps)); // Decrements by 30 minutes per step.
             }
 
             @Override
             public void increment(int steps) {
-                setValue(getValue().plusMinutes(30*steps)); // Incrementa l'orario
+                setValue(getValue().plusMinutes(30*steps)); // Increments by 30 minutes per step.
             }
         };
 
-        // Configura il Spinner per accettare orari nel formato HH:mm
+        // Configures the spinner to accept times in HH:mm format.
         SpinnerValueFactory<LocalTime> valueFactory2 = new SpinnerValueFactory<LocalTime>() {
             {
                 setConverter(new LocalTimeStringConverter());
-                setValue(LocalTime.of(16, 0)); // Imposta l'orario iniziale
-                setWrapAround(true); // Per consentire il wrap-around (riavvolgimento) se si raggiunge il limite
+                setValue(LocalTime.of(16, 0)); // Initial time.
+                setWrapAround(true); // Enables wrap-around at the limits.
             }
 
             @Override
             public void decrement(int steps) {
-                setValue(getValue().minusMinutes(30*steps)); // Decrementa l'orario
+                setValue(getValue().minusMinutes(30*steps)); // Decrements by 30 minutes per step.
             }
 
             @Override
             public void increment(int steps) {
-                setValue(getValue().plusMinutes(30*steps)); // Incrementa l'orario
+                setValue(getValue().plusMinutes(30*steps)); // Increments by 30 minutes per step.
             }
         };
 
@@ -88,11 +93,11 @@ public class NewShiftController implements Initializable{
 
     @FXML
     void onInserisciNuovoCorsoPressed(ActionEvent event) throws IOException {
-        // recuperiamo le informazione inserite dall'utente
+
         LocalDate data = this.data.getValue();
         LocalTime oraInizio = this.oraInizio.getValue();
         LocalTime oraFine = this.oraFine.getValue();
-        
+
         try {
             if (PawBookings.getInstance().nuovoTurno(data, oraInizio, oraFine)) {
                 MainApplication.setRoot("admin_ok-view.fxml");
@@ -102,9 +107,7 @@ public class NewShiftController implements Initializable{
         } catch (Exception e) {
             MainApplication.goAdminErrorPage(e.getMessage());
         }
-        
-    }
 
-    
+    }
 
 }

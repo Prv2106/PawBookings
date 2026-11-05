@@ -20,17 +20,20 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
+/**
+ * Controller for the list of shifts available to the selected dog. Books the selected
+ * shift.
+ */
 public class AvailableShiftsController implements Initializable {
 
     @FXML
     private ListView<Turno> list;
 
-    // creiamo una lista osservabile per i turni
     ObservableList<Turno> items = FXCollections.observableArrayList();
 
     @FXML
     private Button backButton;
-    
+
     @FXML
     void onBackPressed(ActionEvent event) throws IOException {
         try {
@@ -40,30 +43,31 @@ public class AvailableShiftsController implements Initializable {
         }
     }
 
-    // metodo che viene richiamato all'apertura della schermata
+    /**
+     * Populates the available-shift list and configures the cell renderer and booking handler.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // popoliamo la lista dinamica
-        PawBookings PB = PawBookings.getInstance();  
+
+        PawBookings PB = PawBookings.getInstance();
         LinkedList<Turno> elencoTurni = PB.prenotaTurnoLezione();
 
         items.addAll(elencoTurni);
         this.list.setItems(items);
 
-        // definiamo la grafica di ogni oggetto della lista
         this.list.setCellFactory(new Callback<ListView<Turno>, ListCell<Turno>>() {
             @Override
             public ListCell<Turno> call(ListView<Turno> listView) {
                 return new ListCell<Turno>() {
                     @Override
                     protected void updateItem(Turno turno, boolean empty) {
-                        // per ogni elemento (turno)
+
                         super.updateItem(turno, empty);
 
                         if (turno == null || empty) {
                             setText(null);
                         } else {
-                            // data, ora inizio e ora fine
+
                             VBox vbox = new VBox();
                             Label dataLabel = new Label("Data: " + turno.getData().getDayOfMonth() + "/" + turno.getData().getMonthValue() + "/" + turno.getData().getYear());
                             Label oraInizioLabel = new Label("Ora Inizio: " + turno.getOraInizio());
@@ -71,12 +75,10 @@ public class AvailableShiftsController implements Initializable {
 
                             vbox.getChildren().addAll(dataLabel, oraInizioLabel, oraFineLabel);
 
-                            // Imposta il contenuto della cella
                             setGraphic(vbox);
 
-    // -------------------> Aggiungiamo il listener per l'evento di click
                             setOnMouseClicked(event -> {
-                                // Azioni da eseguire quando un elemento viene cliccato
+
                                 try {
                                     boolean b = PB.selezionaTurno(turno);
                                     if (b) {
@@ -96,7 +98,5 @@ public class AvailableShiftsController implements Initializable {
             }
         });
     }
-
-
 
 }

@@ -8,6 +8,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller for registering a dog for the logged-in customer.
+ */
 public class NewDogController {
 
     @FXML
@@ -29,23 +32,22 @@ public class NewDogController {
 
     @FXML
     void onNewDogPressed(ActionEvent event) throws IOException{
-        // recuperiamo le informazione inserite dall'utente
+
         String nome = this.nome.getText();
         String razza = this.razza.getText();
 
-        // validiamole
         if (!nome.isEmpty() && !razza.isEmpty()) {
-            // operazione di sistema
-            PawBookings PB = PawBookings.getInstance();  
+
+            PawBookings PB = PawBookings.getInstance();
             try {
                 PB.aggiungiCane(nome, razza);
                 MainApplication.setRoot("ok-view.fxml");
             } catch (Exception e) {
-                // messaggio errore
+
                 MainApplication.goClientErrorPage(e.getMessage());
             }
         } else {
-            // i campi sono vuoti...
+
            MainApplication.goClientErrorPage("devi prima compilare entrambi i campi!");
         }
     }

@@ -8,7 +8,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
-
+/**
+ * Controller for the foster-care pickup details screen. Confirms the pickup and
+ * forwards the amount due to the payment screen.
+ */
 public class DettagliAffidoController {
 
     @FXML
@@ -23,7 +26,11 @@ public class DettagliAffidoController {
     @FXML
     private Text dataRitiro;
 
-
+    /**
+     * Displays the details of the foster period being concluded.
+     *
+     * @param pa foster period to display
+     */
     public void start(PeriodoAffido pa) {
         codice.setText(Integer.toString(pa.getCodice()));
         dataInizio.setText(pa.getDataInizio().getDayOfMonth() + "/" + pa.getDataInizio().getMonthValue() + "/" + pa.getDataInizio().getYear());

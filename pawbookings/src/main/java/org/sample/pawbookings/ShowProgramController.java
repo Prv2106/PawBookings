@@ -16,6 +16,9 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Callback;
 
+/**
+ * Controller for displaying a course programme.
+ */
 public class ShowProgramController {
 
     @FXML
@@ -27,7 +30,6 @@ public class ShowProgramController {
     @FXML
     private ListView<Lezione> list;
 
-    // creiamo una lista osservabile per le Lezioni
     ObservableList<Lezione> items = FXCollections.observableArrayList();
 
     @FXML
@@ -39,15 +41,17 @@ public class ShowProgramController {
         }
     }
 
-        
-    public void initialize(Corso corso) { // metodo richiamato dal controller chiamante
+    /**
+     * Displays the programme of the supplied course.
+     *
+     * @param corso course whose programme is shown
+     */
+    public void initialize(Corso corso) {
         items.addAll(corso.getLezioni());
         this.list.setItems(items);
-                        
 
         this.courseName.setText(corso.getTipoCorso());
 
-        // definiamo la grafica di ogni oggetto della lista
         this.list.setCellFactory(new Callback<ListView<Lezione>, ListCell<Lezione>>() {
             @Override
             public ListCell<Lezione> call(ListView<Lezione> listView) {
@@ -59,36 +63,30 @@ public class ShowProgramController {
                         if (lezione == null || empty) {
                             setText(null);
                         } else {
-                            // nome lezione
+
                             VBox vbox = new VBox();
                             vbox.setMaxWidth(300);
                             vbox.getChildren().add(new Label("Nome lezione: " + lezione.getNome()));
                             vbox.getChildren().add(new Label("Esercizi (" + lezione.getEsercizi().size() + "):"));
-                           
-                            // elenco esercizi (nome esercizio e descrizione)
+
                             for (int i = 0; i < lezione.getEsercizi().size(); i++) {
                                 Esercizio esercizio = lezione.getEsercizi().get(i);
                                 vbox.getChildren().add(new Label(" - " + (i+1) +") " + esercizio.getNome()));
                                 TextFlow boxDescrizione = new TextFlow();
 
-                                Text descrizione = new Text(esercizio.getDescrizione());                                                                
+                                Text descrizione = new Text(esercizio.getDescrizione());
                                 boxDescrizione.getChildren().add(descrizione);
-                                
+
                                 vbox.getChildren().add(boxDescrizione);
                             }
 
-                            // Imposta il contenuto della cella
-
                             setGraphic(vbox);
 
-                            
                         }
                     }
                 };
             }
         });
     }
-
-
 
 }

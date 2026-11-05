@@ -10,17 +10,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-
-
-/*
- * Test dei casi d'uso UC7-UC8
-*/
-
+/**
+ * Integration tests for course and lesson administration (UC7-UC8).
+ */
 class PawBookingsTest3 {
     static PawBookings PB;
 
-    // Il metodo viene eseguito prima di tutti i test
-    // inizializza l'istanza di PawBookings
+    // Runs before all tests.
+    // Initializes the PawBookings instance.
     @BeforeAll
     public static void initTest() {
         PB = PawBookings.getInstance();
@@ -28,49 +25,42 @@ class PawBookingsTest3 {
         PB.aggiungiCane("Stella", "Pastore Tedesco");
         PB.aggiungiCane("Asso", "Corso");
         PB.logout();
-        
-       }
 
+       }
 
     @Test
     void testInserisciNuovoCorso(){
-        // test del metodo
         int lunghezzaIniziale = PB.getCorsi().size();
         PB.inserisciNuovoCorso("Corso Base", 10, 200.0F);
         Corso corsoBase = PB.getCorsi().getLast();
-       
-        // Ci aspettiamo che la lunghezza dell'elencoCorsi di PB adesso sia aumentata di 1
+
+        // Expected: the PB course list grows by one.
         assertEquals(lunghezzaIniziale+1, PB.getCorsi().size());
 
-        // Ci aspettiamo che l'elencoCorsi di PB contenga corsoBase
+        // Expected: the PB course list contains the basic course.
         assertTrue(PB.getCorsi().contains(corsoBase));
 
     }
 
-
     @Test
     void testGeneraCodiceCorso(){
-        // Inseriamo un nuovo corso 
+        // Inserts a new course.
         PB.inserisciNuovoCorso("Corso Avanzato", 10, 250.0F);
 
-        // Se chiamiamo il metodo generaCodiceCorso ci aspettiamo che venga restituito
-        // un numero pari al numero di corsi + 1
+        // Calling generaCodiceCorso returns
+        // the number of courses plus one.
         assertEquals(PB.getCorsi().size()+1, PB.generaCodiceCorso());
     }
-
-
 
     @Test
     void testSelezionaCorso(){
         PB.inserisciNuovoCorso("Corso Agility", 10, 300.0F);
         Corso corsoAgility = PB.getCorsi().getLast();
 
-        // test del metodo 
         PB.selezionaCorso(corsoAgility);
-        // Ci aspettiamo che corso selezionato sia corsoAgility
+        // Expected: the selected course is the agility course.
         assertEquals(corsoAgility, PB.getCorsoSelezionato());
     }
-
 
     @Test
     void testSetCorsoSelezionato(){
@@ -78,21 +68,18 @@ class PawBookingsTest3 {
         Corso corsoNewAgility = PB.getCorsi().getLast();
 
         PB.setCorsoSelezionato(corsoNewAgility);
-        // Ci aspettiamo che il corso selezionato sia il corsoNewAgility
+        // Expected: the selected course is corsoNewAgility.
         assertEquals(corsoNewAgility, PB.getCorsoSelezionato());
-        // Ci aspettiamo che il valore restituito da setCorsoSelezionato sia true
+        // Expected: setCorsoSelezionato returns true.
         assertTrue(PB.setCorsoSelezionato(corsoNewAgility));
 
         PB.setCorsoSelezionato(null);
-        // Ci aspettiamo che il corso selezionato sia null
+        // Expected: the selected course is null.
         assertEquals(null, PB.getCorsoSelezionato());
-        // Ci aspettiamo che il valore restituito da setCorsoSelezionato sia false
+        // Expected: setCorsoSelezionato returns false.
         assertFalse(PB.setCorsoSelezionato(null));
 
-
     }
-
-
 
     @Test
     void testModificaCorso(){
@@ -100,15 +87,12 @@ class PawBookingsTest3 {
         Corso corsoTest = PB.getCorsi().getLast();
         PB.selezionaCorso(corsoTest);
 
-        // test del metodo
         PB.modificaCorso(5, 100.0F);
 
-        // Ci aspettiamo che adesso la capienza sia 5 e che il costo sia 100.0F
+        // Expected: capacity 5 and cost 100.0F.
         assertEquals(5, corsoTest.getCapienza());
         assertEquals(100.0F, corsoTest.getCosto());
     }
-
-
 
     @Test
     void testNuovaLezione(){
@@ -116,37 +100,32 @@ class PawBookingsTest3 {
         Corso corsoTestLezione = PB.getCorsi().getLast();
         PB.selezionaCorso(corsoTestLezione);
 
-        // Settiamo a null la lezione Corrente
+        // Sets lezioneCorrente to null.
         corsoTestLezione.setLezioneCorrente(null);
 
-        // Test del metodo
         PB.nuovaLezione("Lezione test");
 
-        // Verifichiamo che è stata creata una nuova lezione
+        // Verifies that a new lesson was created.
         assertNotEquals(null, corsoTestLezione.getLezioneCorrente());
 
-        // resettiamo le condizioni di partenza
+        // Resets the starting conditions.
         corsoTestLezione.setLezioneCorrente(null);
         PB.selezionaCorso(null);
     }
-
 
     @Test
     void generaCodiceLezione(){
         int expected;
         int numLezioni=0;
-      
+
         for(Corso c: PB.getCorsi()){
             numLezioni += c.getLezioni().size();
         }
         expected = numLezioni +1;
-        // test del metodo
-        //Ci aspettiamo che il codice sia uguale al numero delle lezioni + 1
+        // Expected: the code equals the number of lessons plus one.
         assertEquals(expected, PB.generaCodiceLezione());
 
     }
-    
-    
 
     @Test
     void testInserisciEsercizio(){
@@ -154,16 +133,14 @@ class PawBookingsTest3 {
         Corso corsoTest = PB.getCorsi().getLast();
         PB.selezionaCorso(corsoTest);
         PB.nuovaLezione("Lezione test");
-        // test del metodo 
         PB.inserisciEsercizio("Esercizio test", "esercizio fittizio per eseguire il test del metodo");
-        // Ci aspettiamo che la lunghezza della lista di esercizi di Lezione test sia 1
+        // Expected: the test lesson contains one exercise.
         assertEquals(1, corsoTest.getLezioneCorrente().getEsercizi().size());
         PB.inserisciEsercizio("Esercizio test2", "esercizio fittizio per eseguire il test del metodo");
-        // Ci aspettiamo che la lunghezza della lista di esercizi di Lezione test sia 2
+        // Expected: the test lesson contains two exercises.
         assertEquals(2, corsoTest.getLezioneCorrente().getEsercizi().size());
 
     }
-
 
     @Test
     void testConfermaLezione(){
@@ -174,17 +151,15 @@ class PawBookingsTest3 {
         PB.inserisciEsercizio("Esercizio test", "esercizio fittizio per eseguire il test del metodo");
         Lezione nuovaLezione = corsoTest.getLezioneCorrente();
         int lunghezzaPrecedente = corsoTest.getLezioni().size();
-        // Test del metodo
         PB.confermaLezione();
 
-        // Ci aspettiamo che nuovaLezione sia stata inserita nel programma del corsoTest
+        // Expected: nuovaLezione is included in the corsoTest programme.
         assertTrue(corsoTest.getLezioni().contains(nuovaLezione));
 
-        // Ci aspettiamo che la lunghezza del programma del corsoTest sia aumentata di 1
+        // Expected: the corsoTest programme length increases by one.
         assertEquals(lunghezzaPrecedente + 1, corsoTest.getLezioni().size());
 
     }
-
 
     @Test
     void testCalcolaCorsiConCaniIscritti(){
@@ -193,16 +168,13 @@ class PawBookingsTest3 {
         corsoTest1.getCaniIscritti().add(new Cane(11, "Stella", "Pastore Tedesco"));
         PB.inserisciNuovoCorso("Corso Test senza Cani Iscritti", 10, 400.0F);
         Corso corsoTest2 = PB.getCorsi().getLast();
-        // Test del metodo
-        // Ci aspettiamo che non sia Presente corsoTest2
+        // Expected: corsoTest2 is not present.
         assertFalse(PB.calcolaCorsiConCaniIscritti().contains(corsoTest2));
 
-        // Ci aspettiamo che  sia Presente corsoTest1
+        // Expected: corsoTest1 is present.
         assertTrue(PB.calcolaCorsiConCaniIscritti().contains(corsoTest1));
 
     }
-
-
 
     @Test
     void testSelezionaLezione(){
@@ -211,24 +183,22 @@ class PawBookingsTest3 {
         Corso corsoTest = PB.getCorsi().getLast();
         PB.selezionaCorso(corsoTest);
 
-        // Ci aspettiamo che lezioneSelezionata sua uguale a nuovaLezione
+        // Expected: the selected lesson equals the new lesson.
         PB.selezionaLezione(nuovaLezione);
         assertEquals(nuovaLezione,corsoTest.getLezioneSelezionata());
     }
 
-
-
     @Test
-    void testVerificaDatiTurno(){       
-        // Turno Valido
+    void testVerificaDatiTurno(){
+        // Valid shift data.
         assertTrue(PB.verificaDatiTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0)));
-        // Turno non valido per la data
+        // Invalid date.
         assertFalse(PB.verificaDatiTurno(LocalDate.now(), LocalTime.of(9, 0), LocalTime.of(10, 0)));
-        // Turno non valido per l'ora
+        // Invalid time range.
         assertFalse(PB.verificaDatiTurno(LocalDate.now().plusDays(1), LocalTime.of(19, 0), LocalTime.of(10, 0)));
-        // Turno non valido per data e ora
+        // Invalid date and time range.
         assertFalse(PB.verificaDatiTurno(LocalDate.now(), LocalTime.of(19, 0), LocalTime.of(10, 0)));
-        
+
     }
 
     @Test
@@ -243,20 +213,16 @@ class PawBookingsTest3 {
         corsoTest.setLezioneSelezionata(nuovaLezione);
         int numeroTurniDisponibili = nuovaLezione.getTurniDisponibili().size();
 
-        // test del metodo
-        // Inserendo valori validi di turno
+        // Enters valid shift values.
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
-        // Ci aspettiamo che la lunghezza dell'elencoTurniDisponibili di nuovaLezione sia aumentata di 1
+        // Expected: elencoTurniDisponibili grows by one.
         assertEquals(numeroTurniDisponibili+1, nuovaLezione.getTurniDisponibili().size());
         numeroTurniDisponibili = nuovaLezione.getTurniDisponibili().size();
-        // Inserendo valori errati di turno
+        // Enters invalid shift values.
         PB.nuovoTurno(LocalDate.now(), LocalTime.of(9, 0), LocalTime.of(10, 0));
-        // Ci aspettiamo che la lunghezza dell'elencoTurniDisponibili di nuovaLezione sia rimasta invariata
+        // Expected: elencoTurniDisponibili is unchanged.
         assertEquals(numeroTurniDisponibili, nuovaLezione.getTurniDisponibili().size());
 
-
     }
-
-
 
 }

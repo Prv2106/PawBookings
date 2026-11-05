@@ -6,6 +6,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
+/**
+ * Controller shown after successful registration. Displays the generated customer
+ * code.
+ */
 public class SignupOkController {
 
     @FXML
@@ -20,6 +24,11 @@ public class SignupOkController {
         }
     }
 
+    /**
+     * Displays the generated customer code.
+     *
+     * @param codiceCliente customer code
+     */
     public void setCodiceCliente(String codiceCliente) {
         this.codiceClienteLabel.setText(codiceCliente);
     }

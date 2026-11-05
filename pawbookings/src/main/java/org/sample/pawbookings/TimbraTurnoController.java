@@ -12,6 +12,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller for shift check-in. Resolves the booking from customer and dog codes.
+ */
 public class TimbraTurnoController {
 
     @FXML
@@ -23,7 +26,6 @@ public class TimbraTurnoController {
     @FXML
     private TextField codiceCane;
 
-    
     @FXML
     void onBackPressed(ActionEvent event) {
         try {
@@ -35,38 +37,37 @@ public class TimbraTurnoController {
 
     @FXML
     void onTimbraPressed(ActionEvent event) throws IOException {
-        // recuperiamo quanto inserito dall'amministratore
-        // recuperiamo le informazione inserite dall'amministratore
+
         String codiceCliente = this.codiceCliente.getText();
         String codiceCane = this.codiceCane.getText();
 
         if (!codiceCliente.isEmpty() && !codiceCane.isEmpty()) {
-        // operazione di sistema
-        PawBookings PB = PawBookings.getInstance();  
-        
+
+        PawBookings PB = PawBookings.getInstance();
+
         try {
             Turno t = PB.timbraPrenotazioneTurno(codiceCliente, Integer.parseInt(codiceCane));
 
             if (t != null) {
-                // recuperiamo il loader relativa alla schermata di dettagli turno prenotato (fxml)
+
                 FXMLLoader ld = new FXMLLoader(getClass().getResource("dettagli_turno-view.fxml"));
-                Parent root = ld.load(); // qui viene chiamato l'eventuale INITIALIZE
-                // ne recuperiamo il relativo controller
+                Parent root = ld.load();
+
                 DettagliTurnoController controller = ld.getController();
                 controller.start(t);
-                // andiamo nella schermata
+
                 MainApplication.goTo(root);
             } else {
-                // nessun affido trovato sulla base dei dati inseriti:
+
                 MainApplication.goAdminErrorPage("Nessuna corrispondenza trovata");
               }
             } catch (Exception e) {
                 MainApplication.goAdminErrorPage(e.getMessage());
             }
         } else {
-        // i campi sono vuoti...
+
         MainApplication.goAdminErrorPage("Devi prima compilare tutti i campi!");
         }
-    }    
+    }
 
 }

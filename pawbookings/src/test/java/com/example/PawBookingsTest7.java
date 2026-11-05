@@ -18,12 +18,9 @@ import domain_layer.PawBookings;
 import domain_layer.PeriodoAffido;
 import domain_layer.Turno;
 
-
-/*
- * Test delle regole di dominioR1-R2-R3-R4
-*/
-
-
+/**
+ * Integration tests for domain pricing rules R1-R4.
+ */
 public class PawBookingsTest7 {
     static PawBookings PB;
     static Cane Stella;
@@ -32,12 +29,9 @@ public class PawBookingsTest7 {
     static Cane Leila;
     static Corso corsoBase;
     static Cliente Alberto;
-    
 
-
-
-    // Il metodo viene eseguito prima di tutti i test
-    // inizializza l'istanza di PawBookings
+    // Runs before all tests.
+    // Initializes the PawBookings instance.
 
     @BeforeAll
     public static void initTest() {
@@ -55,12 +49,10 @@ public class PawBookingsTest7 {
         Asso = Alberto.getCane(2);
         Maya = Alberto.getCane(3);
         Leila = Alberto.getCane(4);
-        
 
         PB.inserisciNuovoCorso("Corso Base", 10, 200.0F);
         corsoBase = PB.modificaProgrammaCorso().get(0);
         PB.selezionaCorso(corsoBase);
-
 
         PB.nuovaLezione("Comandi di Base");
         PB.inserisciEsercizio("Saluto amichevole", "Questo esercizio aiuta a promuovere una socializzazione positiva tra cani");
@@ -70,9 +62,7 @@ public class PawBookingsTest7 {
         PB.inserisciEsercizio("Introduzione al Guinzaglio", "Insegnare ai proprietari come presentare il guinzaglio al cane in modo positivo, facendolo abituare gradualmente alla sensazione e premiando il comportamento calmo e collaborativo.");
         PB.confermaLezione();
 
-
-
-        // Inserimento turni 6 per la lezione 1 e 2 per la lezione 2
+        // Adds six shifts to lesson 1 and two shifts to lesson 2.
         PB.selezionaCorsoModificaTurni(corsoBase);
         PB.selezionaLezione(corsoBase.getLezioni().get(0));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
@@ -85,109 +75,103 @@ public class PawBookingsTest7 {
         PB.selezionaLezione(corsoBase.getLezioni().get(0));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(15, 0), LocalTime.of(16, 0));
         PB.selezionaLezione(corsoBase.getLezioni().get(0));
-        
 
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(15, 0), LocalTime.of(16, 0));
         PB.selezionaLezione(corsoBase.getLezioni().get(1));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(15, 0), LocalTime.of(16, 0));
         PB.selezionaLezione(corsoBase.getLezioni().get(1));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(15, 0), LocalTime.of(16, 0));
-      
 
     }
 
-
-
-
-    /* Test regole di dominio R2-R4 */
+    // Tests domain rules R2 and R4.
     @Test
     void testConfermaConclusioneAffido(){
-        /*  Test R2 -Ritiro Anticipato (almeno 1 settimana prima della dataFine del periodo) */
-        // Questo periodo termina tra 7 giorni(rientriamo nell'anticipo della regola di dominio)
+        // Rule R2: early pickup at least one week before the period end.
+        // The period ends in seven days, which qualifies as early pickup.
         PeriodoAffido periodoTestAnticipo = new PeriodoAffido(11, LocalDate.now().minusMonths(1), LocalDate.now().plusDays(7), 100.0F);
-        // Simuliamo l'affido di stella a tale periodo
+        // Places Stella in foster care for this period.
         PB.setClienteLoggato(Alberto);
         PB.selezionaPeriodo(periodoTestAnticipo);
         PB.confermaAffido(Stella);
         assertNotNull(Stella.getAffidoCorrente());
-        // Adesso simuliamo la conclusione dell'affido di stella a questo periodo
+        // Simulates concluding Stella's foster period.
         PB.selezionaCane(Stella);
         PB.setClienteSelezionato(Alberto);
-        // Ci aspettiamo che l'importo dovuto sia 80.0F (costo del periodo scontato del 20%)
+        // Expected amount due: 80.0F (20% discount).
         assertEquals(80.0F, PB.confermaConclusioneAffido());
 
-        /* Test R4 -Ritiro con più cani in affido*/
-        // Questo periodo termina tra 6 giorni (non comprende quindi la regola R2)
+        // Rule R4: pickup with multiple dogs in foster care.
+        // The period ends in six days, which does not qualify as early pickup.
         PeriodoAffido periodoTestAffidoMultiplo = new PeriodoAffido(11, LocalDate.now().minusMonths(1), LocalDate.now().plusDays(6), 100.0F);
-        // Mettiamo Stella e Asso in affido nel periodoTestAffidoMultiplo 
+        // Places Stella and Asso in foster care in periodoTestAffidoMultiplo.
         PB.selezionaPeriodo(periodoTestAffidoMultiplo);
         PB.confermaAffido(Stella);
         PB.confermaAffido(Asso);
-        
-        // Concludendo adesso l'affido di Stella e poi di Asso
-        // Ci aspettiamo che per il primo Cane del quale viene concluso l'affido ci sia uno sconto del 20%
+
+        // Concludes Stella's foster care and then Asso's.
+        // Expected: the first pickup receives a 20% discount.
         PB.selezionaCane(Stella);
         PB.setClienteSelezionato(Alberto);
-        // Ci aspettiamo che l'importo dovuto sia 80.0F (costo del periodo scontato del 20%)
+        // Expected amount due: 80.0F (20% discount).
         assertEquals(80.0F, PB.confermaConclusioneAffido());
-        // Ci aspettiamo che per il secondo Cane del quale viene concluso l'affido non ci sia alcuno sconto
+        // Expected: the second pickup receives no discount.
         PB.selezionaCane(Asso);
         PB.setClienteSelezionato(Alberto);
-        // Ci aspettiamo che l'importo dovuto sia 100.0F (nessuno sconto)
+        // Expected amount due: 100.0F (no discount).
         assertEquals(100.0F, PB.confermaConclusioneAffido());
 
-
-        /* Test Sovrapposizione R2 ed R4 -Ritiro anticipato con più cani in affido*/
-        // Questo periodo termina tra 7 giorni(rientriamo nell'anticipo della regola di dominio)
+        // Rules R2 and R4 overlap: early pickup with multiple dogs.
+        // The period ends in seven days, which qualifies as early pickup.
         PeriodoAffido testSovrapposizionePolitiche = new PeriodoAffido(11, LocalDate.now().minusMonths(1), LocalDate.now().plusDays(7), 100.0F);
         PB.selezionaPeriodo(testSovrapposizionePolitiche);
         PB.confermaAffido(Stella);
         PB.confermaAffido(Asso);
 
-        // Concludendo adesso l'affido di Stella e poi di Asso
-        // Ci aspettiamo che per il primo Cane del quale viene concluso l'affido ci sia uno sconto del 40% (20% + 20%)
+        // Concludes Stella's foster care and then Asso's.
+        // Expected: the first pickup receives a 40% discount (20% + 20%).
         PB.selezionaCane(Stella);
         PB.setClienteSelezionato(Alberto);
-        // Ci aspettiamo che l'importo dovuto sia 60.0F (costo del periodo scontato del 40%)
+        // Expected amount due: 60.0F (40% discount).
         assertEquals(60.0F, PB.confermaConclusioneAffido());
-        // Ci aspettiamo che per il secondo Cane del quale viene concluso l'affido ci sia uno sconto del 20%
+        // Expected: the second pickup receives a 20% discount.
         PB.selezionaCane(Asso);
         PB.setClienteSelezionato(Alberto);
-        // Ci aspettiamo che l'importo dovuto sia 80.0F  (costo del periodo scontato del 20%)
+        // Expected amount due: 80.0F (20% discount).
         assertEquals(80.0F, PB.confermaConclusioneAffido());
     }
 
-    /* Test regole di dominio R1-R3 */
+    // Tests domain rules R1 and R3.
     @Test
     void testConfermaTimbroTurno(){
         Lezione l1 = corsoBase.getLezioni().getFirst();
         Lezione l2 =corsoBase.getLezioni().getLast();
         PB.setClienteSelezionato(Alberto);
-        /* Test R1 - Recupero Lezione */
-        // Il corsoBase ha 2 lezioni, il costo del corsoBase è di 200.0F
-        // Simuliamo l'iscrizione di Maya al corsoBase e simuliamo che debba essere recuperata la seconda lezione
+        // Rule R1: lesson recovery.
+        // The basic course has two lessons and costs 200.0F.
+        // Enrolls Maya and simulates that the second lesson must be recovered.
         PB.selezionaCane(Maya);
         PB.confermaIscrizioneCorso(corsoBase);
         Turno turnoRecupero = l2.getTurniDisponibili().getFirst();
         Maya.getLezioniSeguite().add(l1);
         Maya.getLezioniSeguite().add(l2);
 
-        // Simuliamo il recupero della lezione 2
+        // Simulates recovering lesson 2.
         PB.selezionaTurnoRecupero(turnoRecupero);
         assertTrue(Maya.getLezioneDaRecuperare());
-        // chiamando il metodo confermaTimbroTurno
-        // Ci aspettiamo che venga restituito, come importo dovuto, 50.0F 
-        // ( 50% del costo totale del corso diviso il numero di lezioni previste da questo)
+        // Calls confermaTimbroTurno.
+        // Expected amount due: 50.0F.
+        // (50% of the course price divided by the number of lessons).
         assertEquals(50.0F, PB.confermaTimbroTurno());
 
-        // Resettiamo le condizioni di partenza
+        // Resets the starting conditions.
         Maya.getLezioniSeguite().clear();
 
-        /* Test R3 - Iscrizione multipla */
-        // Simuliamo l'iscrizione di Leila al corsoBase 
+        // Rule R3: multiple enrollment.
+        // Enrolls Leila in the basic course.
         PB.selezionaCane(Leila);
         PB.confermaIscrizioneCorso(corsoBase);
-        // Prenotiamo sia Leila che Maya alla prima lezione del corsoBase
+        // Books Leila and Maya for the first lesson.
         PB.selezionaTurno(l1.getTurniDisponibili().getLast());
         PB.selezionaCane(Maya);
         PB.selezionaTurno(l1.getTurniDisponibili().getFirst());
@@ -195,21 +179,20 @@ public class PawBookingsTest7 {
         assertEquals(l1,Maya.getLezioniSeguite().getFirst());
         assertEquals(l1,Leila.getLezioniSeguite().getLast());
 
-        // chiamando il metodo confermaTimbroTurno
-        // Ci aspettiamo che l'importo dovuto per il primo cane che segue la prima lezione sia 140.0F (prezzo di corsoBase scontato del 30%)
+        // Calls confermaTimbroTurno.
+        // Expected: the first dog pays 140.0F (30% discount).
         PB.selezionaCane(Maya);
         assertEquals(140.0F, PB.confermaTimbroTurno());
-        // Ci aspettiamo che l'importo dovuto per il secondo cane che segue la prima lezione sia 200.0F (prezzo di corsoBase senza sconto)
+        // Expected: the second dog pays 200.0F (no discount).
         PB.selezionaCane(Leila);
         assertEquals(200.0F, PB.confermaTimbroTurno());
 
-        // Resettiamo le condizioni di partenza
+        // Resets the starting conditions.
         Maya.getLezioniSeguite().clear();
         Leila.getLezioniSeguite().clear();
-        
 
-        /* Test R1-R3 - Recupero Lezione Iscrizione Multipla */
-        // Simuliamo che sia Leila che Maya debbano recuperare la prima lezione del corsoBase
+        // Rules R1 and R3: recovery of a multiple-enrollment lesson.
+        // Simulates both dogs recovering the first lesson.
         Turno t1 = l1.getTurniDisponibili().getFirst();
         Turno t2 = l2.getElencoTurniDisponibili().getLast();
         Maya.getLezioniSeguite().add(l1);
@@ -223,42 +206,31 @@ public class PawBookingsTest7 {
         PB.selezionaTurnoRecupero(t2);
         assertTrue(Leila.getLezioneDaRecuperare());
 
-        // chiamando il metodo confermaTimbroTurno
-        // Ci aspettiamo che l'importo dovuto per il primo cane che segue la prima lezione sia 190.0F 
-        // (prezzo di corsoBase scontato del 30% + 50% del costo del corsoBase diviso il numero delle sue lezioni)
+        // Calls confermaTimbroTurno.
+        // Expected: the first dog pays 190.0F.
+        // (30% discount plus 50% of the course price divided by the number of lessons).
         PB.selezionaCane(Maya);
         assertEquals(190.0F, PB.confermaTimbroTurno());
-        // Ci aspettiamo che l'importo dovuto per il secondo cane che segue la prima lezione sia 250.0F 
-        // (prezzo di corsoBase senza sconto + 50% del costo del corsoBase diviso il numero delle sue lezioni)
+        // Expected: the second dog pays 250.0F.
+        // (full price plus 50% of the course price divided by the number of lessons).
         PB.selezionaCane(Leila);
         assertEquals(250.0F, PB.confermaTimbroTurno());
 
-        // Resettiamo le condizioni di partenza
+        // Resets the starting conditions.
         Maya.getLezioniSeguite().clear();
         Leila.getLezioniSeguite().clear();
-        
 
-        /* Test metodo quando l'importo dovuto è 0 */
-        // // Prenotiamo Maya alla seconda lezione del corsoBase
+        // Tests the method when the amount due is zero.
+
         PB.selezionaCane(Maya);
         Maya.getLezioniSeguite().add(l1);
-    
+
         PB.selezionaTurno(l2.getElencoTurniDisponibili().getFirst());
-        // chiamando il metodo confermaTimbroTurno
-        // Ci aspettiamo che l'importo dovuto sia 0 in quanto il turno corrisponde alla seconda lezione del corsoBase
-        // di conseguenza il corso è stato già pagato
+        // Calls confermaTimbroTurno.
+        // Expected: zero because the shift is the second lesson and the course is already paid.
+
         assertEquals(0, PB.confermaTimbroTurno());
-        
 
     }
-
-
-
-
-
-
-
-
-
 
 }

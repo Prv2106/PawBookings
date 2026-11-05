@@ -18,6 +18,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
+/**
+ * Controller for displaying attended and missing lessons of the selected dog.
+ */
 public class ShowCourseStateController implements Initializable {
 
     @FXML
@@ -25,12 +28,12 @@ public class ShowCourseStateController implements Initializable {
 
     @FXML
     private ListView<Lezione> list1;
-    // creiamo una lista osservabile per le lezioni seguite
+
     ObservableList<Lezione> lezioniSeguite = FXCollections.observableArrayList();
 
     @FXML
     private ListView<Lezione> list2;
-    // creiamo una lista osservabile per le lezioni mancanti
+
     ObservableList<Lezione> lezioniMancanti = FXCollections.observableArrayList();
 
     @FXML
@@ -42,36 +45,33 @@ public class ShowCourseStateController implements Initializable {
         }
     }
 
+    /**
+     * Displays attended and missing lessons for the selected dog.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        PawBookings PB = PawBookings.getInstance();  
+        PawBookings PB = PawBookings.getInstance();
         Map<String, LinkedList<Lezione>> lista = PB.mostraStatoAvanzamentoCorso();
-        
-        // recuperiamo le lezioni seguite e mettiamole nella UI
+
         lezioniSeguite.addAll(lista.get("lezioni seguite"));
         this.list1.setItems(lezioniSeguite);
 
-        // recuperiamo le lezioni mancanti e mettiamole nella UI
         lezioniMancanti.addAll(lista.get("lezioni mancanti"));
         this.list2.setItems(lezioniMancanti);
 
-
-        // definiamo la grafica di ogni oggetto di entrambe le liste..
-    
-           // list1 = lista lezioni seguite
             this.list1.setCellFactory(new Callback<ListView<Lezione>, ListCell<Lezione>>() {
                 @Override
                 public ListCell<Lezione> call(ListView<Lezione> listView) {
                     return new ListCell<Lezione>() {
                         @Override
                         protected void updateItem(Lezione lezione, boolean empty) {
-                            // per ogni elemento (lezione)
+
                             super.updateItem(lezione, empty);
 
                             if (lezione == null || empty) {
                                 setText(null);
                             } else {
-                                // nome lezione
+
                                 VBox vbox = new VBox();
                                 vbox.getChildren().add(new Label(lezione.getNome()));
                                 setGraphic(vbox);
@@ -81,20 +81,19 @@ public class ShowCourseStateController implements Initializable {
                 }
             });
 
-            // list2 = lista lezioni mancanti
             this.list2.setCellFactory(new Callback<ListView<Lezione>, ListCell<Lezione>>() {
                 @Override
                 public ListCell<Lezione> call(ListView<Lezione> listView) {
                     return new ListCell<Lezione>() {
                         @Override
                         protected void updateItem(Lezione lezione, boolean empty) {
-                            // per ogni elemento (lezione)
+
                             super.updateItem(lezione, empty);
 
                             if (lezione == null || empty) {
                                 setText(null);
                             } else {
-                                // nome lezione
+
                                 VBox vbox = new VBox();
                                 vbox.getChildren().add(new Label(lezione.getNome()));
                                 setGraphic(vbox);

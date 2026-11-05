@@ -23,6 +23,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
+/**
+ * Controller for entering health-status comments for the dogs in a foster period.
+ */
 public class ShowDogsToRateController {
     private Map<Integer, TextField> mappaBoxsCommenti = new HashMap<>();
 
@@ -31,9 +34,8 @@ public class ShowDogsToRateController {
 
     @FXML
     private ListView<Cane> list;
-    // creiamo una lista osservabile per i cani
-    ObservableList<Cane> items = FXCollections.observableArrayList();
 
+    ObservableList<Cane> items = FXCollections.observableArrayList();
 
     @FXML
     void onBackPressed(ActionEvent event) {
@@ -44,44 +46,43 @@ public class ShowDogsToRateController {
         }
     }
 
+    /**
+     * Builds the health-status form for the supplied dogs.
+     *
+     * @param cani dogs requiring a health-status comment
+     */
     public void initialize(LinkedList<Cane> cani) {
         items.addAll(cani);
         this.list.setItems(items);
 
-        // definiamo la grafica di ogni oggetto della lista
             this.list.setCellFactory(new Callback<ListView<Cane>, ListCell<Cane>>() {
                 @Override
                 public ListCell<Cane> call(ListView<Cane> listView) {
                     return new ListCell<Cane>() {
                         @Override
                         protected void updateItem(Cane cane, boolean empty) {
-                            // per ogni elemento (cane)
+
                             super.updateItem(cane, empty);
 
                             if (cane == null || empty) {
                                 setText(null);
                             } else {
-                                // a sx vogliamo le informazioni del cane, quindi: nome, razza e codice
-                                // a dx vogliamo un TextField dove mettere il commento
+
                                 HBox hBox = new HBox();
                                 hBox.setAlignment(Pos.CENTER);
 
-                                // elementi di sinistra
                                 VBox vbox = new VBox();
                                 vbox.setPrefWidth(150);
                                 vbox.getChildren().add(new Label("Nome: " + cane.getNome()));
                                 vbox.getChildren().add(new Label("Razza: " + cane.getRazza()));
                                 vbox.getChildren().add(new Label("Codice: " + cane.getCodiceCane()));
 
-                                // elemento di destra
                                 TextField textField = new TextField();
                                 textField.setPrefWidth(400);
                                 mappaBoxsCommenti.put(cane.getCodiceCane(), textField);
 
-                                // mettiamo gli elementi di sinistra e destra nell'hbox
                                 hBox.getChildren().addAll(vbox, textField);
 
-                                // Impostiiamo il contenuto della cella
                                 setGraphic(hBox);
                             }
                         }
@@ -92,7 +93,7 @@ public class ShowDogsToRateController {
 
     @FXML
     void onSendPressed(ActionEvent event) throws IOException {
-        // travasiamoci le chiavi in una List (accessibile per posizione)
+        // Copies map keys into a position-accessible list.
         List<Integer> codiciCani = new ArrayList<>();
         for (Integer k: mappaBoxsCommenti.keySet()) {
             codiciCani.add(k);
@@ -100,10 +101,10 @@ public class ShowDogsToRateController {
 
         int counter = 0;
         Map<Integer, String> mappaStatoSalute = new HashMap<>();
-        // cicliamo la mappa per ricavare i commenti di ogni cane
+        // Reads the comment entered for each dog.
         for (TextField box: mappaBoxsCommenti.values()) {
             if (box.getText().isEmpty()) {
-                // il box è vuoto
+                // Rejects empty comments.
                 MainApplication.goAdminErrorPage("devi compilare tutti i campi");
                 return;
             } else {
@@ -112,7 +113,6 @@ public class ShowDogsToRateController {
              counter++;
         }
 
-        // operazione di sistema
         PawBookings.getInstance().notificaClienti(mappaStatoSalute);
         MainApplication.setRoot("admin_ok-view.fxml");
     }

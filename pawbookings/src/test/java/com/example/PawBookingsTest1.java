@@ -14,12 +14,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.LinkedList;
 
-
-/*
- * Test dei casi d'uso UC1-UC2
+/**
+ * Integration tests for customer registration, course enrollment, and shift booking
+ * (UC1-UC2).
  */
-
-
 class PawBookingsTest1 {
 
     static PawBookings PB;
@@ -31,7 +29,7 @@ class PawBookingsTest1 {
 
     @BeforeAll
     public static void initTest() {
-        //Configurazioni che ci servono prima dell'esecuzione dei metodi di test
+        // Initializes the fixtures required by the tests.
         PB = PawBookings.getInstance();
         PB.registrati("Alberto", "Provenzano", "156322345678", "0000");
         PB.aggiungiCane("Stella", "Pastore Tedesco");
@@ -48,21 +46,21 @@ class PawBookingsTest1 {
         corsoBase = PB.getCorsi().getFirst();
         PB.selezionaCorso(corsoBase);
 
-        // Il codice di questa lezione sarà 1
+        // The lesson code is 1.
         PB.nuovaLezione("Comandi di Base");
         PB.inserisciEsercizio("Saluto amichevole", "Questo esercizio aiuta a promuovere una socializzazione positiva tra cani");
         PB.inserisciEsercizio("Resta", "'Resta'per rimanere in posizione, aumentando gradualmente la distanza dal proprietario");
         PB.inserisciEsercizio("Richiamo", "Insegna al cane a rispondere al comando di richiamo del padrone");
         PB.confermaLezione();
 
-        // Il codice di questa lezione sarà 2
+        // The lesson code is 2.
         PB.nuovaLezione("Guinzaglio e Camminare al Guinzaglio");
         PB.inserisciEsercizio("Introduzione al Guinzaglio", "Insegnare ai proprietari come presentare il guinzaglio al cane in modo positivo, facendolo abituare gradualmente alla sensazione e premiando il comportamento calmo e collaborativo.");
         PB.inserisciEsercizio("Camminata Focalizzata", "Praticare una camminata controllata in cui il cane cammina al fianco del proprietario senza tirare al guinzaglio. Utilizzare comandi verbali e premi per incoraggiare un comportamento desiderato.");
         PB.inserisciEsercizio("Affrontare Distrazioni", "Introdurre gradualmente distrazioni durante la camminata al guinzaglio, come altri cani o stimoli ambientali. Insegnare ai proprietari come gestire le situazioni, mantenendo il controllo del cane e premiando il comportamento desiderato in presenza di distrazioni.");
         PB.confermaLezione();
 
-        // Inserimento turni
+        // Adds shifts.
         PB.selezionaCorsoModificaTurni(corsoBase);
         PB.selezionaLezione(corsoBase.getLezioni().get(0));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
@@ -73,21 +71,21 @@ class PawBookingsTest1 {
         Corso corsoAvanzato = PB.modificaProgrammaCorso().get(1);
         PB.selezionaCorso(corsoAvanzato);
 
-        // Il codice di questa lezione sarà 3
+        // The lesson code is 3.
         PB.nuovaLezione("Svolte, dietro front e variazioni andature");
         PB.inserisciEsercizio("Dietro Front", "Insegna al cane a girare rapidamente di 180 gradi su comando, promuovendo una risposta veloce e coordinata.");
         PB.inserisciEsercizio("Variazioni Andature", "Pratica diverse andature come il passo veloce e il passo lento, migliorando il controllo del cane nelle varie situazioni.");
         PB.inserisciEsercizio("Svolte", "Esercita il cane a eseguire svolte a destra e sinistra durante la camminata al guinzaglio, migliorando la coordinazione e la capacità di seguire le indicazioni del proprietario.");
         PB.confermaLezione();
 
-        // Il codice di questa lezione sarà 4
+        // The lesson code is 4.
         PB.nuovaLezione("Riporto in piano di un oggetto");
         PB.inserisciEsercizio("Introduzione al Riporto", "Insegna al cane a prendere un oggetto e a rilasciarlo gentilmente, utilizzando rinforzi positivi come premi o carezze.");
         PB.inserisciEsercizio("Riporto con Distrazioni", " Pratica il riporto introducendo distrazioni come suoni o altri oggetti, migliorando la capacità del cane di concentrarsi sul compito principale.");
         PB.inserisciEsercizio("Riporto a Distanza", "Insegna al cane a riportare un oggetto anche a distanza, incrementando gradualmente la distanza tra il proprietario e il punto in cui l'oggetto deve essere riportato.");
         PB.confermaLezione();
 
-        // Inserimento turni
+        // Adds shifts.
 
         PB.selezionaCorsoModificaTurni(corsoAvanzato);
         PB.selezionaLezione(corsoAvanzato.getLezioni().get(0));
@@ -101,15 +99,14 @@ class PawBookingsTest1 {
 
     }
 
-    // Il metodo restituisce un'istanza della classe PawBookings se PB è null.
+    // Returns the singleton PawBookings instance.
     @Test
     void testGetInstance() {
         assertNotNull(PB);
     }
-    
 
-    // Il metodo verifica che la lista dei corsi disponibili contenga corsi 
-    // la cui capienza sia effettivamente maggiore di 0
+    // Verifies that the available-course list contains only courses
+    // with capacity greater than zero.
     @Test
     void testNuovaIscrizioneCorso() {
         LinkedList<Corso> elencoCorsiDisponibili = new LinkedList<>();
@@ -123,80 +120,74 @@ class PawBookingsTest1 {
             assertTrue(corso.getCapienza() > 0);
         }
 
-        // Verifichiamo che l'elencoCorsiCompleto (contenente Corso Pieno) non sia uguale all'elencoCorsiDisponibili
+        // Verifies that the complete-course list differs from the available-course list.
         assertFalse(elencoCorsiDisponibili.containsAll(elencoCorsiCompleto));
-        // Verifichiamo che elencoCorsiDisponibili non contenga Corso Pieno
+        // Verifies that elencoCorsiDisponibili excludes the full course.
         assertFalse(elencoCorsiDisponibili.contains(PB.getCorsi().getLast()));
     }
 
     @Test
     void testconfermaIscrizioneCorso(){
-        // Dog non è iscritto ad alcun Corso
+        // The dog is not enrolled in any course.
         assertFalse(Dog.getAttualmenteIscritto());
         PB.selezionaCane(Dog);
-        // Iscriviamo Dog al corsoBase
+        // Enrolls the dog in the basic course.
         PB.confermaIscrizioneCorso(corsoBase);
-        // verifichiamo che Dog sia iscritto ad un corso
+        // Verifies that the dog is enrolled in a course.
         assertTrue(Dog.getAttualmenteIscritto());
-        // verifichiamo che Dog sia effettivamente iscritto al corsoBase
+        // Verifies that the dog is actually enrolled in the basic course.
         assertEquals(corsoBase, Dog.getCorsoCorrente());
     }
-
 
     @Test
     void testPrenotaTurnoLezione(){
         LinkedList<Turno> elencoTurniDisponibili = new LinkedList<>();
-        // Primo turno della lezione 2 di corsoBase
+        // First shift of basic-course lesson 2.
         Turno t1 = corsoBase.getLezioni().getLast().getTurniDisponibili().getFirst();
-        // Secondo turno della lezione 2 di corsoBase
+        // Second shift of basic-course lesson 2.
         Turno t2 = corsoBase.getLezioni().getLast().getTurniDisponibili().getLast();
 
-        // Rimuoviamo il turno t1 dai turni disponibili
+        // Removes shift t1 from the available shifts.
         corsoBase.getLezioni().getLast().getTurniDisponibili().remove(t1);
 
-        // Iscriviamo Maya al corsoBase
+        // Enrolls Maya in the basic course.
         PB.selezionaCane(Maya);
         PB.confermaIscrizioneCorso(corsoBase);
 
-        // ipotizziamo che Maya abbia seguito la prima lezione
+        // Assumes that Maya attended the first lesson.
         Maya.getLezioniSeguite().add(corsoBase.getLezioni().getFirst());
 
-        // Adesso chiamando il metodo prenotaTurnoLezione 
-        // Ci aspettiamo che venga restituito l'elenco turni disponibili e che:
-        // - tra di essi non ci sia t1
-        // - tra di essi ci sia t2
+        // Calls prenotaTurnoLezione.
+        // Expected: the available-shift list is returned and:
+        // - it does not contain t1;
+        // - it contains t2.
         elencoTurniDisponibili = PB.prenotaTurnoLezione();
         assertFalse(elencoTurniDisponibili.contains(t1));
         assertFalse(elencoTurniDisponibili.contains(t2));
 
-        // Prenotando Maya al turno t2 e riprovando ad eseguire l'operazione prenotaTurnoLezione
-        // Ci aspettiamo che venga restituito null poiché il turnoCorrente di Maya è !=null
+        // Books Maya for t2 and calls prenotaTurnoLezione again.
+        // Expected: null because Maya already has a current shift.
         PB.selezionaTurno(t2);
         assertNull(PB.prenotaTurnoLezione());
     }
 
-
-
-
-
-    // Viene fatto un controllo sul valore booleano restituito relativamente al turno passato come parametro al metodo selezionaTurno
+    // Checks the boolean returned by selezionaTurno for the supplied shift.
     @Test
     void testSelezionaTurno() {
-        // Recuperiamo il primo turno lezione 1 del corsoBase
+        // Retrieves the first shift of basic-course lesson 1.
         Turno ts = corsoBase.getLezioni().get(0).getTurniDisponibili().get(0);
-        // Iscriviamo Asso al corsoBase
+        // Enrolls Asso in the basic course.
         PB.selezionaCane(Asso);
         PB.confermaIscrizioneCorso(corsoBase);
-        assertTrue(PB.selezionaTurno(ts)); 
-        // Verifichiamo che il turno corrente di Asso sia effettivamente ts
+        assertTrue(PB.selezionaTurno(ts));
+        // Verifies that Asso's current shift is ts.
         assertEquals(ts, Asso.getTurnoCorrente());
-        // Verifichiamo che ts non appartenga più ai turni disponibili della lezione 1 del corsoBase
+        // Verifies that ts is removed from the lesson 1 available shifts.
         assertFalse(corsoBase.getLezioni().getFirst().getTurniDisponibili().contains(ts));
     }
 
-    
-    // Il metodo restituisce un'istanza della classe Cane se il parametro cane è diverso da null 
-    // ed inoltre verifica che il nome del cane sia uguale a "Luna"
+    // Returns a Cane instance when the dog parameter is not null,
+    // and verifies that the dog name is "Luna".
     @Test
     void testSelezionaCane() {
         PB.selezionaCane(new Cane(10, "Luna", "Barboncino"));
@@ -204,7 +195,4 @@ class PawBookingsTest1 {
         assertEquals("Luna", PB.getCaneSelezionato().getNome());
     }
 
-
-
-  
 }

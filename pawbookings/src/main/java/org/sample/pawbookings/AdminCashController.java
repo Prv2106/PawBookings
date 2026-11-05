@@ -6,11 +6,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
+/**
+ * Controller for the administrator payment summary screen. Displays the amount to
+ * collect.
+ */
 public class AdminCashController {
 
     @FXML
     private Text importo;
 
+    /**
+     * Displays the amount to collect.
+     *
+     * @param amount amount to display
+     */
     public void setAmount(float amount) {
         this.importo.setText("" + String.format("%.2f", amount) + "€");
     }

@@ -8,13 +8,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 
+/**
+ * Controller for the administrator course-management menu.
+ */
 public class ManageCourseController {
 
     @FXML
     private Button backButton;
 
     private void showAllCourses(String nextDestination) {
-        // andiamo nella pagina contenente l'elenco di tutti i corsi esistenti
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("admin_all_courses-view.fxml"));
             Parent root = loader.load();
@@ -37,7 +40,7 @@ public class ManageCourseController {
 
     @FXML
     void onInserisciCorsoPressed(ActionEvent event) {
-        // andiamo nella pagina dove l'amministratore può inserire un corso
+
         try {
             MainApplication.setRoot("new_course-view.fxml");;
         } catch (IOException e) {

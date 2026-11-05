@@ -21,6 +21,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
+/**
+ * Controller for the list of all courses. Routes to the programme of the selected
+ * course.
+ */
 public class ShowAllCoursesController implements Initializable{
 
     @FXML
@@ -28,7 +32,7 @@ public class ShowAllCoursesController implements Initializable{
 
     @FXML
     private ListView<Corso> list;
-    // creiamo una lista osservabile per i corsi
+
     ObservableList<Corso> items = FXCollections.observableArrayList();
 
     @FXML
@@ -39,52 +43,50 @@ public class ShowAllCoursesController implements Initializable{
             e.printStackTrace();
         }
     }
-    
+
+    /**
+     * Populates the course list and configures programme navigation.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        PawBookings PB = PawBookings.getInstance();  
+        PawBookings PB = PawBookings.getInstance();
         LinkedList<Corso> elencoCorsi = PB.getCorsi();
-        
+
         items.addAll(elencoCorsi);
         this.list.setItems(items);
 
-
-        // definiamo la grafica di ogni oggetto della lista
         this.list.setCellFactory(new Callback<ListView<Corso>, ListCell<Corso>>() {
             @Override
             public ListCell<Corso> call(ListView<Corso> listView) {
                 return new ListCell<Corso>() {
                     @Override
                     protected void updateItem(Corso corso, boolean empty) {
-                        // per ogni elemento (corso)
+
                         super.updateItem(corso, empty);
 
                         if (corso == null || empty) {
                             setText(null);
                         } else {
-                            // tipo corso e costo
+
                             VBox vbox = new VBox();
                             vbox.getChildren().add(new Label("Tipo Corso: " + corso.getTipoCorso()));
                             vbox.getChildren().add(new Label("Costo: " + corso.getCosto() + "€"));
                             setGraphic(vbox);
 
-    // -------------------> Aggiungiamo il listener per l'evento di click
                             setOnMouseClicked(event -> {
-                                // passiamo alla schermata successiva passando il corso cliccato
+
                                 try {
-                                     // recuperiamo il loader relativa alla schermata di visualizzazione del programma
+
                                     FXMLLoader loader = new FXMLLoader(getClass().getResource("show_program-view.fxml"));
-                                    // reperiamone la "root"
+
                                     Parent secondRoot = loader.load();
-                                    // ne recuperiamo il relativo controller
+
                                     ShowProgramController controller = loader.getController();
-                        
-                                    // passiamogli il parametro corso e facciamolo "partire"
+
                                     controller.initialize(corso);
 
-                                    // impostiamo la root 
                                     MainApplication.goTo(secondRoot);
-                                    
+
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }

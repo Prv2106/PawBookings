@@ -6,16 +6,22 @@ import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-
+/**
+ * Controller for the customer error screen.
+ */
 public class ErrorController {
     @FXML
     private TextFlow textError;
 
+    /**
+     * Displays an error message.
+     *
+     * @param txt message to display
+     */
     public void setTextError(String txt) {
         this.textError.getChildren().add(new Text(txt));
-        
+
     }
-  
 
     @FXML
     void onPressed(ActionEvent event) {

@@ -1,32 +1,15 @@
+UI layout notes
 
 Mobile:
-    larghezza finestre: 350
-    altezza finestre: 625
+    window width: 350
+    window height: 625
 
 Desktop:
-    larghezza: 800
-    altezza: 650
+    width: 800
+    height: 650
 
-colore base:  #4facfe  
+Base colour: #4facfe
 
-
-
-//TODO, Lato Amministratore
-
-- schermata Dettagli Affido, aggiungere la voce "importo dovuto dal Cliente" (lato Controller cambierà che si dovrà gestire una mappa)
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+TODO (administrator area)
+- Foster-care details screen: add the amount due by the customer. From the
+  controller perspective, the amount must be exposed as a map.

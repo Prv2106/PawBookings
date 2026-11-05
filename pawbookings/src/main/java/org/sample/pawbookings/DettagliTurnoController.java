@@ -10,6 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 
+/**
+ * Controller for the booked shift details screen. Confirms the check-in and forwards
+ * the amount due to the payment screen.
+ */
 public class DettagliTurnoController {
 
     @FXML
@@ -27,7 +31,11 @@ public class DettagliTurnoController {
     @FXML
     private Text oraInizio;
 
-
+    /**
+     * Displays the details of the shift being checked in.
+     *
+     * @param t booked shift
+     */
     public void start(Turno t) {
         codice.setText(Integer.toString(t.getCodice()));
         data.setText(t.getData().getDayOfMonth() + "/" + t.getData().getMonthValue() + "/" + t.getData().getYear());

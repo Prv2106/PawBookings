@@ -13,6 +13,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
+/**
+ * Controller for adding an exercise to the lesson being edited.
+ */
 public class NewExerciseController implements Initializable {
 
     @FXML
@@ -27,7 +30,6 @@ public class NewExerciseController implements Initializable {
     @FXML
     private TextField nome;
 
-
     @FXML
     void onBackPressed(ActionEvent event) {
         try {
@@ -37,6 +39,9 @@ public class NewExerciseController implements Initializable {
         }
     }
 
+    /**
+     * Displays the name of the lesson being edited.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.lezioneCorrente.setText(PawBookings.getInstance().getCorsoSelezionato().getLezioneCorrente().getNome());
@@ -44,11 +49,10 @@ public class NewExerciseController implements Initializable {
 
     @FXML
     void onAggiungiEsercizioPressed(ActionEvent event) throws IOException {
-        // recuperiamo le informazione inserite dall'amministratore
+
         String nome = this.nome.getText();
         String descrizione = this.descrizione.getText();
 
-        // validiamole
         if (!nome.isEmpty() && !descrizione.isEmpty()) {
             try {
                 PawBookings.getInstance().inserisciEsercizio(nome, descrizione);
@@ -57,10 +61,10 @@ public class NewExerciseController implements Initializable {
                 MainApplication.goAdminErrorPage("qualcosa è andato storto :(");
             }
         } else {
-            // uno dei campi è vuoto
+
             MainApplication.goAdminErrorPage("devi compilare tutti i campi!");
         }
-       
+
     }
 }
 

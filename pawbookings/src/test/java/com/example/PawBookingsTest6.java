@@ -21,12 +21,10 @@ import domain_layer.PawBookings;
 import domain_layer.PeriodoAffido;
 import domain_layer.Turno;
 
-
-/*
- * Test degli scenari alternativi 3c e 3d dell UC2:Gestisci prenotazione turno lezione
+/**
+ * Integration tests for shift cancellation and lesson recovery (UC2 extensions 3c and
+ * 3d).
  */
-
-
 public class PawBookingsTest6 {
     static PawBookings PB;
     static Cane Stella;
@@ -43,10 +41,8 @@ public class PawBookingsTest6 {
     static Cliente Daniele;
     static Cliente Giuseppe;
 
-
-
-    // Il metodo viene eseguito prima di tutti i test
-    // inizializza l'istanza di PawBookings
+    // Runs before all tests.
+    // Initializes the PawBookings instance.
 
     @BeforeAll
     public static void initTest() {
@@ -58,7 +54,7 @@ public class PawBookingsTest6 {
         PB.aggiungiCane("Leila", "Labrador");
         PB.aggiungiCane("Duchessa", "Labrador");
         PB.logout();
-        
+
         PB.registrati("Giuseppe", "Leocata", "562562", "0000");
         PB.aggiungiCane("Walker", "Pastore Tedesco");
         PB.logout();
@@ -72,7 +68,6 @@ public class PawBookingsTest6 {
         PB.inserisciNuovoCorso("Corso Base", 10, 200.0F);
         corsoBase = PB.modificaProgrammaCorso().get(0);
         PB.selezionaCorso(corsoBase);
-
 
         PB.nuovaLezione("Comandi di Base");
         PB.inserisciEsercizio("Saluto amichevole", "Questo esercizio aiuta a promuovere una socializzazione positiva tra cani");
@@ -94,7 +89,7 @@ public class PawBookingsTest6 {
         PB.inserisciEsercizio("Introduzione al Riporto", "Insegna al cane a prendere un oggetto e a rilasciarlo gentilmente, utilizzando rinforzi positivi come premi o carezze.");
         PB.confermaLezione();
 
-        // Inserimento turni 4 per la lezione 1 e 2 per la lezione 2
+        // Adds four shifts to lesson 1 and two shifts to lesson 2.
         PB.selezionaCorsoModificaTurni(corsoBase);
         PB.selezionaLezione(corsoBase.getLezioni().get(0));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
@@ -103,14 +98,13 @@ public class PawBookingsTest6 {
         PB.selezionaLezione(corsoBase.getLezioni().get(0));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(11, 0), LocalTime.of(12, 0));
         PB.selezionaLezione(corsoBase.getLezioni().get(0));
-        
 
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(15, 0), LocalTime.of(16, 0));
         PB.selezionaLezione(corsoBase.getLezioni().get(1));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(15, 0), LocalTime.of(16, 0));
         PB.selezionaLezione(corsoBase.getLezioni().get(1));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(15, 0), LocalTime.of(16, 0));
-      
+
         PB.inserisciNuovoCorso("Corso Agility", 10, 300.0F);
         corsoAgility = PB.getCorsi().get(2);
         PB.selezionaCorso(corsoAgility);
@@ -119,155 +113,144 @@ public class PawBookingsTest6 {
         PB.inserisciEsercizio("Pausa", "Insegna al cane il comando \"Pausa\" per fermarsi istantaneamente, sviluppando il controllo e la risposta rapida alle istruzioni del proprietario.");
         PB.confermaLezione();
 
-        // Iscriviamo Stella al corsoBase
+        // Enrolls Stella in the basic course.
         PB.accedi("Alberto1", "0000");
         Alberto = PB.getClienteLoggato();
         Stella = Alberto.getCane(1);
         PB.setCaneSelezionato(Stella);
         PB.confermaIscrizioneCorso(corsoBase);
 
-        // Iscriviamo Maya al corsoBase
+        // Enrolls Maya in the basic course.
         Maya = Alberto.getCane(3);
         PB.setCaneSelezionato(Maya);
         PB.confermaIscrizioneCorso(corsoBase);
 
-        // Iscriviamo Maya al corsoBase
+        // Enrolls Maya in the basic course.
         Leila = Alberto.getCane(4);
         PB.selezionaPeriodo(PB.getPeriodiAffido().getLast());
         PB.confermaAffido(Leila);
 
-        
-        // Mettiamo Stella in Affido nel periodo1
+        // Places Stella in foster care in period 1.
         PB.selezionaPeriodo(PB.getPeriodiAffido().getFirst());
         PB.confermaAffido(Stella);
 
-        // Facciamo in modo che Duchessa abbia completato tutti i corsi
+        // Ensures Duchessa completed every course.
         Duchessa = Alberto.getCane(5);
         Duchessa.getCorsiCompletati().add(PB.getCorsi().get(0));
         Duchessa.getCorsiCompletati().add(PB.getCorsi().get(1));
         Duchessa.getCorsiCompletati().add(PB.getCorsi().get(2));
 
-
-        // Iscriviamo Walker al corsoBase
+        // Enrolls Walker in the basic course.
         PB.accedi("Giuseppe2", "0000");
         Giuseppe = PB.getClienteLoggato();
         Walker = Giuseppe.getCane(6);
         PB.setCaneSelezionato(Walker);
         PB.confermaIscrizioneCorso(corsoBase);
 
-        // Mettiamo Walker in affido nel periodo2
+        // Places Walker in foster care in period 2.
         PB.selezionaPeriodo(PB.getPeriodiAffido().get(1));
         PB.confermaAffido(Walker);
 
-
-        // Iscriviamo Sole al corsoBase
+        // Enrolls Sole in the basic course.
         PB.accedi("Daniele3", "0000");
         Daniele = PB.getClienteLoggato();
         Sole = Daniele.getCani().getFirst();
         PB.setCaneSelezionato(Sole);
         PB.confermaIscrizioneCorso(corsoBase);
         PB.logout();
-        
 
     }
 
-
-
-    /* Test dell'estensione 3c dell'UC2 */
+    // Tests UC2, extension 3c.
     @Test
     void testDisdiciTurno(){
-        // Prenotiamo Sole di Daniele al primo turno del corsoBase 
+        // Books Daniele's dog Sole in the first basic-course shift.
         PB.selezionaCane(Sole);
         Turno ts = corsoBase.getLezioni().getFirst().getElencoTurniDisponibili().getFirst();
         Lezione l1 = corsoBase.getLezioni().getFirst();
         Lezione l2 =corsoBase.getLezioni().get(1);
         Turno tl2 = l2.getElencoTurniDisponibili().getFirst();
-        
+
         PB.selezionaTurno(ts);
-        // Adesso la prima lezione del corsoBase è tra le lezioni seguite di Sole
+        // The first lesson is among Sole's attended lessons.
         assertTrue(Sole.getLezioniSeguite().contains(corsoBase.getLezioni().getFirst()));
         assertEquals(Sole.getTurnoCorrente(), ts);
         assertFalse(l1.getElencoTurniDisponibili().contains(ts));
-        // Test del metodo
-        // Chiamando il metodo disdiciTurno
-        // Ci aspettiamo che il turnoCorrente di Sole diventi null
-        // Ci aspettiamo che il turno ts appartenga nuovamente all'elencoTurniDisponibili della lezione l1
-        // Ci aspettiamo che la prima lezione del corsoBase non sia più tra le lezioniSeguite di Sole
+        // Calls disdiciTurno.
+        // Expected: Sole's current shift becomes null.
+        // Expected: shift ts returns to l1's elencoTurniDisponibili.
+        // Expected: the first lesson is removed from Sole's attended lessons.
         PB.disdiciTurno();
         assertFalse(Sole.getLezioniSeguite().contains(corsoBase.getLezioni().getFirst()));
         assertTrue(l1.getElencoTurniDisponibili().contains(ts));
         assertNull(Sole.getTurnoCorrente());
 
-        // Adesso settando come turnoCorrente di sole un turno scaduto ci aspettiamo che venga restituito false
+        // An expired current shift makes disdiciTurno return false.
         Turno turnoScaduto = new Turno(10, LocalDate.now().minusDays(1), LocalTime.of(9, 0), LocalTime.of(11, 0));
         Sole.setTurnoCorrente(turnoScaduto);
         assertFalse(PB.disdiciTurno());
 
-        // Verifichiamo ora che se sole ha prenotato un turno per l'ultima lezione del corsoBase (completandolo per il sistema)
+        // Verifies the case in which Sole books the last lesson and completes the course.
         PB.selezionaTurno(l1.getElencoTurniDisponibili().getFirst());
         PB.selezionaTurno(tl2);
         assertFalse(Sole.getAttualmenteIscritto());
         assertNull(Sole.getCorsoCorrente());
         assertEquals(Sole.getLezioniSeguite().getLast(), l2);
 
-
-        // Chiamando il metodo disdiciTurno
+        // Calls disdiciTurno.
         PB.disdiciTurno();
-        // Ci aspettiamo che il corsoCorrente torni ad essere il corsoBase
+        // Expected: corsoCorrente returns to the basic course.
         assertEquals(Sole.getCorsoCorrente(), corsoBase);
-        // Ci aspettiamo che l'attributo attualmenteIscritto di Sole sia true
+        // Expected: Sole attualmenteIscritto is true.
         assertTrue(Sole.getAttualmenteIscritto());
-        // Ci aspettiamo che l'ultima lezione seguita sia l1
+        // Expected: the last attended lesson is l1.
         assertEquals(Sole.getLezioniSeguite().getLast(), l1);
 
-    }   
+    }
 
-
-    /* Test dell'estensione 3d dell'UC2 */
+    // Tests UC2, extension 3d.
     @Test
     void testRecuperaLezione(){
-        // Prenotiamo Walker di Giuseppe ad un turno della prima lezione del CorsoBase
+        // Books Giuseppe's dog Walker in the first basic-course lesson.
         Lezione l1 = corsoBase.getLezioni().getFirst();
         Turno t1 = l1.getElencoTurniDisponibili().getFirst();
-        // Settiamo come turnoCorrente di Walker ad un turno scaduto
+        // Sets Walker's current shift to an expired shift.
         Turno turnoScaduto = new Turno(10, LocalDate.now().minusDays(1), LocalTime.of(9, 0), LocalTime.of(11, 0));
         Walker.setTurnoCorrente(turnoScaduto);
-        // Aggiungiamo l1 alla lista delle lezioniSeguite di Walker
+        // Adds l1 to Walker's attended lessons.
         Walker.getLezioniSeguite().add(l1);
 
-    
         LinkedList<Turno> expected = l1.getTurniDisponibili();
         PB.selezionaCane(Walker);
 
-        // Test del metodo 
-        // Chiamando il metodo recuperaLezione
-        // Ci aspettiamo che venga restituito l'elencoTurniDisponibili dell'ultima lezione seguita da Walker
+        // Calls recuperaLezione.
+        // Expected: Walker's last-lesson available shifts are returned.
         assertEquals(expected, PB.recuperaLezione());
 
-        // Resettiamo lo stato iniziale
+        // Resets the initial state.
         Walker.setTurnoCorrente(null);
         Walker.getLezioniSeguite().clear();
 
-        // Adesso prenotando walker ad un turno della prima lezione del corsoBase e invocando nuovamente il metodo sotto test
-        // Ci aspettiamo che venga restituito null in quanto il turno non è scaduto
+        // Books Walker in the first lesson and calls the method again.
+        // Expected: null because the shift has not expired.
         PB.selezionaTurno(t1);
         assertEquals(Walker.getTurnoCorrente(), t1);
         assertNull(PB.recuperaLezione());
 
-        // Resettiamo lo stato iniziale
+        // Resets the initial state.
         PB.disdiciTurno();
 
     }
 
-    /* Test dell'estensione 3d dell'UC2 */
+    // Tests UC2, extension 3d.
     @Test
     void testSelezionaTurnoRecupero(){
-        // Prenotiamo Walker di Giuseppe ad un turno della prima lezione del CorsoBase
+        // Books Giuseppe's dog Walker in the first basic-course lesson.
         Lezione l1 = corsoBase.getLezioni().getFirst();
-        // Settiamo come turnoCorrente di Walker ad un turno scaduto
+        // Sets Walker's current shift to an expired shift.
         Turno turnoScaduto = new Turno(10, LocalDate.now().minusDays(1), LocalTime.of(9, 0), LocalTime.of(11, 0));
         Walker.setTurnoCorrente(turnoScaduto);
-        // Aggiungiamo l1 alla lista delle lezioniSeguite di Walker
+        // Adds l1 to Walker's attended lessons.
         Walker.getLezioniSeguite().add(l1);
         PB.selezionaCane(Walker);
 
@@ -277,22 +260,19 @@ public class PawBookingsTest6 {
         assertTrue(turniDisponibili.contains(turnoRecupero));
         assertFalse(Walker.getLezioneDaRecuperare());
         assertNotNull(Walker.getAffidoCorrente());
-        //Test del metodo
-        // Chiamando il metodo selezionaTurnoRecupero passando turnoTestSovrapposizione
-        // Ci aspettiamo che venga restituito false
+        // Calls selezionaTurnoRecupero with turnoTestSovrapposizione.
+        // Expected: false.
         assertFalse(PB.selezionaTurnoRecupero(turnoTestSovrapposizione));
-        // Chiamando il metodo selezionaTurnoRecupero passando turnoRecupero
-        // Ci aspettiamo venga restituito true
-        // Ci aspettiamo che l'attributo lezioneDaRecuperare di Walker diventi true
-        // Ci aspettiamo che turnoRecupero non appartenga più all'elencoTurniDisponibili di l1
-        // Ci aspettiamo che turnoCorrente di Walker sia uguale a turnoRecupero
+        // Calls selezionaTurnoRecupero with turnoRecupero.
+        // Expected: true.
+        // Expected: Walker's lezioneDaRecuperare becomes true.
+        // Expected: turnoRecupero is removed from l1's elencoTurniDisponibili.
+        // Expected: Walker's current shift is turnoRecupero.
         assertTrue(PB.selezionaTurnoRecupero(turnoRecupero));
         assertTrue(Walker.getLezioneDaRecuperare());
         assertFalse(turniDisponibili.contains(turnoRecupero));
         assertEquals(turnoRecupero, Walker.getTurnoCorrente());
-        
+
     }
-
-
 
 }

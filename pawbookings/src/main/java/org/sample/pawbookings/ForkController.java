@@ -7,6 +7,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+/**
+ * Controller for the initial platform selection screen. Routes to the administrator or
+ * customer area.
+ */
 public class ForkController {
 
     @FXML
@@ -14,7 +18,7 @@ public class ForkController {
 
     @FXML
     void onAdminPressed(ActionEvent event) {
-        // passiamo alla schermata di login per l'admin
+
         try {
             MainApplication.setRoot("admin_login-view.fxml");
         } catch (IOException e) {
@@ -24,7 +28,7 @@ public class ForkController {
 
     @FXML
     void onUserPressed(ActionEvent event) {
-        // passiamo alla schermata dedicata al cliente
+
         try {
             Stage finestraCorrente = (Stage) button.getScene().getWindow();
             finestraCorrente.close();

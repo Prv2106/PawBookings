@@ -10,6 +10,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller for customer registration.
+ */
 public class RegisterController {
 
     @FXML
@@ -37,16 +40,15 @@ public class RegisterController {
 
     @FXML
     void onRegisterPressed(ActionEvent event) throws IOException {
-        // recuperiamo le informazione inserite dall'utente
+
         String name = this.name.getText();
         String surname = this.surname.getText();
         String tel = this.tel.getText();
         String password = this.password.getText();
 
-        // validiamole
         if (!name.isEmpty() && !surname.isEmpty() && !password.isEmpty() && !tel.isEmpty()) {
-            // operazione di sistema
-            PawBookings PB = PawBookings.getInstance();  
+
+            PawBookings PB = PawBookings.getInstance();
             try {
                 String codiceCliente = PB.registrati(name, surname, tel, password);
                 if (codiceCliente != null) {
@@ -56,14 +58,14 @@ public class RegisterController {
                     controller.setCodiceCliente(codiceCliente);
                     MainApplication.goTo(root);
                 } else {
-                    // utente già iscritto
+
                     MainApplication.goClientErrorPage("Il numero di telefono inserito risulta già presente nel sistema");
                 }
             } catch (Exception e) {
                 MainApplication.goClientErrorPage(e.getMessage());
             }
         } else {
-            // messaggio errore
+
             MainApplication.goClientErrorPage("devi prima compilare tutti i campi");
         }
     }

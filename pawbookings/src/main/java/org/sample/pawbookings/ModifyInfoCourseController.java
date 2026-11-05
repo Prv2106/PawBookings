@@ -11,6 +11,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller for editing a course capacity and price.
+ */
 public class ModifyInfoCourseController implements Initializable {
 
     @FXML
@@ -31,20 +34,22 @@ public class ModifyInfoCourseController implements Initializable {
         }
     }
 
+    /**
+     * Prefills the form with the selected course capacity and price.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // allo start, settiamo nei TextFields i valori attuali
+
         this.capienza.setText(String.valueOf(PawBookings.getInstance().getCorsoSelezionato().getCapienza()));
-        this.costo.setText(String.valueOf(PawBookings.getInstance().getCorsoSelezionato().getCosto()));   
+        this.costo.setText(String.valueOf(PawBookings.getInstance().getCorsoSelezionato().getCosto()));
     }
 
     @FXML
     void onInserisciNuovoCorsoPressed(ActionEvent event) throws IOException{
-        // recuperiamo le informazione inserite dall'utente
+
         Integer capienza = Integer.parseInt(this.capienza.getText());
         float costo = Float.parseFloat(this.costo.getText());
 
-        // validiamole
         if (capienza > 0 && costo > 0) {
             try {
                 if (PawBookings.getInstance().modificaCorso(capienza, costo)) {
@@ -56,11 +61,9 @@ public class ModifyInfoCourseController implements Initializable {
                 MainApplication.goAdminErrorPage(e.getMessage());
             }
         } else {
-            // i campi sono vuoti...
+
             MainApplication.goAdminErrorPage("Devi prima compilare tutti i campi!");
         }
     }
-
-    
 
 }

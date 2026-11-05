@@ -12,6 +12,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
+/**
+ * Controller for adding a lesson to the selected course.
+ */
 public class ModifyProgramCourseController implements Initializable {
 
     @FXML
@@ -32,18 +35,20 @@ public class ModifyProgramCourseController implements Initializable {
         }
     }
 
+    /**
+     * Displays the name of the course being edited.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // andiamo a reperire il corso selezionato
+
         this.corsoSelezionato.setText(PawBookings.getInstance().getCorsoSelezionato().getTipoCorso());
     }
 
     @FXML
     void onAggiungiLezionePressed(ActionEvent event) throws IOException {
-        // recuperiamo le informazione inserite dall'amministratore
+
         String nome = this.nome.getText();
 
-        // validiamole
         if (!nome.isEmpty()) {
             try {
                 PawBookings.getInstance().nuovaLezione(nome);
@@ -52,13 +57,9 @@ public class ModifyProgramCourseController implements Initializable {
                 MainApplication.goAdminErrorPage(e.getMessage());
             }
         } else {
-            // i campi sono vuoti...
+
             MainApplication.goAdminErrorPage("devi prima compilare il campo di testo");
         }
     }
-
-    
-
-    
 
 }

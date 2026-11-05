@@ -19,16 +19,18 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
+/**
+ * Controller for the list of shifts available for an exchange. Replaces the current
+ * booking with the selected shift.
+ */
 public class AvailableShiftsToSwitchController implements Initializable {
-    
+
     @FXML
     private Button backButton;
 
     @FXML
     private ListView<Turno> list;
 
-
-    // creiamo una lista osservabile per i turni
     ObservableList<Turno> items = FXCollections.observableArrayList();
 
     @FXML
@@ -40,7 +42,9 @@ public class AvailableShiftsToSwitchController implements Initializable {
         }
     }
 
-
+    /**
+     * Populates the exchange-shift list and configures the cell renderer and exchange handler.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         PawBookings PB = PawBookings.getInstance();
@@ -49,47 +53,43 @@ public class AvailableShiftsToSwitchController implements Initializable {
         items.addAll(elencoTurni);
         this.list.setItems(items);
 
-        // definiamo la grafica di ogni oggetto della lista
         this.list.setCellFactory(new Callback<ListView<Turno>, ListCell<Turno>>() {
             @Override
             public ListCell<Turno> call(ListView<Turno> listView) {
                 return new ListCell<Turno>() {
                     @Override
                     protected void updateItem(Turno turno, boolean empty) {
-                        // per ogni elemento (turno)
+
                         super.updateItem(turno, empty);
 
                         if (turno == null || empty) {
                             setText(null);
                         } else {
-                            // data, ora inizio e ora fine
+
                             VBox vbox = new VBox();
                             vbox.getChildren().add(new Label("Data: " + turno.getData().getDayOfMonth() + "/" + turno.getData().getMonthValue() + "/" + turno.getData().getYear()));
                             vbox.getChildren().add(new Label("Ora Inizio: " + turno.getOraInizio()));
                             vbox.getChildren().add(new Label("Ora fine: " + turno.getOraFine()));
-                        
-                            // Imposta il contenuto della cella
+
                             setGraphic(vbox);
 
-    // -------------------> Aggiungiamo il listener per l'evento di click
                             setOnMouseClicked(event -> {
-                                // Azioni da eseguire quando un elemento viene cliccato
+
                                 PB.selezionaTurnoScambio(turno);
 
-                                // passiamo alla schermata successiva
                                     try {
                                         MainApplication.setRoot("ok-view.fxml");
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-                                
+
                             });
                         }
                     }
                 };
             }
         });
-        
+
     }
 
 }

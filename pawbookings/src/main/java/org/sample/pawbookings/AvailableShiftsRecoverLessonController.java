@@ -20,17 +20,20 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
+/**
+ * Controller for the list of shifts available to recover a missed lesson. Books the
+ * selected recovery shift.
+ */
 public class AvailableShiftsRecoverLessonController implements Initializable {
 
     @FXML
     private ListView<Turno> list;
 
-    // creiamo una lista osservabile per i turni
     ObservableList<Turno> items = FXCollections.observableArrayList();
 
     @FXML
     private Button backButton;
-    
+
     @FXML
     void onBackPressed(ActionEvent event) throws IOException {
         try {
@@ -40,9 +43,12 @@ public class AvailableShiftsRecoverLessonController implements Initializable {
         }
     }
 
+    /**
+     * Populates the recovery-shift list and configures the cell renderer and booking handler.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        PawBookings PB = PawBookings.getInstance();  
+        PawBookings PB = PawBookings.getInstance();
         LinkedList<Turno> elencoTurni = PB.recuperaLezione();
 
         items.addAll(elencoTurni);
@@ -54,13 +60,13 @@ public class AvailableShiftsRecoverLessonController implements Initializable {
                 return new ListCell<Turno>() {
                     @Override
                     protected void updateItem(Turno turno, boolean empty) {
-                        // per ogni elemento (turno)
+
                         super.updateItem(turno, empty);
 
                         if (turno == null || empty) {
                             setText(null);
                         } else {
-                            // data, ora inizio e ora fine
+
                             VBox vbox = new VBox();
                             Label dataLabel = new Label("Data: " + turno.getData().getDayOfMonth() + "/" + turno.getData().getMonthValue() + "/" + turno.getData().getYear());
                             Label oraInizioLabel = new Label("Ora Inizio: " + turno.getOraInizio());
@@ -68,12 +74,10 @@ public class AvailableShiftsRecoverLessonController implements Initializable {
 
                             vbox.getChildren().addAll(dataLabel, oraInizioLabel, oraFineLabel);
 
-                            // Imposta il contenuto della cella
                             setGraphic(vbox);
 
-    // -------------------> Aggiungiamo il listener per l'evento di click
                             setOnMouseClicked(event -> {
-                                // Azioni da eseguire quando un elemento viene cliccato
+
                                 try {
                                     boolean b = PB.selezionaTurnoRecupero(turno);
                                     if (b) {
@@ -91,7 +95,5 @@ public class AvailableShiftsRecoverLessonController implements Initializable {
             }
         });
     }
-
-
 
 }

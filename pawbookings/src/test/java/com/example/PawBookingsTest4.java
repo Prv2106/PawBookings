@@ -18,20 +18,16 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-
-/*
- * Test dei casi d'uso UC9-UC11-UC12-UC13
- * Inoltre Test di alcuni metodi dei casi d'uso UC2-UC3-UC4 necessari per i casi d'uso aggiunti
+/**
+ * Integration tests for shift exchange, progress tracking, notifications, and
+ * foster-period queries (UC9-UC13).
  */
-
-
-
 class PawBookingsTest4 {
     static PawBookings PB;
 
-    // Il metodo viene eseguito prima di tutti i test
-    // inizializza l'istanza di PawBookings
-    // crea un'istanza di Cane e la seleziona
+    // Runs before all tests.
+    // Initializes the PawBookings instance.
+    // Creates a Cane instance and selects it.
     @BeforeAll
     public static void initTest() {
         PB = PawBookings.getInstance();
@@ -42,7 +38,7 @@ class PawBookingsTest4 {
         PB.aggiungiCane("Leila", "Labrador");
         PB.aggiungiCane("Duchessa", "Labrador");
         PB.logout();
-        
+
         PB.registrati("Giuseppe", "Leocata", "562562", "0000");
         PB.aggiungiCane("Walker", "Pastore Tedesco");
         PB.logout();
@@ -57,15 +53,14 @@ class PawBookingsTest4 {
         Corso corsoBase = PB.modificaProgrammaCorso().get(0);
         PB.selezionaCorso(corsoBase);
 
-
-        // Il codice di questa lezione sarà 1
+        // The lesson code is 1.
         PB.nuovaLezione("Comandi di Base");
         PB.inserisciEsercizio("Saluto amichevole", "Questo esercizio aiuta a promuovere una socializzazione positiva tra cani");
         PB.inserisciEsercizio("Resta", "'Resta'per rimanere in posizione, aumentando gradualmente la distanza dal proprietario");
         PB.inserisciEsercizio("Richiamo", "Insegna al cane a rispondere al comando di richiamo del padrone");
         PB.confermaLezione();
 
-        // Il codice di questa lezione sarà 2
+        // The lesson code is 2.
         PB.nuovaLezione("Guinzaglio e Camminare al Guinzaglio");
         PB.inserisciEsercizio("Introduzione al Guinzaglio", "Insegnare ai proprietari come presentare il guinzaglio al cane in modo positivo, facendolo abituare gradualmente alla sensazione e premiando il comportamento calmo e collaborativo.");
         PB.inserisciEsercizio("Camminata Focalizzata", "Praticare una camminata controllata in cui il cane cammina al fianco del proprietario senza tirare al guinzaglio. Utilizzare comandi verbali e premi per incoraggiare un comportamento desiderato.");
@@ -76,21 +71,21 @@ class PawBookingsTest4 {
         Corso corsoAvanzato = PB.modificaProgrammaCorso().get(1);
         PB.selezionaCorso(corsoAvanzato);
 
-        // Il codice di questa lezione sarà 3
+        // The lesson code is 3.
         PB.nuovaLezione("Svolte, dietro front e variazioni andature");
         PB.inserisciEsercizio("Dietro Front", "Insegna al cane a girare rapidamente di 180 gradi su comando, promuovendo una risposta veloce e coordinata.");
         PB.inserisciEsercizio("Variazioni Andature", "Pratica diverse andature come il passo veloce e il passo lento, migliorando il controllo del cane nelle varie situazioni.");
         PB.inserisciEsercizio("Svolte", "Esercita il cane a eseguire svolte a destra e sinistra durante la camminata al guinzaglio, migliorando la coordinazione e la capacità di seguire le indicazioni del proprietario.");
         PB.confermaLezione();
 
-        // Il codice di questa lezione sarà 4
+        // The lesson code is 4.
         PB.nuovaLezione("Riporto in piano di un oggetto");
         PB.inserisciEsercizio("Introduzione al Riporto", "Insegna al cane a prendere un oggetto e a rilasciarlo gentilmente, utilizzando rinforzi positivi come premi o carezze.");
         PB.inserisciEsercizio("Riporto con Distrazioni", " Pratica il riporto introducendo distrazioni come suoni o altri oggetti, migliorando la capacità del cane di concentrarsi sul compito principale.");
         PB.inserisciEsercizio("Riporto a Distanza", "Insegna al cane a riportare un oggetto anche a distanza, incrementando gradualmente la distanza tra il proprietario e il punto in cui l'oggetto deve essere riportato.");
         PB.confermaLezione();
 
-        // Inserimento turni
+        // Adds shifts.
         PB.selezionaCorsoModificaTurni(corsoBase);
         PB.selezionaLezione(corsoBase.getLezioni().get(0));
         PB.nuovoTurno(LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(10, 0));
@@ -113,14 +108,11 @@ class PawBookingsTest4 {
 
     }
 
-    // Il metodo restituisce un'istanza della classe PawBookings se PB è null.
+    // Returns the singleton PawBookings instance.
     @Test
     void testGetInstance() {
         assertNotNull(PB);
     }
-
-
-
 
     @Test
     void testScambioTurno(){
@@ -128,14 +120,13 @@ class PawBookingsTest4 {
         Cane Asso = PB.getClienteLoggato().getCane(2);
         PB.setCaneSelezionato(Asso);
         PB.confermaIscrizioneCorso(PB.getCorsi().getFirst());
-        
+
         Turno t1 = PB.getCorsi().getFirst().getLezioni().getFirst().getTurniDisponibili().getFirst();
         PB.selezionaTurno(t1);
         PB.selezionaCane(Asso);
-        // Ci aspettiamo che venga restituita la lista dei turni disponibili e che tra tali turni non sia presente t1
+        // Expected: the available-shift list is returned without t1.
         assertFalse(PB.scambioTurno().contains(t1));
     }
-
 
     @Test
     void testSelezionaTurnoScambio(){
@@ -143,7 +134,7 @@ class PawBookingsTest4 {
         Cane Maya = PB.getClienteLoggato().getCane(3);
         PB.setCaneSelezionato(Maya);
         PB.confermaIscrizioneCorso(PB.getCorsi().getFirst());
-        
+
         Turno t1 = PB.getCorsi().getFirst().getLezioni().get(1).getTurniDisponibili().getFirst();
         PB.selezionaTurno(t1);
         assertEquals(t1,Maya.getTurnoCorrente());
@@ -151,15 +142,12 @@ class PawBookingsTest4 {
         LinkedList<Turno> turniDisponibili = PB.scambioTurno();
         Turno t2 = turniDisponibili.getFirst();
 
-        //Test del metodo
         PB.selezionaTurnoScambio(t2);
 
-        //Ci aspettiamo che il turno corrente di Asso adesso sia t2
+        // Expected: Asso's current shift is t2.
         assertEquals(t2,Maya.getTurnoCorrente());
 
     }
-
-
 
     @Test
     void testMostraStatoAvanzamentoCorso(){
@@ -168,18 +156,17 @@ class PawBookingsTest4 {
         assertFalse(Leila.getAttualmenteIscritto());
         PB.selezionaCane(Leila);
 
-        // Facciamo sì che Leila abbia completato il corsoBase
+        // Ensures Leila completed the basic course.
         Leila.getCorsiCompletati().add(PB.getCorsi().get(0));
-        // Simuliamo l'iscrizione di Leila al Corso Avanzato
+        // Simulates Leila enrolling in the advanced course.
         PB.confermaIscrizioneCorso(PB.getCorsi().get(1));
 
         Lezione lezione1 = Leila.getCorsoCorrente().getLezioni().get(0);
         Lezione lezione2 = Leila.getCorsoCorrente().getLezioni().get(1);
-        
-        // Test del metodo
-        // Chiamando il metodo mostraStatoAvanzamentoCorso adesso
-        // Ci aspettiamo che la lista lezioni seguite sia vuota
-        // Ci aspettiamo che la lista lezioni mancanti contenga lezione1 e lezione2
+
+        // Calls mostraStatoAvanzamentoCorso.
+        // Expected: the attended-lesson list is empty.
+        // Expected: the missing-lesson list contains lesson1 and lesson2.
 
         Map<String,LinkedList<Lezione>> mappaLezioni = PB.mostraStatoAvanzamentoCorso();
 
@@ -190,11 +177,11 @@ class PawBookingsTest4 {
         assertFalse(mappaLezioni.get("lezioni seguite").contains(lezione1));
         assertFalse(mappaLezioni.get("lezioni seguite").contains(lezione2));
 
-        // Prenotando Leila ad un turno della lezione 1
-        // Ci aspettiamo che la lista lezioni seguite abbia lunghezza 1
-        // Ci aspettiamo che la lista lezioni seguite contenga lezione 1
-        // Ci aspettiamo che la lista lezioni mancanti contenga lezione2 ma non lezione 1
-        // Ci aspettiamo che la lista lezioni mancanti abbia lumghezza 1
+        // Books Leila for a lesson 1 shift.
+        // Expected: the attended-lesson list has length 1.
+        // Expected: the attended-lesson list contains lesson 1.
+        // Expected: the missing-lesson list contains lesson2 but not lesson1.
+        // Expected: the missing-lesson list has length 1.
 
         PB.selezionaTurno(PB.getCorsi().get(1).getLezioni().getFirst().getTurniDisponibili().getFirst());
         mappaLezioni = PB.mostraStatoAvanzamentoCorso();
@@ -208,12 +195,10 @@ class PawBookingsTest4 {
 
     }
 
-    
-
     @Test
     void testCalcolaPeriodoCaneRegistrato(){
         PB.accedi("Alberto1", "0000");
-        // Calcoliamo la lista iniziale
+        // Calculates the initial list.
 
         LinkedList<PeriodoAffido> elencoPeriodiAffidoCaniRegistrati= new LinkedList<>();
         for(PeriodoAffido pa: PB.getPeriodiAffido()){
@@ -224,13 +209,12 @@ class PawBookingsTest4 {
 
         int lunghezzaIniziale = elencoPeriodiAffidoCaniRegistrati.size();
 
-        // Test del metodo
-        // Ci aspettiamo che venga restituita una lista con lunghezza pari a lunghezzaIniziale
+        // Expected: a list of length lunghezzaIniziale.
         assertEquals(lunghezzaIniziale, PB.calcolaPeriodoCaneRegistrato().size());
 
-        // Mettendo Stella in affido nel periodo 1
-        // Ci aspettiamo che la lista restituita abbia lunghezza pari a lunghezzaIniziale + 1
-        // Ci aspettiamo che la lista restituita contenga periodo 1
+        // Places Stella in foster care in period 1.
+        // Expected: the list length is lunghezzaIniziale + 1.
+        // Expected: the list contains period 1.
         PeriodoAffido periodo1 = PB.getPeriodiAffido().getFirst();
         PB.selezionaPeriodo(periodo1);
         Cane Stella = PB.getClienteLoggato().getCane(1);
@@ -238,9 +222,9 @@ class PawBookingsTest4 {
         assertEquals(lunghezzaIniziale + 1, PB.calcolaPeriodoCaneRegistrato().size());
         assertTrue(PB.calcolaPeriodoCaneRegistrato().contains(periodo1));
 
-        // Mettendo Asso in affido nel periodo 2
-        // Ci aspettiamo che la lista restituita abbia lunghezza pari a lunghezzaIniziale + 2
-        // Ci aspettiamo che la lista restituita contenga periodo 1 e periodo 2
+        // Places Asso in foster care in period 2.
+        // Expected: the list length is lunghezzaIniziale + 2.
+        // Expected: the list contains periods 1 and 2.
         PeriodoAffido periodo2 = PB.getPeriodiAffido().get(1);
         PB.selezionaPeriodo(periodo2);
         Cane Asso = PB.getClienteLoggato().getCane(2);
@@ -250,10 +234,7 @@ class PawBookingsTest4 {
         assertTrue(PB.calcolaPeriodoCaneRegistrato().contains(periodo1));
         assertTrue(PB.calcolaPeriodoCaneRegistrato().contains(periodo2));
 
-
-
     }
-
 
     @Test
     void setPeriodoSelezionato(){
@@ -264,7 +245,6 @@ class PawBookingsTest4 {
         assertEquals(null, PB.getPeriodoSelezionato());
     }
 
-
     @Test
     void testMostraCaniAffido(){
         PeriodoAffido periodo3 = PB.getPeriodiAffido().get(2);
@@ -272,44 +252,33 @@ class PawBookingsTest4 {
         Cane Maya = PB.getClienteLoggato().getCane(3);
         int lunghezzaIniziale = periodo3.getCaniAffido().size();
 
-        // test del metodo
-        
-        // Ci aspettiamo che venga restituita una lista di lunghezza pari a lunghezzaIniziale
+        // Expected: a list of length lunghezzaIniziale.
         assertEquals(lunghezzaIniziale, PB.mostraCaniInAffido(periodo3).size());
 
-        // Ci aspettiamo che il periodo selezionato sia periodo 3
+        // Expected: the selected period is period 3.
         assertEquals(periodo3, PB.getPeriodoSelezionato());
 
-
-        // Mettendo Maya in Affido nel periodo 3
-        // Ci aspettiamo che Maya sia contenuta nella lista
-        // Ci aspettiamo che la lista abbia lunghezza pari a lunghezzaIniziale + 1
+        // Places Maya in foster care in period 3.
+        // Expected: Maya is included in the list.
+        // Expected: the list to have length equal to lunghezzaIniziale + 1.
         PB.selezionaPeriodo(periodo3);
         PB.confermaAffido(Maya);
 
         assertEquals(lunghezzaIniziale+1, PB.mostraCaniInAffido(periodo3).size());
         assertTrue(PB.mostraCaniInAffido(periodo3).contains(Maya));
 
-        // Concludendo l'affido di Maya
-        // Ci aspettiamo che venga restituita una lista pari a lunghezzaIniziale
+        // Concludes Maya's foster care.
+        // Expected: a list of length lunghezzaIniziale.
         PB.setClienteSelezionato(PB.getClienteLoggato());
         PB.selezionaCane(Maya);
         PB.confermaConclusioneAffido();
-        
+
         assertEquals(lunghezzaIniziale, PB.mostraCaniInAffido(periodo3).size());
 
-
-        // Ripristino lo stato di periodoSelezionato
+        // Restores the selected-period state.
         PB.setPeriodoSelezionato(null);
 
-
     }
-
-
-
-
-
-
 
     @Test
     void testNotificaClienti(){
@@ -318,16 +287,15 @@ class PawBookingsTest4 {
         Cane Duchessa = PB.getClienteLoggato().getCane(5);
         PeriodoAffido periodo3 = PB.getPeriodiAffido().get(2);
         PB.selezionaPeriodo(periodo3);
-        // Mettiamo Duchessa in affido nel periodo 3
+        // Places Duchessa in foster care in period 3.
         PB.confermaAffido(Duchessa);
 
         PB.accedi("Giuseppe2", "0000");
         Cliente Giuseppe = PB.getClienteLoggato();
         Cane Walker = PB.getClienteLoggato().getCane(6);
         PB.selezionaPeriodo(periodo3);
-        // Mettiamo Walker in affido nel periodo 3
+        // Places Walker in foster care in period 3.
         PB.confermaAffido(Walker);
-
 
         PB.accedi("Daniele3", "0000");
         Cliente Daniele = PB.getClienteLoggato();
@@ -337,16 +305,15 @@ class PawBookingsTest4 {
         mappaStatoSalute.put(6, "test stato salute Walker");
         PB.setPeriodoSelezionato(periodo3);
 
-        // Test del metodo
         PB.notificaClienti(mappaStatoSalute);
 
-        // Ci aspettiamo che la mappaStatoSalute di periodoSelezionato sia stata settata a mappaStatoSalute
+        // Expected: the selected period stores the supplied mappaStatoSalute.
         assertEquals(mappaStatoSalute, periodo3.getMappaStatoSalute());
 
-        // Ci aspettiamo che l'attributo notifica di Alberto e di Giuseppe sia diventato true
-        // Ci aspettiamo che l'attributo notifica di Daniele sia rimasto false
-         // Ci aspettiamo che la lista statoSaluteCani di Giuseppe e di Alberto non sia vuota
-        // Ci aspettiamo che la lista statoSaluteCani di Daniele sia vuota
+        // Expected: the notification flags of Alberto and Giuseppe become true.
+        // Expected: Daniele's notification flag remains false.
+         // Expected: Giuseppe and Alberto have non-empty statoSaluteCani lists.
+        // Expected: Daniele's statoSaluteCani list is empty.
         assertTrue(Alberto.getNotifica());
         assertTrue(Giuseppe.getNotifica());
         assertFalse(Daniele.getNotifica());
@@ -354,9 +321,7 @@ class PawBookingsTest4 {
         assertEquals(1, Giuseppe.getStatoSalute().size());
         assertEquals(0, Daniele.getStatoSalute().size());
 
-
-
-        // Ripristino le condizioni iniziali
+        // Restores the initial conditions.
         PB.setClienteSelezionato(Alberto);
         PB.setCaneSelezionato(Duchessa);
         PB.confermaConclusioneAffido();
@@ -369,9 +334,6 @@ class PawBookingsTest4 {
 
     }
 
-
-
-
     @Test
     void testCancellaNotifiche(){
         PB.accedi("Alberto1", "0000");
@@ -379,17 +341,17 @@ class PawBookingsTest4 {
         Cane Duchessa = PB.getClienteLoggato().getCane(5);
         PeriodoAffido periodo3 = PB.getPeriodiAffido().get(2);
         PB.selezionaPeriodo(periodo3);
-        // Mettiamo Duchessa in affido nel periodo 3
+        // Places Duchessa in foster care in period 3.
         PB.confermaAffido(Duchessa);
 
         PB.accedi("Giuseppe2", "0000");
         Cliente Giuseppe = PB.getClienteLoggato();
         Cane Walker = PB.getClienteLoggato().getCane(6);
         PB.selezionaPeriodo(periodo3);
-        // Mettiamo Walker in affido nel periodo 3
+        // Places Walker in foster care in period 3.
         PB.confermaAffido(Walker);
-        
-        // Imposto le condizioni iniziali
+
+        // Sets the initial conditions.
         Alberto.getStatoSalute().clear();
         Giuseppe.getStatoSalute().clear();
 
@@ -400,21 +362,19 @@ class PawBookingsTest4 {
 
         PB.notificaClienti(mappaStatoSalute);
 
-        // Ci aspettiamo che la mappaStatoSalute di periodoSelezionato sia stata settata a mappaStatoSalute
+        // Expected: the selected period stores the supplied mappaStatoSalute.
         assertEquals(mappaStatoSalute, periodo3.getMappaStatoSalute());
 
-        // Ci aspettiamo che l'attributo notifica di Alberto e di Giuseppe sia diventato true
-        // Ci aspettiamo che l'attributo notifica di Daniele sia rimasto false
+        // Expected: the notification flags of Alberto and Giuseppe become true.
+        // Expected: Daniele's notification flag remains false.
         assertTrue(Alberto.getNotifica());
         assertTrue(Giuseppe.getNotifica());
 
-
-        // Test del metodo
-        // Accedendo con Alberto e richiamando il metodo cancellaNotifiche
-        // Ci aspettiamo che l'attributo Notifica di Alberto sia diventato false
-        // Ci aspettiamo che la lista statoSaluteCani di Alberto sia diventata vuota
-        // Ci aspettiamo che l'attributo Notifica di Giuseppe sia ancora true
-        // Ci aspettiamo che la lista statoSaluteCani di Giuseppe non sia vuota
+        // Logs in as Alberto and calls cancellaNotifiche.
+        // Expected: Alberto's notification flag becomes false.
+        // Expected: Alberto's statoSaluteCani list becomes empty.
+        // Expected: Giuseppe's notification flag remains true.
+        // Expected: Giuseppe's statoSaluteCani list is not empty.
         PB.accedi("Alberto1", "0000");
         PB.cancellaNotifiche();
         assertFalse(Alberto.getNotifica());
@@ -422,10 +382,6 @@ class PawBookingsTest4 {
         assertTrue(Giuseppe.getNotifica());
         assertEquals(1, Giuseppe.getStatoSalute().size());
 
-        
-
-
     }
 
-    
 }

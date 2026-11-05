@@ -18,6 +18,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
+/**
+ * Controller for the list of courses containing at least one enrolled dog. Routes to
+ * lesson selection for shift creation.
+ */
 public class CoursesWithDogsController implements Initializable {
 
     @FXML
@@ -25,7 +29,7 @@ public class CoursesWithDogsController implements Initializable {
 
     @FXML
     private ListView<Corso> list;
-    // creiamo una lista osservabile per i corsi
+
     ObservableList<Corso> items = FXCollections.observableArrayList();
 
     @FXML
@@ -37,38 +41,37 @@ public class CoursesWithDogsController implements Initializable {
         }
     }
 
+    /**
+     * Populates the list of courses with enrolled dogs and configures course selection.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         items.addAll(PawBookings.getInstance().inserisciTurnoLezione());
         this.list.setItems(items);
 
-        // definiamo la grafica di ogni oggetto della lista (corso)
         this.list.setCellFactory(new Callback<ListView<Corso>, ListCell<Corso>>() {
             @Override
             public ListCell<Corso> call(ListView<Corso> listView) {
                 return new ListCell<Corso>() {
                     @Override
                     protected void updateItem(Corso corso, boolean empty) {
-                        // per ogni elemento (corso)
+
                         super.updateItem(corso, empty);
 
                         if (corso == null || empty) {
                             setText(null);
                         } else {
-                            // tipo corso e costo
+
                             VBox vbox = new VBox();
                             vbox.getChildren().add(new Label("Tipo Corso: " + corso.getTipoCorso()));
                             vbox.getChildren().add(new Label("Costo: " + corso.getCosto() + "€"));
 
-                            // Imposta il contenuto della cella
                             setGraphic(vbox);
 
-    // -------------------> Aggiungiamo il listener per l'evento di click
                             setOnMouseClicked(event -> {
-                                // Azioni da eseguire quando un elemento viene cliccato
+
                                 PawBookings.getInstance().selezionaCorsoModificaTurni(corso);
 
-                                // passiamo alla schermata successiva
                                 try {
                                     MainApplication.setRoot("admin_show_course_program-view.fxml");
                                 } catch (IOException e) {
@@ -81,7 +84,5 @@ public class CoursesWithDogsController implements Initializable {
             }
         });
     }
-
-
 
 }
