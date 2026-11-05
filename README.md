@@ -9,9 +9,9 @@ domain-driven core and a layered JavaFX presentation. The runtime keeps all data
 in memory; demo customers, dogs, courses, lessons, and shifts are created at
 startup so the application can be evaluated without external services.
 
-<p align="center">
-  <img src="ELABORAZIONE/istruzione%20esecuzione%20software.png" alt="PawBookings running on desktop and mobile-style windows" width="820">
-</p>
+<div align="center">
+  <img src="https://github.com/Prv2106/PawBookings/assets/101663958/0e68a4a8-734e-449d-9ae7-8e51653456c2" width="300" alt="PawBookings">
+</div>
 
 ## Key Features
 
